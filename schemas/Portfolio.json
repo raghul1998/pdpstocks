@@ -1,0 +1,49 @@
+{
+  "description": "Portfolio represents a collection of stocks and its shares.",
+  "properties": {
+    "PortfolioName": {
+      "description": "Name of the portfolio.",
+      "type": "string",
+      "readonly": true
+    },
+    "PortfolioID": {
+      "description": "Unique ID for the portfolio",
+      "type": "string",
+      "readonly": true
+    },
+    "StockHoldings": {
+      "description": "Describes the array of stock holdings.",
+      "items": {
+        "properties": {
+          "StockSymbol": {
+            "description": "Denotes the symbol of the stock.",
+            "type": "string"
+          },
+          "NameOfStock": {
+            "description": "Denotes the name of the stock.",
+            "type": "string"
+          },
+          "PurchaseTimestamp": {
+            "description": "Denotes the time of purchase.",
+            "type": "date"
+          },
+          "NumberOfStocksPurchased": {
+            "description": "Denotes the number of stocks purchased.",
+            "type": "date"
+          },
+          "PriceOfShareAtPurchase": {
+            "description": "Denotes the price of a share at the tine of purchase.",
+            "type": "double"
+          },
+          "PurchaseID": {
+            "description": "Denotes the identification number of the purchase.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "readonly": true,
+      "type": "array"
+    }
+  }
+}
