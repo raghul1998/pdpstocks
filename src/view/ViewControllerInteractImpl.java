@@ -7,9 +7,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 import controller.ControllerViewInteract;
@@ -19,12 +18,17 @@ import supportedstocks.SupportedStocks;
 
 public class ViewControllerInteractImpl implements ViewControllerInteract {
   private final ControllerViewInteract controllerViewInteractObj = new ControllerViewInteractImpl();
+  private String currentPortfolioName;
 
   @Override
   public void viewControllerInteract(TypeofViews type) {
     switch (type) {
       case MAIN: {
         mainScreen();
+        break;
+      }
+      case CREATE_PORTFOLIO_NAME_SCREEN: {
+        createPortfolioName();
         break;
       }
       case CREATE_PORTFOLIO: {
@@ -39,9 +43,76 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showStockDataScreen();
         break;
       }
+      case BUY_STOCKS_VALUE: {
+        showBuyStockValueScreen();
+        break;
+      }
+      case BUY_ANOTHER_STOCK: {
+        wouldYouLikeToBuyAnotherStockScreen();
+        break;
+      }
       default: {
         break;
       }
+    }
+  }
+
+  private void showBuyStockValueScreen() {
+    System.out.println("How many stocks would you like to buy?");
+    System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu");
+    String option;
+    Scanner scan = new Scanner(System.in);
+    option = scan.nextLine();
+    while ((option == null || option.length() == 0) || (!validateBuyStockOption(option))) {
+      System.out.println("Not a valid input. Please enter the correct stock");
+      System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu\n");
+      option = scan.nextLine();
+      if (option == "b") {
+        return;
+      }
+    }
+    controllerViewInteractObj.controllerViewInteract(this, option,
+            TypeofViews.BUY_STOCKS_VALUE, null, 0);
+  }
+
+  private void wouldYouLikeToBuyAnotherStockScreen() {
+    System.out.println("Would you like to buy another stock? (Y|N)");
+    String option;
+    Scanner scan = new Scanner(System.in);
+    option = scan.nextLine();
+    while ((option == null || option.length() == 0) || ((!option.equals("Y")) &&
+            (!option.equals("y")) && (!option.equals("N")) && (!option.equals("n")))) {
+      System.out.println("Not a valid input. Please enter the correct option\n");
+      option = scan.nextLine();
+      if (Objects.equals(option, "b")) {
+        return;
+      }
+    }
+    controllerViewInteractObj.controllerViewInteract(this, option,
+            TypeofViews.BUY_ANOTHER_STOCK, null, 0);
+  }
+
+  private boolean validateBuyStockOption(String option) {
+    if (option == null || option.length() == 0) {
+      return false;
+    }
+
+    if (option.equals("m")) {
+      return true;
+    }
+
+    // The selected option should be a number, and it should be a valid digit.
+    int val;
+    try {
+      val = Integer.parseInt(option);
+    } catch (Exception e) {
+      return false;
+    }
+
+    if (val < 0) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -84,10 +155,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       System.out.println("If you want to go back to main menu, press '0'\n");
       option = scan.nextLine();
     }
-    // If entered main menu, return.
-    if (option.equals("0")) {
-      return;
-    }
     // Else pass the input to the controller
     controllerViewInteractObj.controllerViewInteract(this, option,
             TypeofViews.LIST_OF_STOCKS, stockSymbolIndexArray, stockSymbolIndexArray.length);
@@ -97,11 +164,15 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     if (option == null || option.length() == 0) {
       return false;
     }
+
+    if (option.equals("0")) {
+      return true;
+    }
     // The selected option should be a number, and it should be a valid digit.
     int val;
     try {
       val = Integer.parseInt(option);
-    } catch (NumberFormatException e) {
+    } catch (Exception e) {
       return false;
     }
 
@@ -134,29 +205,22 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void createStockMainScreen() {
     char option;
     Scanner scan = new Scanner(System.in);
-    String name;
-    while (true) {
-      System.out.println("\n\nCREATE PORTFOLIO MENU\n");
-      name = createPortfolioName();
-      if (name.equals("0")) {
-        return;
-      }
-      System.out.println(name.toUpperCase() + " Portfolio\n");
-      System.out.println("1. Buy a share");
-      System.out.println("2. Add already bought shares");
-      System.out.println("3. Back");
-      System.out.println("4. Main Menu");
-      System.out.println("e. Exit\n");
-      System.out.println("ENTER YOUR CHOICE: ");
-      option = scan.next().charAt(0);
-      String[] args = new String[1];
-      args[0] = name;
-      controllerViewInteractObj.controllerViewInteract(this,
-              String.valueOf(option), TypeofViews.CREATE_PORTFOLIO, args, args.length);
-    }
+
+    System.out.println("\n\nCREATE PORTFOLIO MENU\n");
+
+    System.out.println(currentPortfolioName.toUpperCase() + " Portfolio\n");
+    System.out.println("1. Buy a share");
+    System.out.println("2. Add already bought shares");
+    System.out.println("3. Main Menu");
+    System.out.println("e. Exit\n");
+    System.out.println("ENTER YOUR CHOICE: ");
+    option = scan.next().charAt(0);
+    controllerViewInteractObj.controllerViewInteract(this,
+            String.valueOf(option), TypeofViews.CREATE_PORTFOLIO, null, 0);
+
   }
 
-  private String createPortfolioName() {
+  private void createPortfolioName() {
     String name;
     Scanner scan = new Scanner(System.in);
     System.out.println("Enter the name for this portfolio");
@@ -165,8 +229,16 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       System.out.println("Cannot create a portfolio with empty name. Enter a valid name.");
       System.out.println("If you want to go back to main menu, press '0'\n");
       name = scan.nextLine();
+      if (name.equals("0")) {
+        controllerViewInteractObj.controllerViewInteract(this,
+                name, TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, null, 0);
+      }
     }
-    return name;
+    String[] args = new String[1];
+    args[0] = name;
+    currentPortfolioName = name;
+    controllerViewInteractObj.controllerViewInteract(this,
+            null, TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, args, 0);
   }
 
 

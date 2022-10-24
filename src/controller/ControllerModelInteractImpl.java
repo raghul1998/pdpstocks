@@ -11,7 +11,9 @@ public class ControllerModelInteractImpl implements ControllerModelInteract {
   public void controllerModelInteract(TypeofAction type, String[] args, int length) {
     switch (type) {
       case BUY_STOCKS:
-      case GET_STOCK_DATA: {
+      case GET_STOCK_DATA:
+      case CREATE_PORTFOLIO:
+      case DELETE_EMPTY_PORTFOLIO: {
         // Buy a stock
         // Get stock data
         mciObj.modelControllerInteract(type, args, length);

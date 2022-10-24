@@ -25,15 +25,19 @@
           },
           "PurchaseTimestamp": {
             "description": "Denotes the time of purchase.",
-            "type": "date"
+            "type": "string"
+          },
+          "StockLastKnownValueTimestamp": {
+            "description": "Denotes the time of the last known value of the stock.",
+            "type": "string"
           },
           "NumberOfStocksPurchased": {
             "description": "Denotes the number of stocks purchased.",
-            "type": "date"
+            "type": "integer"
           },
           "PriceOfShareAtPurchase": {
             "description": "Denotes the price of a share at the tine of purchase.",
-            "type": "double"
+            "type": "string"
           },
           "PurchaseID": {
             "description": "Denotes the identification number of the purchase.",
