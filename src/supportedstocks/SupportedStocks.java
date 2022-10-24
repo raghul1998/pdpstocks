@@ -1,3 +1,5 @@
+package supportedstocks;
+
 public enum SupportedStocks {
   AAPL,
   MSFT,
@@ -7,5 +9,6 @@ public enum SupportedStocks {
   META,
   WMT,
   JNJ,
-  JPM
+  JPM,
+  UNH;
 }

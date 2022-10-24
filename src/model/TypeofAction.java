@@ -1,5 +1,6 @@
 package model;
 
 public enum TypeofAction {
-  BUY_STOCKS
+  BUY_STOCKS,
+  GET_STOCK_DATA
 }

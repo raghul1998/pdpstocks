@@ -10,9 +10,11 @@ public class ControllerModelInteractImpl implements ControllerModelInteract {
   @Override
   public void controllerModelInteract(TypeofAction type, String[] args, int length) {
     switch (type) {
-      case BUY_STOCKS: {
+      case BUY_STOCKS:
+      case GET_STOCK_DATA: {
         // Buy a stock
-        mciObj.modelControllerInteract(type);
+        // Get stock data
+        mciObj.modelControllerInteract(type, args, length);
         break;
       }
       default: {
