@@ -141,8 +141,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showDisplayPortFolioCreated() {
-    System.out.println("\n" + currentPortfolioName + " CREATED...!!!");
-    System.out.println("\n" + currentPortfolioName + " CREATED...!!!");
+    System.out.println("\n" + currentPortfolioName.toUpperCase() + " PORTFOLIO CREATED...!!!");
   }
 
   private void showBuyStockValueScreen() {
