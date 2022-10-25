@@ -73,10 +73,17 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showStockBuyInvalidRetryScreen();
         break;
       }
+      case REVIEW_STOCK: {
+        showPortfolioReviewScreen();
+      }
       default: {
         break;
       }
     }
+  }
+
+  private void showPortfolioReviewScreen() {
+    System.out.println("Press 'b' to go back and 'm' for main menu\n");
   }
 
   private void showPortfolioIndividualScreen(String option) {
@@ -117,7 +124,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showBuyStockValueScreen() {
-    System.out.println("How many stocks would you like to buy?");
+    System.out.println("\nHow many stocks would you like to buy?");
     System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu");
   }
 
@@ -141,6 +148,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     JSONArray jsonArray = (JSONArray) jsonObj.get("AllStockData");
     JSONObject stk = (JSONObject) jsonArray.get(0);
 
+    System.out.println("\nCURRENT STOCK PRICE");
     System.out.println("StockName: " + stk.get("StockName"));
     System.out.println("Symbol: " + stk.get("StockSymbol"));
     System.out.println("Time: " + stk.get("Timestamp"));
@@ -156,7 +164,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       System.out.print(entry.getValue());
       System.out.println(" (" + entry.getKey() + ")");
     }
-    System.out.println("Which stock would you like to buy?");
+    System.out.println("\nWhich stock would you like to buy?");
   }
 
   private void mainScreen() {
@@ -171,7 +179,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showStockMainScreen(String name) {
-    System.out.println("\n\nCREATE PORTFOLIO MENU\n");
+    System.out.println("\nCREATE PORTFOLIO MENU\n");
     System.out.println(name.toUpperCase() + " Portfolio\n");
     System.out.println("1. Buy a share");
     System.out.println("2. Add already bought shares");

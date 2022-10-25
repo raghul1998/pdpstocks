@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
-import model.ModelControllerInteract;
 import model.TypeofAction;
 import supportedstocks.StockNameMap;
 import supportedstocks.SupportedStocks;
@@ -14,6 +13,7 @@ import view.ViewControllerInteractImpl;
 import view.TypeofViews;
 
 import static java.lang.System.exit;
+import static java.lang.Thread.sleep;
 
 public class ControllerViewInteractImpl implements ControllerViewInteract {
   ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
@@ -36,13 +36,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   @Override
   public void start() {
-    char option;
+    String option;
     Scanner scan = new Scanner(System.in);
     do {
       vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
-      option = scan.next().charAt(0);
-      performMainMenuAction(String.valueOf(option));
-    } while (option != 'e');
+      option = scan.nextLine();
+      performMainMenuAction(option);
+    } while (option != "e");
   }
 
   private void portfolioCompositionAction(String options) {
@@ -52,16 +52,19 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   private void createPortfolioNameScreenAction(String options, String[] args) {
-    if (options == null) {
-      cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
-      String[] name = new String[1];
-      name[0] = currentPortfolioName;
-      vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO, name, 0);
-      char option;
-      Scanner scan = new Scanner(System.in);
-      option = scan.next().charAt(0);
-      performCreatePortfolioMenuAction(String.valueOf(option), null);
+    try {
+      sleep(100);
+    } catch (Exception e) {
+      // Exception while sleep
     }
+    cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
+    String[] name = new String[1];
+    name[0] = currentPortfolioName;
+    vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO, name, 0);
+    String option;
+    Scanner scan = new Scanner(System.in);
+    option = scan.nextLine();
+    performCreatePortfolioMenuAction(option, null);
   }
 
   private void buyAnotherStockMenuAction(String options) {
@@ -151,28 +154,43 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
       case "2": {
         // Composition of the portfolio
-        StockCompositionData obj = new StockCompositionData();
-        int numberOfPortFolio = obj.getNumberOfPortFolio();
-        if (numberOfPortFolio == 0) {
-          System.out.println("You dont have any portfolio.");
-          return;
-        }
-        String[] portfolioNames = obj.getPortFolioNames();
-        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames, numberOfPortFolio);
-        String options;
-        Scanner scan = new Scanner(System.in);
-        options = scan.nextLine();
-        while ((options == null || options.length() == 0) ||
-                (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
-          System.out.println("Not a valid input. Please enter the correct portfolio");
-          System.out.println("Press 'b' to go back to the previous menu\n");
-          options = scan.nextLine();
-          if (Objects.equals(options, "b")) {
+        while (true) {
+          StockCompositionData obj = new StockCompositionData();
+          int numberOfPortFolio = obj.getNumberOfPortFolio();
+          if (numberOfPortFolio == 0) {
+            System.out.println("You dont have any portfolio.");
             return;
           }
+          String[] portfolioNames = obj.getPortFolioNames();
+          vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames, numberOfPortFolio);
+          String options;
+          Scanner scan = new Scanner(System.in);
+          options = scan.nextLine();
+          while ((options == null || options.length() == 0) ||
+                  (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
+            System.out.println("Not a valid input. Please enter the correct portfolio");
+            System.out.println("Press 'b' to go back to the previous menu\n");
+            options = scan.nextLine();
+            if (Objects.equals(options, "b")) {
+              return;
+            }
+          }
+          portfolioCompositionAction(options);
+          vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+          options = scan.nextLine();
+          while ((options == null || options.length() == 0) ||
+                  ((!options.equals("M")) && (!options.equals("m")) && (!options.equals("b")) &&
+                          (!options.equals("B")))) {
+            System.out.println("Not a valid input. Please enter the correct option");
+            vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+            options = scan.nextLine();
+            if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
+              break;
+            } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+              return;
+            }
+          }
         }
-        portfolioCompositionAction(options);
-        break;
       }
       case "3": {
         System.out.println("Value of the portfolio");
@@ -195,6 +213,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
       default: {
         System.out.println("Invalid command");
+        try {
+          sleep(500);
+        } catch (Exception e) {
+          // Exception while calling sleep
+        }
         break;
       }
     }
@@ -228,7 +251,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
           options = scan.nextLine();
         }
-        performListOfStocksMenuAction(option, null, 0);
+        performListOfStocksMenuAction(options, null, 0);
         break;
       }
       case "2": {
@@ -238,7 +261,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       case "3": {
         // Go to Main menu
         cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
-        vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
         break;
       }
       case "e":
@@ -249,6 +271,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
       default: {
         System.out.println("Invalid command");
+        try {
+          sleep(500);
+        } catch (Exception e) {
+          // Exception while calling sleep
+        }
         break;
       }
     }
