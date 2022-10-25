@@ -1,0 +1,42 @@
+{
+  "PortfolioID": "user1_1666668140",
+  "StockHoldings": [
+    {
+      "PurchaseTimestamp": "2022-10-24 23:22:23",
+      "PurchaseID": "1666668143",
+      "StockLastKnownValueTimestamp": "2022-10-24 19:59:00",
+      "StockSymbol": "MSFT",
+      "NameOfStock": "Microsoft",
+      "NumberOfStocksPurchased": "10",
+      "PriceOfShareAtPurchase": "247.5000"
+    },
+    {
+      "PurchaseTimestamp": "2022-10-24 23:22:23",
+      "PurchaseID": "1666668143",
+      "StockLastKnownValueTimestamp": "2022-10-24 19:59:00",
+      "StockSymbol": "MSFT",
+      "NameOfStock": "Microsoft",
+      "NumberOfStocksPurchased": "10",
+      "PriceOfShareAtPurchase": "247.5000"
+    },
+    {
+      "PurchaseTimestamp": "2022-10-24 23:22:29",
+      "PurchaseID": "1666668149",
+      "StockLastKnownValueTimestamp": "2022-10-24 20:00:00",
+      "StockSymbol": "META",
+      "NameOfStock": "Meta",
+      "NumberOfStocksPurchased": "8",
+      "PriceOfShareAtPurchase": "129.8900"
+    },
+    {
+      "PurchaseTimestamp": "2022-10-24 23:22:33",
+      "PurchaseID": "1666668153",
+      "StockLastKnownValueTimestamp": "2022-10-24 20:00:00",
+      "StockSymbol": "JNJ",
+      "NameOfStock": "Johnson",
+      "NumberOfStocksPurchased": "3",
+      "PriceOfShareAtPurchase": "171.5600"
+    }
+  ],
+  "PortfolioName": "name"
+}

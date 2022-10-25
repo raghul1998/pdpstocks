@@ -21,18 +21,18 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private String currentPortfolioName;
 
   @Override
-  public void viewControllerInteract(TypeofViews type) {
+  public void viewControllerInteract(TypeofViews type, String[] args, int length) {
     switch (type) {
       case MAIN: {
         mainScreen();
         break;
       }
       case CREATE_PORTFOLIO_NAME_SCREEN: {
-        createPortfolioName();
+        showPortfolioName();
         break;
       }
       case CREATE_PORTFOLIO: {
-        createStockMainScreen();
+        showStockMainScreen();
         break;
       }
       case LIST_OF_STOCKS: {
@@ -51,10 +51,98 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         wouldYouLikeToBuyAnotherStockScreen();
         break;
       }
+      case DISPLAY_PORTFOLIO_CREATED: {
+        showDisplayPortFolioCreated();
+        break;
+      }
+      case PORTFOLIO_COMPOSITION: {
+        showPortFolioCompositionScreen();
+        break;
+      }
+      case PORTFOLIO_INDIVIDUAL_LIST: {
+        String opt = args[0];
+        showPortfolioIndividualScreen(opt);
+        break;
+      }
       default: {
         break;
       }
     }
+  }
+
+  private void showPortfolioIndividualScreen(String option) {
+    int portfolioNumber = Integer.parseInt(option) - 1;
+    StockCompositionData obj = new StockCompositionData();
+    StockCompositionData.stockPortFolioData stkObj =
+            obj.getAllStockDataInPortFolio(portfolioNumber);
+
+    String[] portfolioNames = obj.getPortFolioNames();
+    System.out.println(portfolioNames[portfolioNumber].toUpperCase() + "PORTFOLIO");
+
+    System.out.print("\nName");
+    System.out.print(" (" + "Symbol" + ") ");
+    System.out.print("\t " + "Quantity");
+    System.out.println("\t " + "Value");
+
+    for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
+      System.out.print(stkObj.stockName[i]);
+      System.out.print(" (" + stkObj.stockSymbol[i] + ") ");
+      System.out.print("\t " + stkObj.stockQuantity[i]);
+      System.out.println("\t " + stkObj.totalValue[i]);
+    }
+  }
+
+  private void showPortFolioCompositionScreen() {
+    System.out.println("\nLIST OF PORTFOLIO");
+    StockCompositionData obj = new StockCompositionData();
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      System.out.println("You dont have any portfolio.");
+      return;
+    }
+
+    String[] portfolioNames = obj.getPortFolioNames();
+    System.out.println();
+    for (int i = 0; i < numberOfPortFolio; i++) {
+      System.out.println(i + 1 + ". " + portfolioNames[i].toUpperCase());
+    }
+
+    System.out.println("\nWhich portfolio would you like to check?");
+    String option;
+    Scanner scan = new Scanner(System.in);
+    option = scan.nextLine();
+    while ((option == null || option.length() == 0) ||
+            (!validatePortfolioSelectOption(option, numberOfPortFolio))) {
+      System.out.println("Not a valid input. Please enter the correct portfolio");
+      System.out.println("Press 'b' to go back to the previous menu\n");
+      option = scan.nextLine();
+      if (Objects.equals(option, "b")) {
+        return;
+      }
+    }
+    controllerViewInteractObj.controllerViewInteract(this, option,
+            TypeofViews.PORTFOLIO_COMPOSITION, null, 0);
+  }
+
+  private boolean validatePortfolioSelectOption(String option, int numberOfPortFolio) {
+    // The selected option should be a number, and it should be a valid digit.
+    int val;
+    try {
+      val = Integer.parseInt(option);
+    } catch (Exception e) {
+      return false;
+    }
+
+    if (val < 1 || val > numberOfPortFolio) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  private void showDisplayPortFolioCreated() {
+    System.out.println("\n" + currentPortfolioName + " CREATED...!!!");
+    System.out.println("\n" + currentPortfolioName + " CREATED...!!!");
   }
 
   private void showBuyStockValueScreen() {
@@ -67,7 +155,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       System.out.println("Not a valid input. Please enter the correct stock");
       System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu\n");
       option = scan.nextLine();
-      if (option == "b") {
+      if (Objects.equals(option, "b")) {
         return;
       }
     }
@@ -187,8 +275,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     char option;
     Scanner scan = new Scanner(System.in);
     do {
-      System.out.println("\n\nWelcome to Stock Manager\n");
-      System.out.println("MENU\n");
+      System.out.println("\nMENU\n");
       System.out.println("1. Create a portfolio");
       System.out.println("2. View portfolio");
       System.out.println("3. Value of portfolio");
@@ -202,7 +289,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     } while (option != 'e');
   }
 
-  private void createStockMainScreen() {
+  private void showStockMainScreen() {
     char option;
     Scanner scan = new Scanner(System.in);
 
@@ -220,7 +307,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
   }
 
-  private void createPortfolioName() {
+  private void showPortfolioName() {
     String name;
     Scanner scan = new Scanner(System.in);
     System.out.println("Enter the name for this portfolio");
@@ -244,6 +331,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
   public static void main(String[] args) {
     ViewControllerInteract obj = new ViewControllerInteractImpl();
-    obj.viewControllerInteract(TypeofViews.MAIN);
+    obj.viewControllerInteract(TypeofViews.MAIN, null, 0);
   }
 }

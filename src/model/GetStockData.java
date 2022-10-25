@@ -16,7 +16,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import supportedstocks.StockNameMap;
-import supportedstocks.SupportedStocks;
 
 public class GetStockData {
   JSONObject jsonWriteObject = new JSONObject();

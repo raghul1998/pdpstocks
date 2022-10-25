@@ -81,24 +81,22 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     JSONArray jsonArray = (JSONArray) jsonObj.get("AllStockData");
     JSONObject stk = (JSONObject) jsonArray.get(0);
 
-    JSONArray arr = new JSONArray();
-    Map<String, Object> stockMap = new LinkedHashMap<>(7);
+    JSONObject arr = new JSONObject();
 
-    stockMap.put("StockSymbol", stk.get("StockName"));
-    stockMap.put("NameOfStock", stk.get("StockSymbol"));
+    arr.put("StockSymbol", stk.get("StockSymbol"));
+    arr.put("NameOfStock", stk.get("StockName"));
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
-    stockMap.put("PurchaseTimestamp", dtf.format(now));
+    arr.put("PurchaseTimestamp", dtf.format(now));
 
-    stockMap.put("StockLastKnownValueTimestamp", stk.get("Timestamp"));
-    stockMap.put("NumberOfStocksPurchased", args[0]);
-    stockMap.put("PriceOfShareAtPurchase", stk.get("Price"));
+    arr.put("StockLastKnownValueTimestamp", stk.get("Timestamp"));
+    arr.put("NumberOfStocksPurchased", args[0]);
+    arr.put("PriceOfShareAtPurchase", stk.get("Price"));
 
     long time = System.currentTimeMillis() / 1000;
-    stockMap.put("PurchaseID", Long.toString(time, 0));
+    arr.put("PurchaseID", Long.toString(time, 0));
 
-    arr.add(stockMap);
 
     try {
       writeArrayToPortfolio(arr);
@@ -107,7 +105,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     }
   }
 
-  private void writeArrayToPortfolio(JSONArray arr) throws FileNotFoundException {
+  private void writeArrayToPortfolio(JSONObject arr) throws FileNotFoundException {
     Object obj;
     String filename = "userdata/user1/" + "pf_" + portFolioName + ".json";
     try {
@@ -126,13 +124,6 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
   }
 
   private void getStockData(String arg) {
-/*    String[] stocks = new String[SupportedStocks.values().length];
-    int i = 0;
-    for (SupportedStocks stock : EnumSet.allOf(SupportedStocks.class)) {
-      stocks[i] = String.valueOf(stock);
-      i++;
-    }
-    System.out.println(Arrays.toString(stocks));*/
     GetStockData obj = new GetStockData();
     try {
       obj.getValue(arg);

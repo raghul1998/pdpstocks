@@ -43,36 +43,45 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         buyAnotherStockMenuAction(vciObj, options);
         break;
       }
+      case PORTFOLIO_COMPOSITION: {
+        portfolioCompositionAction(vciObj, options);
+      }
       default: {
         break;
       }
     }
   }
 
+  private void portfolioCompositionAction(ViewControllerInteractImpl vciObj, String options) {
+    String[] args = new String[1];
+    args[0] = options;
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, args, 1);
+  }
+
   private void createPortfolioNameScreenAction(ViewControllerInteractImpl vciObj,
                                                String options, String[] args) {
     if (options == null) {
       cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
-      vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO);
+      vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO, null, 0);
     }
   }
 
   private void buyAnotherStockMenuAction(ViewControllerInteractImpl vciObj, String options) {
     if (Objects.equals(options, "Y") || Objects.equals(options, "y")) {
-      vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS);
+      vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
     } else {
-      vciObj.viewControllerInteract(TypeofViews.MAIN);
+      vciObj.viewControllerInteract(TypeofViews.DISPLAY_PORTFOLIO_CREATED, null, 0);
     }
   }
 
   private void buyStockValueMenuAction(ViewControllerInteractImpl vciObj, String option) {
     if (Objects.equals(option, "m")) {
-      vciObj.viewControllerInteract(TypeofViews.MAIN);
+      vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
     }
     String[] stock = new String[1];
     stock[0] = option;
     cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 1);
-    vciObj.viewControllerInteract(TypeofViews.BUY_ANOTHER_STOCK);
+    vciObj.viewControllerInteract(TypeofViews.BUY_ANOTHER_STOCK, null, 0);
   }
 
   private void performListOfStocksMenuAction(ViewControllerInteractImpl vciObj, String options,
@@ -85,19 +94,20 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     String[] stock = new String[1];
     stock[0] = args[Integer.parseInt(options) - 1];
     cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 1);
-    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA);
-    vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_VALUE);
+    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+    vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_VALUE, null, 0);
   }
 
   private void performMainMenuAction(ViewControllerInteractImpl viewObj, String option) {
     switch (option) {
       case "1": {
         // Create a portfolio
-        viewObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN);
+        viewObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, null, 0);
         break;
       }
       case "2": {
-        System.out.println("Composition of the portfolio");
+        // Composition of the portfolio
+        viewObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, null, 0);
         break;
       }
       case "3": {
@@ -106,7 +116,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
       case "4": {
         //Buy a stock
-        viewObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS);
+        viewObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
         //cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, null, 0);
         break;
       }
@@ -131,7 +141,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     switch (option) {
       case "1": {
         //Buy a new stock
-        viewObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS);
+        viewObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
         break;
       }
       case "2": {
@@ -141,7 +151,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       case "3": {
         // Go to Main menu
         cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
-        viewObj.viewControllerInteract(TypeofViews.MAIN);
+        viewObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
         break;
       }
       case "e":
