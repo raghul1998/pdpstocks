@@ -60,11 +60,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
     String[] name = new String[1];
     name[0] = currentPortfolioName;
-    vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO, name, 0);
-    String option;
-    Scanner scan = new Scanner(System.in);
-    option = scan.nextLine();
-    performCreatePortfolioMenuAction(option, null);
+    while(true) {
+      vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO, name, 0);
+      String option;
+      Scanner scan = new Scanner(System.in);
+      option = scan.nextLine();
+      if(performCreatePortfolioMenuAction(option, null)) {
+        break;
+      }
+    }
   }
 
   private void buyAnotherStockMenuAction(String options) {
@@ -239,7 +243,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
-  private void performCreatePortfolioMenuAction(String option, String[] args) {
+  private boolean performCreatePortfolioMenuAction(String option, String[] args) {
     switch (option) {
       case "1": {
         //Buy a new stock
@@ -280,9 +284,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         } catch (Exception e) {
           // Exception while calling sleep
         }
-        break;
+        return false;
       }
     }
+    return true;
   }
 
   private boolean validateStockSelectOption(String option) {
