@@ -98,7 +98,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     System.out.print("\nName");
     System.out.print(" (" + "Symbol" + ") ");
     System.out.print("\t " + "Quantity");
-    System.out.println("\t " + "Value");
+    System.out.println("\t " + "Value\n");
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
       System.out.print(stkObj.stockName[i]);
@@ -106,6 +106,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       System.out.print("\t " + stkObj.stockQuantity[i]);
       System.out.println("\t " + stkObj.totalValue[i]);
     }
+
+    System.out.println("\nTotal Portfolio Value is: " + stkObj.totalPortFolioValue);
   }
 
   private void showPortFolioCompositionScreen(String[] portfolioNames, int numberOfPortFolio) {

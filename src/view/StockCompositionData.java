@@ -78,6 +78,7 @@ public class StockCompositionData {
     String[] symbol = new String[jsonArr.size()];
     long[] quantity = new long[jsonArr.size()];
     double[] value = new double[jsonArr.size()];
+    double totalPortFolioValue = 0;
 
     for (Object stkObj : jsonArr) {
       found = false;
@@ -99,13 +100,15 @@ public class StockCompositionData {
         double val = quantity[nameIndex] *
                 Double.parseDouble((String) stk.get("PriceOfShareAtPurchase"));
         value[nameIndex] = Math.floor(val * 100) / 100;
-        ;
+        totalPortFolioValue += value[nameIndex];
         nameIndex++;
       } else {
         quantity[i] = quantity[i] + Long.parseLong((String) stk.get("NumberOfStocksPurchased"));
         double val = value[i] + (quantity[i] *
                 Double.parseDouble((String) stk.get("PriceOfShareAtPurchase")));
+        totalPortFolioValue -= value[i];
         value[i] = Math.floor(val * 100) / 100;
+        totalPortFolioValue += value[i];
       }
     }
 
@@ -115,6 +118,7 @@ public class StockCompositionData {
     obj.stockSymbol = symbol;
     obj.stockQuantity = quantity;
     obj.totalValue = value;
+    obj.totalPortFolioValue = totalPortFolioValue;
     return obj;
   }
 
@@ -125,6 +129,7 @@ public class StockCompositionData {
     public String[] stockSymbol;
     public long[] stockQuantity;
     public double[] totalValue;
+    public double totalPortFolioValue;
   }
 
 }
