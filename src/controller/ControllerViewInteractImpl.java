@@ -69,7 +69,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   private void buyAnotherStockMenuAction(String options) {
     if (Objects.equals(options, "Y") || Objects.equals(options, "y")) {
-      vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
+      //vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
+      performCreatePortfolioMenuAction("1", null);
     } else {
       String[] args = new String[1];
       args[0] = currentPortfolioName;
@@ -79,7 +80,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   private void buyStockValueMenuAction(String option) {
     if (Objects.equals(option, "m")) {
-      vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
+      return;
     }
     String[] stock = new String[1];
     stock[0] = option;
@@ -92,18 +93,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
             (!options.equals("y")) && (!options.equals("N")) && (!options.equals("n")))) {
       System.out.println("Not a valid input. Please enter the correct option\n");
       options = scan.nextLine();
-      if (Objects.equals(options, "b")) {
-        return;
-      }
     }
     buyAnotherStockMenuAction(options);
   }
 
-  private void performListOfStocksMenuAction(String options, String[] args, int length) {
+  private boolean performListOfStocksMenuAction(String options, String[] args, int length) {
 
     if (Objects.equals(options, "0")) {
       cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
-      return;
+      return false;
     }
     StockNameMap snp = new StockNameMap();
     Map<String, String> map = snp.getMap();
@@ -121,13 +119,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     Scanner scan = new Scanner(System.in);
     option = scan.nextLine();
     while ((option == null || option.length() == 0) || (!validateBuyStockOption(option))) {
+      if (Objects.equals(option, "b")) {
+        cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+        return true;
+      }
       vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, null, 0);
       option = scan.nextLine();
-      if (Objects.equals(option, "b")) {
-        return;
-      }
     }
     buyStockValueMenuAction(option);
+    return false;
   }
 
   private void performMainMenuAction(String option) {
@@ -243,15 +243,19 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     switch (option) {
       case "1": {
         //Buy a new stock
-        vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
-        String options;
-        Scanner scan = new Scanner(System.in);
-        options = scan.nextLine();
-        while ((options == null || options.length() == 0) || (!validateStockSelectOption(options))) {
-          vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
+        while (true) {
+          vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
+          String options;
+          Scanner scan = new Scanner(System.in);
           options = scan.nextLine();
+          while ((options == null || options.length() == 0) || (!validateStockSelectOption(options))) {
+            vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
+            options = scan.nextLine();
+          }
+          if (!performListOfStocksMenuAction(options, null, 0)) {
+            break;
+          }
         }
-        performListOfStocksMenuAction(options, null, 0);
         break;
       }
       case "2": {

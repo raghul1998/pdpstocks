@@ -83,7 +83,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showPortfolioReviewScreen() {
-    System.out.println("Press 'b' to go back and 'm' for main menu\n");
+    System.out.println("\nPress 'b' to go back and 'm' for main menu\n");
   }
 
   private void showPortfolioIndividualScreen(String option) {
