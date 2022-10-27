@@ -1,20 +1,10 @@
 package view;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
 
-import controller.ControllerViewInteract;
-import controller.ControllerViewInteractImpl;
 import supportedstocks.StockNameMap;
-import supportedstocks.SupportedStocks;
 
 public class ViewControllerInteractImpl implements ViewControllerInteract {
   @Override
@@ -93,12 +83,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
             obj.getAllStockDataInPortFolio(portfolioNumber);
 
     String[] portfolioNames = obj.getPortFolioNames();
-    System.out.println(portfolioNames[portfolioNumber].toUpperCase() + "PORTFOLIO");
+    System.out.println(portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
 
     System.out.print("\nName");
     System.out.print(" (" + "Symbol" + ") ");
     System.out.print("\t " + "Quantity");
-    System.out.println("\t " + "Value\n");
+    System.out.println("\t " + "Value (in Dollars)\n");
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
       System.out.print(stkObj.stockName[i]);
@@ -140,21 +130,28 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showStockDataScreen() {
-    Object obj;
+    String line = "";
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData = new String[4];
     try {
-      obj = new JSONParser().parse(new FileReader("./data/StockData.json"));
-    } catch (IOException | ParseException e) {
-      throw new RuntimeException(e);
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      System.out.println("Supported stocks file not found " + e.getMessage());
     }
-    JSONObject jsonObj = (JSONObject) obj;
-    JSONArray jsonArray = (JSONArray) jsonObj.get("AllStockData");
-    JSONObject stk = (JSONObject) jsonArray.get(0);
+
+    try {
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+    } catch (Exception e) {
+      System.out.println("Error in reading Supported stocks csv file");
+    }
 
     System.out.println("\nCURRENT STOCK PRICE");
-    System.out.println("StockName: " + stk.get("StockName"));
-    System.out.println("Symbol: " + stk.get("StockSymbol"));
-    System.out.println("Time: " + stk.get("Timestamp"));
-    System.out.println("Price: " + stk.get("Price"));
+    System.out.println("StockName: " + splitStockData[0]);
+    System.out.println("Symbol: " + splitStockData[2]);
+    System.out.println("Time: " + splitStockData[3]);
+    System.out.println("Price: $" + splitStockData[1]);
   }
 
   private void listOfSupportedStocksScreen() {

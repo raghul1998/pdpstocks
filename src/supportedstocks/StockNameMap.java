@@ -1,30 +1,35 @@
 package supportedstocks;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class StockNameMap {
   public Map<String, String> stockNameMap = new HashMap<>();
 
   public StockNameMap() {
-    Object obj;
+    String line = "";
+    String splitBy = ",";
+    BufferedReader stockData = null;
     try {
-      obj = new JSONParser().parse(new FileReader("./data/SupportedStocks.json"));
-    } catch (IOException | ParseException e) {
-      throw new RuntimeException(e);
+      stockData = new BufferedReader(new FileReader("data/SupportedStocks.csv"));
+    } catch (Exception e) {
+      System.out.println("Supported stocks file not found " + e.getMessage());
     }
-    JSONObject jsonObj = (JSONObject) obj;
-    JSONArray jsonArray = (JSONArray) jsonObj.get("SupportedStocks");
-    for (Object stkObj : jsonArray) {
-      JSONObject stk = (JSONObject) stkObj;
-      this.stockNameMap.put((String) stk.get("StockSymbol"), (String) stk.get("StockName"));
+
+    boolean isTitleRead = false;
+    try {
+      while ((line = stockData.readLine()) != null) {
+        if (isTitleRead) {
+          String[] row = line.split(splitBy);
+          this.stockNameMap.put(row[2], row[1]);
+          continue;
+        }
+        isTitleRead = true;
+      }
+    } catch (Exception e) {
+      System.out.println("Error in reading Supported stocks csv file");
     }
   }
 
@@ -35,4 +40,5 @@ public class StockNameMap {
   public int getMapSize() {
     return stockNameMap.size();
   }
+
 }

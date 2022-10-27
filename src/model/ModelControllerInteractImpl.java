@@ -1,19 +1,15 @@
 package model;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class ModelControllerInteractImpl implements ModelControllerInteract {
   String portFolioName;
@@ -45,80 +41,115 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
   }
 
   private void deleteEmptyPortFolio() {
-    String fileName = "userdata/user1/" + "pf_" + portFolioName + ".json";
+    String fileName = "userdata/user1/" + "pf_" + portFolioName + ".csv";
     try {
       File file = new File(fileName);
-      file.delete();
+      BufferedReader stockData;
+
+      try {
+        stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+
+      String line = "";
+      String splitBy = ",";
+      String[] splitStockData = new String[8];
+
+      while ((line = stockData.readLine()) != null) {
+        splitStockData = line.split(splitBy);
+      }
+
+      // Delete only if the portfolio is empty
+      if (Objects.equals(splitStockData[0], "PurchaseTimestamp")) {
+        file.delete();
+      }
     } catch (Exception e) {
-      e.printStackTrace();
+      System.out.println("Unable to delete the empty portfolio");
     }
   }
 
   private void createPortFolio(String name) throws IOException {
-    String fileName = "userdata/user1/" + "pf_" + name + ".json";
+    String directoryName = "userdata/user1/";
+    File directory = new File(directoryName);
+    if (!directory.exists()) {
+      directory.mkdirs();
+    }
+
+    String fileName = directoryName + "pf_" + name + ".csv";
     File file = new File(fileName);
     file.createNewFile();
-    JSONObject jsonWriteObject = new JSONObject();
-    jsonWriteObject.put("PortfolioName", name);
+
+    StringBuilder csvData = new StringBuilder();
+    csvData.append("PortfolioName," + name);
+    csvData.append('\n');
+
     long time = System.currentTimeMillis() / 1000;
-    jsonWriteObject.put("PortfolioID", "user1_" + Long.toString(time, 0));
-    JSONArray ja = new JSONArray();
-    jsonWriteObject.put("StockHoldings", ja);
+    csvData.append("PortfolioID," + Long.toString(time, 0));
+    csvData.append('\n');
+
+    csvData.append("PurchaseTimestamp," + "PurchaseID," + "StockLastKnownValueTimestamp,"
+            + "StockSymbol," + "NameOfStock," + "NumberOfStocksPurchased,"
+            + "PriceOfShareAtPurchase");
+    csvData.append('\n');
+
     PrintWriter write = new PrintWriter(fileName);
-    write.write(jsonWriteObject.toJSONString());
+    write.write(csvData.toString());
     write.flush();
     write.close();
   }
 
   private void buyStockData(String[] args, int length) {
-    Object obj;
+    BufferedReader stockData;
     try {
-      obj = new JSONParser().parse(new FileReader("./data/StockData.json"));
-    } catch (IOException | ParseException e) {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    JSONObject jsonObj = (JSONObject) obj;
-    JSONArray jsonArray = (JSONArray) jsonObj.get("AllStockData");
-    JSONObject stk = (JSONObject) jsonArray.get(0);
 
-    JSONObject arr = new JSONObject();
-
-    arr.put("StockSymbol", stk.get("StockSymbol"));
-    arr.put("NameOfStock", stk.get("StockName"));
-
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    LocalDateTime now = LocalDateTime.now();
-    arr.put("PurchaseTimestamp", dtf.format(now));
-
-    arr.put("StockLastKnownValueTimestamp", stk.get("Timestamp"));
-    arr.put("NumberOfStocksPurchased", args[0]);
-    arr.put("PriceOfShareAtPurchase", stk.get("Price"));
-
-    long time = System.currentTimeMillis() / 1000;
-    arr.put("PurchaseID", Long.toString(time, 0));
-
+    String line = "";
+    String splitBy = ",";
+    String[] splitStockData;
 
     try {
-      writeArrayToPortfolio(arr);
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+    StringBuilder pfBoughtStockData = new StringBuilder();
+    // PurchaseTimestamp
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    LocalDateTime now = LocalDateTime.now();
+    pfBoughtStockData.append(dtf.format(now)).append(",");
+    // PurchaseID
+    long time = System.currentTimeMillis() / 1000;
+    pfBoughtStockData.append(Long.toString(time, 0)).append(",");
+    // StockLastKnownValueTimestamp
+    pfBoughtStockData.append(splitStockData[3]).append(",");
+    //stockName + "," + price + "," + stock + "," + timestamp;
+    // StockSymbol
+    pfBoughtStockData.append(splitStockData[2]).append(",");
+    // NameOfStock
+    pfBoughtStockData.append(splitStockData[0]).append(",");
+    // NumberOfStocksPurchased
+    pfBoughtStockData.append(args[0]).append(",");
+    // PriceOfShareAtPurchase
+    pfBoughtStockData.append(splitStockData[1]).append('\n');
+
+    try {
+      writeArrayToPortfolio(pfBoughtStockData.toString());
     } catch (Exception e) {
       System.out.println("Error in writing to portfolio" + e.getMessage());
     }
   }
 
-  private void writeArrayToPortfolio(JSONObject arr) throws FileNotFoundException {
+  private void writeArrayToPortfolio(CharSequence data) throws FileNotFoundException {
     Object obj;
-    String filename = "userdata/user1/" + "pf_" + portFolioName + ".json";
-    try {
-      obj = new JSONParser().parse(new FileReader(filename));
-    } catch (IOException | ParseException e) {
-      throw new RuntimeException(e);
-    }
-    JSONObject jsonObj = (JSONObject) obj;
-    JSONArray jsonArray = (JSONArray) jsonObj.get("StockHoldings");
-    jsonArray.add(arr);
-
-    PrintWriter write = new PrintWriter(filename);
-    write.write(jsonObj.toJSONString());
+    String filename = "userdata/user1/" + "pf_" + portFolioName + ".csv";
+    PrintWriter write = new PrintWriter(new FileOutputStream(filename, true));
+    write.append(data);
     write.flush();
     write.close();
   }

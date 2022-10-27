@@ -2,9 +2,8 @@ package view;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,22 +29,24 @@ public class StockCompositionData {
     return numberOfPortFolio;
   }
 
-  public JSONArray getPortFolioStockData(int index) {
+  private String getPortFolioFileNameByIndex(int index) {
     File dir = new File("userdata/user1");
     File[] files = dir.listFiles();
     assert files != null;
     File file = files[index];
     String filename = "userdata/user1/" + file.getName();
+    return filename;
+  }
 
-    Object obj;
+  private int getNumberOfStockDataInAPortFolio(String filename) {
+    Path path = Paths.get(filename);
+    long lines = 0;
     try {
-      obj = new JSONParser().parse(new FileReader(filename));
-    } catch (IOException | ParseException e) {
-      throw new RuntimeException(e);
+      lines = Files.lines(path).count();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    JSONObject jsonObj = (JSONObject) obj;
-    JSONArray jsonArray = (JSONArray) jsonObj.get("StockHoldings");
-    return jsonArray;
+    return (int) lines;
   }
 
   public String[] getPortFolioNames() {
@@ -70,46 +71,67 @@ public class StockCompositionData {
   }
 
   public stockPortFolioData getAllStockDataInPortFolio(int index) {
-    JSONArray jsonArr = getPortFolioStockData(index);
+    String filename = getPortFolioFileNameByIndex(index);
+    int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
+
     boolean found;
     int nameIndex = 0;
 
-    String[] names = new String[jsonArr.size()];
-    String[] symbol = new String[jsonArr.size()];
-    long[] quantity = new long[jsonArr.size()];
-    double[] value = new double[jsonArr.size()];
+    String[] names = new String[numberOfStocks];
+    String[] symbol = new String[numberOfStocks];
+    long[] quantity = new long[numberOfStocks];
+    double[] value = new double[numberOfStocks];
     double totalPortFolioValue = 0;
 
-    for (Object stkObj : jsonArr) {
-      found = false;
-      JSONObject stk = (JSONObject) stkObj;
-      int i;
-      for (i = 0; i < symbol.length; i++) {
-        if (symbol[i] == null) {
-          break;
-        }
-        if (Objects.equals(symbol[i], (String) stk.get("StockSymbol"))) {
-          found = true;
-          break;
+    BufferedReader stockData;
+    try {
+      stockData = new BufferedReader(new FileReader(filename));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    stockData.lines();
+    String line = "";
+    String splitBy = ",";
+    String[] splitStockData;
+    int timesOfRead = 0;
+
+    try {
+      while ((line = stockData.readLine()) != null) {
+        timesOfRead++;
+        if (timesOfRead > 3) {
+          splitStockData = line.split(splitBy);
+          found = false;
+          int i;
+          for (i = 0; i < symbol.length; i++) {
+            if (symbol[i] == null) {
+              break;
+            }
+            if (Objects.equals(symbol[i], splitStockData[3])) {
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            names[nameIndex] = splitStockData[4];
+            symbol[nameIndex] = splitStockData[3];
+            quantity[nameIndex] = Long.parseLong(splitStockData[5]);
+            double val = quantity[nameIndex] *
+                    Double.parseDouble(splitStockData[6]);
+            value[nameIndex] = Math.floor(val * 100) / 100;
+            totalPortFolioValue += value[nameIndex];
+            nameIndex++;
+          } else {
+            quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
+            double val = quantity[i] *
+                    Double.parseDouble(splitStockData[6]);
+            totalPortFolioValue -= value[i];
+            value[i] = Math.floor(val * 100) / 100;
+            totalPortFolioValue += value[i];
+          }
         }
       }
-      if (!found) {
-        names[nameIndex] = (String) stk.get("NameOfStock");
-        symbol[nameIndex] = (String) stk.get("StockSymbol");
-        quantity[nameIndex] = Long.parseLong((String) stk.get("NumberOfStocksPurchased"));
-        double val = quantity[nameIndex] *
-                Double.parseDouble((String) stk.get("PriceOfShareAtPurchase"));
-        value[nameIndex] = Math.floor(val * 100) / 100;
-        totalPortFolioValue += value[nameIndex];
-        nameIndex++;
-      } else {
-        quantity[i] = quantity[i] + Long.parseLong((String) stk.get("NumberOfStocksPurchased"));
-        double val = value[i] + (quantity[i] *
-                Double.parseDouble((String) stk.get("PriceOfShareAtPurchase")));
-        totalPortFolioValue -= value[i];
-        value[i] = Math.floor(val * 100) / 100;
-        totalPortFolioValue += value[i];
-      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
 
     stockPortFolioData obj = new stockPortFolioData();
