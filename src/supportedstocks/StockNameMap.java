@@ -28,6 +28,7 @@ public class StockNameMap {
         }
         isTitleRead = true;
       }
+      stockData.close();
     } catch (Exception e) {
       System.out.println("Error in reading Supported stocks csv file");
     }

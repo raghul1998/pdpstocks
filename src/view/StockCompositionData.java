@@ -130,6 +130,7 @@ public class StockCompositionData {
           }
         }
       }
+      stockData.close();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

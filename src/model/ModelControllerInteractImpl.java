@@ -47,7 +47,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
       BufferedReader stockData;
 
       try {
-        stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+        stockData = new BufferedReader(new FileReader(fileName));
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -62,6 +62,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
 
       // Delete only if the portfolio is empty
       if (Objects.equals(splitStockData[0], "PurchaseTimestamp")) {
+        stockData.close();
         file.delete();
       }
     } catch (Exception e) {
@@ -114,6 +115,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     try {
       line = stockData.readLine();
       splitStockData = line.split(splitBy);
+      stockData.close();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -146,7 +148,6 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
   }
 
   private void writeArrayToPortfolio(CharSequence data) throws FileNotFoundException {
-    Object obj;
     String filename = "userdata/user1/" + "pf_" + portFolioName + ".csv";
     PrintWriter write = new PrintWriter(new FileOutputStream(filename, true));
     write.append(data);

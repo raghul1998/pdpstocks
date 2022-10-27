@@ -48,6 +48,7 @@ public class GetStockData {
         readLine = line.split(splitBy);    // use comma as separator
         timesOfRead--;
       }
+      reader.close();
     } catch (IOException e) {
       throw new IllegalArgumentException("No price data found for " + stock);
     }

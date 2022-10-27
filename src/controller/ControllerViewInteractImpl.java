@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import model.TypeofAction;
 import supportedstocks.StockNameMap;
-import supportedstocks.SupportedStocks;
 import view.StockCompositionData;
 import view.ViewControllerInteract;
 import view.ViewControllerInteractImpl;
@@ -60,12 +59,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
     String[] name = new String[1];
     name[0] = currentPortfolioName;
-    while(true) {
+    while (true) {
       vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO, name, 0);
       String option;
       Scanner scan = new Scanner(System.in);
       option = scan.nextLine();
-      if(performCreatePortfolioMenuAction(option, null)) {
+      if (performCreatePortfolioMenuAction(option, null)) {
         break;
       }
     }
@@ -306,7 +305,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    if (val < 0 || val > SupportedStocks.values().length) {
+    StockNameMap snp = new StockNameMap();
+    if (val < 0 || val > snp.getMapSize()) {
       return false;
     } else {
       return true;
