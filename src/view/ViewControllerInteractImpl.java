@@ -3,6 +3,7 @@ package view;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Map;
+import java.util.Random;
 
 import supportedstocks.StockNameMap;
 
@@ -51,6 +52,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showPortfolioIndividualScreen(opt);
         break;
       }
+      case PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE: {
+        String opt = args[0];
+        String date = args[1];
+        showPortfolioIndividualWithDateScreen(opt, date);
+        break;
+      }
       case PORTFOLIO_NAME_REENTER: {
         showPortfolioNameReenter();
         break;
@@ -73,7 +80,39 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showPortfolioReviewScreen() {
-    System.out.println("\nPress 'b' to go back and 'm' for main menu\n");
+    System.out.println("Press 'b' to go back and 'm' for main menu\n");
+  }
+
+  private void showPortfolioIndividualWithDateScreen(String option, String date) {
+    int portfolioNumber = Integer.parseInt(option) - 1;
+    StockCompositionData obj = new StockCompositionData();
+    StockCompositionData.stockPortFolioData stkObj =
+            obj.getAllStockDataInPortFolio(portfolioNumber);
+
+    Random rand = new Random(1234567890);
+    double totalPortFolioValue = 0;
+
+    String[] portfolioNames = obj.getPortFolioNames();
+    System.out.println("Value of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
+
+
+    System.out.print("\nName");
+    System.out.print(" (" + "Symbol" + ") ");
+    System.out.print("\t " + "Quantity");
+    System.out.print("\t " + "Share Value on " + date);
+    System.out.println("\t " + "Total Value\n");
+
+    for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
+      double randomShareValue = getRandomShareValue(stkObj.valueOfSingleStock[i]);
+      System.out.print(stkObj.stockName[i]);
+      System.out.print(" (" + stkObj.stockSymbol[i] + ") ");
+      System.out.print("\t " + stkObj.stockQuantity[i]);
+      System.out.print("\t " + randomShareValue);
+      totalPortFolioValue += Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100;
+      System.out.println("\t " + randomShareValue * stkObj.stockQuantity[i]);
+    }
+    totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
+    System.out.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue);
   }
 
   private void showPortfolioIndividualScreen(String option) {
@@ -83,21 +122,26 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
             obj.getAllStockDataInPortFolio(portfolioNumber);
 
     String[] portfolioNames = obj.getPortFolioNames();
-    System.out.println(portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
+    String date = stkObj.createdTimeStamp;
+    date = date.substring(0, 10);
+    System.out.println("\n" + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO"
+            + " COMPOSITION - Created on " + date + "\n");
 
-    System.out.print("\nName");
-    System.out.print(" (" + "Symbol" + ") ");
-    System.out.print("\t " + "Quantity");
-    System.out.println("\t " + "Value (in Dollars)\n");
+    System.out.print("Name");
+    System.out.print(" (" + "Symbol" + ") \t ");
+    System.out.print("Quantity \t ");
+    System.out.print("Price of each share \t ");
+    System.out.println("Total Value\n");
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
       System.out.print(stkObj.stockName[i]);
       System.out.print(" (" + stkObj.stockSymbol[i] + ") ");
       System.out.print("\t " + stkObj.stockQuantity[i]);
-      System.out.println("\t " + stkObj.totalValue[i]);
+      System.out.print("\t $" + stkObj.valueOfSingleStock[i]);
+      System.out.println("\t $" + stkObj.totalValue[i]);
     }
 
-    System.out.println("\nTotal Portfolio Value is: " + stkObj.totalPortFolioValue);
+    System.out.println("\nTotal Portfolio Value as on " + date + ": $" + stkObj.totalPortFolioValue + "\n");
   }
 
   private void showPortFolioCompositionScreen(String[] portfolioNames, int numberOfPortFolio) {
@@ -116,12 +160,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showBuyStockValueScreen() {
-    System.out.println("\nHow many stocks would you like to buy?");
+    System.out.println("\nHow many shares would you like to buy?");
     System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu");
   }
 
   private void showStockBuyInvalidRetryScreen() {
-    System.out.println("Not a valid input. Please enter the correct stock");
+    System.out.println("Not a valid input. Please enter number of shares as whole number");
     System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu\n");
   }
 
@@ -171,8 +215,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     System.out.println("1. Create a portfolio");
     System.out.println("2. View portfolio");
     System.out.println("3. Value of portfolio");
-    System.out.println("4. Buy stocks");
-    System.out.println("5. View stocks");
     System.out.println("e. Exit\n");
     System.out.println("ENTER YOUR CHOICE: ");
   }
@@ -181,8 +223,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     System.out.println("\nCREATE PORTFOLIO MENU\n");
     System.out.println(name.toUpperCase() + " Portfolio\n");
     System.out.println("1. Buy a share");
-    System.out.println("2. Add already bought shares");
-    System.out.println("3. Main Menu");
+    System.out.println("2. Main Menu");
     System.out.println("e. Exit\n");
     System.out.println("ENTER YOUR CHOICE: ");
   }
@@ -199,5 +240,16 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void showPortfolioNameReenter() {
     System.out.println("Cannot create a portfolio with empty name. Enter a valid name.");
     System.out.println("If you want to go back to main menu, press '0'\n");
+  }
+
+  private double getRandomShareValue(double stockValue) {
+    Random rand = new Random(12345);
+    int randomShareValueInteger = (int) (rand.nextInt((int) ((stockValue + 30) -
+            (stockValue - 10))) + stockValue - 10);
+    rand = new Random();
+    int randomShareValueFloatValue = rand.nextInt(99);
+    String randomShareValueString = "" + randomShareValueInteger + "." + randomShareValueFloatValue;
+    double value = Double.parseDouble(randomShareValueString);
+    return Math.floor(value * 100) / 100;
   }
 }

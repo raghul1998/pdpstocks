@@ -77,10 +77,12 @@ public class StockCompositionData {
     boolean found;
     int nameIndex = 0;
 
+    String createdTimeStamp = null;
     String[] names = new String[numberOfStocks];
     String[] symbol = new String[numberOfStocks];
     long[] quantity = new long[numberOfStocks];
     double[] value = new double[numberOfStocks];
+    double[] valueOfSingleStock = new double[numberOfStocks];
     double totalPortFolioValue = 0;
 
     BufferedReader stockData;
@@ -111,6 +113,9 @@ public class StockCompositionData {
               break;
             }
           }
+          if (createdTimeStamp == null || createdTimeStamp.length() == 0) {
+            createdTimeStamp = splitStockData[0];
+          }
           if (!found) {
             names[nameIndex] = splitStockData[4];
             symbol[nameIndex] = splitStockData[3];
@@ -119,6 +124,8 @@ public class StockCompositionData {
                     Double.parseDouble(splitStockData[6]);
             value[nameIndex] = Math.floor(val * 100) / 100;
             totalPortFolioValue += value[nameIndex];
+            valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
+                    * 100) / 100;
             nameIndex++;
           } else {
             quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
@@ -142,6 +149,8 @@ public class StockCompositionData {
     obj.stockQuantity = quantity;
     obj.totalValue = value;
     obj.totalPortFolioValue = totalPortFolioValue;
+    obj.valueOfSingleStock = valueOfSingleStock;
+    obj.createdTimeStamp = createdTimeStamp;
     return obj;
   }
 
@@ -153,6 +162,7 @@ public class StockCompositionData {
     public long[] stockQuantity;
     public double[] totalValue;
     public double totalPortFolioValue;
+    public double[] valueOfSingleStock;
+    public String createdTimeStamp;
   }
-
 }

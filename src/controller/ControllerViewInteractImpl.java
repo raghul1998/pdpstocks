@@ -1,5 +1,10 @@
 package controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
@@ -50,6 +55,63 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, args, 1);
   }
 
+  private void portfolioViewAction(String options) {
+    String[] args = new String[2];
+    args[0] = options;
+
+    System.out.println("Enter the year in format (MM-DD-YYYY) (2000 to "
+            + LocalDate.now().getYear() + "): ");
+    String year;
+    Scanner scan = new Scanner(System.in);
+    year = scan.nextLine();
+    while (!validateDate(year)) {
+      System.out.println("Not a valid input. Please enter the correct date");
+      System.out.println("Press 'b' to go back\n");
+      year = scan.nextLine();
+      if (Objects.equals(year, "b")) {
+        return;
+      }
+    }
+    args[1] = year;
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args, 1);
+  }
+
+  private boolean validateDate(String dateStr) {
+    if (dateStr == null || dateStr.length() == 0) {
+      return false;
+    }
+
+    Date date;
+    try {
+      DateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+      date = sdf.parse(dateStr);
+      if (!dateStr.equals(sdf.format(date))) {
+        return false;
+      }
+
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTime(date);
+      if (calendar.get(Calendar.YEAR) > LocalDate.now().getYear()
+              || calendar.get(Calendar.YEAR) < 2000) {
+        return false;
+      }
+
+      if (calendar.get(Calendar.YEAR) == LocalDate.now().getYear()) {
+        if (calendar.get(Calendar.MONTH) + 1 > LocalDate.now().getMonthValue()) {
+          return false;
+        }
+        if (calendar.get(Calendar.MONTH) + 1 == LocalDate.now().getMonthValue()) {
+          if (calendar.get(Calendar.DATE) > LocalDate.now().getDayOfMonth()) {
+            return false;
+          }
+        }
+      }
+    } catch (Exception e) {
+      return false;
+    }
+    return true;
+  }
+
   private void createPortfolioNameScreenAction(String options, String[] args) {
     try {
       sleep(100);
@@ -83,6 +145,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   private void buyStockValueMenuAction(String option) {
     if (Objects.equals(option, "m")) {
+      cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
       return;
     }
     String[] stock = new String[1];
@@ -182,32 +245,58 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
           options = scan.nextLine();
           while ((options == null || options.length() == 0) ||
-                  ((!options.equals("M")) && (!options.equals("m")) && (!options.equals("b")) &&
-                          (!options.equals("B")))) {
-            System.out.println("Not a valid input. Please enter the correct option");
-            vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
-            options = scan.nextLine();
+                  ((options.equals("M")) || (options.equals("m")) || (options.equals("b")) ||
+                          (options.equals("B")))) {
             if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
               break;
             } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
               return;
             }
+            System.out.println("Not a valid input. Please enter the correct option");
+            vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+            options = scan.nextLine();
           }
         }
       }
       case "3": {
-        System.out.println("Value of the portfolio");
-        break;
-      }
-      case "4": {
-        //Buy a stock
-        vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
-        //cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, null, 0);
-        break;
-      }
-      case "5": {
-        System.out.println("View stock");
-        break;
+        // Value of the portfolio on a certain date
+        while (true) {
+          StockCompositionData obj = new StockCompositionData();
+          int numberOfPortFolio = obj.getNumberOfPortFolio();
+          if (numberOfPortFolio == 0) {
+            System.out.println("You dont have any portfolio.");
+            return;
+          }
+          String[] portfolioNames = obj.getPortFolioNames();
+          vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames, numberOfPortFolio);
+          String options;
+          Scanner scan = new Scanner(System.in);
+          options = scan.nextLine();
+          while ((options == null || options.length() == 0) ||
+                  (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
+            System.out.println("Not a valid input. Please enter the correct portfolio");
+            System.out.println("Press 'b' to go back to the previous menu\n");
+            options = scan.nextLine();
+            if (Objects.equals(options, "b")) {
+              return;
+            }
+          }
+          portfolioViewAction(options);
+          vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+          options = scan.nextLine();
+          while ((options == null || options.length() == 0) ||
+                  ((options.equals("M")) || (options.equals("m")) || (options.equals("b")) ||
+                          (options.equals("B")))) {
+            if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
+              break;
+            } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+              return;
+            }
+            System.out.println("Not a valid input. Please enter the correct option");
+            vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+            options = scan.nextLine();
+          }
+        }
       }
       case "e":
       case "E": {
@@ -215,7 +304,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         exit(0);
       }
       default: {
-        System.out.println("Invalid command");
+        System.out.println("Invalid command. Enter the right option number.");
         try {
           sleep(500);
         } catch (Exception e) {
@@ -251,7 +340,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           String options;
           Scanner scan = new Scanner(System.in);
           options = scan.nextLine();
-          while ((options == null || options.length() == 0) || (!validateStockSelectOption(options))) {
+          while (!validateStockSelectOption(options)) {
             vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
             options = scan.nextLine();
           }
@@ -262,10 +351,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         break;
       }
       case "2": {
-        System.out.println("Add exiting stock");
-        break;
-      }
-      case "3": {
         // Go to Main menu
         cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
         break;
@@ -277,7 +362,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         exit(0);
       }
       default: {
-        System.out.println("Invalid command");
+        System.out.println("Invalid command. Enter the right option number.");
         try {
           sleep(500);
         } catch (Exception e) {

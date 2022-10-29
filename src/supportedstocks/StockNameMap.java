@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StockNameMap {
-  public Map<String, String> stockNameMap = new HashMap<>();
+  private final Map<String, String> stockNameMap = new HashMap<>();
 
   public StockNameMap() {
     String line = "";
