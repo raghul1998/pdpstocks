@@ -1,4 +1,4 @@
-package view;
+package model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -155,7 +155,7 @@ public class StockCompositionData {
   }
 
 
-  static class stockPortFolioData {
+  public static class stockPortFolioData {
     public int numberOfUniqueStocks;
     public String[] stockName;
     public String[] stockSymbol;

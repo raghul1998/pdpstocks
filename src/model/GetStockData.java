@@ -10,8 +10,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-import supportedstocks.StockNameMap;
-
 public class GetStockData {
 
   public void getValue(String stock) {

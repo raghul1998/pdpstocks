@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -10,8 +11,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import model.TypeofAction;
-import supportedstocks.StockNameMap;
-import view.StockCompositionData;
+import model.StockNameMap;
+import model.StockCompositionData;
 import view.ViewControllerInteract;
 import view.ViewControllerInteractImpl;
 import view.TypeofViews;
@@ -51,8 +52,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     Scanner scan = new Scanner(System.in);
     year = scan.nextLine();
     while (!validateDate(year)) {
-      System.out.println("Not a valid input. Please enter the correct date");
-      System.out.println("Press 'b' to go back\n");
+      vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
       year = scan.nextLine();
       if (Objects.equals(year, "b")) {
         return;
@@ -186,21 +186,47 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     switch (option) {
       case "1": {
         // Create a portfolio
-        String name;
-        Scanner scan = new Scanner(System.in);
-        vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, null, 0);
-        name = scan.nextLine();
-        while (name.length() == 0) {
-          vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_NAME_REENTER, null, 0);
+        while (true) {
+          String name;
+          Scanner scan = new Scanner(System.in);
+          vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, null, 0);
           name = scan.nextLine();
-          if (name.equals("0")) {
-            return;
+          while (name.length() == 0) {
+            vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_NAME_REENTER, null, 0);
+            name = scan.nextLine();
+            if (name.equals("0")) {
+              return;
+            }
           }
+
+          if (checkIfPortfolioExists(name)) {
+            vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_ALREADY_EXISTS, null, 0);
+            vciObj.viewControllerInteract(TypeofViews.PF_REENTER_DUPLICATE_NAME, null, 0);
+            String input;
+            input = scan.nextLine();
+            while ((input.length() == 0) || !(input.equals("B") || input.equals("b") ||
+                    input.equals("Y") || input.equals("y") || input.equals("N") ||
+                    input.equals("n"))) {
+              vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+              vciObj.viewControllerInteract(TypeofViews.PF_REENTER_DUPLICATE_NAME,
+                      null, 0);
+              input = scan.nextLine();
+            }
+            if (input.equals("B") || input.equals("b")) {
+              return;
+            }
+            if (input.equals("N") || input.equals("n")) {
+              continue;
+            }
+            // This case is 'Y', we want to override.
+          }
+
+          String[] args = new String[1];
+          args[0] = name;
+          currentPortfolioName = name;
+          createPortfolioNameScreenAction(option, args);
+          break;
         }
-        String[] args = new String[1];
-        args[0] = name;
-        currentPortfolioName = name;
-        createPortfolioNameScreenAction(option, args);
         break;
       }
       case "2": {
@@ -296,6 +322,21 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         break;
       }
     }
+  }
+
+  private boolean checkIfPortfolioExists(String name) {
+    File dir = new File("userdata/user1");
+    File[] files = dir.listFiles();
+    assert files != null;
+    for (int i = 0; i < files.length; i++) {
+      String fullName = files[i].getName();
+      fullName = fullName.substring(3);
+      String[] fName = fullName.split("\\.");
+      if (Objects.equals(fName[0], name)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private boolean validatePortfolioSelectOption(String option, int numberOfPortFolio) {

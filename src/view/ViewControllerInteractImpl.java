@@ -5,7 +5,8 @@ import java.io.FileReader;
 import java.util.Map;
 import java.util.Random;
 
-import supportedstocks.StockNameMap;
+import model.StockCompositionData;
+import model.StockNameMap;
 
 public class ViewControllerInteractImpl implements ViewControllerInteract {
   @Override
@@ -75,7 +76,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         break;
       }
       case NOT_VALID_INPUT_SCREEN: {
-        System.out.println("Not a valid input. Please enter the correct option\n");
+        System.out.println("Not a valid input. Please enter the correct option.");
         break;
       }
       case NO_PORTFOLIO: {
@@ -86,19 +87,42 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         portfolioInvalidEntryScreen();
         break;
       }
+      case PORTFOLIO_ALREADY_EXISTS: {
+        System.out.println("This portfolio already exists.");
+        break;
+      }
+      case PF_REENTER_DUPLICATE_NAME: {
+        pfReenterDuplicateName();
+        break;
+      }
+      case DATE_RENTER: {
+        correctDateScreen();
+        break;
+      }
       default: {
         break;
       }
     }
   }
 
+  private void correctDateScreen() {
+    System.out.println("Not a valid input. Please enter the correct date.");
+    System.out.println("Press 'b' to go back\n");
+  }
+
+  private void pfReenterDuplicateName() {
+    System.out.println("If you want to override this portfolio, then press 'y'. "
+            + "If you want to enter another name, press 'n'. If you want to go main screen, "
+            + "press 'b'.\n");
+  }
+
   private void portfolioInvalidEntryScreen() {
-    System.out.println("Not a valid input. Please enter the correct portfolio");
-    System.out.println("Press 'b' to go back to the previous menu\n");
+    System.out.println("Not a valid input. Please enter the correct portfolio.");
+    System.out.println("Press 'b' to go back to the previous menu.\n");
   }
 
   private void showPortfolioReviewScreen() {
-    System.out.println("Press 'b' to go back and 'm' for main menu\n");
+    System.out.println("Press 'b' to go back and 'm' for main menu.\n");
   }
 
   private void showPortfolioIndividualWithDateScreen(String option, String date) {
@@ -180,12 +204,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
   private void showBuyStockValueScreen() {
     System.out.println("\nHow many shares would you like to buy?");
-    System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu");
+    System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
   }
 
   private void showStockBuyInvalidRetryScreen() {
-    System.out.println("Not a valid input. Please enter number of shares as whole number");
-    System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu\n");
+    System.out.println("Not a valid input. Please enter number of shares as whole number.");
+    System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
   }
 
   private void wouldYouLikeToBuyAnotherStockScreen() {
@@ -207,7 +231,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       line = stockData.readLine();
       splitStockData = line.split(splitBy);
     } catch (Exception e) {
-      System.out.println("Error in reading Supported stocks csv file");
+      System.out.println("Error in reading Supported stocks csv file.");
     }
 
     System.out.println("\nCURRENT STOCK PRICE");
@@ -248,17 +272,17 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showPortfolioName() {
-    System.out.println("Enter the name for this portfolio");
+    System.out.println("Enter the name for this portfolio.");
   }
 
   private void showStockBuyReenter() {
-    System.out.println("Not a valid input. Please enter the correct stock");
-    System.out.println("If you want to go back to main menu, press '0'\n");
+    System.out.println("Not a valid input. Please enter the correct stock.");
+    System.out.println("If you want to go back to main menu, press '0'.\n");
   }
 
   private void showPortfolioNameReenter() {
     System.out.println("Cannot create a portfolio with empty name. Enter a valid name.");
-    System.out.println("If you want to go back to main menu, press '0'\n");
+    System.out.println("If you want to go back to main menu, press '0'.\n");
   }
 
   private double getRandomShareValue(double stockValue) {
