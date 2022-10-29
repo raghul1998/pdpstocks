@@ -25,20 +25,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   private String currentPortfolioName;
 
   @Override
-  public void controllerViewInteract(ViewControllerInteractImpl vciObj, String options,
-                                     TypeofViews type, String[] args, int length) {
-    switch (type) {
-      case BUY_STOCKS_MAIN: {
-        System.out.println("abc");
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
-
-  @Override
   public void start() {
     String option;
     Scanner scan = new Scanner(System.in);
@@ -157,7 +143,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     options = scan.nextLine();
     while ((options == null || options.length() == 0) || ((!options.equals("Y")) &&
             (!options.equals("y")) && (!options.equals("N")) && (!options.equals("n")))) {
-      System.out.println("Not a valid input. Please enter the correct option\n");
+      vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
       options = scan.nextLine();
     }
     buyAnotherStockMenuAction(options);
@@ -205,8 +191,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, null, 0);
         name = scan.nextLine();
         while (name.length() == 0) {
-          System.out.println("Cannot create a portfolio with empty name. Enter a valid name.");
-          System.out.println("If you want to go back to main menu, press '0'\n");
+          vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_NAME_REENTER, null, 0);
           name = scan.nextLine();
           if (name.equals("0")) {
             return;
@@ -224,7 +209,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           StockCompositionData obj = new StockCompositionData();
           int numberOfPortFolio = obj.getNumberOfPortFolio();
           if (numberOfPortFolio == 0) {
-            System.out.println("You dont have any portfolio.");
+            vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
             return;
           }
           String[] portfolioNames = obj.getPortFolioNames();
@@ -234,8 +219,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           options = scan.nextLine();
           while ((options == null || options.length() == 0) ||
                   (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
-            System.out.println("Not a valid input. Please enter the correct portfolio");
-            System.out.println("Press 'b' to go back to the previous menu\n");
+            vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
             options = scan.nextLine();
             if (Objects.equals(options, "b")) {
               return;
@@ -252,7 +236,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
             } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
               return;
             }
-            System.out.println("Not a valid input. Please enter the correct option");
+            vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
             vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
             options = scan.nextLine();
           }
@@ -264,7 +248,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           StockCompositionData obj = new StockCompositionData();
           int numberOfPortFolio = obj.getNumberOfPortFolio();
           if (numberOfPortFolio == 0) {
-            System.out.println("You dont have any portfolio.");
+            vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
             return;
           }
           String[] portfolioNames = obj.getPortFolioNames();
@@ -274,8 +258,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           options = scan.nextLine();
           while ((options == null || options.length() == 0) ||
                   (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
-            System.out.println("Not a valid input. Please enter the correct portfolio");
-            System.out.println("Press 'b' to go back to the previous menu\n");
+            vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
             options = scan.nextLine();
             if (Objects.equals(options, "b")) {
               return;
@@ -292,7 +275,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
             } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
               return;
             }
-            System.out.println("Not a valid input. Please enter the correct option");
+            vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
             vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
             options = scan.nextLine();
           }

@@ -72,11 +72,29 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       }
       case REVIEW_STOCK: {
         showPortfolioReviewScreen();
+        break;
+      }
+      case NOT_VALID_INPUT_SCREEN: {
+        System.out.println("Not a valid input. Please enter the correct option\n");
+        break;
+      }
+      case NO_PORTFOLIO: {
+        System.out.println("You dont have any portfolio.");
+        break;
+      }
+      case PORTFOLIO_INVALID_ENTRY: {
+        portfolioInvalidEntryScreen();
+        break;
       }
       default: {
         break;
       }
     }
+  }
+
+  private void portfolioInvalidEntryScreen() {
+    System.out.println("Not a valid input. Please enter the correct portfolio");
+    System.out.println("Press 'b' to go back to the previous menu\n");
   }
 
   private void showPortfolioReviewScreen() {
