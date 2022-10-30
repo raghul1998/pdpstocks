@@ -252,6 +252,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     int index = 0;
     StockNameMap snp = new StockNameMap();
     Map<String, String> map = snp.getMap();
+    System.out.println("\n");
     for (Map.Entry<String, String> entry : map.entrySet()) {
       System.out.print(++index + ". ");
       System.out.print(entry.getValue());

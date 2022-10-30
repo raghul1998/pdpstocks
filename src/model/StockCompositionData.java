@@ -144,7 +144,7 @@ public class StockCompositionData {
     obj.stockSymbol = symbol;
     obj.stockQuantity = quantity;
     obj.totalValue = value;
-    obj.totalPortFolioValue = totalPortFolioValue;
+    obj.totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
     obj.valueOfSingleStock = valueOfSingleStock;
     obj.createdTimeStamp = createdTimeStamp;
     return obj;

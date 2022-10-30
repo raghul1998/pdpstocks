@@ -291,7 +291,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
               return;
             }
           }
-          if(!portfolioViewAction(options)) {
+          if (!portfolioViewAction(options)) {
             continue;
           }
           vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
@@ -328,6 +328,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   private boolean checkIfPortfolioExists(String name) {
+    String directoryName = "userdata/user1/";
+    File directory = new File(directoryName);
+    if (!directory.exists()) {
+      return false;
+    }
     File dir = new File("userdata/user1");
     File[] files = dir.listFiles();
     assert files != null;
