@@ -42,7 +42,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, args, 1);
   }
 
-  private void portfolioViewAction(String options) {
+  private boolean portfolioViewAction(String options) {
     String[] args = new String[2];
     args[0] = options;
 
@@ -55,11 +55,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
       date = scan.nextLine();
       if (Objects.equals(date, "b")) {
-        return;
+        return false;
       }
     }
     args[1] = date;
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args, 1);
+    return true;
   }
 
   private boolean validateDate(String dateStr) {
@@ -290,7 +291,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
               return;
             }
           }
-          portfolioViewAction(options);
+          if(!portfolioViewAction(options)) {
+            continue;
+          }
           vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
           options = scan.nextLine();
           while ((options == null || options.length() == 0) ||

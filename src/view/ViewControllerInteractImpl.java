@@ -161,7 +161,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       }
     }
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
-    System.out.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue);
+    System.out.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
   }
 
   private void showPortfolioIndividualScreen(String option) {
