@@ -23,22 +23,21 @@ public class GetStockData {
               + ".co/query?function=TIME_SERIES_INTRADAY"
               + "&outputsize=compact"
               + "&symbol"
-              + "=" + stock.toString() + "&apikey=" + apiKey + "&datatype=csv"
+              + "=" + stock + "&apikey=" + apiKey + "&datatype=csv"
               + "&interval=1min");
     } catch (MalformedURLException e) {
-      throw new RuntimeException("the alphavantage API has either changed or "
+      throw new RuntimeException("the Alpha Vantage API has either changed or "
               + "no longer works");
     }
 
     InputStream in;
-    StringBuilder output = new StringBuilder();
     String[] readLine = new String[10];
 
     try {
       in = url.openStream();
 
       BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-      String line = "";
+      String line;
       String splitBy = ",";
       int timesOfRead = 2;
 

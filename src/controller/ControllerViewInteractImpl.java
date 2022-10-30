@@ -33,7 +33,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
       option = scan.nextLine();
       performMainMenuAction(option);
-    } while (option != "e");
+    } while (!option.equals("e"));
   }
 
   private void portfolioCompositionAction(String options) {
@@ -46,19 +46,19 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     String[] args = new String[2];
     args[0] = options;
 
-    System.out.println("Enter the year in format (MM-DD-YYYY) (2000 to "
+    System.out.println("Enter the year in format (YYYY-MM-DD) (2000 to "
             + LocalDate.now().getYear() + "): ");
-    String year;
+    String date;
     Scanner scan = new Scanner(System.in);
-    year = scan.nextLine();
-    while (!validateDate(year)) {
+    date = scan.nextLine();
+    while (!validateDate(date)) {
       vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-      year = scan.nextLine();
-      if (Objects.equals(year, "b")) {
+      date = scan.nextLine();
+      if (Objects.equals(date, "b")) {
         return;
       }
     }
-    args[1] = year;
+    args[1] = date;
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args, 1);
   }
 
@@ -69,7 +69,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
     Date date;
     try {
-      DateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+      DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
       date = sdf.parse(dateStr);
       if (!dateStr.equals(sdf.format(date))) {
         return false;
@@ -328,8 +328,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     File dir = new File("userdata/user1");
     File[] files = dir.listFiles();
     assert files != null;
-    for (int i = 0; i < files.length; i++) {
-      String fullName = files[i].getName();
+    for (File file : files) {
+      String fullName = file.getName();
       fullName = fullName.substring(3);
       String[] fName = fullName.split("\\.");
       if (Objects.equals(fName[0], name)) {

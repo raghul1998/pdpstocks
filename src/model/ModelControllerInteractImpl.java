@@ -52,7 +52,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         throw new RuntimeException(e);
       }
 
-      String line = "";
+      String line;
       String splitBy = ",";
       String[] splitStockData = new String[8];
 
@@ -82,11 +82,11 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     file.createNewFile();
 
     StringBuilder csvData = new StringBuilder();
-    csvData.append("PortfolioName," + name);
+    csvData.append("PortfolioName,").append(name);
     csvData.append('\n');
 
     long time = System.currentTimeMillis() / 1000;
-    csvData.append("PortfolioID," + Long.toString(time, 0));
+    csvData.append("PortfolioID,").append(Long.toString(time, 0));
     csvData.append('\n');
 
     csvData.append("PurchaseTimestamp," + "PurchaseID," + "StockLastKnownValueTimestamp,"
@@ -108,7 +108,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
       throw new RuntimeException(e);
     }
 
-    String line = "";
+    String line;
     String splitBy = ",";
     String[] splitStockData;
 

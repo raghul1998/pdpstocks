@@ -1,8 +1,5 @@
 package model;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 public class StockCompositionData {
-  private int numberOfPortFolio;
+  private final int numberOfPortFolio;
 
   public StockCompositionData() {
     int count = 0;
@@ -34,8 +31,7 @@ public class StockCompositionData {
     File[] files = dir.listFiles();
     assert files != null;
     File file = files[index];
-    String filename = "userdata/user1/" + file.getName();
-    return filename;
+    return "userdata/user1/" + file.getName();
   }
 
   private int getNumberOfStockDataInAPortFolio(String filename) {
@@ -92,7 +88,7 @@ public class StockCompositionData {
       throw new RuntimeException(e);
     }
     stockData.lines();
-    String line = "";
+    String line;
     String splitBy = ",";
     String[] splitStockData;
     int timesOfRead = 0;

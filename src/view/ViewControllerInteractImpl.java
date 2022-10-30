@@ -130,9 +130,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     StockCompositionData obj = new StockCompositionData();
     StockCompositionData.stockPortFolioData stkObj =
             obj.getAllStockDataInPortFolio(portfolioNumber);
-
-    Random rand = new Random(1234567890);
     double totalPortFolioValue = 0;
+
+    String pfCreatedDate = stkObj.createdTimeStamp;
+    pfCreatedDate = pfCreatedDate.substring(0, 10);
 
     String[] portfolioNames = obj.getPortFolioNames();
     System.out.println("Value of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
@@ -145,14 +146,19 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     System.out.println("\t " + "Total Value\n");
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
-      double randomShareValue = getRandomShareValue(stkObj.valueOfSingleStock[i]);
       System.out.print(stkObj.stockName[i]);
       System.out.print(" (" + stkObj.stockSymbol[i] + ") ");
       System.out.print("\t " + stkObj.stockQuantity[i]);
-      System.out.print("\t $" + randomShareValue);
-      totalPortFolioValue += Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100;
-      System.out.println("\t $" + Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100);
-      ;
+      // Display based on the date created
+      if (pfCreatedDate.equals(date)) {
+        System.out.print("\t $" + stkObj.valueOfSingleStock[i]);
+        System.out.println("\t $" + stkObj.totalValue[i]);
+      } else {
+        double randomShareValue = getRandomShareValue(stkObj.valueOfSingleStock[i], date);
+        System.out.print("\t $" + randomShareValue);
+        totalPortFolioValue += Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100;
+        System.out.println("\t $" + Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100);
+      }
     }
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
     System.out.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue);
@@ -217,7 +223,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showStockDataScreen() {
-    String line = "";
+    String line;
     String splitBy = ",";
     BufferedReader stockData = null;
     String[] splitStockData = new String[4];
@@ -228,6 +234,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     }
 
     try {
+      assert stockData != null;
       line = stockData.readLine();
       splitStockData = line.split(splitBy);
     } catch (Exception e) {
@@ -285,14 +292,28 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     System.out.println("If you want to go back to main menu, press '0'.\n");
   }
 
-  private double getRandomShareValue(double stockValue) {
-    Random rand = new Random(12345);
+  private double getRandomShareValue(double stockValue, String date) {
+    String[] dateSplit = date.split("-");
+    StringBuilder dateSplitIndividual = new StringBuilder();
+    for (String s : dateSplit) {
+      dateSplitIndividual.append(s);
+    }
+    int dateLong = Integer.parseInt(dateSplitIndividual.toString());
+    int decimalValue = sumOfNumber(dateLong);
+    Random rand = new Random(dateLong);
     int randomShareValueInteger = (int) (rand.nextInt((int) ((stockValue + 30) -
             (stockValue - 10))) + stockValue - 10);
-    rand = new Random();
-    int randomShareValueFloatValue = rand.nextInt(99);
-    String randomShareValueString = "" + randomShareValueInteger + "." + randomShareValueFloatValue;
+    String randomShareValueString = "" + randomShareValueInteger + "." + decimalValue;
     double value = Double.parseDouble(randomShareValueString);
     return Math.floor(value * 100) / 100;
   }
+
+  private int sumOfNumber(int number) {
+    int sum;
+    for (sum = 0; number != 0; number = number / 10) {
+      sum = sum + number % 10;
+    }
+    return sum;
+  }
+
 }

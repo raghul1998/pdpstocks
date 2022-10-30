@@ -9,7 +9,7 @@ public class StockNameMap {
   private final Map<String, String> stockNameMap = new HashMap<>();
 
   public StockNameMap() {
-    String line = "";
+    String line;
     String splitBy = ",";
     BufferedReader stockData = null;
     try {
