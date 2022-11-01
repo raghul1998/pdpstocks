@@ -86,6 +86,7 @@ public class controllerTest {
 
     assertEquals(expectedOutput, result);
   }
+
   @Test
   public void testControllerCreatePortfolioAndViewPortfolio() {
     String userInput = "1" + "\n" + "controllerTest2_bharati" + "\n" + "1" + "\n" + "10" + "\n" + "11"
@@ -210,7 +211,7 @@ public class controllerTest {
             "1. CONTROLLERTEST1_HEALTH\n" +
             "2. CONTROLLERTEST2_BHARATI\n" +
             "3. ESHA\n" +
-             "\n" +
+            "\n" +
             "Which portfolio would you like to check?\n" +
             "\nCONTROLLERTEST2_BHARATI PORTFOLIO COMPOSITION - Created on 2022-10-31\n" +
 
@@ -220,7 +221,7 @@ public class controllerTest {
             "Tesla (TSLA) 	 3	 $228.36	 $685.08\n" +
             "Johnson (JNJ) 	 100	 $174.2	 $17420.0\n" +
 
-            "\nTotal Portfolio Value as on 2022-10-31: $19673.68\n"+
+            "\nTotal Portfolio Value as on 2022-10-31: $19673.68\n" +
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
             "\n" +
@@ -315,7 +316,7 @@ public class controllerTest {
   @Test
   public void testControllerClubTwoStocksOfSameTickerComposition() {
     String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "1" + "\n" + "3" + "\n" + "3"
-            + "\n" + "y" + "\n" + "3"+ "\n" + "2"+ "\n" + "n"+ "\n" + "2"+ "\n" + "3"+ "\n" + "m"+ "\n" + "e";
+            + "\n" + "y" + "\n" + "3" + "\n" + "2" + "\n" + "n" + "\n" + "2" + "\n" + "3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -419,10 +420,10 @@ public class controllerTest {
 
             "\nGoogle (GOOG) \t 5\t $96.55\t $482.75\n" +
 
-            "\nTotal Portfolio Value as on 2022-10-31: $482.75\n"+
+            "\nTotal Portfolio Value as on 2022-10-31: $482.75\n" +
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n"+
+            "\n" +
             "\nMENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
@@ -431,7 +432,7 @@ public class controllerTest {
             "e. Exit\n" +
             "\n" +
             "ENTER YOUR CHOICE: \n" +
-            "\n"+
+            "\n" +
             "Exiting...\n";
 
     String result = bytes.toString();
@@ -439,10 +440,11 @@ public class controllerTest {
 
     assertEquals(expectedOutput, result);
   }
+
   @Test
   public void testControllerOverrideSamePortfolio() {
-    String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "y"+ "\n" + "1" + "\n" + "8" + "\n" + "7"+ "\n"
-             + "n"+ "\n" + "2"+ "\n" + "3"+ "\n" + "m"+ "\n" + "e";
+    String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "y" + "\n" + "1" + "\n" + "8" + "\n" + "7" + "\n"
+            + "n" + "\n" + "2" + "\n" + "3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -460,10 +462,10 @@ public class controllerTest {
             "\n" +
             "ENTER YOUR CHOICE: \n" +
             "Enter the name for this portfolio.\n" +
-            "This portfolio already exists.\n"+
-            "If you want to override this portfolio, then press 'y'. "+
+            "This portfolio already exists.\n" +
+            "If you want to override this portfolio, then press 'y'. " +
             "If you want to enter another name, press 'n'. " +
-            "If you want to go main screen, press 'b'.\n"+
+            "If you want to go main screen, press 'b'.\n" +
             "\n" +
             "\nCREATE PORTFOLIO MENU\n" +
             "\nCONTROLLERTEST3_BHARAT Portfolio\n" +
@@ -524,10 +526,10 @@ public class controllerTest {
 
             "\nAmazon (AMZN) \t 7\t $102.4\t $716.8\n" +
 
-            "\nTotal Portfolio Value as on 2022-10-31: $716.8\n"+
+            "\nTotal Portfolio Value as on 2022-10-31: $716.8\n" +
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n"+
+            "\n" +
             "\nMENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
@@ -536,7 +538,7 @@ public class controllerTest {
             "e. Exit\n" +
             "\n" +
             "ENTER YOUR CHOICE: \n" +
-            "\n"+
+            "\n" +
             "Exiting...\n";
 
     String result = bytes.toString();
@@ -544,9 +546,10 @@ public class controllerTest {
 
     assertEquals(expectedOutput, result);
   }
+
   @Test
   public void testControllerInputDate() {
-    String userInput = "3" + "\n" + "4" + "\n" + "2022-10-10"+ "\n" + "m" + "\n" + "e";
+    String userInput = "3" + "\n" + "4" + "\n" + "2022-10-10" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -563,7 +566,7 @@ public class controllerTest {
             "e. Exit\n" +
             "\n" +
             "ENTER YOUR CHOICE: \n" +
-            "\n"+
+            "\n" +
             "LIST OF PORTFOLIO\n" +
             "\n" +
             "1. CONTROLLERTEST1_HEALTH\n" +
@@ -573,16 +576,16 @@ public class controllerTest {
             "\n" +
             "Which portfolio would you like to check?\n" +
             "Enter the year in format (YYYY-MM-DD) (2000 to 2022): " +
-            "\n"+
+            "\n" +
             "Value of ESHA PORTFOLIO\n" +
 
             "\nName (Symbol) \t Quantity\t Share Value on 2022-10-10\t Total Value\n" +
-            "\nAmazon (AMZN) \t 7\t $107.8\t $754.6"+
-            "\n"+
-            "\nTotal Portfolio Value is on 2022-10-10: $754.6\n"+
+            "\nAmazon (AMZN) \t 7\t $107.8\t $754.6" +
+            "\n" +
+            "\nTotal Portfolio Value is on 2022-10-10: $754.6\n" +
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n"+
+            "\n" +
             "\nMENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
@@ -591,7 +594,257 @@ public class controllerTest {
             "e. Exit\n" +
             "\n" +
             "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  @Test
+  public void testControllerInvalidDate() {
+    String userInput = "3" + "\n" + "4" + "\n" + "9999-98-88" + "\n" + "2022-02-02"
+            + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "LIST OF PORTFOLIO\n" +
+            "\n" +
+            "1. CONTROLLERTEST1_HEALTH\n" +
+            "2. CONTROLLERTEST2_BHARATI\n" +
+            "3. CONTROLLERTEST3_BHARAT\n" +
+            "4. ESHA\n" +
+            "\n" +
+            "Which portfolio would you like to check?\n" +
+            "Enter the year in format (YYYY-MM-DD) (2000 to 2022): " +
+            "\n" +
+            "Not a valid input. Please enter the correct date.\n" +
+            "Press 'b' to go back\n" +
             "\n"+
+            "Value of ESHA PORTFOLIO\n" +
+
+            "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n" +
+            "\nAmazon (AMZN) 	 7	 $119.1	 $833.7" +
+            "\n" +
+            "\nTotal Portfolio Value is on 2022-02-02: $833.7\n" +
+            "\n" +
+            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\n" +
+            "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  @Test
+  public void testControllerEnterWrongOptionForSelectingPortfolio() {
+    String userInput = "2" + "\n" + "89" + "\n" + "b" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "LIST OF PORTFOLIO\n" +
+            "\n" +
+            "1. CONTROLLERTEST1_HEALTH\n" +
+            "2. CONTROLLERTEST2_BHARATI\n" +
+            "3. CONTROLLERTEST3_BHARAT\n" +
+            "4. ESHA\n" +
+            "\n" +
+            "Which portfolio would you like to check?\n" +
+            "Not a valid input. Please enter the correct portfolio.\n" +
+            "Press 'b' to go back to the previous menu.\n" +
+            "\n" +
+            "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+  @Test
+  public void testControllerInvalidInitialChoice() {
+    String userInput = "7" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "Invalid command. Enter the right option number.\n" +
+            "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+  @Test
+  public void testControllerInvalidInputs() {
+    String userInput = "5" + "\n" + "1"+ "\n" + ""+ "\n" + "Riya"+ "\n" + "6"+ "\n" + "1"+
+            "\n" + "11"+ "\n" + "10"+ "\n" + "-4"+ "\n" + "4.3"+ "\n" + "l"+ "\n" + "m"+ "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "Invalid command. Enter the right option number.\n" +
+            "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "Enter the name for this portfolio.\n" +
+            "Cannot create a portfolio with empty name. Enter a valid name.\n" +
+            "If you want to go back to main menu, press '0'.\n" +
+            "\n" +
+            "\n" +
+            "CREATE PORTFOLIO MENU\n" +
+            "\n" +
+            "RIYA Portfolio\n" +
+            "\n" +
+            "1. Buy a share\n" +
+            "2. Main Menu\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "Invalid command. Enter the right option number.\n"+
+            "\n" +
+            "CREATE PORTFOLIO MENU\n" +
+            "\n" +
+            "RIYA Portfolio\n" +
+            "\n" +
+            "1. Buy a share\n" +
+            "2. Main Menu\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "\n" +
+            "1. Microsoft (MSFT)\n" +
+            "2. Meta (META)\n" +
+            "3. Google (GOOG)\n" +
+            "4. Apple (AAPL)\n" +
+            "5. Tesla (TSLA)\n" +
+            "6. JPMorgan Chase (JPM)\n" +
+            "7. Johnson (JNJ)\n" +
+            "8. Amazon (AMZN)\n" +
+            "9. UnitedHealth (UNH)\n" +
+            "10. Walmart (WMT)\n" +
+            "\n" +
+            "Which stock would you like to buy?\n" +
+            "Not a valid input. Please enter the correct stock.\n" +
+            "If you want to go back to main menu, press '0'."+
+            "\n" +
+            "\n" +
+            "\nCURRENT STOCK PRICE\n" +
+            "StockName: Walmart\n" +
+            "Symbol: WMT\n" +
+            "Time: 2022-10-31 19:28:00\n" +
+            "Price: $142.1200\n" +
+            "\n" +
+            "How many shares would you like to buy?\n" +
+            "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
+            "\n" +
+            "Not a valid input. Please enter number of shares as whole number.\n" +
+            "Press 'b' to go back to the previous menu, 'm' to main menu.\n"+
+            "\n" +
+            "Not a valid input. Please enter number of shares as whole number.\n" +
+            "Press 'b' to go back to the previous menu, 'm' to main menu.\n"+
+            "\n" +
+            "Not a valid input. Please enter number of shares as whole number.\n" +
+            "Press 'b' to go back to the previous menu, 'm' to main menu.\n"+
+            "\n" +
+            "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
             "Exiting...\n";
 
     String result = bytes.toString();
