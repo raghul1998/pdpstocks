@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -24,11 +23,11 @@ import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 
 public class ControllerViewInteractImpl implements ControllerViewInteract {
-  private ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
-  private ViewControllerInteract vciObj;
+  private final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
+  private final ViewControllerInteract vciObj;
   private String currentPortfolioName;
-  private PrintStream output;
-  Scanner scan;
+  private final PrintStream output;
+  private final Scanner scan;
 
   public ControllerViewInteractImpl(InputStream input, PrintStream output) {
     this.output = output;
@@ -38,6 +37,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   @Override
   public void start() {
+    cmiObj.controllerModelInteract(TypeofAction.CREATE_SUPPORTED_STOCKS, null, 0);
     String option;
     do {
       vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);

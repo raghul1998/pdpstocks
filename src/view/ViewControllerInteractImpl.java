@@ -10,7 +10,7 @@ import model.StockCompositionData;
 import model.StockNameMap;
 
 public class ViewControllerInteractImpl implements ViewControllerInteract {
-  private PrintStream output;
+  private final PrintStream output;
 
   public ViewControllerInteractImpl(PrintStream out) {
     this.output = out;

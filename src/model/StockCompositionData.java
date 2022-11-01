@@ -40,7 +40,8 @@ public class StockCompositionData {
     try {
       lines = Files.lines(path).count();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("MODEL: Error in getting the number of Stocks in portfolio");
+      //e.printStackTrace();
     }
     return (int) lines;
   }

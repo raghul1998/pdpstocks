@@ -36,8 +36,48 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
       }
       case DELETE_EMPTY_PORTFOLIO: {
         deleteEmptyPortFolio();
+        break;
+      }
+      case CREATE_SUPPORTED_STOCKS: {
+        try {
+          createSupportedStocksFile();
+        } catch (Exception e) {
+          System.out.println("MODEL: Error in creating supported stocks file");
+        }
+        break;
       }
     }
+  }
+
+  private void createSupportedStocksFile() throws IOException {
+    File directory = new File("data");
+    if (!directory.exists()) {
+      directory.mkdir();
+    }
+    String fileName = "data/SupportedStocks.csv";
+    File file = new File(fileName);
+    if (!file.exists()) {
+      file.createNewFile();
+      PrintWriter write = new PrintWriter(fileName);
+      String supportedStockData = supportedStocksCSVData();
+      write.write(supportedStockData);
+      write.flush();
+      write.close();
+    }
+  }
+
+  private String supportedStocksCSVData() {
+    return "StockID,StockName,StockSymbol\n" +
+            "1,Apple,AAPL\n" +
+            "2,Amazon,AMZN\n" +
+            "3,Microsoft,MSFT\n" +
+            "4,Tesla,TSLA\n" +
+            "5,Meta,META\n" +
+            "6,Walmart,WMT\n" +
+            "7,Johnson,JNJ\n" +
+            "8,JPMorgan Chase,JPM\n" +
+            "9,Google,GOOG\n" +
+            "10,UnitedHealth,UNH";
   }
 
   private void deleteEmptyPortFolio() {
