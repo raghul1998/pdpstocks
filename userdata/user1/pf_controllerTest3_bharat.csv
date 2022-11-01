@@ -1,4 +1,4 @@
 PortfolioName,controllerTest3_bharat
-PortfolioID,1667266863
+PortfolioID,1667274389
 PurchaseTimestamp,PurchaseID,StockLastKnownValueTimestamp,StockSymbol,NameOfStock,NumberOfStocksPurchased,PriceOfShareAtPurchase
-2022-10-31 21:41:05,1667266865,2022-10-28 20:00:00,AMZN,Amazon,2,103.8700
+2022-10-31 23:46:30,1667274390,2022-10-31 20:00:00,AMZN,Amazon,7,102.4000

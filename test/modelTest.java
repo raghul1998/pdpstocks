@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -94,8 +95,7 @@ public class modelTest {
   }
 
   @Test
-  public void testModelBuyStocks() throws FileNotFoundException {
-    // check inside the given portfolio.csv if the current timestamp present in csv file
+  public void testModelBuyStocks() throws IOException {
     String[] name = {"modelTest_esha2"};
     String[] stockTicker = {"META"};
 
@@ -106,20 +106,25 @@ public class modelTest {
     obj.modelControllerInteract(TypeofAction.BUY_STOCKS,stockTicker,0);
 
     Timestamp instant= Timestamp.from(Instant.now());
-    String s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(instant);
+    String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(instant);
 
-    String filename = "userdata/user1/" + "pf_"+ name[0].toString()+".csv";
-//    BufferedReader stockData = null;
-//    try {
-//      stockData = new BufferedReader(new FileReader(filename));
-//    } catch (Exception e) {
-//      System.out.println("Supported stocks file not found " + e.getMessage());
-//    }
-
-    if(new Scanner(new File(filename))
-            .next().contains(s)){
-      System.out.println("matched");
+    String filename = "userdata/user1/" + "pf_"+ name[0]+".csv";
+    String[] words=null;
+    FileReader fr = new FileReader(filename);
+    BufferedReader br = new BufferedReader(fr);
+    String str;
+    while((str=br.readLine())!=null)
+    {
+      words=str.split(",");
+      for (String word : words)
+      {
+        if (word.equals(currentTime))
+        {
+          assertEquals(currentTime,word);
+          return;
+        }
+      }
     }
-    System.out.println("not matched");
+    assert(false);
   }
 }

@@ -441,7 +441,7 @@ public class controllerTest {
   }
   @Test
   public void testControllerOverrideSamePortfolio() {
-    String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "y"+ "\n" + "1" + "\n" + "8" + "\n" + "7"
+    String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "y"+ "\n" + "1" + "\n" + "8" + "\n" + "7"+ "\n"
              + "n"+ "\n" + "2"+ "\n" + "3"+ "\n" + "m"+ "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -460,14 +460,13 @@ public class controllerTest {
             "\n" +
             "ENTER YOUR CHOICE: \n" +
             "Enter the name for this portfolio.\n" +
-            "\n" +
             "This portfolio already exists.\n"+
             "If you want to override this portfolio, then press 'y'. "+
             "If you want to enter another name, press 'n'. " +
             "If you want to go main screen, press 'b'.\n"+
-            "CREATE PORTFOLIO MENU\n" +
             "\n" +
-            "CONTROLLERTEST3_BHARAT Portfolio\n" +
+            "\nCREATE PORTFOLIO MENU\n" +
+            "\nCONTROLLERTEST3_BHARAT Portfolio\n" +
             "\n" +
             "1. Buy a share\n" +
             "2. Main Menu\n" +
@@ -492,8 +491,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Amazon\n" +
             "Symbol: AMZN\n" +
-            "Time: 2022-10-28 20:00:00\n" +
-            "Price: $103.8700\n" +
+            "Time: 2022-10-31 20:00:00\n" +
+            "Price: $102.4000\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -523,9 +522,9 @@ public class controllerTest {
 
             "\nName (Symbol) 	 Quantity 	 Price of each share 	 Total Value\n" +
 
-            "\nAmazon (AMZN) \t 7 \t 5\t $103.87\t $727.09\n" +
+            "\nAmazon (AMZN) \t 7\t $102.4\t $716.8\n" +
 
-            "\nTotal Portfolio Value as on 2022-10-31: $482.75\n"+
+            "\nTotal Portfolio Value as on 2022-10-31: $716.8\n"+
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
             "\n"+
@@ -545,5 +544,59 @@ public class controllerTest {
 
     assertEquals(expectedOutput, result);
   }
+  @Test
+  public void testControllerInputDate() {
+    String userInput = "3" + "\n" + "4" + "\n" + "2022-10-10"+ "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n"+
+            "LIST OF PORTFOLIO\n" +
+            "\n" +
+            "1. CONTROLLERTEST1_HEALTH\n" +
+            "2. CONTROLLERTEST2_BHARATI\n" +
+            "3. CONTROLLERTEST3_BHARAT\n" +
+            "4. ESHA\n" +
+            "\n" +
+            "Which portfolio would you like to check?\n" +
+            "Enter the year in format (YYYY-MM-DD) (2000 to 2022): " +
+            "\n"+
+            "Value of ESHA PORTFOLIO\n" +
+
+            "\nName (Symbol) \t Quantity\t Share Value on 2022-10-10\t Total Value\n" +
+            "\nAmazon (AMZN) \t 7\t $107.8\t $754.6"+
+            "\n"+
+            "\nTotal Portfolio Value is on 2022-10-10: $754.6\n"+
+            "\n" +
+            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\n"+
+            "\nMENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. View portfolio\n" +
+            "3. Value of portfolio\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n"+
+            "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
 }
