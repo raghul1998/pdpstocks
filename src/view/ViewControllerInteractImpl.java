@@ -2,6 +2,7 @@ package view;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.PrintStream;
 import java.util.Map;
 import java.util.Random;
 
@@ -9,6 +10,11 @@ import model.StockCompositionData;
 import model.StockNameMap;
 
 public class ViewControllerInteractImpl implements ViewControllerInteract {
+  private PrintStream output;
+  public ViewControllerInteractImpl(PrintStream out) {
+    this.output = out;
+  }
+
   @Override
   public void viewControllerInteract(TypeofViews type, String[] args, int length) {
     switch (type) {
@@ -76,11 +82,11 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         break;
       }
       case NOT_VALID_INPUT_SCREEN: {
-        System.out.println("Not a valid input. Please enter the correct option.");
+        output.println("Not a valid input. Please enter the correct option.");
         break;
       }
       case NO_PORTFOLIO: {
-        System.out.println("You dont have any portfolio.");
+        output.println("You dont have any portfolio.");
         break;
       }
       case PORTFOLIO_INVALID_ENTRY: {
@@ -88,7 +94,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         break;
       }
       case PORTFOLIO_ALREADY_EXISTS: {
-        System.out.println("This portfolio already exists.");
+        output.println("This portfolio already exists.");
         break;
       }
       case PF_REENTER_DUPLICATE_NAME: {
@@ -106,23 +112,23 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void correctDateScreen() {
-    System.out.println("Not a valid input. Please enter the correct date.");
-    System.out.println("Press 'b' to go back\n");
+    output.println("Not a valid input. Please enter the correct date.");
+    output.println("Press 'b' to go back\n");
   }
 
   private void pfReenterDuplicateName() {
-    System.out.println("If you want to override this portfolio, then press 'y'. "
+    output.println("If you want to override this portfolio, then press 'y'. "
             + "If you want to enter another name, press 'n'. If you want to go main screen, "
             + "press 'b'.\n");
   }
 
   private void portfolioInvalidEntryScreen() {
-    System.out.println("Not a valid input. Please enter the correct portfolio.");
-    System.out.println("Press 'b' to go back to the previous menu.\n");
+    output.println("Not a valid input. Please enter the correct portfolio.");
+    output.println("Press 'b' to go back to the previous menu.\n");
   }
 
   private void showPortfolioReviewScreen() {
-    System.out.println("Press 'b' to go back and 'm' for main menu.\n");
+    output.println("Press 'b' to go back and 'm' for main menu.\n");
   }
 
   private void showPortfolioIndividualWithDateScreen(String option, String date) {
@@ -136,32 +142,32 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     pfCreatedDate = pfCreatedDate.substring(0, 10);
 
     String[] portfolioNames = obj.getPortFolioNames();
-    System.out.println("Value of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
+    output.println("Value of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
 
 
-    System.out.print("\nName");
-    System.out.print(" (" + "Symbol" + ") ");
-    System.out.print("\t " + "Quantity");
-    System.out.print("\t " + "Share Value on " + date);
-    System.out.println("\t " + "Total Value\n");
+    output.print("\nName");
+    output.print(" (" + "Symbol" + ") ");
+    output.print("\t " + "Quantity");
+    output.print("\t " + "Share Value on " + date);
+    output.println("\t " + "Total Value\n");
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
-      System.out.print(stkObj.stockName[i]);
-      System.out.print(" (" + stkObj.stockSymbol[i] + ") ");
-      System.out.print("\t " + stkObj.stockQuantity[i]);
+      output.print(stkObj.stockName[i]);
+      output.print(" (" + stkObj.stockSymbol[i] + ") ");
+      output.print("\t " + stkObj.stockQuantity[i]);
       // Display based on the date created
       if (pfCreatedDate.equals(date)) {
-        System.out.print("\t $" + stkObj.valueOfSingleStock[i]);
-        System.out.println("\t $" + stkObj.totalValue[i]);
+        output.print("\t $" + stkObj.valueOfSingleStock[i]);
+        output.println("\t $" + stkObj.totalValue[i]);
       } else {
         double randomShareValue = getRandomShareValue(stkObj.valueOfSingleStock[i], date);
-        System.out.print("\t $" + randomShareValue);
+        output.print("\t $" + randomShareValue);
         totalPortFolioValue += Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100;
-        System.out.println("\t $" + Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100);
+        output.println("\t $" + Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100);
       }
     }
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
-    System.out.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
+    output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
   }
 
   private void showPortfolioIndividualScreen(String option) {
@@ -173,53 +179,53 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     String[] portfolioNames = obj.getPortFolioNames();
     String date = stkObj.createdTimeStamp;
     date = date.substring(0, 10);
-    System.out.println("\n" + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO"
+    output.println("\n" + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO"
             + " COMPOSITION - Created on " + date + "\n");
 
-    System.out.print("Name");
-    System.out.print(" (" + "Symbol" + ") \t ");
-    System.out.print("Quantity \t ");
-    System.out.print("Price of each share \t ");
-    System.out.println("Total Value\n");
+    output.print("Name");
+    output.print(" (" + "Symbol" + ") \t ");
+    output.print("Quantity \t ");
+    output.print("Price of each share \t ");
+    output.println("Total Value\n");
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
-      System.out.print(stkObj.stockName[i]);
-      System.out.print(" (" + stkObj.stockSymbol[i] + ") ");
-      System.out.print("\t " + stkObj.stockQuantity[i]);
-      System.out.print("\t $" + stkObj.valueOfSingleStock[i]);
-      System.out.println("\t $" + stkObj.totalValue[i]);
+      output.print(stkObj.stockName[i]);
+      output.print(" (" + stkObj.stockSymbol[i] + ") ");
+      output.print("\t " + stkObj.stockQuantity[i]);
+      output.print("\t $" + stkObj.valueOfSingleStock[i]);
+      output.println("\t $" + stkObj.totalValue[i]);
     }
 
-    System.out.println("\nTotal Portfolio Value as on " + date + ": $" + stkObj.totalPortFolioValue + "\n");
+    output.println("\nTotal Portfolio Value as on " + date + ": $" + stkObj.totalPortFolioValue + "\n");
   }
 
   private void showPortFolioCompositionScreen(String[] portfolioNames, int numberOfPortFolio) {
-    System.out.println("\nLIST OF PORTFOLIO");
-    System.out.println();
+    output.println("\nLIST OF PORTFOLIO");
+    output.println();
     for (int i = 0; i < numberOfPortFolio; i++) {
-      System.out.println(i + 1 + ". " + portfolioNames[i].toUpperCase());
+      output.println(i + 1 + ". " + portfolioNames[i].toUpperCase());
     }
 
-    System.out.println("\nWhich portfolio would you like to check?");
+    output.println("\nWhich portfolio would you like to check?");
   }
 
 
   private void showDisplayPortFolioCreated(String currentPortfolioName) {
-    System.out.println("\n" + currentPortfolioName.toUpperCase() + " PORTFOLIO CREATED...!!!");
+    output.println("\n" + currentPortfolioName.toUpperCase() + " PORTFOLIO CREATED...!!!");
   }
 
   private void showBuyStockValueScreen() {
-    System.out.println("\nHow many shares would you like to buy?");
-    System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
+    output.println("\nHow many shares would you like to buy?");
+    output.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
   }
 
   private void showStockBuyInvalidRetryScreen() {
-    System.out.println("Not a valid input. Please enter number of shares as whole number.");
-    System.out.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
+    output.println("Not a valid input. Please enter number of shares as whole number.");
+    output.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
   }
 
   private void wouldYouLikeToBuyAnotherStockScreen() {
-    System.out.println("Would you like to buy another stock? (Y|N)");
+    output.println("Would you like to buy another stock? (Y|N)");
   }
 
   private void showStockDataScreen() {
@@ -230,7 +236,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     try {
       stockData = new BufferedReader(new FileReader("data/StockData.csv"));
     } catch (Exception e) {
-      System.out.println("Supported stocks file not found " + e.getMessage());
+      output.println("Supported stocks file not found " + e.getMessage());
     }
 
     try {
@@ -238,59 +244,59 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       line = stockData.readLine();
       splitStockData = line.split(splitBy);
     } catch (Exception e) {
-      System.out.println("Error in reading Supported stocks csv file.");
+      output.println("Error in reading Supported stocks csv file.");
     }
 
-    System.out.println("\nCURRENT STOCK PRICE");
-    System.out.println("StockName: " + splitStockData[0]);
-    System.out.println("Symbol: " + splitStockData[2]);
-    System.out.println("Time: " + splitStockData[3]);
-    System.out.println("Price: $" + splitStockData[1]);
+    output.println("\nCURRENT STOCK PRICE");
+    output.println("StockName: " + splitStockData[0]);
+    output.println("Symbol: " + splitStockData[2]);
+    output.println("Time: " + splitStockData[3]);
+    output.println("Price: $" + splitStockData[1]);
   }
 
   private void listOfSupportedStocksScreen() {
     int index = 0;
     StockNameMap snp = new StockNameMap();
     Map<String, String> map = snp.getMap();
-    System.out.println("\n");
+    output.println("\n");
     for (Map.Entry<String, String> entry : map.entrySet()) {
-      System.out.print(++index + ". ");
-      System.out.print(entry.getValue());
-      System.out.println(" (" + entry.getKey() + ")");
+      output.print(++index + ". ");
+      output.print(entry.getValue());
+      output.println(" (" + entry.getKey() + ")");
     }
-    System.out.println("\nWhich stock would you like to buy?");
+    output.println("\nWhich stock would you like to buy?");
   }
 
   private void mainScreen() {
-    System.out.println("\nMENU\n");
-    System.out.println("1. Create a portfolio");
-    System.out.println("2. View portfolio");
-    System.out.println("3. Value of portfolio");
-    System.out.println("e. Exit\n");
-    System.out.println("ENTER YOUR CHOICE: ");
+    output.println("\nMENU\n");
+    output.println("1. Create a portfolio");
+    output.println("2. View portfolio");
+    output.println("3. Value of portfolio");
+    output.println("e. Exit\n");
+    output.println("ENTER YOUR CHOICE: ");
   }
 
   private void showStockMainScreen(String name) {
-    System.out.println("\nCREATE PORTFOLIO MENU\n");
-    System.out.println(name.toUpperCase() + " Portfolio\n");
-    System.out.println("1. Buy a share");
-    System.out.println("2. Main Menu");
-    System.out.println("e. Exit\n");
-    System.out.println("ENTER YOUR CHOICE: ");
+    output.println("\nCREATE PORTFOLIO MENU\n");
+    output.println(name.toUpperCase() + " Portfolio\n");
+    output.println("1. Buy a share");
+    output.println("2. Main Menu");
+    output.println("e. Exit\n");
+    output.println("ENTER YOUR CHOICE: ");
   }
 
   private void showPortfolioName() {
-    System.out.println("Enter the name for this portfolio.");
+    output.println("Enter the name for this portfolio.");
   }
 
   private void showStockBuyReenter() {
-    System.out.println("Not a valid input. Please enter the correct stock.");
-    System.out.println("If you want to go back to main menu, press '0'.\n");
+    output.println("Not a valid input. Please enter the correct stock.");
+    output.println("If you want to go back to main menu, press '0'.\n");
   }
 
   private void showPortfolioNameReenter() {
-    System.out.println("Cannot create a portfolio with empty name. Enter a valid name.");
-    System.out.println("If you want to go back to main menu, press '0'.\n");
+    output.println("Cannot create a portfolio with empty name. Enter a valid name.");
+    output.println("If you want to go back to main menu, press '0'.\n");
   }
 
   private double getRandomShareValue(double stockValue, String date) {

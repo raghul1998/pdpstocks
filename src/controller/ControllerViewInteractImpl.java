@@ -1,6 +1,9 @@
 package controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -21,14 +24,21 @@ import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 
 public class ControllerViewInteractImpl implements ControllerViewInteract {
-  ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
-  ViewControllerInteract vciObj = new ViewControllerInteractImpl();
+  private ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
+  private ViewControllerInteract vciObj;
   private String currentPortfolioName;
+  private PrintStream output;
+  Scanner scan;
+
+  public ControllerViewInteractImpl(InputStream input, PrintStream output) {
+    this.output = output;
+    vciObj = new ViewControllerInteractImpl(output);
+    scan =  new Scanner(input);
+  }
 
   @Override
   public void start() {
     String option;
-    Scanner scan = new Scanner(System.in);
     do {
       vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
       option = scan.nextLine();
@@ -46,10 +56,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     String[] args = new String[2];
     args[0] = options;
 
-    System.out.println("Enter the year in format (YYYY-MM-DD) (2000 to "
+    output.println("Enter the year in format (YYYY-MM-DD) (2000 to "
             + LocalDate.now().getYear() + "): ");
     String date;
-    Scanner scan = new Scanner(System.in);
     date = scan.nextLine();
     while (!validateDate(date)) {
       vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
@@ -111,7 +120,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     while (true) {
       vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO, name, 0);
       String option;
-      Scanner scan = new Scanner(System.in);
       option = scan.nextLine();
       if (performCreatePortfolioMenuAction(option, null)) {
         break;
@@ -140,7 +148,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 1);
     vciObj.viewControllerInteract(TypeofViews.BUY_ANOTHER_STOCK, null, 0);
     String options;
-    Scanner scan = new Scanner(System.in);
     options = scan.nextLine();
     while ((options == null || options.length() == 0) || ((!options.equals("Y")) &&
             (!options.equals("y")) && (!options.equals("N")) && (!options.equals("n")))) {
@@ -169,7 +176,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
     vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_VALUE, null, 0);
     String option;
-    Scanner scan = new Scanner(System.in);
     option = scan.nextLine();
     while ((option == null || option.length() == 0) || (!validateBuyStockOption(option))) {
       if (Objects.equals(option, "b")) {
@@ -189,7 +195,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         // Create a portfolio
         while (true) {
           String name;
-          Scanner scan = new Scanner(System.in);
           vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, null, 0);
           name = scan.nextLine();
           while (name.length() == 0) {
@@ -242,7 +247,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           String[] portfolioNames = obj.getPortFolioNames();
           vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames, numberOfPortFolio);
           String options;
-          Scanner scan = new Scanner(System.in);
           options = scan.nextLine();
           while ((options == null || options.length() == 0) ||
                   (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
@@ -281,7 +285,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           String[] portfolioNames = obj.getPortFolioNames();
           vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames, numberOfPortFolio);
           String options;
-          Scanner scan = new Scanner(System.in);
           options = scan.nextLine();
           while ((options == null || options.length() == 0) ||
                   (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
@@ -312,11 +315,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
       case "e":
       case "E": {
-        System.out.println("\nExiting...");
-        exit(0);
+        output.println("\nExiting...");
+        //exit(0);
+        return;
       }
       default: {
-        System.out.println("Invalid command. Enter the right option number.");
+        output.println("Invalid command. Enter the right option number.");
         try {
           sleep(500);
         } catch (Exception e) {
@@ -370,7 +374,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         while (true) {
           vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
           String options;
-          Scanner scan = new Scanner(System.in);
           options = scan.nextLine();
           while (!validateStockSelectOption(options)) {
             vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
@@ -390,11 +393,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       case "e":
       case "E": {
         cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
-        System.out.println("\nExiting...");
+        output.println("\nExiting...");
         exit(0);
       }
       default: {
-        System.out.println("Invalid command. Enter the right option number.");
+        output.println("Invalid command. Enter the right option number.");
         try {
           sleep(500);
         } catch (Exception e) {

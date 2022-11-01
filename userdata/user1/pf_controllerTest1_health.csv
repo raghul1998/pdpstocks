@@ -1,0 +1,4 @@
+PortfolioName,controllerTest1_health
+PortfolioID,1667264443
+PurchaseTimestamp,PurchaseID,StockLastKnownValueTimestamp,StockSymbol,NameOfStock,NumberOfStocksPurchased,PriceOfShareAtPurchase
+2022-10-31 21:00:44,1667264444,2022-10-28 19:59:00,MSFT,Microsoft,1,235.7000
