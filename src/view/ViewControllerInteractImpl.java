@@ -11,6 +11,7 @@ import model.StockNameMap;
 
 public class ViewControllerInteractImpl implements ViewControllerInteract {
   private PrintStream output;
+
   public ViewControllerInteractImpl(PrintStream out) {
     this.output = out;
   }
@@ -159,6 +160,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       if (pfCreatedDate.equals(date)) {
         output.print("\t $" + stkObj.valueOfSingleStock[i]);
         output.println("\t $" + stkObj.totalValue[i]);
+        totalPortFolioValue = stkObj.totalPortFolioValue;
       } else {
         double randomShareValue = getRandomShareValue(stkObj.valueOfSingleStock[i], date);
         output.print("\t $" + randomShareValue);
@@ -220,7 +222,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private void showStockBuyInvalidRetryScreen() {
-    output.println("Not a valid input. Please enter number of shares as whole number.");
+    output.println("Not a valid input. Please enter number of shares as natural numbers.");
     output.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
   }
 
@@ -291,7 +293,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
   private void showStockBuyReenter() {
     output.println("Not a valid input. Please enter the correct stock.");
-    output.println("If you want to go back to main menu, press '0'.\n");
+    output.println("If you want to go back to main menu, press 'm'.\n");
   }
 
   private void showPortfolioNameReenter() {

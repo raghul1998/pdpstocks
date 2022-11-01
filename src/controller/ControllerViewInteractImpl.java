@@ -33,7 +33,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   public ControllerViewInteractImpl(InputStream input, PrintStream output) {
     this.output = output;
     vciObj = new ViewControllerInteractImpl(output);
-    scan =  new Scanner(input);
+    scan = new Scanner(input);
   }
 
   @Override
@@ -129,7 +129,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   private void buyAnotherStockMenuAction(String options) {
     if (Objects.equals(options, "Y") || Objects.equals(options, "y")) {
-      //vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
       performCreatePortfolioMenuAction("1", null);
     } else {
       String[] args = new String[1];
@@ -139,7 +138,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   private void buyStockValueMenuAction(String option) {
-    if (Objects.equals(option, "m")) {
+    if (Objects.equals(option, "m") || Objects.equals(option, "M")) {
       cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
       return;
     }
@@ -159,7 +158,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   private boolean performListOfStocksMenuAction(String options, String[] args, int length) {
 
-    if (Objects.equals(options, "0")) {
+    if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
       cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
       return false;
     }
@@ -178,7 +177,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     String option;
     option = scan.nextLine();
     while ((option == null || option.length() == 0) || (!validateBuyStockOption(option))) {
-      if (Objects.equals(option, "b")) {
+      if (Objects.equals(option, "b") || Objects.equals(option, "B")) {
         cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
         return true;
       }
@@ -383,6 +382,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
             break;
           }
         }
+        // Delete if portfolio is empty
+        cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
         break;
       }
       case "2": {
@@ -414,7 +415,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    if (option.equals("0")) {
+    if (option.equals("m") || option.equals("M")) {
       return true;
     }
     // The selected option should be a number, and it should be a valid digit.
@@ -426,7 +427,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
 
     StockNameMap snp = new StockNameMap();
-    if (val < 0 || val > snp.getMapSize()) {
+    if (val < 1 || val > snp.getMapSize()) {
       return false;
     } else {
       return true;
@@ -438,7 +439,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    if (option.equals("m")) {
+    if (option.equals("m") || (option.equals("M"))) {
       return true;
     }
 
@@ -450,7 +451,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    if (val < 0) {
+    if (val <= 0) {
       return false;
     } else {
       return true;

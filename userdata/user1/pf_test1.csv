@@ -1,4 +1,4 @@
 PortfolioName,test1
 PortfolioID,1667314269
 PurchaseTimestamp,PurchaseID,StockLastKnownValueTimestamp,StockSymbol,NameOfStock,NumberOfStocksPurchased,PriceOfShareAtPurchase
-2022-11-01 10:51:20,1667314280,2022-10-31 20:00:00,MSFT,Microsoft,0,232.6000
+2022-11-01 10:51:20,1667314280,2022-10-31 20:00:00,MSFT,Microsoft,1,232.6000
