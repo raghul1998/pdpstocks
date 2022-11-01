@@ -1,0 +1,5 @@
+PortfolioName,t3
+PortfolioID,1667314780
+PurchaseTimestamp,PurchaseID,StockLastKnownValueTimestamp,StockSymbol,NameOfStock,NumberOfStocksPurchased,PriceOfShareAtPurchase
+2022-11-01 10:59:54,1667314794,2022-10-31 20:00:00,AAPL,Apple,3,153.4600
+2022-11-01 11:00:21,1667314821,2022-10-31 20:00:00,MSFT,Microsoft,0,232.6000
