@@ -336,17 +336,17 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
       options = scan.nextLine();
       while ((options == null || options.length() == 0)
-              || ((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
+              || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
               || (options.equals("B")))) {
-        if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
-          break;
-        } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
-          return;
-        }
         vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
         vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
         options = scan.nextLine();
       }
+
+      if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+        return;
+      }
+      // When user press 'B' continue
     }
   }
 
@@ -379,17 +379,17 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
       options = scan.nextLine();
       while ((options == null || options.length() == 0)
-              || ((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
+              || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
               || (options.equals("B")))) {
-        if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
-          break;
-        } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
-          return;
-        }
         vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
         vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
         options = scan.nextLine();
       }
+
+      if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+        return;
+      }
+      // When user presses 'B' continue
     }
   }
 
