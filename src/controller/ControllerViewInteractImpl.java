@@ -22,6 +22,19 @@ import view.TypeofViews;
 import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 
+/**
+ * This class represents the controller that interacts with the view.
+ * This class provides the implementation that helps controller to interact with the view.
+ * This class also interacts with the controller that interacts with the model.
+ * This class has the following variables.
+ * <ul>
+ *   <li> cmiObj - an object for the controller that interacts with the model </li>
+ *   <li> vciObj - an object for the view </li>
+ *   <li> currentPortfolioName - the name of the current portfolio that is being used or read </li>
+ *   <li> output - print stream object </li>
+ *   <li> scan - scanner object </li>
+ * </ul>
+ */
 public class ControllerViewInteractImpl implements ControllerViewInteract {
   private final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
   private final ViewControllerInteract vciObj;
@@ -29,6 +42,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   private final PrintStream output;
   private final Scanner scan;
 
+  /**
+   * Constructor for the controller that interacts with the view that takes in two arguments and
+   * initializes them to the global variables.
+   *
+   * @param input  the input stream
+   * @param output the output stream
+   */
   public ControllerViewInteractImpl(InputStream input, PrintStream output) {
     this.output = output;
     vciObj = new ViewControllerInteractImpl(output);
@@ -46,12 +66,25 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     } while (!option.equals("e"));
   }
 
+  /**
+   * This method tells the view to display the composition of the portfolio along with the stocks
+   * details like name, symbol, quantity, price of each share and total value.
+   *
+   * @param options the portfolio number
+   */
   private void portfolioCompositionAction(String options) {
     String[] args = new String[1];
     args[0] = options;
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, args, 1);
   }
 
+  /**
+   * This method takes in the date for the view portfolio menu and tells the view to display the
+   * value of the portfolio on the given date.
+   *
+   * @param options the portfolio number
+   * @return false if the user entered back option, else true
+   */
   private boolean portfolioViewAction(String options) {
     String[] args = new String[2];
     args[0] = options;
@@ -63,7 +96,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     while (!validateDate(date)) {
       vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
       date = scan.nextLine();
-      if (Objects.equals(date, "b")) {
+      if (Objects.equals(date, "b") || Objects.equals(date, "B")) {
         return false;
       }
     }
@@ -72,6 +105,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return true;
   }
 
+  /**
+   * This is a helper method that helps in validating the date input the user enters when the user
+   * wants to see the value of the portfolio on a certain date.
+   *
+   * @param dateStr the date that user entered
+   * @return true of the input is valid, else false
+   */
   private boolean validateDate(String dateStr) {
     if (dateStr == null || dateStr.length() == 0) {
       return false;
@@ -108,6 +148,14 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return true;
   }
 
+  /**
+   * This method tells the view to display the list of menu options that can be performed when a
+   * user is trying to create a portfolio. The options being, whether the user wants to buy a share
+   * or wants to go back to main menu or exit the application.
+   *
+   * @param options the options that are provided by the user
+   * @param args    the helper arguments that are passed by the callee
+   */
   private void createPortfolioNameScreenAction(String options, String[] args) {
     try {
       sleep(100);
@@ -127,6 +175,14 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * This method tells the view to display stock buying screen provided that the user wanted to
+   * buy another share after purchasing a share. If the user doesn't want to buy another share,
+   * then this method tells the controller to display the portfolio created screen.
+   *
+   * @param options the option that was provided by the user that whether the user wants
+   *                to buy a share
+   */
   private void buyAnotherStockMenuAction(String options) {
     if (Objects.equals(options, "Y") || Objects.equals(options, "y")) {
       performCreatePortfolioMenuAction("1", null);
@@ -137,6 +193,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * This method tells the model to buy the share that the user asked for. If the user wanted to
+   * go back to main menu, this method asks the model to delete the empty portfolio and returns
+   * to the main screen. This method also instructs view to display the buy another stock menu if
+   * the user wants to buy another stock.
+   *
+   * @param option the option that was provided by the user that whether the user
+   *               wants to buy a share
+   */
   private void buyStockValueMenuAction(String option) {
     if (Objects.equals(option, "m") || Objects.equals(option, "M")) {
       cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
@@ -156,6 +221,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     buyAnotherStockMenuAction(options);
   }
 
+  /**
+   * This method tells the model to get the stock data that user wants to buy. Also, this method
+   * tells the view to display the stock data that the user wants to buy.
+   *
+   * @param options the stock option that user entered
+   * @param args    helper arguments if any
+   * @param length  length of the arguments
+   * @return true if user wants to go back to main menu, else false
+   */
   private boolean performListOfStocksMenuAction(String options, String[] args, int length) {
 
     if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
@@ -188,6 +262,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return false;
   }
 
+  /**
+   * This method tells the view to render the corresponding screen based on the user input to the
+   * main menu. The options being, to create a portfolio, view composition, price of share on
+   * certain date.
+   *
+   * @param option the option the user entered the main menu screen
+   */
   private void performMainMenuAction(String option) {
     switch (option) {
       case "1": {
@@ -330,6 +411,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * A helper method that check if the portfolio that the user entered while creating one already
+   * exists or not.
+   *
+   * @param name the name of the portfolio that user wants to create
+   * @return true if the portfolio exists, else false
+   */
   private boolean checkIfPortfolioExists(String name) {
     String directoryName = "userdata/user1/";
     File directory = new File(directoryName);
@@ -350,6 +438,14 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return false;
   }
 
+  /**
+   * A helper method that helps in validation the option the user entered for the portfolio for
+   * which the user needs to know the information about.
+   *
+   * @param option            the index of the portfolio the user entered
+   * @param numberOfPortFolio the number of portfolios that are present in the system
+   * @return true if the input is valid, else false
+   */
   private boolean validatePortfolioSelectOption(String option, int numberOfPortFolio) {
     // The selected option should be a number, and it should be a valid digit.
     int val;
@@ -366,6 +462,14 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * After user creats a portfolio with the name, the user has to buy stocks to fill the portfolio
+   * with date. This method tells the view to display the options for the user to buy the stocks.
+   *
+   * @param option the option that user entered after entering name for the portfolio
+   * @param args   helper arguments if passed by the callee
+   * @return false if the option entered is invalid, else true
+   */
   private boolean performCreatePortfolioMenuAction(String option, String[] args) {
     switch (option) {
       case "1": {
@@ -410,6 +514,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return true;
   }
 
+  /**
+   * A helper method that helps in validating where the option that was entered buy the user to buy
+   * a stock is valid or not.
+   *
+   * @param option the stock option that was entered by the user
+   * @return true if the input is valid, else false
+   */
   private boolean validateStockSelectOption(String option) {
     if (option == null || option.length() == 0) {
       return false;
@@ -434,6 +545,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * A helper method that helps in validation the user input for the number of shares the user
+   * wants to buy for a stock.
+   *
+   * @param option the number of shares that the user wants to buy
+   * @return true if the input is valid, else false
+   */
   private boolean validateBuyStockOption(String option) {
     if (option == null || option.length() == 0) {
       return false;

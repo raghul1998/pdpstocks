@@ -10,9 +10,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-public class
-GetStockData {
-
+/**
+ * This class represents the stock data and methods that can be called upon to get the value of a
+ * certain stock using APIs
+ */
+public class GetStockData {
+  /**
+   * This method helps in getting the real-time value of a stock by performing an API call to the
+   * Alpha Vantage.
+   *
+   * @param stock the ticker symbol of the stock that the data is required for
+   */
   public void getValue(String stock) {
     StockNameMap snp = new StockNameMap();
     Map<String, String> stockMap = snp.getMap();
@@ -64,8 +72,14 @@ GetStockData {
     }
   }
 
-  private void writeDataToFile(String stockData)
-          throws IOException {
+  /**
+   * This method writes the stock data that was obtained by performing the API call to a file
+   * called 'StockData.csv'.
+   *
+   * @param stockData the stock data to be written to the file
+   * @throws IOException if the file is not found
+   */
+  private void writeDataToFile(String stockData) throws IOException {
     File directory = new File("data");
     if (!directory.exists()) {
       directory.mkdir();

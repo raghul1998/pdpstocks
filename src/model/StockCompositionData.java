@@ -9,9 +9,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+/**
+ * This class represents the stock composition data and methods that can be called upon to get the
+ * data related to the stocks.
+ * This method has the following variables.
+ * <ul>
+ *   <li>numberOfPortFolio - the number of portfolio that are available in the system</li>
+ * </ul>
+ */
 public class StockCompositionData {
   private final int numberOfPortFolio;
 
+  /**
+   * A constructor that reads the user directory to find the number of portfolios that the user
+   * has or created and assigns the number to the global variable.
+   */
   public StockCompositionData() {
     int count = 0;
     Path path = Paths.get("userdata/user1");
@@ -22,10 +34,21 @@ public class StockCompositionData {
     this.numberOfPortFolio = count;
   }
 
+  /**
+   * A method that tells the number of portfolio's that are available for the user.
+   *
+   * @return the number of portfolio's
+   */
   public int getNumberOfPortFolio() {
     return numberOfPortFolio;
   }
 
+  /**
+   * A helper method that returns the name of the portfolio by the index that is provided.
+   *
+   * @param index the index of the portfolio
+   * @return the name of the portfolio as a string
+   */
   private String getPortFolioFileNameByIndex(int index) {
     File dir = new File("userdata/user1");
     File[] files = dir.listFiles();
@@ -34,6 +57,12 @@ public class StockCompositionData {
     return "userdata/user1/" + file.getName();
   }
 
+  /**
+   * A helper method that helps to find out the number of stocks that are present in a portfolio.
+   *
+   * @param filename the filename of the portfolio
+   * @return the number of stocks as an integer
+   */
   private int getNumberOfStockDataInAPortFolio(String filename) {
     Path path = Paths.get(filename);
     long lines = 0;
@@ -46,6 +75,11 @@ public class StockCompositionData {
     return (int) lines;
   }
 
+  /**
+   * This method finds out the names of all the portfolio that a user has in the system.
+   *
+   * @return the names of the portfolio as a string array
+   */
   public String[] getPortFolioNames() {
     int index = 0;
     if (numberOfPortFolio == 0) {
@@ -67,6 +101,13 @@ public class StockCompositionData {
     }
   }
 
+  /**
+   * This method gets all the stock related data that is in a portfolio and some data relevant to
+   * the portfolio.
+   *
+   * @param index the index of the portfolio
+   * @return the stock related data as 'stockPortFolioData' object
+   */
   public stockPortFolioData getAllStockDataInPortFolio(int index) {
     String filename = getPortFolioFileNameByIndex(index);
     int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
@@ -151,7 +192,21 @@ public class StockCompositionData {
     return obj;
   }
 
-
+  /**
+   * A static class inside the 'StockCompositionData' that holds the data related to the stocks and
+   * shares in a portfolio.
+   * This class has the following members.
+   * <ul>
+   *   <li>numberOfUniqueStocks</li>
+   *   <li>stockName - name of all the stocks in a portfolio</li>
+   *   <li>stockSymbol - symbol of all the stocks in a portfolio</li>
+   *   <li>stockQuantity - number of shares for each stock in a portfolio</li>
+   *   <li>totalValue - total value of each stock in a portfolio</li>
+   *   <li>totalPortFolioValue - total value of the complete portfolio</li>
+   *   <li>valueOfSingleStock - value of each share of a stock in the portfolio</li>
+   *   <li>createdTimeStamp - timestamp on which the portfolio was created</li>
+   * </ul>
+   */
   public static class stockPortFolioData {
     public int numberOfUniqueStocks;
     public String[] stockName;

@@ -11,6 +11,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+/**
+ * This class represents the model and provides the implementation to dispatch the actions to the
+ * corresponding methods.
+ * This class has the following variables.
+ * <ul>
+ *   <li> portFolioName - name of the portfolio that is being currently read or written </li>
+ * </ul>
+ */
 public class ModelControllerInteractImpl implements ModelControllerInteract {
   String portFolioName;
 
@@ -49,6 +57,12 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     }
   }
 
+  /**
+   * This method runs during the start that creates a 'SupportedStocks.csv' file that represents
+   * the stocks that this application supports.
+   *
+   * @throws IOException if there is any issue in creating a file
+   */
   private void createSupportedStocksFile() throws IOException {
     File directory = new File("data");
     if (!directory.exists()) {
@@ -66,6 +80,12 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     }
   }
 
+  /**
+   * This is a helper function that returns the supported stocks, it's ID, stock name and the
+   * symbol as a string but written in a CSV format.
+   *
+   * @return the supported stocks as a string
+   */
   private String supportedStocksCSVData() {
     return "StockID,StockName,StockSymbol\n" +
             "1,Apple,AAPL\n" +
@@ -80,6 +100,9 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
             "10,UnitedHealth,UNH";
   }
 
+  /**
+   * This method deletes the portfolio if it is empty.
+   */
   private void deleteEmptyPortFolio() {
     String fileName = "userdata/user1/" + "pf_" + portFolioName + ".csv";
     try {
@@ -110,6 +133,13 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     }
   }
 
+  /**
+   * This method helps in creating a portfolio and adding starter contents to it like the name of
+   * the portfolio, unique ID and the titles for the stock data.
+   *
+   * @param name the name of the portfolio
+   * @throws IOException if there is an issue in creating a file
+   */
   private void createPortFolio(String name) throws IOException {
     String directoryName = "userdata/user1/";
     File directory = new File(directoryName);
@@ -140,6 +170,13 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     write.close();
   }
 
+  /**
+   * When a user tries to buy a stock, this method helps in writing that data to the portfolio that
+   * the user wants to enter the data to.
+   *
+   * @param args   helper arguments like the number of shares the user wants to purchase
+   * @param length length of the arguments
+   */
   private void buyStockData(String[] args, int length) {
     BufferedReader stockData;
     try {
@@ -181,13 +218,20 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     pfBoughtStockData.append(splitStockData[1]).append('\n');
 
     try {
-      writeArrayToPortfolio(pfBoughtStockData.toString());
+      writeStockDataToPortfolio(pfBoughtStockData.toString());
     } catch (Exception e) {
       System.out.println("Error in writing to portfolio" + e.getMessage());
     }
   }
 
-  private void writeArrayToPortfolio(CharSequence data) throws FileNotFoundException {
+  /**
+   * This is a helper method helps in writing the provided data to the portfolio file that user
+   * is trying to create.
+   *
+   * @param data the data to be written to the portfolio
+   * @throws FileNotFoundException if the portfolio doesn't exists
+   */
+  private void writeStockDataToPortfolio(CharSequence data) throws FileNotFoundException {
     String filename = "userdata/user1/" + "pf_" + portFolioName + ".csv";
     PrintWriter write = new PrintWriter(new FileOutputStream(filename, true));
     write.append(data);
@@ -195,6 +239,11 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     write.close();
   }
 
+  /**
+   * This method helps in getting the real-time stock data of the stock that the user wants to buy.
+   *
+   * @param arg the stock symbol that the user wants to buy
+   */
   private void getStockData(String arg) {
     GetStockData obj = new GetStockData();
     try {

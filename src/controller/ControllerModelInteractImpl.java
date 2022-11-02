@@ -4,6 +4,13 @@ import model.ModelControllerInteract;
 import model.ModelControllerInteractImpl;
 import model.TypeofAction;
 
+/**
+ * This class represents the controller that interacts with the model and provides implementation
+ * that helps controller to interact with the model. This class has the following variables.
+ * <ul>
+ *   <li> mciObj - an object for the model </li>
+ * </ul>
+ */
 public class ControllerModelInteractImpl implements ControllerModelInteract {
   private final ModelControllerInteract mciObj = new ModelControllerInteractImpl();
 
