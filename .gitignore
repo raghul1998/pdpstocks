@@ -3,5 +3,7 @@
 # dependencies
 /out
 /.idea
-Assignment4.iml
+*.iml
 *.zip
+userdata
+data
