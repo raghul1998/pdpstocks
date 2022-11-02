@@ -203,9 +203,9 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         totalPortFolioValue += Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100;
         output.println("\t $"
                 + Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100);
+        totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
       }
     }
-    totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
     output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
   }
 
