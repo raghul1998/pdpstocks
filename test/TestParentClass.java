@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * This class is the parent class for all other test classes
+ * This class is the parent class for all other test classes.
  */
 public class TestParentClass {
   // A helper function to get the stock data from the portfolio

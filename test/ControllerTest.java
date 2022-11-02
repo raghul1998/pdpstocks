@@ -4523,13 +4523,13 @@ public class ControllerTest extends TestParentClass {
   }
 
   // A helper function to delete a file
-  private void deleteFileInDirectory(String FileName) {
+  private void deleteFileInDirectory(String fileName) {
     File directory = new File("userdata/user1");
     if (directory.exists()) {
       String[] filename = directory.list();
       assert filename != null;
       for (String fName : filename) {
-        if (Objects.equals(FileName, fName)) {
+        if (Objects.equals(fileName, fName)) {
           File currentFile = new File(directory.getPath(), fName);
           currentFile.delete();
           break;
