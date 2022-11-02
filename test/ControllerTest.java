@@ -3834,4 +3834,33 @@ public class ControllerTest {
 
     assertEquals(expectedOutput, result);
   }
+
+  // initial choice exit
+
+  @Test
+  public void testInitialChoiceExit() {
+    String userInput = "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
 }
