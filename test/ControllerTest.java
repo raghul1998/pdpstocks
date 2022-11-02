@@ -18,110 +18,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class ControllerTest {
 
-  private String readStockDateFromPortfolioCsv(String portfolioName, int lineNumber)
-          throws IOException {
-    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
-    String[] cols = null;
-    FileReader fr = new FileReader(filename);
-    BufferedReader br = new BufferedReader(fr);
-    String line;
-    String dateLastKnown = null;
-    int l = 3 + lineNumber;
-
-    while ((line = br.readLine()) != null && l >= 0) {
-      cols = line.split(",");
-      if (l == 1) {
-        dateLastKnown = cols[2];
-      }
-      l--;
-    }
-    return dateLastKnown;
-  }
-
-  private String readPurchaseDateFromCsv(String portfolioName, int lineNumber)
-          throws IOException {
-    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
-    String[] cols = null;
-    FileReader fr = new FileReader(filename);
-    BufferedReader br = new BufferedReader(fr);
-    String line;
-    String datePurchase = null;
-    int l = 3 + lineNumber;
-
-    while ((line = br.readLine()) != null && l >= 0) {
-      cols = line.split(",");
-      if (l == 1) {
-        datePurchase = cols[0];
-      }
-      l--;
-    }
-    return datePurchase.substring(0, 10);
-  }
-
-  private String readStockPriceFromPortfolioCsv(String portfolioName, int lineNumber)
-          throws IOException {
-    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
-    String[] cols = null;
-    FileReader fr = new FileReader(filename);
-    BufferedReader br = new BufferedReader(fr);
-    String line;
-    String price = null;
-    int l = 3 + lineNumber;
-
-    while ((line = br.readLine()) != null && l >= 0) {
-      cols = line.split(",");
-      if (l == 1) {
-        price = cols[6];
-      }
-      l--;
-    }
-    return price;
-  }
-
-
-  private String readStockDateFromStockDataCsv() {
-    String line;
-    String splitBy = ",";
-    BufferedReader stockData = null;
-    String[] splitStockData = new String[4];
-    try {
-      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
-    } catch (Exception e) {
-      throw new RuntimeException();
-    }
-
-    try {
-      assert stockData != null;
-      line = stockData.readLine();
-      splitStockData = line.split(splitBy);
-    } catch (Exception e) {
-      throw new RuntimeException();
-    }
-    return splitStockData[3];
-  }
-
-  private String readStockPriceFromStockDataCsv() {
-    String line;
-    String splitBy = ",";
-    BufferedReader stockData = null;
-    String[] splitStockData = new String[4];
-    try {
-      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
-    } catch (Exception e) {
-      throw new RuntimeException();
-    }
-
-    try {
-      assert stockData != null;
-      line = stockData.readLine();
-      splitStockData = line.split(splitBy);
-    } catch (Exception e) {
-      throw new RuntimeException();
-    }
-    return splitStockData[1];
-  }
-
-
   // creating portfolio
 
   @Test
@@ -203,7 +99,7 @@ public class ControllerTest {
     assertEquals(expectedOutput, result);
   }
 
-  // create portfolio and view portfolio
+  // create portfolio and view portfolio and show composition
 
   @Test
   public void testControllerCreatePortfolioAndViewPortfolio() throws IOException {
@@ -3867,8 +3763,8 @@ public class ControllerTest {
   // how many = large number
   @Test
   public void testInvalidHowMany() throws IOException {
-    String userInput = "1" + "\n" + "pf_controllerTest12_Dan" + "\n" + "2"
-            + "1" + "\n" + "pf_controllerTest12_Dan" + "\n"
+    String userInput = "1" + "\n" + "controllerTest12_Dan" + "\n" + "2"
+            + "1" + "\n" + "controllerTest12_Dan" + "\n"
             + "1" + "\n" + "10" + "\n" + "14000000000000000000" +
             "\n" + "10000000" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -3890,7 +3786,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "PF_CONTROLLERTEST12_DAN Portfolio\n"
+            + "CONTROLLERTEST12_DAN Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -3901,7 +3797,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "PF_CONTROLLERTEST12_DAN Portfolio\n"
+            + "CONTROLLERTEST12_DAN Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -3912,7 +3808,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "PF_CONTROLLERTEST12_DAN Portfolio\n"
+            + "CONTROLLERTEST12_DAN Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -3938,9 +3834,9 @@ public class ControllerTest {
             + "StockName: Walmart\n"
             + "Symbol: WMT\n"
             + "Time: " + readStockDateFromPortfolioCsv(
-            "pf_controllerTest12_Dan", 1) + "\n"
+            "controllerTest12_Dan", 1) + "\n"
             + "Price: $" + readStockPriceFromPortfolioCsv(
-            "pf_controllerTest12_Dan", 1) + "\n"
+            "controllerTest12_Dan", 1) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3950,7 +3846,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "PF_CONTROLLERTEST12_DAN PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST12_DAN PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -4010,4 +3906,549 @@ public class ControllerTest {
     assertEquals(expectedOutput, result);
   }
 
+  // view list of portfolios and entering wrong option
+
+  @Test
+  public void testViewPortfolioAndEnterWrongOption() {
+    String userInput = "2" + "\n" + "-52" + "\n" + "b" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST10_KAT\n"
+            + "2. CONTROLLERTEST11_CAMELLA\n"
+            + "3. CONTROLLERTEST12_DAN\n"
+            + "4. CONTROLLERTEST1_HEALTH\n"
+            + "5. CONTROLLERTEST2_BHARATI\n"
+            + "6. CONTROLLERTEST3_BHARAT\n"
+            + "7. CONTROLLERTEST4_ANUJA\n"
+            + "8. CONTROLLERTEST5_ASH\n"
+            + "9. CONTROLLERTEST6_SHUBHAM\n"
+            + "10. CONTROLLERTEST7_SHARAYU\n"
+            + "11. CONTROLLERTEST8_SHWETA\n"
+            + "12. CONTROLLERTEST9_STEVEN\n"
+            + "13. ESHA\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Not a valid input. Please enter the correct portfolio.\n"
+            + "Press 'b' to go back to the previous menu.\n"
+            + "\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // value of portfolio. enter wrong portfolio option
+
+  @Test
+  public void testValueOfPortfolioEnterWrongPortfolioNumber() {
+    String userInput = "3" + "\n" + "-9" + "\n" + "b" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST10_KAT\n"
+            + "2. CONTROLLERTEST11_CAMELLA\n"
+            + "3. CONTROLLERTEST12_DAN\n"
+            + "4. CONTROLLERTEST1_HEALTH\n"
+            + "5. CONTROLLERTEST2_BHARATI\n"
+            + "6. CONTROLLERTEST3_BHARAT\n"
+            + "7. CONTROLLERTEST4_ANUJA\n"
+            + "8. CONTROLLERTEST5_ASH\n"
+            + "9. CONTROLLERTEST6_SHUBHAM\n"
+            + "10. CONTROLLERTEST7_SHARAYU\n"
+            + "11. CONTROLLERTEST8_SHWETA\n"
+            + "12. CONTROLLERTEST9_STEVEN\n"
+            + "13. ESHA\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Not a valid input. Please enter the correct portfolio.\n"
+            + "Press 'b' to go back to the previous menu.\n"
+            + "\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // buy a stock, enter wrong stock option
+  @Test
+  public void testBuyStockEnterWrongStockOption() {
+    String userInput = "1" + "\n" + "ram" + "\n" + "1" + "\n"
+            + "0" + "\n" + "90" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "RAM Portfolio\n"
+            + "\n"
+            + "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + "1. Microsoft (MSFT)\n"
+            + "2. Meta (META)\n"
+            + "3. Google (GOOG)\n"
+            + "4. Apple (AAPL)\n"
+            + "5. Tesla (TSLA)\n"
+            + "6. JPMorgan Chase (JPM)\n"
+            + "7. Johnson (JNJ)\n"
+            + "8. Amazon (AMZN)\n"
+            + "9. UnitedHealth (UNH)\n"
+            + "10. Walmart (WMT)\n"
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Not a valid input. Please enter the correct stock.\n"
+            + "If you want to go back to main menu, press 'm'.\n"
+            + "\n"
+            + "Not a valid input. Please enter the correct stock.\n"
+            + "If you want to go back to main menu, press 'm'.\n"
+            + "\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // buy a stock, enter invalid how many stocks
+  @Test
+  public void testBuyStockEnterInvalidHowManyStocks() {
+    String userInput = "1" + "\n" + "e" + "\n" + "1" + "\n" + "9" + "\n" + "0"
+            + "\n" + "-85" + "\n" + "8.90" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "E Portfolio\n"
+            + "\n"
+            + "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + "1. Microsoft (MSFT)\n"
+            + "2. Meta (META)\n"
+            + "3. Google (GOOG)\n"
+            + "4. Apple (AAPL)\n"
+            + "5. Tesla (TSLA)\n"
+            + "6. JPMorgan Chase (JPM)\n"
+            + "7. Johnson (JNJ)\n"
+            + "8. Amazon (AMZN)\n"
+            + "9. UnitedHealth (UNH)\n"
+            + "10. Walmart (WMT)\n"
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "\n"
+            + "CURRENT STOCK PRICE\n"
+            + "StockName: UnitedHealth\n"
+            + "Symbol: UNH\n"
+            + "Time: 2022-11-01 18:12:00\n"
+            + "Price: $547.3100\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Not a valid input. Please enter number of shares as natural numbers.\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Not a valid input. Please enter number of shares as natural numbers.\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Not a valid input. Please enter number of shares as natural numbers.\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // toggle between main menu / back
+  @Test
+  public void testToggleBetweenMainMenuAndBack() {
+    String userInput = "1" + "\n" + "Mahi" + "\n" + " 2" + "\n" + "2" + "\n"
+            + "-1" + "\n" + "b" + "\n" + "3" + "\n" + "1" + "\n" + "-1" + "\n" + "b"
+            + "\n" + "-1" + "\n" + "b" + "\n" + "1" + "\n"
+            + "Mahi" + "\n" + "1" + "\n" + "-1" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "MAHI Portfolio\n"
+            + "\n"
+            + "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Invalid command. Enter the right option number.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "MAHI Portfolio\n"
+            + "\n"
+            + "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Invalid command. Enter the right option number.\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Invalid command. Enter the right option number.\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST10_KAT\n"
+            + "2. CONTROLLERTEST11_CAMELLA\n"
+            + "3. CONTROLLERTEST12_DAN\n"
+            + "4. CONTROLLERTEST1_HEALTH\n"
+            + "5. CONTROLLERTEST2_BHARATI\n"
+            + "6. CONTROLLERTEST3_BHARAT\n"
+            + "7. CONTROLLERTEST4_ANUJA\n"
+            + "8. CONTROLLERTEST5_ASH\n"
+            + "9. CONTROLLERTEST6_SHUBHAM\n"
+            + "10. CONTROLLERTEST7_SHARAYU\n"
+            + "11. CONTROLLERTEST8_SHWETA\n"
+            + "12. CONTROLLERTEST9_STEVEN\n"
+            + "13. ESHA\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "Not a valid input. Please enter the correct date.\n"
+            + "Press 'b' to go back\n"
+            + "\n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST10_KAT\n"
+            + "2. CONTROLLERTEST11_CAMELLA\n"
+            + "3. CONTROLLERTEST12_DAN\n"
+            + "4. CONTROLLERTEST1_HEALTH\n"
+            + "5. CONTROLLERTEST2_BHARATI\n"
+            + "6. CONTROLLERTEST3_BHARAT\n"
+            + "7. CONTROLLERTEST4_ANUJA\n"
+            + "8. CONTROLLERTEST5_ASH\n"
+            + "9. CONTROLLERTEST6_SHUBHAM\n"
+            + "10. CONTROLLERTEST7_SHARAYU\n"
+            + "11. CONTROLLERTEST8_SHWETA\n"
+            + "12. CONTROLLERTEST9_STEVEN\n"
+            + "13. ESHA\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Not a valid input. Please enter the correct portfolio.\n"
+            + "Press 'b' to go back to the previous menu.\n"
+            + "\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "MAHI Portfolio\n"
+            + "\n"
+            + "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + "1. Microsoft (MSFT)\n"
+            + "2. Meta (META)\n"
+            + "3. Google (GOOG)\n"
+            + "4. Apple (AAPL)\n"
+            + "5. Tesla (TSLA)\n"
+            + "6. JPMorgan Chase (JPM)\n"
+            + "7. Johnson (JNJ)\n"
+            + "8. Amazon (AMZN)\n"
+            + "9. UnitedHealth (UNH)\n"
+            + "10. Walmart (WMT)\n"
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Not a valid input. Please enter the correct stock.\n"
+            + "If you want to go back to main menu, press 'm'.\n"
+            + "\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+  
+  private String readStockDateFromPortfolioCsv(String portfolioName, int lineNumber)
+          throws IOException {
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
+    FileReader fr = new FileReader(filename);
+    BufferedReader br = new BufferedReader(fr);
+    String line;
+    String dateLastKnown = null;
+    int l = 3 + lineNumber;
+
+    while ((line = br.readLine()) != null && l >= 0) {
+      cols = line.split(",");
+      if (l == 1) {
+        dateLastKnown = cols[2];
+      }
+      l--;
+    }
+    return dateLastKnown;
+  }
+
+  private String readPurchaseDateFromCsv(String portfolioName, int lineNumber)
+          throws IOException {
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
+    FileReader fr = new FileReader(filename);
+    BufferedReader br = new BufferedReader(fr);
+    String line;
+    String datePurchase = null;
+    int l = 3 + lineNumber;
+
+    while ((line = br.readLine()) != null && l >= 0) {
+      cols = line.split(",");
+      if (l == 1) {
+        datePurchase = cols[0];
+      }
+      l--;
+    }
+    return datePurchase.substring(0, 10);
+  }
+
+  private String readStockPriceFromPortfolioCsv(String portfolioName, int lineNumber)
+          throws IOException {
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
+    FileReader fr = new FileReader(filename);
+    BufferedReader br = new BufferedReader(fr);
+    String line;
+    String price = null;
+    int l = 3 + lineNumber;
+
+    while ((line = br.readLine()) != null && l >= 0) {
+      cols = line.split(",");
+      if (l == 1) {
+        price = cols[6];
+      }
+      l--;
+    }
+    return price;
+  }
+
+
+  private String readStockDateFromStockDataCsv() {
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData = new String[4];
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+    return splitStockData[3];
+  }
+
+  private String readStockPriceFromStockDataCsv() {
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData = new String[4];
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+    return splitStockData[1];
+  }
 }
