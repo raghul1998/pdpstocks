@@ -133,7 +133,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         file.delete();
       }
     } catch (Exception e) {
-      System.out.println("Unable to delete the empty portfolio");
+      //System.out.println("Unable to delete the empty portfolio");
     }
   }
 

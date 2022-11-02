@@ -1,12 +1,16 @@
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Objects;
 
 import controller.ControllerViewInteract;
 import controller.ControllerViewInteractImpl;
@@ -16,12 +20,13 @@ import static org.junit.Assert.assertEquals;
 /**
  * This class contains tests for the Controller.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ControllerTest {
-
   // creating portfolio
-
   @Test
-  public void testControllerCreatePortfolio() throws IOException {
+  public void testAControllerCreatePortfolio() throws IOException {
+    deleteDirectory();
+    deleteFileInDirectory("pf_controllerTest1.csv");
     String userInput = "1" + "\n" + "controllerTest1" + "\n" + "1" + "\n" + "1"
             + "\n" + "1" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -102,7 +107,8 @@ public class ControllerTest {
   // create portfolio and view portfolio and show composition
 
   @Test
-  public void testControllerCreatePortfolioAndViewPortfolio() throws IOException {
+  public void testBControllerCreatePortfolioAndViewPortfolio() throws IOException {
+    deleteFileInDirectory("pf_controllerTest2.csv");
     String userInput = "1" + "\n" + "controllerTest2" + "\n" + "1" + "\n"
             + "10" + "\n" + "11" + "\n" + "y" + "\n" + "5" + "\n" + "3" + "\n" + "y"
             + "\n" + "7" + "\n" + "100" + "\n" + "n" + "\n" + "2" + "\n" + "2" + "\n"
@@ -237,7 +243,6 @@ public class ControllerTest {
             + "\n"
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
-            + "3. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\nCONTROLLERTEST2 PORTFOLIO COMPOSITION - Created on "
@@ -294,7 +299,7 @@ public class ControllerTest {
   // without buying anything, no portfolio created
 
   @Test
-  public void testControllerWithoutBuyingAnythingNoPortfolioCreated() {
+  public void testCControllerWithoutBuyingAnythingNoPortfolioCreated() {
     String userInput = "1" + "\n" + "Neha" + "\n" + "1" + "\n" + "10" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -367,7 +372,8 @@ public class ControllerTest {
   // two same stocks that are bought, can be seen combined in composition
 
   @Test
-  public void testControllerClubTwoStocksOfSameTickerComposition() throws IOException {
+  public void testDControllerClubTwoStocksOfSameTickerComposition() throws IOException {
+    deleteFileInDirectory("pf_controllerTest3.csv");
     String userInput = "1" + "\n" + "controllerTest3" + "\n" + "1" + "\n" + "3"
             + "\n" + "3" + "\n" + "y" + "\n" + "3" + "\n" + "2" + "\n" + "n"
             + "\n" + "2" + "\n" + "3" + "\n" + "m" + "\n" + "e";
@@ -473,7 +479,6 @@ public class ControllerTest {
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
-            + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\nCONTROLLERTEST3 PORTFOLIO COMPOSITION - Created on "
@@ -515,7 +520,7 @@ public class ControllerTest {
   // overriding same name portfolio
 
   @Test
-  public void testControllerOverrideSamePortfolio() throws IOException {
+  public void testEControllerOverrideSamePortfolio() throws IOException {
     String userInput = "1" + "\n" + "controllerTest3" + "\n" + "y" + "\n"
             + "1" + "\n" + "8" + "\n" + "7" + "\n" + "n" + "\n" + "2"
             + "\n" + "3" + "\n" + "m" + "\n" + "e";
@@ -595,7 +600,6 @@ public class ControllerTest {
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
-            + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\nCONTROLLERTEST3 PORTFOLIO COMPOSITION - Created on "
@@ -638,8 +642,8 @@ public class ControllerTest {
   // viewing portfolio by inputting some previous date
 
   @Test
-  public void testControllerInputDate() throws IOException {
-    String userInput = "3" + "\n" + "4" + "\n" + "2022-10-10" + "\n" + "m" + "\n" + "e";
+  public void testFControllerInputDate() throws IOException {
+    String userInput = "3" + "\n" + "3" + "\n" + "2022-10-10" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -663,16 +667,15 @@ public class ControllerTest {
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
-            + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): "
             + "\n"
-            + "Value of ESHA PORTFOLIO\n"
+            + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-10-10\t Total Value\n"
-            + "\nAmazon (AMZN) \t 4\t $106.8\t $427.2\n"
+            + "\nAmazon (AMZN) \t 7\t $100.8\t $705.6\n"
             + "\n"
-            + "Total Portfolio Value is on 2022-10-10: $427.2\n"
+            + "Total Portfolio Value is on 2022-10-10: $705.6\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -696,8 +699,8 @@ public class ControllerTest {
   // another example of viewing portfolio by inputting some previous date
 
   @Test
-  public void testControllerInputDate2() {
-    String userInput = "3" + "\n" + "4" + "\n" + "2019-12-12" + "\n" + "m" + "\n" + "e";
+  public void testGControllerInputDate2() {
+    String userInput = "3" + "\n" + "3" + "\n" + "2019-12-12" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -720,16 +723,15 @@ public class ControllerTest {
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
-            + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): "
             + "\n"
-            + "Value of ESHA PORTFOLIO\n"
+            + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2019-12-12\t Total Value\n"
-            + "\nAmazon (AMZN) \t 4\t $110.18\t $440.72\n"
+            + "\nAmazon (AMZN) \t 7\t $104.18\t $729.26\n"
             + "\n"
-            + "Total Portfolio Value is on 2019-12-12: $440.72"
+            + "Total Portfolio Value is on 2019-12-12: $729.26"
             + "\n"
             + "\nPress 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -753,8 +755,8 @@ public class ControllerTest {
   // inputting wrong date
 
   @Test
-  public void testControllerInvalidDate() {
-    String userInput = "3" + "\n" + "4" + "\n" + "9999-98-88" + "\n" + "2022-02-02"
+  public void testHControllerInvalidDate() {
+    String userInput = "3" + "\n" + "3" + "\n" + "9999-98-88" + "\n" + "2022-02-02"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -778,7 +780,6 @@ public class ControllerTest {
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
-            + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): "
@@ -786,11 +787,11 @@ public class ControllerTest {
             + "Not a valid input. Please enter the correct date.\n"
             + "Press 'b' to go back\n"
             + "\n"
-            + "Value of ESHA PORTFOLIO\n"
+            + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\nAmazon (AMZN) \t 4\t $118.1\t $472.4\n"
+            + "\nAmazon (AMZN) \t 7\t $112.1\t $784.7\n"
             + "\n"
-            + "Total Portfolio Value is on 2022-02-02: $472.4"
+            + "Total Portfolio Value is on 2022-02-02: $784.7"
             + "\n"
             + "\nPress 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -814,8 +815,8 @@ public class ControllerTest {
   // another example of inputting wrong date
 
   @Test
-  public void testControllerInvalidDate2() {
-    String userInput = "3" + "\n" + "4" + "\n" + "123445" + "\n" + "2022-02-02"
+  public void testIControllerInvalidDate2() {
+    String userInput = "3" + "\n" + "3" + "\n" + "123445" + "\n" + "2022-02-02"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -839,7 +840,6 @@ public class ControllerTest {
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
-            + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): "
@@ -847,11 +847,11 @@ public class ControllerTest {
             + "Not a valid input. Please enter the correct date.\n"
             + "Press 'b' to go back\n"
             + "\n"
-            + "Value of ESHA PORTFOLIO\n"
+            + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\nAmazon (AMZN) \t 4\t $118.1\t $472.4\n"
+            + "\nAmazon (AMZN) \t 7\t $112.1\t $784.7\n"
             + "\n"
-            + "Total Portfolio Value is on 2022-02-02: $472.4"
+            + "Total Portfolio Value is on 2022-02-02: $784.7"
             + "\n"
             + "\nPress 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -875,8 +875,8 @@ public class ControllerTest {
   // inputting future date
 
   @Test
-  public void testControllerInvalidDate3FutureDate() {
-    String userInput = "3" + "\n" + "4" + "\n" + "2024-10-10" + "\n" + "2022-02-02"
+  public void testJControllerInvalidDate3FutureDate() {
+    String userInput = "3" + "\n" + "3" + "\n" + "2024-10-10" + "\n" + "2022-02-02"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -900,7 +900,6 @@ public class ControllerTest {
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
-            + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): "
@@ -908,11 +907,11 @@ public class ControllerTest {
             + "Not a valid input. Please enter the correct date.\n"
             + "Press 'b' to go back\n"
             + "\n"
-            + "Value of ESHA PORTFOLIO\n"
+            + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\nAmazon (AMZN) \t 4\t $118.1\t $472.4\n"
+            + "\nAmazon (AMZN) \t 7\t $112.1\t $784.7\n"
             + "\n"
-            + "Total Portfolio Value is on 2022-02-02: $472.4"
+            + "Total Portfolio Value is on 2022-02-02: $784.7"
             + "\n"
             + "\nPress 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -936,7 +935,7 @@ public class ControllerTest {
   // entering wrong option for selecting portfolio
 
   @Test
-  public void testControllerEnterWrongOptionForSelectingPortfolio() {
+  public void testKControllerEnterWrongOptionForSelectingPortfolio() {
     String userInput = "2" + "\n" + "89" + "\n" + "b" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -960,7 +959,6 @@ public class ControllerTest {
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
-            + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -986,7 +984,7 @@ public class ControllerTest {
   // entering wrong option for initial choice of inputs
 
   @Test
-  public void testControllerInvalidInitialChoice() {
+  public void testLControllerInvalidInitialChoice() {
     String userInput = "7" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -1025,7 +1023,7 @@ public class ControllerTest {
   // testing set of all invalid inputs
 
   @Test
-  public void testControllerInvalidInputs() {
+  public void testMControllerInvalidInputs() {
     String userInput = "5" + "\n" + "1" + "\n" + "" + "\n" + "Riya" + "\n" + "6" + "\n" + "1"
             + "\n" + "11" + "\n" + "10" + "\n" + "-4" + "\n" + "4.3"
             + "\n" + "l" + "\n" + "m" + "\n" + "e";
@@ -1135,10 +1133,11 @@ public class ControllerTest {
   // test same price is seen on same date using view portfolio and value of portfolio
 
   @Test
-  public void testControllerShowSamePriceOnSameDate() throws IOException {
+  public void testNControllerShowSamePriceOnSameDate() throws IOException {
+    deleteFileInDirectory("pf_controllerTest4.csv");
     String userInput = "1" + "\n" + "controllerTest4" + "\n" + "1" + "\n" + "1" + "\n" + "1"
             + "\n" + "n"
-            + "\n" + "2" + "\n" + "4" + "\n" + "m" + "\n" + "3" + "\n" + "5" + "\n" + "2022-11-01"
+            + "\n" + "2" + "\n" + "4" + "\n" + "m" + "\n" + "3" + "\n" + "4" + "\n" + "2022-11-01"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -1215,7 +1214,6 @@ public class ControllerTest {
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
             + "4. CONTROLLERTEST4\n"
-            + "5. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\n"
@@ -1259,17 +1257,16 @@ public class ControllerTest {
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
             + "4. CONTROLLERTEST4\n"
-            + "5. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "Value of ESHA PORTFOLIO\n"
+            + "Value of CONTROLLERTEST4 PORTFOLIO\n"
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-01\t Total Value\n"
             + "\n"
-            + "Amazon (AMZN) \t 4\t $102.4\t $409.6\n"
+            + "Microsoft (MSFT) \t 1\t $255.9\t $255.9\n"
             + "\n"
-            + "Total Portfolio Value is on 2022-11-01: $409.6\n"
+            + "Total Portfolio Value is on 2022-11-01: $255.9\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -1294,7 +1291,7 @@ public class ControllerTest {
   // if how many stocks = 0, the portfolio is not created
 
   @Test
-  public void testControllerHowManyStocksIsZeroSoPortfolioNotCreated() throws IOException {
+  public void testOControllerHowManyStocksIsZeroSoPortfolioNotCreated() throws IOException {
     String userInput = "1" + "\n" + "Meghna" + "\n" + "1" + "\n" + "1" + "\n"
             + "0" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -1373,8 +1370,9 @@ public class ControllerTest {
   // this testcase should not display entry in the portfolio when how many stocks = 0
 
   @Test
-  public void testControllerHowManyStocksIsZeroSoStockNotDisplayedInPortfolio()
+  public void testPControllerHowManyStocksIsZeroSoStockNotDisplayedInPortfolio()
           throws IOException {
+    deleteFileInDirectory("pf_controllerTest5.csv");
     String userInput = "1" + "\n" + "controllerTest5" + "\n" + "1" + "\n" + "4" + "\n"
             + "3" + "\n" + "y" + "\n" + "1" + "\n"
             + "0" + "\n" + "m" + "\n" + "e";
@@ -1483,7 +1481,8 @@ public class ControllerTest {
   // 4 stocks bought by user
 
   @Test
-  public void testController4StocksBoughtByTheUser() throws IOException {
+  public void testQController4StocksBoughtByTheUser() throws IOException {
+    deleteFileInDirectory("pf_controllerTest6.csv");
     String userInput = "1" + "\n" + "controllerTest6" + "\n" + "1" + "\n"
             + "1" + "\n" + "10" + "\n" + "Y" + "\n"
             + "2" + "\n" + "10" + "\n" + "y" + "\n"
@@ -1655,7 +1654,8 @@ public class ControllerTest {
   // 5 stocks bought by a user
 
   @Test
-  public void testController5ByTheUser() throws IOException {
+  public void testRController5ByTheUser() throws IOException {
+    deleteFileInDirectory("pf_controllerTest7.csv");
     String userInput = "1" + "\n" + "controllerTest7" + "\n" + "1" + "\n"
             + "1" + "\n" + "10" + "\n" + "Y" + "\n"
             + "2" + "\n" + "10" + "\n" + "y" + "\n"
@@ -1858,7 +1858,8 @@ public class ControllerTest {
   // that composition
 
   @Test
-  public void testControllerClubThreeStocksOfSameTickerComposition() throws IOException {
+  public void testSControllerClubThreeStocksOfSameTickerComposition() throws IOException {
+    deleteFileInDirectory("pf_controllerTest8.csv");
     String userInput = "1" + "\n" + "controllerTest8" + "\n" + "1" + "\n" + "1"
             + "\n" + "1" + "\n" + "y" + "\n" + "1" + "\n" + "1" + "\n" + "y"
             + "\n" + "1" + "\n" + "1" + "\n" + "n" + "\n" + "2" + "\n" + "8"
@@ -1987,7 +1988,6 @@ public class ControllerTest {
             + "6. CONTROLLERTEST6\n"
             + "7. CONTROLLERTEST7\n"
             + "8. CONTROLLERTEST8\n"
-            + "9. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\n"
@@ -2030,7 +2030,8 @@ public class ControllerTest {
   // 10 stocks bought by user
 
   @Test
-  public void testController10StocksBoughtByUser() throws IOException {
+  public void testTController10StocksBoughtByUser() throws IOException {
+    deleteFileInDirectory("pf_controllerTest9.csv");
     String userInput = "1" + "\n" + "controllerTest9" + "\n" + "1" + "\n"
             + "2" + "\n" + "1" + "\n" + "Y" + "\n"
             + "2" + "\n" + "1" + "\n" + "y" + "\n"
@@ -2364,7 +2365,7 @@ public class ControllerTest {
   // 18 stocks bought by user
 
   @Test
-  public void testController18StocksBoughtByUser() throws IOException {
+  public void testUController18StocksBoughtByUser() throws IOException {
     String userInput = "1" + "\n" + "controllerTest10" + "\n" + "1" + "\n"
             + "3" + "\n" + "2" + "\n" + "Y" + "\n" + "3" + "\n" + "2" + "\n" + "y" + "\n"
             + "3" + "\n" + "2" + "\n" + "y" + "\n" + "3" + "\n" + "2" + "\n" + "y" + "\n"
@@ -2911,7 +2912,8 @@ public class ControllerTest {
   // 28 stocks bought by user
 
   @Test
-  public void testController28StocksBoughtByUser() throws IOException {
+  public void testVController28StocksBoughtByUser() throws IOException {
+    deleteFileInDirectory("pf_controllerTest11.csv");
     String userInput = "1" + "\n" + "controllerTest11" + "\n" + "1" + "\n"
             + "5" + "\n" + "1" + "\n" + "Y" + "\n" + "5" + "\n" + "1" + "\n" + "y" + "\n"
             + "5" + "\n" + "1" + "\n" + "y" + "\n" + "5" + "\n" + "1" + "\n" + "y" + "\n"
@@ -3733,7 +3735,7 @@ public class ControllerTest {
   // initial choice exit
 
   @Test
-  public void testInitialChoiceExit() {
+  public void testWInitialChoiceExit() {
     String userInput = "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -3761,7 +3763,8 @@ public class ControllerTest {
 
   // how many = large number
   @Test
-  public void testInvalidHowMany() throws IOException {
+  public void testXInvalidHowMany() throws IOException {
+    deleteFileInDirectory("pf_controllerTest12.csv");
     String userInput = "1" + "\n" + "controllerTest12" + "\n" + "2"
             + "1" + "\n" + "controllerTest12" + "\n"
             + "1" + "\n" + "10" + "\n" + "14000000000000000000"
@@ -3866,7 +3869,7 @@ public class ControllerTest {
   // string is empty for portfolio name
 
   @Test
-  public void testStringEmptyForName() {
+  public void testYStringEmptyForName() {
     String userInput = "1" + "\n" + "" + "\n" + "0" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -3908,7 +3911,7 @@ public class ControllerTest {
   // view list of portfolios and entering wrong option
 
   @Test
-  public void testViewPortfolioAndEnterWrongOption() {
+  public void testZAViewPortfolioAndEnterWrongOption() {
     String userInput = "2" + "\n" + "-52" + "\n" + "b" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -3928,10 +3931,10 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST10\n"
-            + "2. CONTROLLERTEST11\n"
-            + "3. CONTROLLERTEST12\n"
-            + "4. CONTROLLERTEST1\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST10\n"
+            + "3. CONTROLLERTEST11\n"
+            + "4. CONTROLLERTEST12\n"
             + "5. CONTROLLERTEST2\n"
             + "6. CONTROLLERTEST3\n"
             + "7. CONTROLLERTEST4\n"
@@ -3940,7 +3943,6 @@ public class ControllerTest {
             + "10. CONTROLLERTEST7\n"
             + "11. CONTROLLERTEST8\n"
             + "12. CONTROLLERTEST9\n"
-            + "13. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -3967,7 +3969,7 @@ public class ControllerTest {
   // value of portfolio. enter wrong portfolio option
 
   @Test
-  public void testValueOfPortfolioEnterWrongPortfolioNumber() {
+  public void testZBValueOfPortfolioEnterWrongPortfolioNumber() {
     String userInput = "3" + "\n" + "-9" + "\n" + "b" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -3987,10 +3989,10 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST10\n"
-            + "2. CONTROLLERTEST11\n"
-            + "3. CONTROLLERTEST12\n"
-            + "4. CONTROLLERTEST1\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST10\n"
+            + "3. CONTROLLERTEST11\n"
+            + "4. CONTROLLERTEST12\n"
             + "5. CONTROLLERTEST2\n"
             + "6. CONTROLLERTEST3\n"
             + "7. CONTROLLERTEST4\n"
@@ -3999,7 +4001,6 @@ public class ControllerTest {
             + "10. CONTROLLERTEST7\n"
             + "11. CONTROLLERTEST8\n"
             + "12. CONTROLLERTEST9\n"
-            + "13. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -4025,7 +4026,7 @@ public class ControllerTest {
 
   // buy a stock, enter wrong stock option
   @Test
-  public void testBuyStockEnterWrongStockOption() {
+  public void testZCBuyStockEnterWrongStockOption() {
     String userInput = "1" + "\n" + "ram" + "\n" + "1" + "\n"
             + "0" + "\n" + "90" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -4095,7 +4096,7 @@ public class ControllerTest {
 
   // buy a stock, enter invalid how many stocks
   @Test
-  public void testBuyStockEnterInvalidHowManyStocks() {
+  public void testZDBuyStockEnterInvalidHowManyStocks() {
     String userInput = "1" + "\n" + "e" + "\n" + "1" + "\n" + "9" + "\n" + "0"
             + "\n" + "-85" + "\n" + "8.90" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -4178,7 +4179,7 @@ public class ControllerTest {
 
   // toggle between main menu / back
   @Test
-  public void testToggleBetweenMainMenuAndBack() {
+  public void testZEToggleBetweenMainMenuAndBack() {
     String userInput = "1" + "\n" + "Mahi" + "\n" + " 2" + "\n" + "2" + "\n"
             + "-1" + "\n" + "b" + "\n" + "3" + "\n" + "1" + "\n" + "-1" + "\n" + "b"
             + "\n" + "-1" + "\n" + "b" + "\n" + "1" + "\n"
@@ -4253,10 +4254,10 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST10\n"
-            + "2. CONTROLLERTEST11\n"
-            + "3. CONTROLLERTEST12\n"
-            + "4. CONTROLLERTEST1\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST10\n"
+            + "3. CONTROLLERTEST11\n"
+            + "4. CONTROLLERTEST12\n"
             + "5. CONTROLLERTEST2\n"
             + "6. CONTROLLERTEST3\n"
             + "7. CONTROLLERTEST4\n"
@@ -4265,7 +4266,6 @@ public class ControllerTest {
             + "10. CONTROLLERTEST7\n"
             + "11. CONTROLLERTEST8\n"
             + "12. CONTROLLERTEST9\n"
-            + "13. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -4275,10 +4275,10 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST10\n"
-            + "2. CONTROLLERTEST11\n"
-            + "3. CONTROLLERTEST12\n"
-            + "4. CONTROLLERTEST1\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST10\n"
+            + "3. CONTROLLERTEST11\n"
+            + "4. CONTROLLERTEST12\n"
             + "5. CONTROLLERTEST2\n"
             + "6. CONTROLLERTEST3\n"
             + "7. CONTROLLERTEST4\n"
@@ -4287,7 +4287,6 @@ public class ControllerTest {
             + "10. CONTROLLERTEST7\n"
             + "11. CONTROLLERTEST8\n"
             + "12. CONTROLLERTEST9\n"
-            + "13. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -4347,7 +4346,7 @@ public class ControllerTest {
 
     assertEquals(expectedOutput, result);
   }
-  
+
   private String readStockDateFromPortfolioCsv(String portfolioName, int lineNumber)
           throws IOException {
     String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
@@ -4449,5 +4448,32 @@ public class ControllerTest {
       throw new RuntimeException();
     }
     return splitStockData[1];
+  }
+
+  // A helper function to delete a file
+  private void deleteFileInDirectory(String FileName) {
+    File directory = new File("userdata/user1");
+    if (directory.exists()) {
+      String[] filename = directory.list();
+      for (String fName : filename) {
+        if (Objects.equals(FileName, fName)) {
+          File currentFile = new File(directory.getPath(), fName);
+          currentFile.delete();
+          break;
+        }
+      }
+    }
+  }
+
+  private void deleteDirectory() {
+    File directory = new File("userdata/user1");
+    if (directory.exists()) {
+      String[] filename = directory.list();
+      assert filename != null;
+      for (String fName : filename) {
+        File currentFile = new File(directory.getPath(), fName);
+        currentFile.delete();
+      }
+    }
   }
 }

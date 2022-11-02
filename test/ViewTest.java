@@ -3,6 +3,7 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 
@@ -160,7 +161,7 @@ public class ViewTest {
     vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
 
     String expected = "Not a valid input. Please enter the correct stock.\n"
-            + "If you want to go back to main menu, press '0'.\n" + "\n";
+            + "If you want to go back to main menu, press 'm'.\n" + "\n";
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
@@ -176,8 +177,8 @@ public class ViewTest {
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, null, 0);
 
-    String expected = "Not a valid input. Please enter number of shares as whole number.\n"
-            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n" + "\n";
+    String expected = "Not a valid input. Please enter number of shares as natural numbers.\n" +
+            "Press 'b' to go back to the previous menu, 'm' to main menu.\n\n";
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
@@ -264,7 +265,7 @@ public class ViewTest {
 
     String expected = "\nCREATE PORTFOLIO MENU\n" + "\n"
             + s.toUpperCase() + " Portfolio\n" + "\n"
-            + "1. Buy a share\n"
+            + "1. Buy a stock\n"
             + "2. Main Menu\n"
             + "e. Exit\n" + "\n"
             + "ENTER YOUR CHOICE: \n";
@@ -321,29 +322,9 @@ public class ViewTest {
     assertEquals(expected, result);
   }
 
-  @Test
-  public void testShowPortfolioIndividualScreen1() {
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-    String[] option = {"4"};
-    String s = Arrays.toString(option).replaceAll("\\[|\\]|,", "");
-    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, option, 0);
-
-    String expected = "\nESHA PORTFOLIO COMPOSITION - Created on 2022-10-29\n" + "\n"
-            + "Name (Symbol) \t Quantity \t Price of each share \t Total Value\n" + "\n"
-            + "Meta (META) \t 9000\t $98.9\t $890100.0\n" + "\n"
-            + "Total Portfolio Value as on 2022-10-29: $890100.0" + "\n" + "\n";
-
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expected, result);
-  }
 
   @Test
-  public void testShowPortfolioIndividualScreen2() {
+  public void testShowPortfolioIndividualScreen2() throws IOException {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     String[] option = {"3"};
@@ -351,10 +332,10 @@ public class ViewTest {
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, option, 0);
 
-    String expected = "\nESHA A PORTFOLIO COMPOSITION - Created on 2022-10-29\n" + "\n"
-            + "Name (Symbol) \t Quantity \t Price of each share \t Total Value\n" + "\n"
-            + "Microsoft (MSFT) \t 2\t $235.7\t $471.4\n" + "\n"
-            + "Total Portfolio Value as on 2022-10-29: $471.4" + "\n" + "\n";
+    String expected = "\nCONTROLLERTEST11 PORTFOLIO COMPOSITION - Created on "+readPurchaseDateFromCsv("controllerTest11", 1)+"\n"
+            + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n" + "\n"
+            + "Tesla (TSLA) \t 28\t $"+ Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv("controllerTest11", 1)) * 100) / 100 +"\t $"+ 28* Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv("controllerTest11", 1)) * 100) / 100 +"\n"
+            + "\nTotal Portfolio Value as on "+readPurchaseDateFromCsv("controllerTest11", 1)+": $"+ 28* Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv("controllerTest11", 1)) * 100) / 100 +"\n" +"\n" ;
 
 
     String result = bytes.toString();
@@ -427,7 +408,7 @@ public class ViewTest {
   }
 
   @Test
-  public void testShowPortfolioIndividualWithDateScreen() {
+  public void testShowPortfolioIndividualWithDateScreen() throws IOException {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     String[] args = {"3", "2022-10-29"};
@@ -436,10 +417,11 @@ public class ViewTest {
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, args, 0);
 
-    String expected = "\nESHA PORTFOLIO COMPOSITION - Created on " + args[1] + "\n"
+    String expected = "\nCONTROLLERTEST11 PORTFOLIO COMPOSITION - Created on " +readPurchaseDateFromCsv("controllerTest11", 1)+"\n"
             + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n" + "\n"
-            + "Meta (META) \t 9000\t $98.9\t $890100.0\n" + "\n"
-            + "Total Portfolio Value as on " + args[1] + ":" + " $890100.0" + "\n" + "\n";
+            + "Tesla (TSLA) \t 28\t $"+ Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv("controllerTest11", 1)) * 100) / 100 +"\t $"+ 28* Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv("controllerTest11", 1)) * 100) / 100 +"\n"
+            + "\nTotal Portfolio Value as on "+readPurchaseDateFromCsv("controllerTest11", 1)+": $"+ 28* Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv("controllerTest11", 1)) * 100) / 100 +"\n" +"\n" ;
+
 
 
     String result = bytes.toString();
@@ -447,6 +429,107 @@ public class ViewTest {
 
     assertEquals(expected, result);
   }
+  private String readStockDateFromPortfolioCsv(String portfolioName, int lineNumber)
+          throws IOException {
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
+    FileReader fr = new FileReader(filename);
+    BufferedReader br = new BufferedReader(fr);
+    String line;
+    String dateLastKnown = null;
+    int l = 3 + lineNumber;
 
+    while ((line = br.readLine()) != null && l >= 0) {
+      cols = line.split(",");
+      if (l == 1) {
+        dateLastKnown = cols[2];
+      }
+      l--;
+    }
+    return dateLastKnown;
+  }
+
+  private String readPurchaseDateFromCsv(String portfolioName, int lineNumber)
+          throws IOException {
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
+    FileReader fr = new FileReader(filename);
+    BufferedReader br = new BufferedReader(fr);
+    String line;
+    String datePurchase = null;
+    int l = 3 + lineNumber;
+
+    while ((line = br.readLine()) != null && l >= 0) {
+      cols = line.split(",");
+      if (l == 1) {
+        datePurchase = cols[0];
+      }
+      l--;
+    }
+    return datePurchase.substring(0, 10);
+  }
+
+  private String readStockPriceFromPortfolioCsv(String portfolioName, int lineNumber)
+          throws IOException {
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
+    FileReader fr = new FileReader(filename);
+    BufferedReader br = new BufferedReader(fr);
+    String line;
+    String price = null;
+    int l = 3 + lineNumber;
+
+    while ((line = br.readLine()) != null && l >= 0) {
+      cols = line.split(",");
+      if (l == 1) {
+        price = cols[6];
+      }
+      l--;
+    }
+    return price;
+  }
+
+
+  private String readStockDateFromStockDataCsv() {
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData = new String[4];
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+    return splitStockData[3];
+  }
+
+  private String readStockPriceFromStockDataCsv() {
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData = new String[4];
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+    return splitStockData[1];
+  }
 
 }
