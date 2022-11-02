@@ -1,35 +1,30 @@
 import org.junit.Test;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Scanner;
-
-import javax.sound.midi.SysexMessage;
 
 import model.ModelControllerInteract;
 import model.ModelControllerInteractImpl;
-import model.StockCompositionData;
 import model.TypeofAction;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-public class modelTest {
+/**
+ * This class contains tests for the Model.
+ */
+
+public class ModelTest {
 
   @Test
-  public void testModelCreatePortfolio(){
+  public void testModelCreatePortfolio() {
     String[] args = {"modelTest_esha"};
     ModelControllerInteract obj = new ModelControllerInteractImpl();
-    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO,args,0);
+    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, args, 0);
 
     File dir = new File("userdata/user1/");
     File[] directoryListing = dir.listFiles();
@@ -47,16 +42,16 @@ public class modelTest {
   }
 
   @Test
-  public void testModelDeleteEmptyPortfolio(){
+  public void testModelDeleteEmptyPortfolio() {
     String[] args = {"modelTest_esha2"};
     ModelControllerInteract obj = new ModelControllerInteractImpl();
-    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO,args,0);
-    obj.modelControllerInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO,null,0);
+    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, args, 0);
+    obj.modelControllerInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
 
     File dir = new File("userdata/user1/");
     File[] directoryListing = dir.listFiles();
 
-    int count=0;
+    int count = 0;
     if (directoryListing != null) {
       for (File i : directoryListing) {
         if (!i.getName().equals("pf_" + args[0] + ".csv")) {
@@ -64,14 +59,14 @@ public class modelTest {
         }
       }
     }
-    assertEquals(count,dir.listFiles().length);
+    assertEquals(count, dir.listFiles().length);
   }
 
   @Test
-  public void testModelGetStockData(){
+  public void testModelGetStockData() {
     String[] args = {"GOOG"};
     ModelControllerInteract obj = new ModelControllerInteractImpl();
-    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA,args,0);
+    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
 
     String line;
     String splitBy = ",";
@@ -101,30 +96,27 @@ public class modelTest {
 
 
     ModelControllerInteract obj = new ModelControllerInteractImpl();
-    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO,name,0);
-    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA,stockTicker,0);
-    obj.modelControllerInteract(TypeofAction.BUY_STOCKS,stockTicker,0);
+    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
+    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, stockTicker, 0);
+    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, stockTicker, 0);
 
-    Timestamp instant= Timestamp.from(Instant.now());
+    Timestamp instant = Timestamp.from(Instant.now());
     String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(instant);
 
-    String filename = "userdata/user1/" + "pf_"+ name[0]+".csv";
-    String[] words=null;
+    String filename = "userdata/user1/" + "pf_" + name[0] + ".csv";
+    String[] words = null;
     FileReader fr = new FileReader(filename);
     BufferedReader br = new BufferedReader(fr);
     String str;
-    while((str=br.readLine())!=null)
-    {
-      words=str.split(",");
-      for (String word : words)
-      {
-        if (word.equals(currentTime))
-        {
-          assertEquals(currentTime,word);
+    while ((str = br.readLine()) != null) {
+      words = str.split(",");
+      for (String word : words) {
+        if (word.equals(currentTime)) {
+          assertEquals(currentTime, word);
           return;
         }
       }
     }
-    assert(false);
+    assert (false);
   }
 }

@@ -411,8 +411,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     int dateLong = Integer.parseInt(dateSplitIndividual.toString());
     int decimalValue = sumOfNumber(dateLong);
     Random rand = new Random(dateLong);
-    int randomShareValueInteger = (int) (rand.nextInt((int) ((stockValue + 30) -
-            (stockValue - 10))) + stockValue - 10);
+    int randomShareValueInteger = (int) (rand.nextInt((int) ((stockValue + 30)
+            - (stockValue - 10))) + stockValue - 10);
     String randomShareValueString = "" + randomShareValueInteger + "." + decimalValue;
     double value = Double.parseDouble(randomShareValueString);
     return Math.floor(value * 100) / 100;

@@ -1,7 +1,0 @@
-PortfolioName,controllerTest6_Shubham
-PortfolioID,1667367938
-PurchaseTimestamp,PurchaseID,StockLastKnownValueTimestamp,StockSymbol,NameOfStock,NumberOfStocksPurchased,PriceOfShareAtPurchase
-2022-11-02 01:45:40,1667367940,2022-11-01 20:00:00,MSFT,Microsoft,10,227.8500
-2022-11-02 01:45:40,1667367940,2022-11-01 20:00:00,META,Meta,10,94.7400
-2022-11-02 01:45:40,1667367940,2022-11-01 20:00:00,GOOG,Google,10,90.7200
-2022-11-02 01:45:41,1667367941,2022-11-01 20:00:00,AAPL,Apple,10,150.3800

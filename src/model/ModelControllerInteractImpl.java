@@ -91,17 +91,17 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    * @return the supported stocks as a string
    */
   private String supportedStocksCSVData() {
-    return "StockID,StockName,StockSymbol\n" +
-            "1,Apple,AAPL\n" +
-            "2,Amazon,AMZN\n" +
-            "3,Microsoft,MSFT\n" +
-            "4,Tesla,TSLA\n" +
-            "5,Meta,META\n" +
-            "6,Walmart,WMT\n" +
-            "7,Johnson,JNJ\n" +
-            "8,JPMorgan Chase,JPM\n" +
-            "9,Google,GOOG\n" +
-            "10,UnitedHealth,UNH";
+    return "StockID,StockName,StockSymbol\n"
+            + "1,Apple,AAPL\n"
+            + "2,Amazon,AMZN\n"
+            + "3,Microsoft,MSFT\n"
+            + "4,Tesla,TSLA\n"
+            + "5,Meta,META\n"
+            + "6,Walmart,WMT\n"
+            + "7,Johnson,JNJ\n"
+            + "8,JPMorgan Chase,JPM\n"
+            + "9,Google,GOOG\n"
+            + "10,UnitedHealth,UNH";
   }
 
   /**
