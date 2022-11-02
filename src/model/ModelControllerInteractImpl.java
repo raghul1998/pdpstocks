@@ -43,12 +43,13 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         break;
       }
       case DELETE_EMPTY_PORTFOLIO: {
-        deleteEmptyPortFolio();
+        deleteEmptyPortFolio(null);
         break;
       }
       case CREATE_SUPPORTED_STOCKS: {
         try {
           createSupportedStocksFile();
+          deleteEmptyPortFolioAll();
         } catch (Exception e) {
           System.out.println("MODEL: Error in creating supported stocks file");
         }
@@ -57,6 +58,27 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
       default: {
         //No Action Needed
         break;
+      }
+    }
+  }
+
+  /**
+   * This method runs during the start of the application and helps in deleting any empty
+   * portfolio that was created during the previous session of the application that did not
+   * terminate gracefully.
+   */
+  private void deleteEmptyPortFolioAll() {
+    File directory = new File("userdata/user1");
+    if (directory.exists()) {
+      directory.mkdir();
+      File[] files = directory.listFiles();
+      assert files != null;
+      for (File file : files) {
+        String filename = file.getName();
+        String[] arrOfStr = filename.split("pf_", 2);
+        arrOfStr = arrOfStr[1].split("\\.", 2);
+        // Name of the portFolio
+        deleteEmptyPortFolio(arrOfStr[0]);
       }
     }
   }
@@ -107,8 +129,12 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
   /**
    * This method deletes the portfolio if it is empty.
    */
-  private void deleteEmptyPortFolio() {
-    String fileName = "userdata/user1/" + "pf_" + portFolioName + ".csv";
+  private void deleteEmptyPortFolio(String pfName) {
+    if (pfName == null) {
+      pfName = portFolioName;
+    }
+
+    String fileName = "userdata/user1/" + "pf_" + pfName + ".csv";
     try {
       File file = new File(fileName);
       BufferedReader stockData;

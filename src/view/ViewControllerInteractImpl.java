@@ -176,6 +176,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     double totalPortFolioValue = 0;
 
     String pfCreatedDate = stkObj.createdTimeStamp;
+    if (pfCreatedDate == null) {
+      output.println("The portfolio is empty.\n");
+      return;
+    }
     pfCreatedDate = pfCreatedDate.substring(0, 10);
 
     String[] portfolioNames = obj.getPortFolioNames();
@@ -223,6 +227,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
     String[] portfolioNames = obj.getPortFolioNames();
     String date = stkObj.createdTimeStamp;
+    if (date == null) {
+      output.println("The portfolio is empty.\n");
+      return;
+    }
     date = date.substring(0, 10);
     output.println("\n" + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO"
             + " COMPOSITION - Created on " + date + "\n");
