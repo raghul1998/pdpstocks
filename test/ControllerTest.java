@@ -22,7 +22,7 @@ public class ControllerTest {
 
   @Test
   public void testControllerCreatePortfolio() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest1_health" + "\n" + "1" + "\n" + "1"
+    String userInput = "1" + "\n" + "controllerTest1" + "\n" + "1" + "\n" + "1"
             + "\n" + "1" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -43,7 +43,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST1_HEALTH Portfolio\n"
+            + "CONTROLLERTEST1 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -69,10 +69,10 @@ public class ControllerTest {
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest1_health", 1)
+            + readStockDateFromPortfolioCsv("controllerTest1", 1)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest1_health", 1)
+            + readStockPriceFromPortfolioCsv("controllerTest1", 1)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -80,7 +80,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST1_HEALTH PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST1 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -103,7 +103,7 @@ public class ControllerTest {
 
   @Test
   public void testControllerCreatePortfolioAndViewPortfolio() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest2_bharati" + "\n" + "1" + "\n"
+    String userInput = "1" + "\n" + "controllerTest2" + "\n" + "1" + "\n"
             + "10" + "\n" + "11" + "\n" + "y" + "\n" + "5" + "\n" + "3" + "\n" + "y"
             + "\n" + "7" + "\n" + "100" + "\n" + "n" + "\n" + "2" + "\n" + "2" + "\n"
             + "m" + "\n" + "e";
@@ -127,7 +127,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST2_BHARATI Portfolio\n"
+            + "CONTROLLERTEST2 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -153,10 +153,10 @@ public class ControllerTest {
             + "StockName: Walmart\n"
             + "Symbol: WMT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest2_bharati", 1)
+            + readStockDateFromPortfolioCsv("controllerTest2", 1)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest2_bharati", 1)
+            + readStockPriceFromPortfolioCsv("controllerTest2", 1)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -182,10 +182,10 @@ public class ControllerTest {
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest2_bharati", 2)
+            + readStockDateFromPortfolioCsv("controllerTest2", 2)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest2_bharati", 2)
+            + readStockPriceFromPortfolioCsv("controllerTest2", 2)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -211,10 +211,10 @@ public class ControllerTest {
             + "StockName: Johnson\n"
             + "Symbol: JNJ\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest2_bharati", 3)
+            + readStockDateFromPortfolioCsv("controllerTest2", 3)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest2_bharati", 3)
+            + readStockPriceFromPortfolioCsv("controllerTest2", 3)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -222,7 +222,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST2_BHARATI PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST2 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -235,42 +235,42 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
             + "3. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
-            + "\nCONTROLLERTEST2_BHARATI PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest2_bharati", 1) + "\n"
+            + "\nCONTROLLERTEST2 PORTFOLIO COMPOSITION - Created on "
+            + readPurchaseDateFromCsv("controllerTest2", 1) + "\n"
             + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\nWalmart (WMT) \t 11\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest2_bharati", 1)) * 100) / 100 + "\t $"
+            "controllerTest2", 1)) * 100) / 100 + "\t $"
             + 11 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest2_bharati", 1)) * 100) / 100
+            "controllerTest2", 1)) * 100) / 100
             + "\nTesla (TSLA) \t 3\t $" + Math.floor(
             Double.parseDouble(readStockPriceFromPortfolioCsv(
-                    "controllerTest2_bharati", 2)) * 100) / 100
+                    "controllerTest2", 2)) * 100) / 100
             + "\t $" + 3 * Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest2_bharati", 2)) * 100) / 100
+                    "controllerTest2", 2)) * 100) / 100
             + "\nJohnson (JNJ) \t 100\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest2_bharati", 3)) * 100) / 100
+            "controllerTest2", 3)) * 100) / 100
             + "\t $" + 100 * Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest2_bharati", 3)) * 100) / 100
+                    "controllerTest2", 3)) * 100) / 100
             + "\n"
             + "\nTotal Portfolio Value as on "
-            + readPurchaseDateFromCsv("controllerTest2_bharati", 1)
+            + readPurchaseDateFromCsv("controllerTest2", 1)
             + ": $" + (11 * Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest2_bharati", 1)) * 100) / 100
+                    "controllerTest2", 1)) * 100) / 100
             + 3 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest2_bharati", 2)) * 100) / 100 + 100
+            "controllerTest2", 2)) * 100) / 100 + 100
             * Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest2_bharati", 3)) * 100) / 100)
+                    "controllerTest2", 3)) * 100) / 100)
             + "\n"
             + "\nPress 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -368,7 +368,7 @@ public class ControllerTest {
 
   @Test
   public void testControllerClubTwoStocksOfSameTickerComposition() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "1" + "\n" + "3"
+    String userInput = "1" + "\n" + "controllerTest3" + "\n" + "1" + "\n" + "3"
             + "\n" + "3" + "\n" + "y" + "\n" + "3" + "\n" + "2" + "\n" + "n"
             + "\n" + "2" + "\n" + "3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -391,7 +391,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST3_BHARAT Portfolio\n"
+            + "CONTROLLERTEST3 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -417,10 +417,10 @@ public class ControllerTest {
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest3_bharat", 1)
+            + readStockDateFromPortfolioCsv("controllerTest3", 1)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest3_bharat", 1)
+            + readStockPriceFromPortfolioCsv("controllerTest3", 1)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -446,10 +446,10 @@ public class ControllerTest {
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest3_bharat", 2)
+            + readStockDateFromPortfolioCsv("controllerTest3", 2)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest3_bharat", 2)
+            + readStockPriceFromPortfolioCsv("controllerTest3", 2)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -457,7 +457,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST3_BHARAT PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST3 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -470,27 +470,27 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
             + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
-            + "\nCONTROLLERTEST3_BHARAT PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest3_bharat", 1)
+            + "\nCONTROLLERTEST3 PORTFOLIO COMPOSITION - Created on "
+            + readPurchaseDateFromCsv("controllerTest3", 1)
             + "\n"
             + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\nGoogle (GOOG) \t 5\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest3_bharat", 1)) * 100) / 100
+            "controllerTest3", 1)) * 100) / 100
             + "\t $" + 5 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv("controllerTest3_bharat",
+            readStockPriceFromPortfolioCsv("controllerTest3",
                     1)) * 100) / 100 + "\n"
             + "\nTotal Portfolio Value as on "
-            + readPurchaseDateFromCsv("controllerTest3_bharat", 1)
+            + readPurchaseDateFromCsv("controllerTest3", 1)
             + ": $" + 5 * Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest3_bharat", 1)) * 100) / 100
+                    "controllerTest3", 1)) * 100) / 100
             + "\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
@@ -516,7 +516,7 @@ public class ControllerTest {
 
   @Test
   public void testControllerOverrideSamePortfolio() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "y" + "\n"
+    String userInput = "1" + "\n" + "controllerTest3" + "\n" + "y" + "\n"
             + "1" + "\n" + "8" + "\n" + "7" + "\n" + "n" + "\n" + "2"
             + "\n" + "3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -542,7 +542,7 @@ public class ControllerTest {
             + "If you want to go main screen, press 'b'.\n"
             + "\n"
             + "\nCREATE PORTFOLIO MENU\n"
-            + "\nCONTROLLERTEST3_BHARAT Portfolio\n"
+            + "\nCONTROLLERTEST3 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -568,10 +568,10 @@ public class ControllerTest {
             + "StockName: Amazon\n"
             + "Symbol: AMZN\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest3_bharat", 1)
+            + readStockDateFromPortfolioCsv("controllerTest3", 1)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest3_bharat", 1)
+            + readStockPriceFromPortfolioCsv("controllerTest3", 1)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -579,7 +579,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST3_BHARAT PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST3 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -592,28 +592,28 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
             + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
-            + "\nCONTROLLERTEST3_BHARAT PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest3_bharat", 1) + "\n"
+            + "\nCONTROLLERTEST3 PORTFOLIO COMPOSITION - Created on "
+            + readPurchaseDateFromCsv("controllerTest3", 1) + "\n"
             + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\nAmazon (AMZN) \t 7\t $"
             + Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest3_bharat", 1)) * 100) / 100
+                    "controllerTest3", 1)) * 100) / 100
             + "\t $" + 7 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest3_bharat", 1)) * 100) / 100
+            "controllerTest3", 1)) * 100) / 100
             + "\n"
             + "\nTotal Portfolio Value as on "
             + readPurchaseDateFromCsv(
-            "controllerTest3_bharat", 1)
+            "controllerTest3", 1)
             + ": $" + 7 * Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest3_bharat", 1)) * 100) / 100
+                    "controllerTest3", 1)) * 100) / 100
             + "\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
@@ -660,9 +660,9 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
             + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -717,9 +717,9 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
             + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -775,9 +775,9 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
             + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -836,9 +836,9 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
             + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -897,9 +897,9 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
             + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -957,9 +957,9 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
             + "4. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -1136,7 +1136,7 @@ public class ControllerTest {
 
   @Test
   public void testControllerShowSamePriceOnSameDate() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest4_Anuja" + "\n" + "1" + "\n" + "1" + "\n" + "1"
+    String userInput = "1" + "\n" + "controllerTest4" + "\n" + "1" + "\n" + "1" + "\n" + "1"
             + "\n" + "n"
             + "\n" + "2" + "\n" + "4" + "\n" + "m" + "\n" + "3" + "\n" + "5" + "\n" + "2022-11-01"
             + "\n" + "m" + "\n" + "e";
@@ -1161,7 +1161,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST4_ANUJA Portfolio\n"
+            + "CONTROLLERTEST4 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -1187,10 +1187,10 @@ public class ControllerTest {
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest4_Anuja", 1)
+            + readStockDateFromPortfolioCsv("controllerTest4", 1)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest4_Anuja", 1)
+            + readStockPriceFromPortfolioCsv("controllerTest4", 1)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1198,7 +1198,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST4_ANUJA PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST4 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -1211,16 +1211,16 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
-            + "4. CONTROLLERTEST4_ANUJA\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
             + "5. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\n"
-            + "CONTROLLERTEST4_ANUJA PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest4_Anuja", 1)
+            + "CONTROLLERTEST4 PORTFOLIO COMPOSITION - Created on "
+            + readPurchaseDateFromCsv("controllerTest4", 1)
             + "\n"
             + "\n"
             + "Name (Symbol) \t Quantity \t Price of each share \t Total Value\n"
@@ -1228,17 +1228,17 @@ public class ControllerTest {
             + "Microsoft (MSFT) \t 1\t $"
             + Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest4_Anuja", 1)) * 100) / 100
+                    "controllerTest4", 1)) * 100) / 100
             + "\t $" + 1 * Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest4_Anuja", 1)) * 100) / 100
+                    "controllerTest4", 1)) * 100) / 100
             + "\n"
             + "\n"
             + "Total Portfolio Value as on "
-            + readPurchaseDateFromCsv("controllerTest4_Anuja", 1)
+            + readPurchaseDateFromCsv("controllerTest4", 1)
             + ": $" + 1 * Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest4_Anuja", 1)) * 100) / 100
+                    "controllerTest4", 1)) * 100) / 100
             + "\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
@@ -1255,10 +1255,10 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
-            + "4. CONTROLLERTEST4_ANUJA\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
             + "5. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -1375,7 +1375,7 @@ public class ControllerTest {
   @Test
   public void testControllerHowManyStocksIsZeroSoStockNotDisplayedInPortfolio()
           throws IOException {
-    String userInput = "1" + "\n" + "controllerTest5_Ash" + "\n" + "1" + "\n" + "4" + "\n"
+    String userInput = "1" + "\n" + "controllerTest5" + "\n" + "1" + "\n" + "4" + "\n"
             + "3" + "\n" + "y" + "\n" + "1" + "\n"
             + "0" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -1399,7 +1399,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST5_ASH Portfolio\n"
+            + "CONTROLLERTEST5 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -1425,10 +1425,10 @@ public class ControllerTest {
             + "StockName: Apple\n"
             + "Symbol: AAPL\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest5_Ash", 1)
+            + readStockDateFromPortfolioCsv("controllerTest5", 1)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest5_Ash", 1)
+            + readStockPriceFromPortfolioCsv("controllerTest5", 1)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1484,7 +1484,7 @@ public class ControllerTest {
 
   @Test
   public void testController4StocksBoughtByTheUser() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest6_Shubham" + "\n" + "1" + "\n"
+    String userInput = "1" + "\n" + "controllerTest6" + "\n" + "1" + "\n"
             + "1" + "\n" + "10" + "\n" + "Y" + "\n"
             + "2" + "\n" + "10" + "\n" + "y" + "\n"
             + "3" + "\n" + "10" + "\n" + "y" + "\n"
@@ -1509,7 +1509,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST6_SHUBHAM Portfolio\n"
+            + "CONTROLLERTEST6 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -1535,10 +1535,10 @@ public class ControllerTest {
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest6_Shubham", 1)
+            + readStockDateFromPortfolioCsv("controllerTest6", 1)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest6_Shubham", 1)
+            + readStockPriceFromPortfolioCsv("controllerTest6", 1)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1564,10 +1564,10 @@ public class ControllerTest {
             + "StockName: Meta\n"
             + "Symbol: META\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest6_Shubham", 2)
+            + readStockDateFromPortfolioCsv("controllerTest6", 2)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest6_Shubham", 2)
+            + readStockPriceFromPortfolioCsv("controllerTest6", 2)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1593,10 +1593,10 @@ public class ControllerTest {
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest6_Shubham", 3)
+            + readStockDateFromPortfolioCsv("controllerTest6", 3)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest6_Shubham", 3)
+            + readStockPriceFromPortfolioCsv("controllerTest6", 3)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1622,10 +1622,10 @@ public class ControllerTest {
             + "StockName: Apple\n"
             + "Symbol: AAPL\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest6_Shubham", 4)
+            + readStockDateFromPortfolioCsv("controllerTest6", 4)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest6_Shubham", 4)
+            + readStockPriceFromPortfolioCsv("controllerTest6", 4)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1633,7 +1633,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST6_SHUBHAM PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST6 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -1656,7 +1656,7 @@ public class ControllerTest {
 
   @Test
   public void testController5ByTheUser() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest7_Sharayu" + "\n" + "1" + "\n"
+    String userInput = "1" + "\n" + "controllerTest7" + "\n" + "1" + "\n"
             + "1" + "\n" + "10" + "\n" + "Y" + "\n"
             + "2" + "\n" + "10" + "\n" + "y" + "\n"
             + "3" + "\n" + "10" + "\n" + "y" + "\n"
@@ -1682,7 +1682,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST7_SHARAYU Portfolio\n"
+            + "CONTROLLERTEST7 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -1708,10 +1708,10 @@ public class ControllerTest {
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7_Sharayu", 1)
+            + readStockDateFromPortfolioCsv("controllerTest7", 1)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7_Sharayu", 1)
+            + readStockPriceFromPortfolioCsv("controllerTest7", 1)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1737,10 +1737,10 @@ public class ControllerTest {
             + "StockName: Meta\n"
             + "Symbol: META\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7_Sharayu", 2)
+            + readStockDateFromPortfolioCsv("controllerTest7", 2)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7_Sharayu", 2)
+            + readStockPriceFromPortfolioCsv("controllerTest7", 2)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1766,10 +1766,10 @@ public class ControllerTest {
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7_Sharayu", 3)
+            + readStockDateFromPortfolioCsv("controllerTest7", 3)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7_Sharayu", 3)
+            + readStockPriceFromPortfolioCsv("controllerTest7", 3)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1795,10 +1795,10 @@ public class ControllerTest {
             + "StockName: Apple\n"
             + "Symbol: AAPL\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7_Sharayu", 4)
+            + readStockDateFromPortfolioCsv("controllerTest7", 4)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7_Sharayu", 4)
+            + readStockPriceFromPortfolioCsv("controllerTest7", 4)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1824,10 +1824,10 @@ public class ControllerTest {
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7_Sharayu", 5)
+            + readStockDateFromPortfolioCsv("controllerTest7", 5)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7_Sharayu", 5)
+            + readStockPriceFromPortfolioCsv("controllerTest7", 5)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1835,7 +1835,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST7_SHARAYU PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST7 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -1859,7 +1859,7 @@ public class ControllerTest {
 
   @Test
   public void testControllerClubThreeStocksOfSameTickerComposition() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest8_shweta" + "\n" + "1" + "\n" + "1"
+    String userInput = "1" + "\n" + "controllerTest8" + "\n" + "1" + "\n" + "1"
             + "\n" + "1" + "\n" + "y" + "\n" + "1" + "\n" + "1" + "\n" + "y"
             + "\n" + "1" + "\n" + "1" + "\n" + "n" + "\n" + "2" + "\n" + "8"
             + "\n" + "m" + "\n" + "e";
@@ -1883,7 +1883,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST8_SHWETA Portfolio\n"
+            + "CONTROLLERTEST8 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -1908,8 +1908,8 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8_shweta", 1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8_shweta", 1) + "\n"
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8", 1) + "\n"
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8", 1) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -1933,8 +1933,8 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8_shweta", 1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8_shweta", 1) + "\n"
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8", 1) + "\n"
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8", 1) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -1958,15 +1958,15 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8_shweta", 2) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8_shweta", 2) + "\n"
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8", 2) + "\n"
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8", 2) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST8_SHWETA PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST8 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -1979,35 +1979,34 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1_HEALTH\n"
-            + "2. CONTROLLERTEST2_BHARATI\n"
-            + "3. CONTROLLERTEST3_BHARAT\n"
-            + "4. CONTROLLERTEST4_ANUJA\n"
-            + "5. CONTROLLERTEST5_ASH\n"
-            + "6. CONTROLLERTEST6_SHUBHAM\n"
-            + "7. CONTROLLERTEST7_SHARAYU\n"
-            + "8. CONTROLLERTEST8_SHWETA\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
             + "9. ESHA\n"
-            + "10. TEST\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\n"
-            + "CONTROLLERTEST8_SHWETA PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest8_shweta", 1) + "\n"
+            + "CONTROLLERTEST8 PORTFOLIO COMPOSITION - Created on "
+            + readPurchaseDateFromCsv("controllerTest8", 1) + "\n"
             + "\n"
             + "Name (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\n"
             + "Microsoft (MSFT) \t 3\t $"
             + Math.floor(Double.parseDouble(
             readStockPriceFromPortfolioCsv(
-                    "controllerTest8_shweta", 1)) * 100) / 100
+                    "controllerTest8", 1)) * 100) / 100
             + "\t $" + 3 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest8_shweta", 1)) * 100) / 100 + "\n"
+            "controllerTest8", 1)) * 100) / 100 + "\n"
             + "\n"
             + "Total Portfolio Value as on "
-            + readPurchaseDateFromCsv("controllerTest8_shweta", 1)
+            + readPurchaseDateFromCsv("controllerTest8", 1)
             + ": $" + 3 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest8_shweta", 1)) * 100) / 100 + "\n"
+            "controllerTest8", 1)) * 100) / 100 + "\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -2032,7 +2031,7 @@ public class ControllerTest {
 
   @Test
   public void testController10StocksBoughtByUser() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest9_Steven" + "\n" + "1" + "\n"
+    String userInput = "1" + "\n" + "controllerTest9" + "\n" + "1" + "\n"
             + "2" + "\n" + "1" + "\n" + "Y" + "\n"
             + "2" + "\n" + "1" + "\n" + "y" + "\n"
             + "2" + "\n" + "1" + "\n" + "y" + "\n"
@@ -2064,7 +2063,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST9_STEVEN Portfolio\n"
+            + "CONTROLLERTEST9 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -2089,9 +2088,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             1) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2116,9 +2115,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             2) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             2) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2143,9 +2142,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             3) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             3) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2170,9 +2169,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             4) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             4) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2197,9 +2196,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             5) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             5) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2224,9 +2223,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             6) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             6) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2251,9 +2250,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             7) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             7) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2278,9 +2277,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             8) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             8) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2305,9 +2304,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             9) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             9) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2332,9 +2331,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9_Steven",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
             10) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9_Steven",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
             10) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2342,7 +2341,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST9_STEVEN PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST9 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -2366,7 +2365,7 @@ public class ControllerTest {
 
   @Test
   public void testController18StocksBoughtByUser() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest10_Kat" + "\n" + "1" + "\n"
+    String userInput = "1" + "\n" + "controllerTest10" + "\n" + "1" + "\n"
             + "3" + "\n" + "2" + "\n" + "Y" + "\n" + "3" + "\n" + "2" + "\n" + "y" + "\n"
             + "3" + "\n" + "2" + "\n" + "y" + "\n" + "3" + "\n" + "2" + "\n" + "y" + "\n"
             + "3" + "\n" + "2" + "\n" + "y" + "\n" + "3" + "\n" + "2" + "\n" + "y" + "\n"
@@ -2396,7 +2395,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST10_KAT Portfolio\n"
+            + "CONTROLLERTEST10 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -2421,9 +2420,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             1) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2448,9 +2447,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             2) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             2) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2475,9 +2474,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             3) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             3) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2502,9 +2501,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             4) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             4) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2529,9 +2528,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             5) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             5) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2556,9 +2555,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             6) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             6) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2583,9 +2582,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             7) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             7) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2610,9 +2609,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             8) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             8) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2637,9 +2636,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             9) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             9) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2664,9 +2663,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             10) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             10) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2691,9 +2690,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             11) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             11) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2718,9 +2717,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             12) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             12) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2745,9 +2744,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             13) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             13) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2772,9 +2771,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             14) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             14) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2799,9 +2798,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             15) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             15) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2826,9 +2825,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             16) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             16) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2853,9 +2852,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             17) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             17) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2880,9 +2879,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10_Kat",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
             18) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10_Kat",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
             18) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -2890,7 +2889,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST10_KAT PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST10 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -2913,7 +2912,7 @@ public class ControllerTest {
 
   @Test
   public void testController28StocksBoughtByUser() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest11_Camella" + "\n" + "1" + "\n"
+    String userInput = "1" + "\n" + "controllerTest11" + "\n" + "1" + "\n"
             + "5" + "\n" + "1" + "\n" + "Y" + "\n" + "5" + "\n" + "1" + "\n" + "y" + "\n"
             + "5" + "\n" + "1" + "\n" + "y" + "\n" + "5" + "\n" + "1" + "\n" + "y" + "\n"
             + "5" + "\n" + "1" + "\n" + "y" + "\n" + "5" + "\n" + "1" + "\n" + "y" + "\n"
@@ -2948,7 +2947,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST11_CAMELLA Portfolio\n"
+            + "CONTROLLERTEST11 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -2973,9 +2972,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             1) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3000,9 +2999,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             2) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             2) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3027,9 +3026,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             3) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             3) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3054,9 +3053,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             4) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             4) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3081,9 +3080,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             5) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             5) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3108,9 +3107,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             6) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             6) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3135,9 +3134,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             7) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             7) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3162,9 +3161,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             8) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             8) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3189,9 +3188,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             9) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             9) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3216,9 +3215,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             10) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             10) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3243,9 +3242,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             11) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             11) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3270,9 +3269,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             12) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             12) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3297,9 +3296,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             13) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             13) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3324,9 +3323,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             14) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             14) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3351,9 +3350,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             15) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             15) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3378,9 +3377,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             16) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             16) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3405,9 +3404,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             17) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             17) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3432,9 +3431,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             18) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             18) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3459,9 +3458,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             19) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             19) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3486,9 +3485,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             20) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             20) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3513,9 +3512,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             21) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             21) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3540,9 +3539,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             22) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             22) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3567,9 +3566,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             23) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             23) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3594,9 +3593,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             24) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             24) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3621,9 +3620,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             25) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             25) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3648,9 +3647,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             26) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             26) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3675,9 +3674,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             27) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             27) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3702,9 +3701,9 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11_Camella",
+            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
             28) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11_Camella",
+            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
             28) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -3712,7 +3711,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST11_CAMELLA PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST11 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -3763,8 +3762,8 @@ public class ControllerTest {
   // how many = large number
   @Test
   public void testInvalidHowMany() throws IOException {
-    String userInput = "1" + "\n" + "controllerTest12_Dan" + "\n" + "2"
-            + "1" + "\n" + "controllerTest12_Dan" + "\n"
+    String userInput = "1" + "\n" + "controllerTest12" + "\n" + "2"
+            + "1" + "\n" + "controllerTest12" + "\n"
             + "1" + "\n" + "10" + "\n" + "14000000000000000000" +
             "\n" + "10000000" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -3786,7 +3785,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST12_DAN Portfolio\n"
+            + "CONTROLLERTEST12 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -3797,7 +3796,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST12_DAN Portfolio\n"
+            + "CONTROLLERTEST12 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -3808,7 +3807,7 @@ public class ControllerTest {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST12_DAN Portfolio\n"
+            + "CONTROLLERTEST12 Portfolio\n"
             + "\n"
             + "1. Buy a stock\n"
             + "2. Main Menu\n"
@@ -3834,9 +3833,9 @@ public class ControllerTest {
             + "StockName: Walmart\n"
             + "Symbol: WMT\n"
             + "Time: " + readStockDateFromPortfolioCsv(
-            "controllerTest12_Dan", 1) + "\n"
+            "controllerTest12", 1) + "\n"
             + "Price: $" + readStockPriceFromPortfolioCsv(
-            "controllerTest12_Dan", 1) + "\n"
+            "controllerTest12", 1) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3846,7 +3845,7 @@ public class ControllerTest {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST12_DAN PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST12 PORTFOLIO CREATED...!!!\n"
             + "\n"
             + "MENU\n"
             + "\n"
@@ -3929,18 +3928,18 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST10_KAT\n"
-            + "2. CONTROLLERTEST11_CAMELLA\n"
-            + "3. CONTROLLERTEST12_DAN\n"
-            + "4. CONTROLLERTEST1_HEALTH\n"
-            + "5. CONTROLLERTEST2_BHARATI\n"
-            + "6. CONTROLLERTEST3_BHARAT\n"
-            + "7. CONTROLLERTEST4_ANUJA\n"
-            + "8. CONTROLLERTEST5_ASH\n"
-            + "9. CONTROLLERTEST6_SHUBHAM\n"
-            + "10. CONTROLLERTEST7_SHARAYU\n"
-            + "11. CONTROLLERTEST8_SHWETA\n"
-            + "12. CONTROLLERTEST9_STEVEN\n"
+            + "1. CONTROLLERTEST10\n"
+            + "2. CONTROLLERTEST11\n"
+            + "3. CONTROLLERTEST12\n"
+            + "4. CONTROLLERTEST1\n"
+            + "5. CONTROLLERTEST2\n"
+            + "6. CONTROLLERTEST3\n"
+            + "7. CONTROLLERTEST4\n"
+            + "8. CONTROLLERTEST5\n"
+            + "9. CONTROLLERTEST6\n"
+            + "10. CONTROLLERTEST7\n"
+            + "11. CONTROLLERTEST8\n"
+            + "12. CONTROLLERTEST9\n"
             + "13. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -3988,18 +3987,18 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST10_KAT\n"
-            + "2. CONTROLLERTEST11_CAMELLA\n"
-            + "3. CONTROLLERTEST12_DAN\n"
-            + "4. CONTROLLERTEST1_HEALTH\n"
-            + "5. CONTROLLERTEST2_BHARATI\n"
-            + "6. CONTROLLERTEST3_BHARAT\n"
-            + "7. CONTROLLERTEST4_ANUJA\n"
-            + "8. CONTROLLERTEST5_ASH\n"
-            + "9. CONTROLLERTEST6_SHUBHAM\n"
-            + "10. CONTROLLERTEST7_SHARAYU\n"
-            + "11. CONTROLLERTEST8_SHWETA\n"
-            + "12. CONTROLLERTEST9_STEVEN\n"
+            + "1. CONTROLLERTEST10\n"
+            + "2. CONTROLLERTEST11\n"
+            + "3. CONTROLLERTEST12\n"
+            + "4. CONTROLLERTEST1\n"
+            + "5. CONTROLLERTEST2\n"
+            + "6. CONTROLLERTEST3\n"
+            + "7. CONTROLLERTEST4\n"
+            + "8. CONTROLLERTEST5\n"
+            + "9. CONTROLLERTEST6\n"
+            + "10. CONTROLLERTEST7\n"
+            + "11. CONTROLLERTEST8\n"
+            + "12. CONTROLLERTEST9\n"
             + "13. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -4254,18 +4253,18 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST10_KAT\n"
-            + "2. CONTROLLERTEST11_CAMELLA\n"
-            + "3. CONTROLLERTEST12_DAN\n"
-            + "4. CONTROLLERTEST1_HEALTH\n"
-            + "5. CONTROLLERTEST2_BHARATI\n"
-            + "6. CONTROLLERTEST3_BHARAT\n"
-            + "7. CONTROLLERTEST4_ANUJA\n"
-            + "8. CONTROLLERTEST5_ASH\n"
-            + "9. CONTROLLERTEST6_SHUBHAM\n"
-            + "10. CONTROLLERTEST7_SHARAYU\n"
-            + "11. CONTROLLERTEST8_SHWETA\n"
-            + "12. CONTROLLERTEST9_STEVEN\n"
+            + "1. CONTROLLERTEST10\n"
+            + "2. CONTROLLERTEST11\n"
+            + "3. CONTROLLERTEST12\n"
+            + "4. CONTROLLERTEST1\n"
+            + "5. CONTROLLERTEST2\n"
+            + "6. CONTROLLERTEST3\n"
+            + "7. CONTROLLERTEST4\n"
+            + "8. CONTROLLERTEST5\n"
+            + "9. CONTROLLERTEST6\n"
+            + "10. CONTROLLERTEST7\n"
+            + "11. CONTROLLERTEST8\n"
+            + "12. CONTROLLERTEST9\n"
             + "13. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
@@ -4276,18 +4275,18 @@ public class ControllerTest {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST10_KAT\n"
-            + "2. CONTROLLERTEST11_CAMELLA\n"
-            + "3. CONTROLLERTEST12_DAN\n"
-            + "4. CONTROLLERTEST1_HEALTH\n"
-            + "5. CONTROLLERTEST2_BHARATI\n"
-            + "6. CONTROLLERTEST3_BHARAT\n"
-            + "7. CONTROLLERTEST4_ANUJA\n"
-            + "8. CONTROLLERTEST5_ASH\n"
-            + "9. CONTROLLERTEST6_SHUBHAM\n"
-            + "10. CONTROLLERTEST7_SHARAYU\n"
-            + "11. CONTROLLERTEST8_SHWETA\n"
-            + "12. CONTROLLERTEST9_STEVEN\n"
+            + "1. CONTROLLERTEST10\n"
+            + "2. CONTROLLERTEST11\n"
+            + "3. CONTROLLERTEST12\n"
+            + "4. CONTROLLERTEST1\n"
+            + "5. CONTROLLERTEST2\n"
+            + "6. CONTROLLERTEST3\n"
+            + "7. CONTROLLERTEST4\n"
+            + "8. CONTROLLERTEST5\n"
+            + "9. CONTROLLERTEST6\n"
+            + "10. CONTROLLERTEST7\n"
+            + "11. CONTROLLERTEST8\n"
+            + "12. CONTROLLERTEST9\n"
             + "13. ESHA\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
