@@ -1,5 +1,9 @@
 package view;
 
+/**
+ * This list of enums represents the list of views that the view can show. This list is
+ * provided to the controller.
+ */
 public enum TypeofViews {
   MAIN,
   CREATE_PORTFOLIO_NAME_SCREEN,

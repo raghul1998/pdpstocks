@@ -13,13 +13,26 @@ import java.util.Objects;
 import controller.ControllerViewInteract;
 import controller.ControllerViewInteractImpl;
 
+import model.ModelControllerInteract;
 import model.StockCompositionData;
+import model.TypeofAction;
 
 import static org.junit.Assert.assertEquals;
 
 
 public class controllerTest {
 
+
+  class MockModel implements ModelControllerInteract{
+    private StringBuilder log;
+    MockModel(StringBuilder log){
+      this.log=log;
+    }
+    @Override
+    public void modelControllerInteract(TypeofAction type, String[] args, int length) {
+      log.append("modelControllerInteract called with inputs: "+a+" "+b+"\n");
+    }
+  }
   private String readStockDateFromCsv(String portfolioName, int lineNumber) throws IOException {
     String filename = "userdata/user1/" + "pf_"+ portfolioName + ".csv";
     String[] cols= null;
