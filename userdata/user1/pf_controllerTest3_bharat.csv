@@ -1,5 +1,0 @@
-PortfolioName,controllerTest3_bharat
-PortfolioID,1667359695
-PurchaseTimestamp,PurchaseID,StockLastKnownValueTimestamp,StockSymbol,NameOfStock,NumberOfStocksPurchased,PriceOfShareAtPurchase
-2022-11-01 23:28:16,1667359696,2022-11-01 20:00:00,GOOG,Google,3,90.7200
-2022-11-01 23:28:16,1667359696,2022-11-01 20:00:00,GOOG,Google,2,90.7200

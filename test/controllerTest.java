@@ -72,6 +72,48 @@ public class controllerTest {
     return price;
   }
 
+
+  private String readStockDateFromStockDataCsv(){
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData = new String[4];
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+    return splitStockData[3];
+  }
+
+  private String readStockPriceFromStockDataCsv(){
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData = new String[4];
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+    } catch (Exception e) {
+      throw new RuntimeException();
+    }
+    return splitStockData[1];
+  }
   @Test
   public void testControllerCreatePortfolio() throws IOException {
     String userInput = "1" + "\n" + "controllerTest1_health" + "\n" + "1" + "\n" + "1" + "\n" + "1"
@@ -349,8 +391,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Walmart\n" +
             "Symbol: WMT\n" +
-            "Time: 2022-11-01 16:43:00\n" +
-            "Price: $141.6900\n" +
+            "Time: "+readStockDateFromStockDataCsv()+"\n" +
+            "Price: $"+readStockPriceFromStockDataCsv()+"\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -501,7 +543,7 @@ public class controllerTest {
   }
 
   @Test
-  public void testControllerOverrideSamePortfolio() {
+  public void testControllerOverrideSamePortfolio() throws IOException {
     String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "y" + "\n" + "1" + "\n" + "8" + "\n" + "7" + "\n"
             + "n" + "\n" + "2" + "\n" + "3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -552,8 +594,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Amazon\n" +
             "Symbol: AMZN\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $102.4000\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest3_bharat", 1) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest3_bharat", 1) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -579,13 +621,13 @@ public class controllerTest {
             "4. ESHA\n" +
             "\n" +
             "Which portfolio would you like to check?\n" +
-            "\nCONTROLLERTEST3_BHARAT PORTFOLIO COMPOSITION - Created on 2022-10-31\n" +
+            "\nCONTROLLERTEST3_BHARAT PORTFOLIO COMPOSITION - Created on "+readPurchaseDateFromCsv("controllerTest3_bharat", 1)+"\n" +
 
             "\nName (Symbol) 	 Quantity 	 Price of each share 	 Total Value\n" +
 
-            "\nAmazon (AMZN) \t 7\t $102.4\t $716.8\n" +
+            "\nAmazon (AMZN) \t 7\t $"+ Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest3_bharat", 1)) * 100) / 100 +"\t $"+ 7* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest3_bharat", 1)) * 100) / 100 +"\n" +
 
-            "\nTotal Portfolio Value as on 2022-10-31: $716.8\n" +
+            "\nTotal Portfolio Value as on "+readPurchaseDateFromCsv("controllerTest3_bharat", 1)+": $"+ 7* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest3_bharat", 1)) * 100) / 100 +"\n" +
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
             "\n" +
@@ -607,7 +649,7 @@ public class controllerTest {
   }
 
   @Test
-  public void testControllerInputDate() {
+  public void testControllerInputDate() throws IOException {
     String userInput = "3" + "\n" + "4" + "\n" + "2022-10-10" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -639,9 +681,9 @@ public class controllerTest {
             "Value of ESHA PORTFOLIO\n" +
 
             "\nName (Symbol) \t Quantity\t Share Value on 2022-10-10\t Total Value\n" +
-            "\nAmazon (AMZN) \t 7\t $107.8\t $754.6" +
+            "\nAmazon (AMZN) \t 4\t $106.8\t $427.2\n" +
             "\n" +
-            "\nTotal Portfolio Value is on 2022-10-10: $754.6\n" +
+            "Total Portfolio Value is on 2022-10-10: $427.2\n"+
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
             "\n" +
@@ -695,11 +737,11 @@ public class controllerTest {
             "Value of ESHA PORTFOLIO\n" +
 
             "\nName (Symbol) \t Quantity\t Share Value on 2019-12-12\t Total Value\n" +
-            "\nAmazon (AMZN) \t 7\t $107.8\t $754.6" +
+            "\nAmazon (AMZN) \t 4\t $110.18\t $440.72\n" +
             "\n" +
-            "\nTotal Portfolio Value is on 2022-10-10: $754.6\n" +
+            "Total Portfolio Value is on 2019-12-12: $440.72" +
             "\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\nPress 'b' to go back and 'm' for main menu.\n" +
             "\n" +
             "\nMENU\n" +
             "\n" +
@@ -755,11 +797,11 @@ public class controllerTest {
             "Value of ESHA PORTFOLIO\n" +
 
             "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n" +
-            "\nAmazon (AMZN) 	 7	 $119.1	 $833.7" +
+            "\nAmazon (AMZN) \t 4\t $118.1\t $472.4\n" +
             "\n" +
-            "\nTotal Portfolio Value is on 2022-02-02: $833.7\n" +
+            "Total Portfolio Value is on 2022-02-02: $472.4" +
             "\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\nPress 'b' to go back and 'm' for main menu.\n" +
             "\n" +
             "\nMENU\n" +
             "\n" +
@@ -815,11 +857,11 @@ public class controllerTest {
             "Value of ESHA PORTFOLIO\n" +
 
             "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n" +
-            "\nAmazon (AMZN) 	 7	 $119.1	 $833.7" +
+            "\nAmazon (AMZN) \t 4\t $118.1\t $472.4\n" +
             "\n" +
-            "\nTotal Portfolio Value is on 2022-02-02: $833.7\n" +
+            "Total Portfolio Value is on 2022-02-02: $472.4" +
             "\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\nPress 'b' to go back and 'm' for main menu.\n" +
             "\n" +
             "\nMENU\n" +
             "\n" +
@@ -875,11 +917,11 @@ public class controllerTest {
             "Value of ESHA PORTFOLIO\n" +
 
             "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n" +
-            "\nAmazon (AMZN) 	 7	 $119.1	 $833.7" +
+            "\nAmazon (AMZN) \t 4\t $118.1\t $472.4\n" +
             "\n" +
-            "\nTotal Portfolio Value is on 2022-02-02: $833.7\n" +
+            "Total Portfolio Value is on 2022-02-02: $472.4" +
             "\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\nPress 'b' to go back and 'm' for main menu.\n" +
             "\n" +
             "\nMENU\n" +
             "\n" +
@@ -1052,25 +1094,25 @@ public class controllerTest {
             "\n" +
             "Which stock would you like to buy?\n" +
             "Not a valid input. Please enter the correct stock.\n" +
-            "If you want to go back to main menu, press '0'." +
+            "If you want to go back to main menu, press 'm'." +
             "\n" +
             "\n" +
             "\nCURRENT STOCK PRICE\n" +
             "StockName: Walmart\n" +
             "Symbol: WMT\n" +
-            "Time: 2022-10-31 19:28:00\n" +
-            "Price: $142.1200\n" +
+            "Time: "+readStockDateFromStockDataCsv()+"\n" +
+            "Price: $"+readStockPriceFromStockDataCsv()+"\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
-            "Not a valid input. Please enter number of shares as whole number.\n" +
+            "Not a valid input. Please enter number of shares as natural numbers.\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
-            "Not a valid input. Please enter number of shares as whole number.\n" +
+            "Not a valid input. Please enter number of shares as natural numbers.\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
-            "Not a valid input. Please enter number of shares as whole number.\n" +
+            "Not a valid input. Please enter number of shares as natural numbers.\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
             "\nMENU\n" +
@@ -1091,7 +1133,7 @@ public class controllerTest {
   }
 
   @Test
-  public void testControllerShowSamePriceOnSameDate() {
+  public void testControllerShowSamePriceOnSameDate() throws IOException {
     String userInput = "1" + "\n" + "controllerTest4_Anuja" + "\n" + "1" + "\n" + "1" + "\n" + "1"
             + "\n" + "n"
             + "\n" + "2" + "\n" + "5" + "\n" + "m" + "\n" + "3" + "\n" + "5" + "\n" + "2022-11-01"
@@ -1141,8 +1183,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Microsoft\n" +
             "Symbol: MSFT\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $232.6000\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest4_Anuja", 1) +"\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest4_Anuja", 1) + "\n" +"\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1166,6 +1208,7 @@ public class controllerTest {
             "2. CONTROLLERTEST2_BHARATI\n" +
             "3. CONTROLLERTEST3_BHARAT\n" +
             "4. CONTROLLERTEST4_ANUJA\n" +
+            "5. ESHA\n" +
             "\n" +
             "Which portfolio would you like to check?\n" +
             "\n" +
