@@ -1,0 +1,4 @@
+PortfolioName,controllerTest4_Anuja
+PortfolioID,1667365417
+PurchaseTimestamp,PurchaseID,StockLastKnownValueTimestamp,StockSymbol,NameOfStock,NumberOfStocksPurchased,PriceOfShareAtPurchase
+2022-11-02 01:03:38,1667365418,2022-11-01 20:00:00,MSFT,Microsoft,1,227.8500
