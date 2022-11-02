@@ -108,7 +108,7 @@ public class StockCompositionData {
    * @param index the index of the portfolio
    * @return the stock related data as 'stockPortFolioData' object
    */
-  public stockPortFolioData getAllStockDataInPortFolio(int index) {
+  public StockPortFolioData getAllStockDataInPortFolio(int index) {
     String filename = getPortFolioFileNameByIndex(index);
     int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
 
@@ -158,8 +158,8 @@ public class StockCompositionData {
             names[nameIndex] = splitStockData[4];
             symbol[nameIndex] = splitStockData[3];
             quantity[nameIndex] = Long.parseLong(splitStockData[5]);
-            double val = quantity[nameIndex] *
-                    Double.parseDouble(splitStockData[6]);
+            double val = quantity[nameIndex]
+                    * Double.parseDouble(splitStockData[6]);
             value[nameIndex] = Math.floor(val * 100) / 100;
             totalPortFolioValue += value[nameIndex];
             valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
@@ -167,8 +167,8 @@ public class StockCompositionData {
             nameIndex++;
           } else {
             quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
-            double val = quantity[i] *
-                    Double.parseDouble(splitStockData[6]);
+            double val = quantity[i]
+                    * Double.parseDouble(splitStockData[6]);
             totalPortFolioValue -= value[i];
             value[i] = Math.floor(val * 100) / 100;
             totalPortFolioValue += value[i];
@@ -180,7 +180,7 @@ public class StockCompositionData {
       throw new RuntimeException(e);
     }
 
-    stockPortFolioData obj = new stockPortFolioData();
+    StockPortFolioData obj = new StockPortFolioData();
     obj.numberOfUniqueStocks = nameIndex;
     obj.stockName = names;
     obj.stockSymbol = symbol;
@@ -207,7 +207,7 @@ public class StockCompositionData {
    *   <li>createdTimeStamp - timestamp on which the portfolio was created</li>
    * </ul>
    */
-  public static class stockPortFolioData {
+  public static class StockPortFolioData {
     public int numberOfUniqueStocks;
     public String[] stockName;
     public String[] stockSymbol;

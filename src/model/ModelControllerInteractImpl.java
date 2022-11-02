@@ -54,6 +54,10 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         }
         break;
       }
+      default: {
+        //No Action Needed
+        break;
+      }
     }
   }
 

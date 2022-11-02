@@ -171,7 +171,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void showPortfolioIndividualWithDateScreen(String option, String date) {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionData();
-    StockCompositionData.stockPortFolioData stkObj =
+    StockCompositionData.StockPortFolioData stkObj =
             obj.getAllStockDataInPortFolio(portfolioNumber);
     double totalPortFolioValue = 0;
 
@@ -201,7 +201,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         double randomShareValue = getRandomShareValue(stkObj.valueOfSingleStock[i], date);
         output.print("\t $" + randomShareValue);
         totalPortFolioValue += Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100;
-        output.println("\t $" + Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100);
+        output.println("\t $"
+                + Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100);
       }
     }
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
@@ -217,7 +218,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void showPortfolioIndividualScreen(String option) {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionData();
-    StockCompositionData.stockPortFolioData stkObj =
+    StockCompositionData.StockPortFolioData stkObj =
             obj.getAllStockDataInPortFolio(portfolioNumber);
 
     String[] portfolioNames = obj.getPortFolioNames();
@@ -240,7 +241,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       output.println("\t $" + stkObj.totalValue[i]);
     }
 
-    output.println("\nTotal Portfolio Value as on " + date + ": $" + stkObj.totalPortFolioValue + "\n");
+    output.println("\nTotal Portfolio Value as on " + date + ": $"
+            + stkObj.totalPortFolioValue + "\n");
   }
 
   /**

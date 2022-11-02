@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * This class represents the stock data and methods that can be called upon to get the value of a
- * certain stock using APIs
+ * certain stock using APIs.
  */
 public class GetStockData {
   /**

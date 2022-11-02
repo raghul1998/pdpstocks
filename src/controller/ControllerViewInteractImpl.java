@@ -63,7 +63,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
       option = scan.nextLine();
       performMainMenuAction(option);
-    } while (!option.equals("e"));
+    }
+    while (!option.equals("e"));
   }
 
   /**
@@ -213,8 +214,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     vciObj.viewControllerInteract(TypeofViews.BUY_ANOTHER_STOCK, null, 0);
     String options;
     options = scan.nextLine();
-    while ((options == null || options.length() == 0) || ((!options.equals("Y")) &&
-            (!options.equals("y")) && (!options.equals("N")) && (!options.equals("n")))) {
+    while ((options == null || options.length() == 0) || ((!options.equals("Y"))
+            && (!options.equals("y")) && (!options.equals("N")) && (!options.equals("n")))) {
       vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
       options = scan.nextLine();
     }
@@ -273,125 +274,18 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     switch (option) {
       case "1": {
         // Create a portfolio
-        while (true) {
-          String name;
-          vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, null, 0);
-          name = scan.nextLine();
-          while (name.length() == 0) {
-            vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_NAME_REENTER, null, 0);
-            name = scan.nextLine();
-            if (name.equals("0")) {
-              return;
-            }
-          }
-
-          if (checkIfPortfolioExists(name)) {
-            vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_ALREADY_EXISTS, null, 0);
-            vciObj.viewControllerInteract(TypeofViews.PF_REENTER_DUPLICATE_NAME, null, 0);
-            String input;
-            input = scan.nextLine();
-            while ((input.length() == 0) || !(input.equals("B") || input.equals("b") ||
-                    input.equals("Y") || input.equals("y") || input.equals("N") ||
-                    input.equals("n"))) {
-              vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-              vciObj.viewControllerInteract(TypeofViews.PF_REENTER_DUPLICATE_NAME,
-                      null, 0);
-              input = scan.nextLine();
-            }
-            if (input.equals("B") || input.equals("b")) {
-              return;
-            }
-            if (input.equals("N") || input.equals("n")) {
-              continue;
-            }
-            // This case is 'Y', we want to override.
-          }
-
-          String[] args = new String[1];
-          args[0] = name;
-          currentPortfolioName = name;
-          createPortfolioNameScreenAction(option, args);
-          break;
-        }
+        createAPortfolio(option);
         break;
       }
       case "2": {
         // Composition of the portfolio
-        while (true) {
-          StockCompositionData obj = new StockCompositionData();
-          int numberOfPortFolio = obj.getNumberOfPortFolio();
-          if (numberOfPortFolio == 0) {
-            vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
-            return;
-          }
-          String[] portfolioNames = obj.getPortFolioNames();
-          vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames, numberOfPortFolio);
-          String options;
-          options = scan.nextLine();
-          while ((options == null || options.length() == 0) ||
-                  (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
-            vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
-            options = scan.nextLine();
-            if (Objects.equals(options, "b")) {
-              return;
-            }
-          }
-          portfolioCompositionAction(options);
-          vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
-          options = scan.nextLine();
-          while ((options == null || options.length() == 0) ||
-                  ((options.equals("M")) || (options.equals("m")) || (options.equals("b")) ||
-                          (options.equals("B")))) {
-            if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
-              break;
-            } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
-              return;
-            }
-            vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-            vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
-            options = scan.nextLine();
-          }
-        }
+        compositionOfPortfolio();
+        break;
       }
       case "3": {
         // Value of the portfolio on a certain date
-        while (true) {
-          StockCompositionData obj = new StockCompositionData();
-          int numberOfPortFolio = obj.getNumberOfPortFolio();
-          if (numberOfPortFolio == 0) {
-            vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
-            return;
-          }
-          String[] portfolioNames = obj.getPortFolioNames();
-          vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames, numberOfPortFolio);
-          String options;
-          options = scan.nextLine();
-          while ((options == null || options.length() == 0) ||
-                  (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
-            vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
-            options = scan.nextLine();
-            if (Objects.equals(options, "b")) {
-              return;
-            }
-          }
-          if (!portfolioViewAction(options)) {
-            continue;
-          }
-          vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
-          options = scan.nextLine();
-          while ((options == null || options.length() == 0) ||
-                  ((options.equals("M")) || (options.equals("m")) || (options.equals("b")) ||
-                          (options.equals("B")))) {
-            if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
-              break;
-            } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
-              return;
-            }
-            vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-            vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
-            options = scan.nextLine();
-          }
-        }
+        valueOfPortfolio();
+        break;
       }
       case "e":
       case "E": {
@@ -408,6 +302,142 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         }
         break;
       }
+    }
+  }
+
+  /**
+   * This method performs the menu actions when user wants to view the value of a portfolio on
+   * a certain date.
+   */
+  private void valueOfPortfolio() {
+    while (true) {
+      StockCompositionData obj = new StockCompositionData();
+      int numberOfPortFolio = obj.getNumberOfPortFolio();
+      if (numberOfPortFolio == 0) {
+        vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+        return;
+      }
+      String[] portfolioNames = obj.getPortFolioNames();
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
+              numberOfPortFolio);
+      String options;
+      options = scan.nextLine();
+      while ((options == null || options.length() == 0)
+              || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
+        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
+        options = scan.nextLine();
+        if (Objects.equals(options, "b")) {
+          return;
+        }
+      }
+      if (!portfolioViewAction(options)) {
+        continue;
+      }
+      vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+      options = scan.nextLine();
+      while ((options == null || options.length() == 0)
+              || ((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
+              || (options.equals("B")))) {
+        if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
+          break;
+        } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+          return;
+        }
+        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+        vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+        options = scan.nextLine();
+      }
+    }
+  }
+
+  /**
+   * This method performs menu action for the case where user wants to view the composition
+   * of a portfolio.
+   */
+  private void compositionOfPortfolio() {
+    while (true) {
+      StockCompositionData obj = new StockCompositionData();
+      int numberOfPortFolio = obj.getNumberOfPortFolio();
+      if (numberOfPortFolio == 0) {
+        vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+        return;
+      }
+      String[] portfolioNames = obj.getPortFolioNames();
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
+              numberOfPortFolio);
+      String options;
+      options = scan.nextLine();
+      while ((options == null || options.length() == 0)
+              || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
+        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
+        options = scan.nextLine();
+        if (Objects.equals(options, "b")) {
+          return;
+        }
+      }
+      portfolioCompositionAction(options);
+      vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+      options = scan.nextLine();
+      while ((options == null || options.length() == 0)
+              || ((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
+              || (options.equals("B")))) {
+        if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
+          break;
+        } else if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+          return;
+        }
+        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+        vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+        options = scan.nextLine();
+      }
+    }
+  }
+
+  /**
+   * This method performs the menu actions for the case where user wants to create a new portfolio.
+   *
+   * @param option the option which user entered
+   */
+  private void createAPortfolio(String option) {
+    while (true) {
+      String name;
+      vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO_NAME_SCREEN, null, 0);
+      name = scan.nextLine();
+      while (name.length() == 0) {
+        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_NAME_REENTER, null, 0);
+        name = scan.nextLine();
+        if (name.equals("0")) {
+          return;
+        }
+      }
+
+      if (checkIfPortfolioExists(name)) {
+        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_ALREADY_EXISTS, null, 0);
+        vciObj.viewControllerInteract(TypeofViews.PF_REENTER_DUPLICATE_NAME, null, 0);
+        String input;
+        input = scan.nextLine();
+        while ((input.length() == 0) || !(input.equals("B") || input.equals("b")
+                || input.equals("Y") || input.equals("y") || input.equals("N")
+                || input.equals("n"))) {
+          vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+          vciObj.viewControllerInteract(TypeofViews.PF_REENTER_DUPLICATE_NAME,
+                  null, 0);
+          input = scan.nextLine();
+        }
+        if (input.equals("B") || input.equals("b")) {
+          return;
+        }
+        if (input.equals("N") || input.equals("n")) {
+          continue;
+        }
+        // This case is 'Y', we want to override.
+      }
+
+      String[] args = new String[1];
+      args[0] = name;
+      currentPortfolioName = name;
+      createPortfolioNameScreenAction(option, args);
+      break;
     }
   }
 
@@ -455,11 +485,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    if (val < 1 || val > numberOfPortFolio) {
-      return false;
-    } else {
-      return true;
-    }
+    return val >= 1 && val <= numberOfPortFolio;
   }
 
   /**
@@ -500,6 +526,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
         output.println("\nExiting...");
         exit(0);
+        break;
       }
       default: {
         output.println("Invalid command. Enter the right option number.");
@@ -538,11 +565,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
 
     StockNameMap snp = new StockNameMap();
-    if (val < 1 || val > snp.getMapSize()) {
-      return false;
-    } else {
-      return true;
-    }
+    return val >= 1 && val <= snp.getMapSize();
   }
 
   /**
@@ -569,10 +592,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    if (val <= 0) {
-      return false;
-    } else {
-      return true;
-    }
+    return val > 0;
   }
 }
