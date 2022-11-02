@@ -3863,4 +3863,151 @@ public class ControllerTest {
 
     assertEquals(expectedOutput, result);
   }
+
+  // how many = large number
+  @Test
+  public void testInvalidHowMany() throws IOException {
+    String userInput = "1" + "\n" + "pf_controllerTest12_Dan" + "\n" + "2"
+            + "1" + "\n" + "pf_controllerTest12_Dan" + "\n"
+            + "1" + "\n" + "10" + "\n" + "14000000000000000000" +
+            "\n" + "10000000" + "\n" + "n" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "PF_CONTROLLERTEST12_DAN Portfolio\n"
+            + "\n"
+            + "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Invalid command. Enter the right option number.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "PF_CONTROLLERTEST12_DAN Portfolio\n"
+            + "\n"
+            + "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Invalid command. Enter the right option number.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "PF_CONTROLLERTEST12_DAN Portfolio\n"
+            + "\n"
+            + "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + "1. Microsoft (MSFT)\n"
+            + "2. Meta (META)\n"
+            + "3. Google (GOOG)\n"
+            + "4. Apple (AAPL)\n"
+            + "5. Tesla (TSLA)\n"
+            + "6. JPMorgan Chase (JPM)\n"
+            + "7. Johnson (JNJ)\n"
+            + "8. Amazon (AMZN)\n"
+            + "9. UnitedHealth (UNH)\n"
+            + "10. Walmart (WMT)\n"
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "\n"
+            + "CURRENT STOCK PRICE\n"
+            + "StockName: Walmart\n"
+            + "Symbol: WMT\n"
+            + "Time: " + readStockDateFromPortfolioCsv(
+            "pf_controllerTest12_Dan", 1) + "\n"
+            + "Price: $" + readStockPriceFromPortfolioCsv(
+            "pf_controllerTest12_Dan", 1) + "\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Not a valid input. Please enter number of shares as natural numbers.\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "PF_CONTROLLERTEST12_DAN PORTFOLIO CREATED...!!!\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // string is empty for portfolio name
+
+  @Test
+  public void testStringEmptyForName() {
+    String userInput = "1" + "\n" + "" + "\n" + "0" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = "\nMENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Enter the name for this portfolio.\n"
+            + "Cannot create a portfolio with empty name. Enter a valid name.\n"
+            + "If you want to go back to main menu, press '0'.\n"
+            + "\n"
+            + "\n"
+            + "MENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. View portfolio\n"
+            + "3. Value of portfolio\n"
+            + "e. Exit\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
 }
