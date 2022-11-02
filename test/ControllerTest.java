@@ -3764,8 +3764,8 @@ public class ControllerTest {
   public void testInvalidHowMany() throws IOException {
     String userInput = "1" + "\n" + "controllerTest12" + "\n" + "2"
             + "1" + "\n" + "controllerTest12" + "\n"
-            + "1" + "\n" + "10" + "\n" + "14000000000000000000" +
-            "\n" + "10000000" + "\n" + "n" + "\n" + "e";
+            + "1" + "\n" + "10" + "\n" + "14000000000000000000"
+            + "\n" + "10000000" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
