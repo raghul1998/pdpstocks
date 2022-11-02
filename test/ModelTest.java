@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Objects;
 
 import model.ModelControllerInteract;
 import model.ModelControllerInteractImpl;
@@ -59,7 +60,7 @@ public class ModelTest {
         }
       }
     }
-    assertEquals(count, dir.listFiles().length);
+    assertEquals(count, Objects.requireNonNull(dir.listFiles()).length);
   }
 
   @Test
@@ -104,7 +105,7 @@ public class ModelTest {
     String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(instant);
 
     String filename = "userdata/user1/" + "pf_" + name[0] + ".csv";
-    String[] words = null;
+    String[] words;
     FileReader fr = new FileReader(filename);
     BufferedReader br = new BufferedReader(fr);
     String str;

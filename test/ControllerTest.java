@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  * This class contains tests for the Controller.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ControllerTest {
+public class ControllerTest extends TestParentClass {
   // creating portfolio
   @Test
   public void testAControllerCreatePortfolio() throws IOException {
@@ -74,10 +74,12 @@ public class ControllerTest {
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest1", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest1", 1,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest1", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest1", 1,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -159,10 +161,12 @@ public class ControllerTest {
             + "StockName: Walmart\n"
             + "Symbol: WMT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest2", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest2", 1,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest2", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest2", 1,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -188,10 +192,12 @@ public class ControllerTest {
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest2", 2)
+            + super.readStockDataFromPortfolioCsv("controllerTest2", 2,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest2", 2)
+            + super.readStockDataFromPortfolioCsv("controllerTest2", 2,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -217,10 +223,12 @@ public class ControllerTest {
             + "StockName: Johnson\n"
             + "Symbol: JNJ\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest2", 3)
+            + super.readStockDataFromPortfolioCsv("controllerTest2", 3,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest2", 3)
+            + super.readStockDataFromPortfolioCsv("controllerTest2", 3,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -246,36 +254,47 @@ public class ControllerTest {
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\nCONTROLLERTEST2 PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest2", 1) + "\n"
+            + super.readStockDataFromPortfolioCsv("controllerTest2", 1,
+            0, true) + "\n"
             + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\nWalmart (WMT) \t 11\t $"
-            + Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest2", 1)) * 100) / 100 + "\t $"
-            + 11 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest2", 1)) * 100) / 100
+            + Math.floor(Double.parseDouble(super.readStockDataFromPortfolioCsv(
+            "controllerTest2", 1,
+            6, false)) * 100) / 100 + "\t $"
+            + 11 * Math.floor(Double.parseDouble(super.readStockDataFromPortfolioCsv(
+            "controllerTest2", 1,
+            6, false)) * 100) / 100
             + "\nTesla (TSLA) \t 3\t $" + Math.floor(
-            Double.parseDouble(readStockPriceFromPortfolioCsv(
-                    "controllerTest2", 2)) * 100) / 100
+            Double.parseDouble(super.readStockDataFromPortfolioCsv(
+                    "controllerTest2", 2,
+                    6, false)) * 100) / 100
             + "\t $" + 3 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest2", 2)) * 100) / 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest2", 2,
+                    6, false)) * 100) / 100
             + "\nJohnson (JNJ) \t 100\t $"
-            + Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest2", 3)) * 100) / 100
+            + Math.floor(Double.parseDouble(super.readStockDataFromPortfolioCsv(
+            "controllerTest2", 3,
+            6, false)) * 100) / 100
             + "\t $" + 100 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest2", 3)) * 100) / 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest2", 3,
+                    6, false)) * 100) / 100
             + "\n"
             + "\nTotal Portfolio Value as on "
-            + readPurchaseDateFromCsv("controllerTest2", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest2", 1,
+            0, true)
             + ": $" + (11 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest2", 1)) * 100) / 100
-            + 3 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest2", 2)) * 100) / 100 + 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest2", 1,
+                    6, false)) * 100) / 100
+            + 3 * Math.floor(Double.parseDouble(super.readStockDataFromPortfolioCsv(
+            "controllerTest2", 2,
+            6, false)) * 100) / 100 + 100
             * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest2", 3)) * 100) / 100)
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest2", 3,
+                    6, false)) * 100) / 100)
             + "\n"
             + "\nPress 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -423,10 +442,12 @@ public class ControllerTest {
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest3", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 1,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest3", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 1,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -452,10 +473,12 @@ public class ControllerTest {
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest3", 2)
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 2,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest3", 2)
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 2,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -482,20 +505,25 @@ public class ControllerTest {
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\nCONTROLLERTEST3 PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest3", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 1,
+            0, true)
             + "\n"
             + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\nGoogle (GOOG) \t 5\t $"
-            + Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest3", 1)) * 100) / 100
+            + Math.floor(Double.parseDouble(super.readStockDataFromPortfolioCsv(
+            "controllerTest3", 1,
+            6, false)) * 100) / 100
             + "\t $" + 5 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv("controllerTest3",
-                    1)) * 100) / 100 + "\n"
+            super.readStockDataFromPortfolioCsv("controllerTest3",
+                    1,
+                    6, false)) * 100) / 100 + "\n"
             + "\nTotal Portfolio Value as on "
-            + readPurchaseDateFromCsv("controllerTest3", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 1,
+            0, true)
             + ": $" + 5 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest3", 1)) * 100) / 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest3", 1,
+                    6, false)) * 100) / 100
             + "\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
@@ -573,10 +601,12 @@ public class ControllerTest {
             + "StockName: Amazon\n"
             + "Symbol: AMZN\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest3", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 1,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest3", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 1,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -603,21 +633,26 @@ public class ControllerTest {
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "\nCONTROLLERTEST3 PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest3", 1) + "\n"
+            + super.readStockDataFromPortfolioCsv("controllerTest3", 1,
+            0, true) + "\n"
             + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\nAmazon (AMZN) \t 7\t $"
             + Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest3", 1)) * 100) / 100
-            + "\t $" + 7 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest3", 1)) * 100) / 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest3", 1,
+                    6, false)) * 100) / 100
+            + "\t $" + 7 * Math.floor(Double.parseDouble(super.readStockDataFromPortfolioCsv(
+            "controllerTest3", 1,
+            6, false)) * 100) / 100
             + "\n"
             + "\nTotal Portfolio Value as on "
-            + readPurchaseDateFromCsv(
-            "controllerTest3", 1)
+            + super.readStockDataFromPortfolioCsv(
+            "controllerTest3", 1,
+            0, true)
             + ": $" + 7 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest3", 1)) * 100) / 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest3", 1,
+                    6, false)) * 100) / 100
             + "\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
@@ -642,7 +677,7 @@ public class ControllerTest {
   // viewing portfolio by inputting some previous date
 
   @Test
-  public void testFControllerInputDate() throws IOException {
+  public void testFControllerInputDate() {
     String userInput = "3" + "\n" + "3" + "\n" + "2022-10-10" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -1186,10 +1221,12 @@ public class ControllerTest {
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest4", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest4", 1,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest4", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest4", 1,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1218,25 +1255,30 @@ public class ControllerTest {
             + "Which portfolio would you like to check?\n"
             + "\n"
             + "CONTROLLERTEST4 PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest4", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest4", 1,
+            0, true)
             + "\n"
             + "\n"
             + "Name (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\n"
             + "Microsoft (MSFT) \t 1\t $"
             + Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest4", 1)) * 100) / 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest4", 1,
+                    6, false)) * 100) / 100
             + "\t $" + 1 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest4", 1)) * 100) / 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest4", 1,
+                    6, false)) * 100) / 100
             + "\n"
             + "\n"
             + "Total Portfolio Value as on "
-            + readPurchaseDateFromCsv("controllerTest4", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest4", 1,
+            0, true)
             + ": $" + 1 * Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest4", 1)) * 100) / 100
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest4", 1,
+                    6, false)) * 100) / 100
             + "\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
@@ -1291,7 +1333,7 @@ public class ControllerTest {
   // if how many stocks = 0, the portfolio is not created
 
   @Test
-  public void testOControllerHowManyStocksIsZeroSoPortfolioNotCreated() throws IOException {
+  public void testOControllerHowManyStocksIsZeroSoPortfolioNotCreated() {
     String userInput = "1" + "\n" + "Meghna" + "\n" + "1" + "\n" + "1" + "\n"
             + "0" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -1423,10 +1465,12 @@ public class ControllerTest {
             + "StockName: Apple\n"
             + "Symbol: AAPL\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest5", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest5", 1,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest5", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest5", 1,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1534,10 +1578,12 @@ public class ControllerTest {
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest6", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest6", 1,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest6", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest6", 1,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1563,10 +1609,12 @@ public class ControllerTest {
             + "StockName: Meta\n"
             + "Symbol: META\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest6", 2)
+            + super.readStockDataFromPortfolioCsv("controllerTest6", 2,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest6", 2)
+            + super.readStockDataFromPortfolioCsv("controllerTest6", 2,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1592,10 +1640,12 @@ public class ControllerTest {
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest6", 3)
+            + super.readStockDataFromPortfolioCsv("controllerTest6", 3,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest6", 3)
+            + super.readStockDataFromPortfolioCsv("controllerTest6", 3,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1621,10 +1671,12 @@ public class ControllerTest {
             + "StockName: Apple\n"
             + "Symbol: AAPL\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest6", 4)
+            + super.readStockDataFromPortfolioCsv("controllerTest6", 4,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest6", 4)
+            + super.readStockDataFromPortfolioCsv("controllerTest6", 4,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1708,10 +1760,12 @@ public class ControllerTest {
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 1,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7", 1)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 1,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1737,10 +1791,12 @@ public class ControllerTest {
             + "StockName: Meta\n"
             + "Symbol: META\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7", 2)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 2,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7", 2)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 2,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1766,10 +1822,12 @@ public class ControllerTest {
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7", 3)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 3,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7", 3)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 3,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1795,10 +1853,12 @@ public class ControllerTest {
             + "StockName: Apple\n"
             + "Symbol: AAPL\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7", 4)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 4,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7", 4)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 4,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1824,10 +1884,12 @@ public class ControllerTest {
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
             + "Time: "
-            + readStockDateFromPortfolioCsv("controllerTest7", 5)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 5,
+            2, false)
             + "\n"
             + "Price: $"
-            + readStockPriceFromPortfolioCsv("controllerTest7", 5)
+            + super.readStockDataFromPortfolioCsv("controllerTest7", 5,
+            6, false)
             + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
@@ -1909,8 +1971,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8", 1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8", 1) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest8",
+            1, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest8",
+            1,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -1934,8 +1999,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8", 1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8", 1) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest8",
+            1, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest8",
+            1,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -1959,8 +2027,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Microsoft\n"
             + "Symbol: MSFT\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest8", 2) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest8", 2) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest8",
+            2, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest8",
+            2,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -1992,21 +2063,26 @@ public class ControllerTest {
             + "Which portfolio would you like to check?\n"
             + "\n"
             + "CONTROLLERTEST8 PORTFOLIO COMPOSITION - Created on "
-            + readPurchaseDateFromCsv("controllerTest8", 1) + "\n"
+            + super.readStockDataFromPortfolioCsv("controllerTest8", 1,
+            0, true) + "\n"
             + "\n"
             + "Name (Symbol) \t Quantity \t Price of each share \t Total Value\n"
             + "\n"
             + "Microsoft (MSFT) \t 3\t $"
             + Math.floor(Double.parseDouble(
-            readStockPriceFromPortfolioCsv(
-                    "controllerTest8", 1)) * 100) / 100
-            + "\t $" + 3 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest8", 1)) * 100) / 100 + "\n"
+            super.readStockDataFromPortfolioCsv(
+                    "controllerTest8", 1,
+                    6, false)) * 100) / 100
+            + "\t $" + 3 * Math.floor(Double.parseDouble(super.readStockDataFromPortfolioCsv(
+            "controllerTest8", 1,
+            6, false)) * 100) / 100 + "\n"
             + "\n"
             + "Total Portfolio Value as on "
-            + readPurchaseDateFromCsv("controllerTest8", 1)
-            + ": $" + 3 * Math.floor(Double.parseDouble(readStockPriceFromPortfolioCsv(
-            "controllerTest8", 1)) * 100) / 100 + "\n"
+            + super.readStockDataFromPortfolioCsv("controllerTest8", 1,
+            0, true)
+            + ": $" + 3 * Math.floor(Double.parseDouble(super.readStockDataFromPortfolioCsv(
+            "controllerTest8", 1,
+            6, false)) * 100) / 100 + "\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -2089,10 +2165,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            1) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            1, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            1,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2116,10 +2193,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            2) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            2) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            2, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            2,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2143,10 +2221,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            3) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            3) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            3, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            3,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2170,10 +2249,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            4) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            4) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            4, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            4,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2197,10 +2277,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            5) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            5) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            5, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            5,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2224,10 +2305,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            6) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            6) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            6, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            6,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2251,10 +2333,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            7) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            7) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            7, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            7,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2278,10 +2361,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            8) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            8) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            8, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            8,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2305,10 +2389,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            9) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            9) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            9, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            9,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2332,10 +2417,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Meta\n"
             + "Symbol: META\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest9",
-            10) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest9",
-            10) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest9",
+            10, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest9",
+            10,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2421,10 +2507,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            1) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            1, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            1,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2448,10 +2535,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            2) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            2) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            2, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            2,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2475,10 +2563,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            3) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            3) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            3, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            3,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2502,10 +2591,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            4) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            4) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            4, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            4,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2529,10 +2619,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            5) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            5) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            5, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            5,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2556,10 +2647,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            6) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            6) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            6, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            6,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2583,10 +2675,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            7) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            7) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            7, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            7,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2610,10 +2703,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            8) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            8) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            8, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            8,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2637,10 +2731,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            9) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            9) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            9, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            9,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2664,10 +2759,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            10) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            10) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            10, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            10,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2691,10 +2787,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            11) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            11) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            11, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            11,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2718,10 +2815,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            12) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            12) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            12, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            12,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2745,10 +2843,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            13) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            13) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            13, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            13,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2772,10 +2871,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            14) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            14) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            14, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            14,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2799,10 +2899,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            15) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            15) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            15, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            15,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2826,10 +2927,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            16) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            16) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            16, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            16,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2853,10 +2955,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            17) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            17) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            17, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            17,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2880,10 +2983,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Google\n"
             + "Symbol: GOOG\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest10",
-            18) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest10",
-            18) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest10",
+            18, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest10",
+            18,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -2974,10 +3078,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            1) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            1, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            1,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3001,10 +3106,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            2) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            2) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            2, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            2,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3028,10 +3134,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            3) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            3) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            3, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            3,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3055,10 +3162,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            4) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            4) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            4, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            4,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3082,10 +3190,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            5) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            5) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            5, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            5,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3109,10 +3218,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            6) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            6) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            6, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            6,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3136,10 +3246,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            7) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            7) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            7, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            7,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3163,10 +3274,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            8) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            8) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            8, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            8,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3190,10 +3302,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            9) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            9) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            9, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            9,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3217,10 +3330,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            10) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            10) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            10, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            10,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3244,10 +3358,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            11) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            11) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            11, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            11,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3271,10 +3386,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            12) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            12) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            12, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            12,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3298,10 +3414,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            13) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            13) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            13, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            13,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3325,10 +3442,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            14) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            14) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            14, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            14,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3352,10 +3470,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            15) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            15) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            15, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            15,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3379,10 +3498,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            16) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            16) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            16, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            16,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3406,10 +3526,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            17) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            17) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            17, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            17,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3433,10 +3554,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            18) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            18) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            18, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            18,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3460,10 +3582,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            19) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            19) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            19, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            19,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3487,10 +3610,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            20) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            20) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            20, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            20,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3514,10 +3638,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            21) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            21) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            21, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            21,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3541,10 +3666,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            22) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            22) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            22, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            22,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3568,10 +3694,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            23) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            23) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            23, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            23,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3595,10 +3722,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            24) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            24) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            24, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            24,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3622,10 +3750,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            25) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            25) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            25, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            25,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3649,10 +3778,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            26) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            26) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            26, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            26,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3676,10 +3806,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            27) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            27) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            27, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            27,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3703,10 +3834,11 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Tesla\n"
             + "Symbol: TSLA\n"
-            + "Time: " + readStockDateFromPortfolioCsv("controllerTest11",
-            28) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv("controllerTest11",
-            28) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv("controllerTest11",
+            28, 2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv("controllerTest11",
+            28,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -3835,10 +3967,12 @@ public class ControllerTest {
             + "CURRENT STOCK PRICE\n"
             + "StockName: Walmart\n"
             + "Symbol: WMT\n"
-            + "Time: " + readStockDateFromPortfolioCsv(
-            "controllerTest12", 1) + "\n"
-            + "Price: $" + readStockPriceFromPortfolioCsv(
-            "controllerTest12", 1) + "\n"
+            + "Time: " + super.readStockDataFromPortfolioCsv(
+            "controllerTest12", 1,
+            2, false) + "\n"
+            + "Price: $" + super.readStockDataFromPortfolioCsv(
+            "controllerTest12", 1,
+            6, false) + "\n"
             + "\n"
             + "How many shares would you like to buy?\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
@@ -4347,72 +4481,12 @@ public class ControllerTest {
     assertEquals(expectedOutput, result);
   }
 
-  private String readStockDateFromPortfolioCsv(String portfolioName, int lineNumber)
-          throws IOException {
-    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
-    String[] cols = null;
-    FileReader fr = new FileReader(filename);
-    BufferedReader br = new BufferedReader(fr);
-    String line;
-    String dateLastKnown = null;
-    int l = 3 + lineNumber;
-
-    while ((line = br.readLine()) != null && l >= 0) {
-      cols = line.split(",");
-      if (l == 1) {
-        dateLastKnown = cols[2];
-      }
-      l--;
-    }
-    return dateLastKnown;
-  }
-
-  private String readPurchaseDateFromCsv(String portfolioName, int lineNumber)
-          throws IOException {
-    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
-    String[] cols = null;
-    FileReader fr = new FileReader(filename);
-    BufferedReader br = new BufferedReader(fr);
-    String line;
-    String datePurchase = null;
-    int l = 3 + lineNumber;
-
-    while ((line = br.readLine()) != null && l >= 0) {
-      cols = line.split(",");
-      if (l == 1) {
-        datePurchase = cols[0];
-      }
-      l--;
-    }
-    return datePurchase.substring(0, 10);
-  }
-
-  private String readStockPriceFromPortfolioCsv(String portfolioName, int lineNumber)
-          throws IOException {
-    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
-    String[] cols = null;
-    FileReader fr = new FileReader(filename);
-    BufferedReader br = new BufferedReader(fr);
-    String line;
-    String price = null;
-    int l = 3 + lineNumber;
-
-    while ((line = br.readLine()) != null && l >= 0) {
-      cols = line.split(",");
-      if (l == 1) {
-        price = cols[6];
-      }
-      l--;
-    }
-    return price;
-  }
-
 
   private String readStockDateFromStockDataCsv() {
     String line;
     String splitBy = ",";
-    BufferedReader stockData = null;
-    String[] splitStockData = new String[4];
+    BufferedReader stockData;
+    String[] splitStockData;
     try {
       stockData = new BufferedReader(new FileReader("data/StockData.csv"));
     } catch (Exception e) {
@@ -4420,7 +4494,6 @@ public class ControllerTest {
     }
 
     try {
-      assert stockData != null;
       line = stockData.readLine();
       splitStockData = line.split(splitBy);
     } catch (Exception e) {
@@ -4432,8 +4505,8 @@ public class ControllerTest {
   private String readStockPriceFromStockDataCsv() {
     String line;
     String splitBy = ",";
-    BufferedReader stockData = null;
-    String[] splitStockData = new String[4];
+    BufferedReader stockData;
+    String[] splitStockData;
     try {
       stockData = new BufferedReader(new FileReader("data/StockData.csv"));
     } catch (Exception e) {
@@ -4441,7 +4514,6 @@ public class ControllerTest {
     }
 
     try {
-      assert stockData != null;
       line = stockData.readLine();
       splitStockData = line.split(splitBy);
     } catch (Exception e) {
@@ -4455,6 +4527,7 @@ public class ControllerTest {
     File directory = new File("userdata/user1");
     if (directory.exists()) {
       String[] filename = directory.list();
+      assert filename != null;
       for (String fName : filename) {
         if (Objects.equals(FileName, fName)) {
           File currentFile = new File(directory.getPath(), fName);
