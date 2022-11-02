@@ -3,48 +3,31 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Objects;
 
 import controller.ControllerViewInteract;
 import controller.ControllerViewInteractImpl;
-
-import model.ModelControllerInteract;
-import model.StockCompositionData;
-import model.TypeofAction;
 
 import static org.junit.Assert.assertEquals;
 
 
 public class controllerTest {
 
-
-  class MockModel implements ModelControllerInteract{
-    private StringBuilder log;
-    MockModel(StringBuilder log){
-      this.log=log;
-    }
-    @Override
-    public void modelControllerInteract(TypeofAction type, String[] args, int length) {
-      log.append("modelControllerInteract called with inputs: "+a+" "+b+"\n");
-    }
-  }
   private String readStockDateFromCsv(String portfolioName, int lineNumber) throws IOException {
-    String filename = "userdata/user1/" + "pf_"+ portfolioName + ".csv";
-    String[] cols= null;
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
     FileReader fr = new FileReader(filename);
     BufferedReader br = new BufferedReader(fr);
     String line;
     String dateLastKnown = null;
-    int l = 3+lineNumber;
+    int l = 3 + lineNumber;
 
-    while((line=br.readLine())!=null && l>=0) {
+    while ((line = br.readLine()) != null && l >= 0) {
       cols = line.split(",");
-      if(l==1) {
+      if (l == 1) {
         dateLastKnown = cols[2];
       }
       l--;
@@ -52,24 +35,43 @@ public class controllerTest {
     return dateLastKnown;
   }
 
+  private String readPurchaseDateFromCsv(String portfolioName, int lineNumber) throws IOException {
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
+    FileReader fr = new FileReader(filename);
+    BufferedReader br = new BufferedReader(fr);
+    String line;
+    String datePurchase = null;
+    int l = 3 + lineNumber;
+
+    while ((line = br.readLine()) != null && l >= 0) {
+      cols = line.split(",");
+      if (l == 1) {
+        datePurchase = cols[0];
+      }
+      l--;
+    }
+    return datePurchase.substring(0,10);
+  }
   private String readStockPriceFromCsv(String portfolioName, int lineNumber) throws IOException {
-    String filename = "userdata/user1/" + "pf_"+ portfolioName + ".csv";
-    String[] cols= null;
+    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String[] cols = null;
     FileReader fr = new FileReader(filename);
     BufferedReader br = new BufferedReader(fr);
     String line;
     String price = null;
-    int l = 3+lineNumber;
+    int l = 3 + lineNumber;
 
-    while((line=br.readLine())!=null && l>=0) {
+    while ((line = br.readLine()) != null && l >= 0) {
       cols = line.split(",");
-      if(l==1) {
+      if (l == 1) {
         price = cols[6];
       }
       l--;
     }
     return price;
   }
+
   @Test
   public void testControllerCreatePortfolio() throws IOException {
     String userInput = "1" + "\n" + "controllerTest1_health" + "\n" + "1" + "\n" + "1" + "\n" + "1"
@@ -95,7 +97,7 @@ public class controllerTest {
             "\n" +
             "CONTROLLERTEST1_HEALTH Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -118,8 +120,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Microsoft\n" +
             "Symbol: MSFT\n" +
-            "Time: " + readStockDateFromCsv("controllerTest1_health",1) + "\n" +
-            "Price: $" + readStockPriceFromCsv("controllerTest1_health",1)+ "\n" +
+            "Time: " + readStockDateFromCsv("controllerTest1_health", 1) + "\n" +
+            "Price: $" + readStockPriceFromCsv("controllerTest1_health", 1) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -172,7 +174,7 @@ public class controllerTest {
             "\n" +
             "CONTROLLERTEST2_BHARATI Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -195,8 +197,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Walmart\n" +
             "Symbol: WMT\n" +
-            "Time: " + readStockDateFromCsv("controllerTest2_bharati",1) + "\n" +
-            "Price: $" + readStockPriceFromCsv("controllerTest2_bharati",1)+ "\n" +
+            "Time: " + readStockDateFromCsv("controllerTest2_bharati", 1) + "\n" +
+            "Price: $" + readStockPriceFromCsv("controllerTest2_bharati", 1) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -220,8 +222,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Tesla\n" +
             "Symbol: TSLA\n" +
-            "Time: " + readStockDateFromCsv("controllerTest2_bharati",2) + "\n" +
-            "Price: $" + readStockPriceFromCsv("controllerTest2_bharati",2)+ "\n" +
+            "Time: " + readStockDateFromCsv("controllerTest2_bharati", 2) + "\n" +
+            "Price: $" + readStockPriceFromCsv("controllerTest2_bharati", 2) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -245,8 +247,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Johnson\n" +
             "Symbol: JNJ\n" +
-            "Time: " + readStockDateFromCsv("controllerTest2_bharati",3) + "\n" +
-            "Price: $" + readStockPriceFromCsv("controllerTest2_bharati",3)+ "\n" +
+            "Time: " + readStockDateFromCsv("controllerTest2_bharati", 3) + "\n" +
+            "Price: $" + readStockPriceFromCsv("controllerTest2_bharati", 3) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -271,17 +273,16 @@ public class controllerTest {
             "3. ESHA\n" +
             "\n" +
             "Which portfolio would you like to check?\n" +
-            "\nCONTROLLERTEST2_BHARATI PORTFOLIO COMPOSITION - Created on 2022-10-31\n" +
+            "\nCONTROLLERTEST2_BHARATI PORTFOLIO COMPOSITION - Created on "+readPurchaseDateFromCsv("controllerTest2_bharati", 1)+"\n" +
 
             "\nName (Symbol) 	 Quantity 	 Price of each share 	 Total Value\n" +
-
-            "\nWalmart (WMT) 	 11	 $"+ readStockPriceFromCsv("controllerTest2_bharati",1)+	 "$1568.6\n" +
-            "Tesla (TSLA) 	 3	 $"+ readStockPriceFromCsv("controllerTest2_bharati",2)+	 "$685.08\n" +
-            "Johnson (JNJ) 	 100	 $"+ readStockPriceFromCsv("controllerTest2_bharati",3)+	 "$17420.0\n" +
-
-            "\nTotal Portfolio Value as on 2022-10-31: $19673.68\n" +
+            "\nWalmart (WMT) \t 11\t $"+ Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 1)) * 100) / 100 +"\t $"+ 11* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 1)) * 100) / 100 +
+            "\nTesla (TSLA) \t 3\t $"+ Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 2)) * 100) / 100 +"\t $"+ 3* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 2)) * 100) / 100 +
+            "\nJohnson (JNJ) \t 100\t $"+ Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 3)) * 100) / 100 +"\t $"+ 100* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 3)) * 100) / 100 +
             "\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\nTotal Portfolio Value as on 2022-11-01: $" +(11* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 1)) * 100) / 100+3* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 2)) * 100) / 100 + 100* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 3)) * 100) / 100)+
+            "\n" +
+            "\nPress 'b' to go back and 'm' for main menu.\n" +
             "\n" +
             "\nMENU\n" +
             "\n" +
@@ -325,7 +326,7 @@ public class controllerTest {
             "\n" +
             "NEHA Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -348,8 +349,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Walmart\n" +
             "Symbol: WMT\n" +
-            "Time: 2022-10-28 19:26:00\n" +
-            "Price: $142.6000\n" +
+            "Time: 2022-11-01 16:43:00\n" +
+            "Price: $141.6900\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -372,7 +373,7 @@ public class controllerTest {
   }
 
   @Test
-  public void testControllerClubTwoStocksOfSameTickerComposition() {
+  public void testControllerClubTwoStocksOfSameTickerComposition() throws IOException {
     String userInput = "1" + "\n" + "controllerTest3_bharat" + "\n" + "1" + "\n" + "3" + "\n" + "3"
             + "\n" + "y" + "\n" + "3" + "\n" + "2" + "\n" + "n" + "\n" + "2" + "\n" + "3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -397,7 +398,7 @@ public class controllerTest {
             "\n" +
             "CONTROLLERTEST3_BHARAT Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -420,8 +421,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Google\n" +
             "Symbol: GOOG\n" +
-            "Time: 2022-10-28 19:56:00\n" +
-            "Price: $96.5500\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest3_bharat", 1) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest3_bharat", 1) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -445,8 +446,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Google\n" +
             "Symbol: GOOG\n" +
-            "Time: 2022-10-28 19:56:00\n" +
-            "Price: $96.5500\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest3_bharat", 2) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest3_bharat", 2) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -472,13 +473,13 @@ public class controllerTest {
             "4. ESHA\n" +
             "\n" +
             "Which portfolio would you like to check?\n" +
-            "\nCONTROLLERTEST3_BHARAT PORTFOLIO COMPOSITION - Created on 2022-10-31\n" +
+            "\nCONTROLLERTEST3_BHARAT PORTFOLIO COMPOSITION - Created on "+readPurchaseDateFromCsv("controllerTest3_bharat", 1)+"\n" +
 
             "\nName (Symbol) 	 Quantity 	 Price of each share 	 Total Value\n" +
 
-            "\nGoogle (GOOG) \t 5\t $96.55\t $482.75\n" +
+            "\nGoogle (GOOG) \t 5\t $"+ Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest3_bharat", 1)) * 100) / 100 +"\t $"+ 5* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest3_bharat", 1)) * 100) / 100 +"\n" +
 
-            "\nTotal Portfolio Value as on 2022-10-31: $482.75\n" +
+            "\nTotal Portfolio Value as on "+readPurchaseDateFromCsv("controllerTest3_bharat", 1)+": $"+ 5* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest3_bharat", 1)) * 100) / 100 +"\n" +
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
             "\n" +
@@ -528,7 +529,7 @@ public class controllerTest {
             "\nCREATE PORTFOLIO MENU\n" +
             "\nCONTROLLERTEST3_BHARAT Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -1020,7 +1021,7 @@ public class controllerTest {
             "\n" +
             "RIYA Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -1031,7 +1032,7 @@ public class controllerTest {
             "\n" +
             "RIYA Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -1094,7 +1095,7 @@ public class controllerTest {
     String userInput = "1" + "\n" + "controllerTest4_Anuja" + "\n" + "1" + "\n" + "1" + "\n" + "1"
             + "\n" + "n"
             + "\n" + "2" + "\n" + "5" + "\n" + "m" + "\n" + "3" + "\n" + "5" + "\n" + "2022-11-01"
-            + "\n" + "m"+ "\n" + "e";
+            + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1117,7 +1118,7 @@ public class controllerTest {
             "\n" +
             "CONTROLLERTEST4_ANUJA Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -1232,6 +1233,7 @@ public class controllerTest {
 
     assertEquals(expectedOutput, result);
   }
+
   // this testcase is displaying profile, it should not display the profile
   @Test
   public void testControllerHowManyStocksIsZeroSoPortfolioNotCreated() {
@@ -1260,7 +1262,7 @@ public class controllerTest {
             "\n" +
             "CONTROLLERTEST5_MEGHNA Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -1309,6 +1311,7 @@ public class controllerTest {
 
     assertEquals(expectedOutput, result);
   }
+
   // this testcase should not display entry in the portfolio
   @Test
   public void testControllerHowManyStocksIsZeroSoStockNotDisplayedInPortfolio() {
@@ -1337,7 +1340,7 @@ public class controllerTest {
             "\n" +
             "CONTROLLERTEST6_ASH Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
