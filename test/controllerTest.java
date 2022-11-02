@@ -322,7 +322,7 @@ public class controllerTest {
             "\nTesla (TSLA) \t 3\t $"+ Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 2)) * 100) / 100 +"\t $"+ 3* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 2)) * 100) / 100 +
             "\nJohnson (JNJ) \t 100\t $"+ Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 3)) * 100) / 100 +"\t $"+ 100* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 3)) * 100) / 100 +
             "\n" +
-            "\nTotal Portfolio Value as on 2022-11-01: $" +(11* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 1)) * 100) / 100+3* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 2)) * 100) / 100 + 100* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 3)) * 100) / 100)+
+            "\nTotal Portfolio Value as on "+readPurchaseDateFromCsv("controllerTest2_bharati",1)+": $" +(11* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 1)) * 100) / 100+3* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 2)) * 100) / 100 + 100* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest2_bharati", 3)) * 100) / 100)+
             "\n" +
             "\nPress 'b' to go back and 'm' for main menu.\n" +
             "\n" +
@@ -1136,7 +1136,7 @@ public class controllerTest {
   public void testControllerShowSamePriceOnSameDate() throws IOException {
     String userInput = "1" + "\n" + "controllerTest4_Anuja" + "\n" + "1" + "\n" + "1" + "\n" + "1"
             + "\n" + "n"
-            + "\n" + "2" + "\n" + "5" + "\n" + "m" + "\n" + "3" + "\n" + "5" + "\n" + "2022-11-01"
+            + "\n" + "2" + "\n" + "4" + "\n" + "m" + "\n" + "3" + "\n" + "5" + "\n" + "2022-11-01"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -1146,7 +1146,8 @@ public class controllerTest {
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
 
-    String expectedOutput = "\nMENU\n" +
+    String expectedOutput = "\n" +
+            "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
             "2. View portfolio\n" +
@@ -1184,7 +1185,7 @@ public class controllerTest {
             "StockName: Microsoft\n" +
             "Symbol: MSFT\n" +
             "Time: "+ readStockDateFromCsv("controllerTest4_Anuja", 1) +"\n" +
-            "Price: $"+ readStockPriceFromCsv("controllerTest4_Anuja", 1) + "\n" +"\n" +
+            "Price: $" + readStockPriceFromCsv("controllerTest4_Anuja", 1)+"\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1212,14 +1213,13 @@ public class controllerTest {
             "\n" +
             "Which portfolio would you like to check?\n" +
             "\n" +
-            "CONTROLLERTEST6_ASH PORTFOLIO COMPOSITION - Created on 2022-11-01\n" +
+            "CONTROLLERTEST4_ANUJA PORTFOLIO COMPOSITION - Created on " +readPurchaseDateFromCsv("controllerTest4_Anuja", 1)+"\n" +
             "\n" +
             "Name (Symbol) \t Quantity \t Price of each share \t Total Value\n" +
             "\n" +
-            "Apple (AAPL) \t 3\t $153.46\t $460.38\n" +
-            "Microsoft (MSFT) \t 0\t $232.6\t $0.0\n" +
+            "Microsoft (MSFT) \t 1\t $"+ Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest4_Anuja", 1)) * 100) / 100 +"\t $"+ 1* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest4_Anuja", 1)) * 100) / 100 +"\n" +
             "\n" +
-            "Total Portfolio Value as on 2022-11-01: $460.38\n" +
+            "Total Portfolio Value as on "+readPurchaseDateFromCsv("controllerTest4_Anuja", 1)+": $"+ 1* Math.floor(Double.parseDouble(readStockPriceFromCsv("controllerTest4_Anuja", 1)) * 100) / 100 +"\n" +
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
             "\n" +
@@ -1239,23 +1239,17 @@ public class controllerTest {
             "2. CONTROLLERTEST2_BHARATI\n" +
             "3. CONTROLLERTEST3_BHARAT\n" +
             "4. CONTROLLERTEST4_ANUJA\n" +
-            "5. CONTROLLERTEST6_ASH\n" +
-            "6. CONTROLLERTEST7_SHUBHAM\n" +
-            "7. E\n" +
-            "8. ESHA\n" +
-            "9. T3\n" +
-            "10. TEST1\n" +
+            "5. ESHA\n" +
             "\n" +
             "Which portfolio would you like to check?\n" +
             "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n" +
-            "Value of CONTROLLERTEST6_ASH PORTFOLIO\n" +
+            "Value of ESHA PORTFOLIO\n" +
             "\n" +
             "Name (Symbol) \t Quantity\t Share Value on 2022-11-01\t Total Value\n" +
             "\n" +
-            "Apple (AAPL) \t 3\t $153.46\t $460.38\n" +
-            "Microsoft (MSFT) \t 0\t $232.6\t $0.0\n" +
+            "Amazon (AMZN) \t 4\t $102.4\t $409.6\n" +
             "\n" +
-            "Total Portfolio Value is on 2022-11-01: $0.0\n" +
+            "Total Portfolio Value is on 2022-11-01: $409.6\n" +
             "\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
             "\n" +
@@ -1279,9 +1273,9 @@ public class controllerTest {
 
   // this testcase is displaying profile, it should not display the profile
   @Test
-  public void testControllerHowManyStocksIsZeroSoPortfolioNotCreated() {
-    String userInput = "1" + "\n" + "controllerTest5_Meghna" + "\n" + "1" + "\n" + "1" + "\n"
-            + "0" + "\n" + "n" + "\n" + "e";
+  public void testControllerHowManyStocksIsZeroSoPortfolioNotCreated() throws IOException {
+    String userInput = "1" + "\n" + "Meghna" + "\n" + "1" + "\n" + "1" + "\n"
+            + "0" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1290,7 +1284,7 @@ public class controllerTest {
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
 
-    String expectedOutput = "\n\n" +
+    String expectedOutput = "\n" +
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
@@ -1303,7 +1297,7 @@ public class controllerTest {
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
-            "CONTROLLERTEST5_MEGHNA Portfolio\n" +
+            "MEGHNA Portfolio\n" +
             "\n" +
             "1. Buy a stock\n" +
             "2. Main Menu\n" +
@@ -1328,15 +1322,15 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Microsoft\n" +
             "Symbol: MSFT\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $232.6000\n" +
+            "Time: "+readStockDateFromStockDataCsv()+"\n" +
+            "Price: $"+readStockPriceFromStockDataCsv()+"\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
-            "Would you like to buy another stock? (Y|N)\n" +
+            "Not a valid input. Please enter number of shares as natural numbers.\n" +
+            "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
-            "CONTROLLERTEST5_MEGHNA PORTFOLIO CREATED...!!!\n" +
             "\n" +
             "MENU\n" +
             "\n" +
@@ -1357,10 +1351,10 @@ public class controllerTest {
 
   // this testcase should not display entry in the portfolio
   @Test
-  public void testControllerHowManyStocksIsZeroSoStockNotDisplayedInPortfolio() {
-    String userInput = "1" + "\n" + "controllerTest6_Ash" + "\n" + "1" + "\n" + "4" + "\n"
+  public void testControllerHowManyStocksIsZeroSoStockNotDisplayedInPortfolio() throws IOException {
+    String userInput = "1" + "\n" + "controllerTest5_Ash" + "\n" + "1" + "\n" + "4" + "\n"
             + "3" + "\n" + "y" + "\n" + "1" + "\n"
-            + "0" + "\n" + "n" + "\n" + "e";
+            + "0" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1369,7 +1363,8 @@ public class controllerTest {
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
 
-    String expectedOutput = "\nMENU\n" +
+    String expectedOutput = "\n" +
+            "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
             "2. View portfolio\n" +
@@ -1381,7 +1376,7 @@ public class controllerTest {
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
-            "CONTROLLERTEST6_ASH Portfolio\n" +
+            "CONTROLLERTEST5_ASH Portfolio\n" +
             "\n" +
             "1. Buy a stock\n" +
             "2. Main Menu\n" +
@@ -1406,8 +1401,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Apple\n" +
             "Symbol: AAPL\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $153.4600\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest5_Ash", 1) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest5_Ash", 1) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1431,15 +1426,15 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Microsoft\n" +
             "Symbol: MSFT\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $232.6000\n" +
+            "Time: "+readStockDateFromStockDataCsv()+"\n" +
+            "Price: $"+readStockPriceFromStockDataCsv()+"\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
-            "Would you like to buy another stock? (Y|N)\n" +
+            "Not a valid input. Please enter number of shares as natural numbers.\n" +
+            "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
-            "CONTROLLERTEST6_ASH PORTFOLIO CREATED...!!!\n" +
             "\n" +
             "MENU\n" +
             "\n" +
@@ -1459,8 +1454,8 @@ public class controllerTest {
   }
 
   @Test
-  public void testController4StocksBoughtByTheUser() {
-    String userInput = "1" + "\n" + "controllerTest7_Shubham" + "\n" + "1" + "\n"
+  public void testController4StocksBoughtByTheUser() throws IOException {
+    String userInput = "1" + "\n" + "controllerTest6_Shubham" + "\n" + "1" + "\n"
             + "1" + "\n" + "10" + "\n" + "Y" + "\n"
             + "2" + "\n" + "10" + "\n" + "y" + "\n"
             + "3" + "\n" + "10" + "\n" + "y" + "\n"
@@ -1485,9 +1480,9 @@ public class controllerTest {
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
-            "CONTROLLERTEST7_SHUBHAM Portfolio\n" +
+            "CONTROLLERTEST6_SHUBHAM Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -1510,8 +1505,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Microsoft\n" +
             "Symbol: MSFT\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $232.6000\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest6_Shubham", 1) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest6_Shubham", 1) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1535,8 +1530,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Meta\n" +
             "Symbol: META\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $93.2500\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest6_Shubham", 2) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest6_Shubham", 2) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1560,8 +1555,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Google\n" +
             "Symbol: GOOG\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $94.9000\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest6_Shubham", 3) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest6_Shubham", 3) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1585,15 +1580,15 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Apple\n" +
             "Symbol: AAPL\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $153.4600\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest6_Shubham", 4) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest6_Shubham", 4) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
             "Would you like to buy another stock? (Y|N)\n" +
             "\n" +
-            "CONTROLLERTEST7_SHUBHAM PORTFOLIO CREATED...!!!\n" +
+            "CONTROLLERTEST6_SHUBHAM PORTFOLIO CREATED...!!!\n" +
             "\n" +
             "MENU\n" +
             "\n" +
@@ -1613,12 +1608,12 @@ public class controllerTest {
   }
 
   @Test
-  public void testControllerCannotGetStocksMoreThan4ByTheUser() {
-    String userInput = "1" + "\n" + "controllerTest8_Sharayu" + "\n" + "1" + "\n"
+  public void testControllerCannotGetStocksMoreThan4ByTheUser() throws IOException {
+    String userInput = "1" + "\n" + "controllerTest7_Sharayu" + "\n" + "1" + "\n"
             + "1" + "\n" + "10" + "\n" + "Y" + "\n"
             + "2" + "\n" + "10" + "\n" + "y" + "\n"
             + "3" + "\n" + "10" + "\n" + "y" + "\n"
-            + "4" + "\n" + "10" + "\n" + "n" + "\n"
+            + "4" + "\n" + "10" + "\n" + "y" + "\n"
             + "5" + "\n" + "10" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -1640,9 +1635,9 @@ public class controllerTest {
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
-            "CONTROLLERTEST8_SHARAYU Portfolio\n" +
+            "CONTROLLERTEST7_SHARAYU Portfolio\n" +
             "\n" +
-            "1. Buy a share\n" +
+            "1. Buy a stock\n" +
             "2. Main Menu\n" +
             "e. Exit\n" +
             "\n" +
@@ -1665,8 +1660,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Microsoft\n" +
             "Symbol: MSFT\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $232.6000\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest7_Sharayu", 1) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest7_Sharayu", 1) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1690,8 +1685,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Meta\n" +
             "Symbol: META\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $93.2500\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest7_Sharayu", 2) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest7_Sharayu", 2) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1715,8 +1710,8 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Google\n" +
             "Symbol: GOOG\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $94.9000\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest7_Sharayu", 3) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest7_Sharayu", 3) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
@@ -1740,45 +1735,40 @@ public class controllerTest {
             "CURRENT STOCK PRICE\n" +
             "StockName: Apple\n" +
             "Symbol: AAPL\n" +
-            "Time: 2022-10-31 20:00:00\n" +
-            "Price: $153.4600\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest7_Sharayu", 4) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest7_Sharayu", 4) + "\n" +
             "\n" +
             "How many shares would you like to buy?\n" +
             "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
             "Would you like to buy another stock? (Y|N)\n" +
             "\n" +
-            "CONTROLLERTEST8_SHARAYU PORTFOLIO CREATED...!!!\n" +
             "\n" +
-            "MENU\n" +
+            "1. Microsoft (MSFT)\n" +
+            "2. Meta (META)\n" +
+            "3. Google (GOOG)\n" +
+            "4. Apple (AAPL)\n" +
+            "5. Tesla (TSLA)\n" +
+            "6. JPMorgan Chase (JPM)\n" +
+            "7. Johnson (JNJ)\n" +
+            "8. Amazon (AMZN)\n" +
+            "9. UnitedHealth (UNH)\n" +
+            "10. Walmart (WMT)\n" +
             "\n" +
-            "1. Create a portfolio\n" +
-            "2. View portfolio\n" +
-            "3. Value of portfolio\n" +
-            "e. Exit\n" +
+            "Which stock would you like to buy?\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
+            "CURRENT STOCK PRICE\n" +
+            "StockName: Tesla\n" +
+            "Symbol: TSLA\n" +
+            "Time: "+ readStockDateFromCsv("controllerTest7_Sharayu", 5) + "\n" +
+            "Price: $"+ readStockPriceFromCsv("controllerTest7_Sharayu", 5) + "\n" +
             "\n" +
-            "MENU\n" +
+            "How many shares would you like to buy?\n" +
+            "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
             "\n" +
-            "1. Create a portfolio\n" +
-            "2. View portfolio\n" +
-            "3. Value of portfolio\n" +
-            "e. Exit\n" +
+            "Would you like to buy another stock? (Y|N)\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "MENU\n" +
-            "\n" +
-            "1. Create a portfolio\n" +
-            "2. View portfolio\n" +
-            "3. Value of portfolio\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
+            "CONTROLLERTEST7_SHARAYU PORTFOLIO CREATED...!!!\n" +
             "\n" +
             "MENU\n" +
             "\n" +
