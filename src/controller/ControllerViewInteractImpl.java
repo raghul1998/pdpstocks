@@ -94,7 +94,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
             + LocalDate.now().getYear() + "): ");
     String date;
     date = scan.nextLine();
-    while (!validateDate(date)) {
+    while (!validateDate(date, "yyyy-MM-dd")) {
       vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
       date = scan.nextLine();
       if (Objects.equals(date, "b") || Objects.equals(date, "B")) {
@@ -113,14 +113,14 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param dateStr the date that user entered
    * @return true of the input is valid, else false
    */
-  private boolean validateDate(String dateStr) {
+  private boolean validateDate(String dateStr, String format) {
     if (dateStr == null || dateStr.length() == 0) {
       return false;
     }
 
     Date date;
     try {
-      DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      DateFormat sdf = new SimpleDateFormat(format);
       date = sdf.parse(dateStr);
       if (!dateStr.equals(sdf.format(date))) {
         return false;
@@ -237,18 +237,32 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
       return false;
     }
+
+    String date;
+    output.println("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)");
+    date = scan.nextLine();
+    while (!validateDate(date, "yyyy-MM-dd")) {
+      vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+      date = scan.nextLine();
+      if (Objects.equals(date, "b") || Objects.equals(date, "B")) {
+        return false;
+      }
+    }
+
     StockNameMap snp = new StockNameMap();
     Map<String, String> map = snp.getMap();
     String[] stockSymbolIndexArray = new String[snp.getMapSize()];
-    String[] stock = new String[1];
+    String[] stock = new String[2];
     int index = 0;
     for (Map.Entry<String, String> entry : map.entrySet()) {
       stockSymbolIndexArray[index++] = entry.getKey();
     }
     stock[0] = stockSymbolIndexArray[Integer.parseInt(options) - 1];
-    cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 1);
+    stock[1] = date;
+    cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
     vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
     vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_VALUE, null, 0);
+
     String option;
     option = scan.nextLine();
     while ((option == null || option.length() == 0) || (!validateBuyStockOption(option))) {
@@ -489,7 +503,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   /**
-   * After user creats a portfolio with the name, the user has to buy stocks to fill the portfolio
+   * After user creates a portfolio with the name, the user has to buy stocks to fill the portfolio
    * with date. This method tells the view to display the options for the user to buy the stocks.
    *
    * @param option the option that user entered after entering name for the portfolio
@@ -542,7 +556,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   /**
-   * A helper method that helps in validating where the option that was entered buy the user to buy
+   * A helper method that helps in validating where the option that was entered by the user to buy
    * a stock is valid or not.
    *
    * @param option the stock option that was entered by the user

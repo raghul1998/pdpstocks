@@ -7,8 +7,10 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -20,7 +22,7 @@ import java.util.Objects;
  * </ul>
  */
 public class ModelControllerInteractImpl implements ModelControllerInteract {
-  String portFolioName;
+  private String portFolioName;
 
   @Override
   public void modelControllerInteract(TypeofAction type, String[] args, int length) {
@@ -30,7 +32,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         break;
       }
       case GET_STOCK_DATA: {
-        getStockData(args[0]);
+        getStockData(args[0], args[1]);
         break;
       }
       case CREATE_PORTFOLIO: {
@@ -189,6 +191,11 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     csvData.append("PortfolioID,").append(Long.toString(time, 0));
     csvData.append('\n');
 
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    Date date = new Date();
+    csvData.append("PortfolioCreatedTimeStamp,").append(formatter.format(date));
+    csvData.append('\n');
+
     csvData.append("PurchaseTimestamp," + "PurchaseID," + "StockLastKnownValueTimestamp,"
             + "StockSymbol," + "NameOfStock," + "NumberOfStocksPurchased,"
             + "PriceOfShareAtPurchase");
@@ -259,7 +266,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    * is trying to create.
    *
    * @param data the data to be written to the portfolio
-   * @throws FileNotFoundException if the portfolio doesn't exists
+   * @throws FileNotFoundException if the portfolio doesn't exist
    */
   private void writeStockDataToPortfolio(CharSequence data) throws FileNotFoundException {
     String filename = "userdata/user1/" + "pf_" + portFolioName + ".csv";
@@ -272,12 +279,13 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
   /**
    * This method helps in getting the real-time stock data of the stock that the user wants to buy.
    *
-   * @param arg the stock symbol that the user wants to buy
+   * @param stockSymbol the stock symbol that the user wants to buy
+   * @param date        the date on which the user wants to buy the stock
    */
-  private void getStockData(String arg) {
+  private void getStockData(String stockSymbol, String date) {
     GetStockData obj = new GetStockData();
     try {
-      obj.getValue(arg);
+      obj.getValue(stockSymbol, date);
     } catch (Exception e) {
       System.out.println("Get stock data failed");
     }

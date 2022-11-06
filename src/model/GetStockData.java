@@ -8,7 +8,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class represents the stock data and methods that can be called upon to get the value of a
@@ -21,19 +25,25 @@ public class GetStockData {
    *
    * @param stock the ticker symbol of the stock that the data is required for
    */
-  public void getValue(String stock) {
+  public void getValue(String stock, String dateStr) throws ParseException {
     StockNameMap snp = new StockNameMap();
     Map<String, String> stockMap = snp.getMap();
     String apiKey = "L6T2FNC0UY2K71XI";
     URL url;
 
     try {
-      url = new URL("https://www.alphavantage"
+      /*url = new URL("https://www.alphavantage"
               + ".co/query?function=TIME_SERIES_INTRADAY"
-              + "&outputsize=compact"
+              + "&outputsize=full"
               + "&symbol"
               + "=" + stock + "&apikey=" + apiKey + "&datatype=csv"
-              + "&interval=1min");
+              + "&interval=1min");*/
+
+      url = new URL("https://www.alphavantage"
+              + ".co/query?function=TIME_SERIES_DAILY"
+              + "&outputsize=full"
+              + "&symbol"
+              + "=" + stock + "&apikey=" + apiKey + "&datatype=csv");
     } catch (MalformedURLException e) {
       throw new RuntimeException("the Alpha Vantage API has either changed or "
               + "no longer works");
@@ -48,11 +58,27 @@ public class GetStockData {
       BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String line;
       String splitBy = ",";
-      int timesOfRead = 2;
+      int index = 0;
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      Date date1 = sdf.parse(dateStr);
 
-      while ((line = reader.readLine()) != null && timesOfRead != 0) {
+      while ((line = reader.readLine()) != null) {
         readLine = line.split(splitBy);    // use comma as separator
-        timesOfRead--;
+
+        if (index == 0) {
+          index++;
+          continue;
+        }
+
+        Date date2 = sdf.parse(readLine[0]);
+        // Check if both dates are same
+        if (date1.compareTo(date2) == 0) {
+          break;
+        }
+        // If the date is in the future, then take the first date in the list
+        if (date1.compareTo(date2) > 0) {
+          break;
+        }
       }
       reader.close();
     } catch (IOException e) {

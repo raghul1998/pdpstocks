@@ -1,0 +1,9 @@
+PortfolioName,name
+PortfolioID,1667698099
+PortfolioCreatedTimeStamp,11/05/2022 21:28:19
+PurchaseTimestamp,PurchaseID,StockLastKnownValueTimestamp,StockSymbol,NameOfStock,NumberOfStocksPurchased,PriceOfShareAtPurchase
+2022-11-05 21:28:27,1667698107,2021-11-11,MSFT,Microsoft,4,331.2500
+2022-11-05 21:28:34,1667698114,2021-11-11,MSFT,Microsoft,6,331.2500
+2022-11-05 21:28:54,1667698134,2021-10-08,MSFT,Microsoft,9,296.2190
+2022-11-05 21:29:08,1667698148,2021-11-11,GOOG,Google,7,2942.1400
+2022-11-05 21:29:27,1667698167,2021-10-08,GOOG,Google,6,2798.1200

@@ -2,10 +2,12 @@ package view;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Map;
 import java.util.Random;
 
+import model.GetStockData;
 import model.StockCompositionData;
 import model.StockNameMap;
 
@@ -172,15 +174,13 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionData();
     StockCompositionData.StockPortFolioData stkObj =
-            obj.getAllStockDataInPortFolio(portfolioNumber);
+            obj.getAllStockDataInPortFolio(portfolioNumber, true);
     double totalPortFolioValue = 0;
 
-    String pfCreatedDate = stkObj.createdTimeStamp;
-    if (pfCreatedDate == null) {
+    if (stkObj.numberOfUniqueStocks == 0) {
       output.println("The portfolio is empty.\n");
       return;
     }
-    pfCreatedDate = pfCreatedDate.substring(0, 10);
 
     String[] portfolioNames = obj.getPortFolioNames();
     output.println("Value of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
@@ -196,20 +196,15 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       output.print(stkObj.stockName[i]);
       output.print(" (" + stkObj.stockSymbol[i] + ") ");
       output.print("\t " + stkObj.stockQuantity[i]);
-      // Display based on the date created
-      if (pfCreatedDate.equals(date)) {
-        output.print("\t $" + stkObj.valueOfSingleStock[i]);
-        output.println("\t $" + stkObj.totalValue[i]);
-        totalPortFolioValue = stkObj.totalPortFolioValue;
-      } else {
-        double randomShareValue = getRandomShareValue(stkObj.valueOfSingleStock[i], date);
-        output.print("\t $" + randomShareValue);
-        totalPortFolioValue += Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100;
-        output.println("\t $"
-                + Math.floor((randomShareValue * stkObj.stockQuantity[i]) * 100) / 100);
-        totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
-      }
+      // Display based on the date purchased on
+      double shareValue = getShareValueOnDate(stkObj.stockSymbol[i], date);
+      shareValue = Math.floor((shareValue) * 100) / 100;
+      output.print("\t $" + shareValue);
+      output.println("\t $" + Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100);
+      totalPortFolioValue += Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100;
     }
+
+    totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
     output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
   }
 
@@ -223,7 +218,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionData();
     StockCompositionData.StockPortFolioData stkObj =
-            obj.getAllStockDataInPortFolio(portfolioNumber);
+            obj.getAllStockDataInPortFolio(portfolioNumber, false);
 
     String[] portfolioNames = obj.getPortFolioNames();
     String date = stkObj.createdTimeStamp;
@@ -238,19 +233,17 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.print("Name");
     output.print(" (" + "Symbol" + ") \t ");
     output.print("Quantity \t ");
-    output.print("Price of each share \t ");
-    output.println("Total Value\n");
+    output.print("Date of Purchase(DOP)\t");
+    output.println("Price of a share on DOP\n");
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
       output.print(stkObj.stockName[i]);
       output.print(" (" + stkObj.stockSymbol[i] + ") ");
       output.print("\t " + stkObj.stockQuantity[i]);
-      output.print("\t $" + stkObj.valueOfSingleStock[i]);
-      output.println("\t $" + stkObj.totalValue[i]);
+      output.print("\t " + stkObj.stockLastKnownValueDate[i]);
+      output.println("\t $" + stkObj.valueOfSingleStock[i]);
     }
-
-    output.println("\nTotal Portfolio Value as on " + date + ": $"
-            + stkObj.totalPortFolioValue + "\n");
+    output.println();
   }
 
   /**
@@ -438,6 +431,37 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       sum = sum + number % 10;
     }
     return sum;
+  }
+
+  private double getShareValueOnDate(String stockSymbol, String date) {
+    GetStockData gsd = new GetStockData();
+    try {
+      gsd.getValue(stockSymbol, date);
+    } catch (Exception e) {
+      output.println("Error in getting stock data on " + date);
+      return 0;
+    }
+
+    BufferedReader stockData;
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    String line;
+    String splitBy = ",";
+    String[] splitStockData;
+
+    try {
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+      stockData.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+    return Double.parseDouble(splitStockData[1]);
   }
 
 }

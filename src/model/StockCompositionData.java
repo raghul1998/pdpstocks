@@ -108,7 +108,7 @@ public class StockCompositionData {
    * @param index the index of the portfolio
    * @return the stock related data as 'stockPortFolioData' object
    */
-  public StockPortFolioData getAllStockDataInPortFolio(int index) {
+  public StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique) {
     String filename = getPortFolioFileNameByIndex(index);
     int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
 
@@ -118,6 +118,7 @@ public class StockCompositionData {
     String createdTimeStamp = null;
     String[] names = new String[numberOfStocks];
     String[] symbol = new String[numberOfStocks];
+    String[] stockLastKnownValueDate = new String[numberOfStocks];
     long[] quantity = new long[numberOfStocks];
     double[] value = new double[numberOfStocks];
     double[] valueOfSingleStock = new double[numberOfStocks];
@@ -137,34 +138,62 @@ public class StockCompositionData {
 
     try {
       while ((line = stockData.readLine()) != null) {
-        timesOfRead++;
-        if (timesOfRead > 3) {
-          splitStockData = line.split(splitBy);
-          found = false;
-          int i;
-          for (i = 0; i < symbol.length; i++) {
-            if (symbol[i] == null) {
-              break;
-            }
-            if (Objects.equals(symbol[i], splitStockData[3])) {
-              found = true;
-              break;
-            }
+        if (timesOfRead == 2) {
+          createdTimeStamp = line.split(splitBy)[1].split(" ")[0]; // Extract date from CSV
+        }
+
+        if (timesOfRead < 4) {
+          timesOfRead++;
+          continue;
+        }
+
+        splitStockData = line.split(splitBy);
+        found = false;
+        int i;
+        for (i = 0; i < symbol.length; i++) {
+          if (symbol[i] == null) {
+            break;
           }
-          if (createdTimeStamp == null || createdTimeStamp.length() == 0) {
-            createdTimeStamp = splitStockData[0];
+          if (Objects.equals(symbol[i], splitStockData[3])) {
+            found = true;
+            break;
           }
-          if (!found) {
-            names[nameIndex] = splitStockData[4];
-            symbol[nameIndex] = splitStockData[3];
-            quantity[nameIndex] = Long.parseLong(splitStockData[5]);
-            double val = quantity[nameIndex]
-                    * Double.parseDouble(splitStockData[6]);
-            value[nameIndex] = Math.floor(val * 100) / 100;
-            totalPortFolioValue += value[nameIndex];
-            valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
-                    * 100) / 100;
-            nameIndex++;
+        }
+        if (!found) {
+          names[nameIndex] = splitStockData[4];
+          symbol[nameIndex] = splitStockData[3];
+          quantity[nameIndex] = Long.parseLong(splitStockData[5]);
+          double val = quantity[nameIndex]
+                  * Double.parseDouble(splitStockData[6]);
+          value[nameIndex] = Math.floor(val * 100) / 100;
+          totalPortFolioValue += value[nameIndex];
+          valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
+                  * 100) / 100;
+          stockLastKnownValueDate[nameIndex] = splitStockData[2];
+          nameIndex++;
+        } else {
+          if (!unique) {
+            // Combine if the stock last known value date are same
+            if (Objects.equals(stockLastKnownValueDate[i], splitStockData[2])) {
+              quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
+              double val = quantity[i]
+                      * Double.parseDouble(splitStockData[6]);
+              totalPortFolioValue -= value[i];
+              value[i] = Math.floor(val * 100) / 100;
+              totalPortFolioValue += value[i];
+            } else {
+              names[nameIndex] = splitStockData[4];
+              symbol[nameIndex] = splitStockData[3];
+              quantity[nameIndex] = Long.parseLong(splitStockData[5]);
+              double val = quantity[nameIndex]
+                      * Double.parseDouble(splitStockData[6]);
+              value[nameIndex] = Math.floor(val * 100) / 100;
+              totalPortFolioValue += value[nameIndex];
+              valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
+                      * 100) / 100;
+              stockLastKnownValueDate[nameIndex] = splitStockData[2];
+              nameIndex++;
+            }
           } else {
             quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
             double val = quantity[i]
@@ -189,6 +218,7 @@ public class StockCompositionData {
     obj.totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
     obj.valueOfSingleStock = valueOfSingleStock;
     obj.createdTimeStamp = createdTimeStamp;
+    obj.stockLastKnownValueDate = stockLastKnownValueDate;
     return obj;
   }
 
@@ -216,5 +246,6 @@ public class StockCompositionData {
     public double totalPortFolioValue;
     public double[] valueOfSingleStock;
     public String createdTimeStamp;
+    public String[] stockLastKnownValueDate;
   }
 }
