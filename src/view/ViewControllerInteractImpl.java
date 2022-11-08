@@ -259,6 +259,9 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("\t " + "Total Value\n");
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
+      if (stkObj.stockQuantity[i] == 0) {
+        continue;
+      }
       output.print(stkObj.stockName[i]);
       output.print(" (" + stkObj.stockSymbol[i] + ") ");
       output.print("\t " + stkObj.stockQuantity[i]);
