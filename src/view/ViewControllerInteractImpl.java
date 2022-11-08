@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import model.GetStockData;
@@ -80,9 +81,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         break;
       }
       case PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE: {
-        String opt = args[0];
-        String date = args[1];
-        showPortfolioIndividualWithDateScreen(opt, date);
+        showPortfolioIndividualWithDateScreen(args[0], args[1], args[2]);
         break;
       }
       case PORTFOLIO_NAME_REENTER: {
@@ -221,11 +220,27 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    * @param option the index of the portfolio
    * @param date   the date entered by the user
    */
-  private void showPortfolioIndividualWithDateScreen(String option, String date) {
+  private void showPortfolioIndividualWithDateScreen(String option, String date, String type) {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionData();
-    StockCompositionData.StockPortFolioData stkObj =
-            obj.getAllStockDataInPortFolio(portfolioNumber, true);
+    StockCompositionData.StockPortFolioData stkObj = null;
+
+    if (Objects.equals(type, "FULL")) {
+      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true);
+    } else if (Objects.equals(type, "TRUE")) {
+      try {
+        stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date);
+      } catch (Exception e) {
+        output.println("Error in getting the data.");
+        return;
+      }
+    }
+
+    if (stkObj == null) {
+      output.println("Error in getting the data.");
+      return;
+    }
+
     double totalPortFolioValue = 0;
 
     if (stkObj.numberOfUniqueStocks == 0) {
@@ -338,7 +353,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    * trying to buy the shares.
    */
   private void showStockBuyInvalidRetryScreen(String[] args) {
-    if(args == null) {
+    if (args == null) {
       output.println("Not a valid input. Please enter number of shares as natural numbers.");
     } else {
       output.println("Not a valid input. You can only sell until" + args[0] + " shares." +
@@ -408,7 +423,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void mainScreen() {
     output.println("\nMENU\n");
     output.println("1. Create a portfolio");
-    output.println("2. View portfolio");
+    output.println("2. Value portfolio on certain date");
     output.println("3. Value of portfolio on full composition");
     output.println("4. Add a stock to portfolio");
     output.println("5. Sell a stock from portfolio");

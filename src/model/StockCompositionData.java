@@ -167,11 +167,11 @@ public class StockCompositionData {
         if (!found) {
           names[nameIndex] = splitStockData[4];
           symbol[nameIndex] = splitStockData[3];
-          quantity[nameIndex] = Long.parseLong(splitStockData[5]);
-          double val = quantity[nameIndex]
-                  * Double.parseDouble(splitStockData[6]);
-          value[nameIndex] = Math.floor(val * 100) / 100;
-          totalPortFolioValue += value[nameIndex];
+          if (Objects.equals(splitStockData[0], "BUY")) {
+            quantity[nameIndex] += Long.parseLong(splitStockData[5]);
+          } else if (Objects.equals(splitStockData[0], "SALE")) {
+            quantity[nameIndex] -= Long.parseLong(splitStockData[5]);
+          }
           valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
                   * 100) / 100;
           stockLastKnownValueDate[nameIndex] = splitStockData[2];
@@ -180,32 +180,30 @@ public class StockCompositionData {
           if (!unique) {
             // Combine if the stock last known value date are same
             if (Objects.equals(stockLastKnownValueDate[i], splitStockData[2])) {
-              quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
-              double val = quantity[i]
-                      * Double.parseDouble(splitStockData[6]);
-              totalPortFolioValue -= value[i];
-              value[i] = Math.floor(val * 100) / 100;
-              totalPortFolioValue += value[i];
+              if (Objects.equals(splitStockData[0], "BUY")) {
+                quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
+              } else if (Objects.equals(splitStockData[0], "SALE")) {
+                quantity[i] = quantity[i] - Long.parseLong(splitStockData[5]);
+              }
             } else {
               names[nameIndex] = splitStockData[4];
               symbol[nameIndex] = splitStockData[3];
-              quantity[nameIndex] = Long.parseLong(splitStockData[5]);
-              double val = quantity[nameIndex]
-                      * Double.parseDouble(splitStockData[6]);
-              value[nameIndex] = Math.floor(val * 100) / 100;
-              totalPortFolioValue += value[nameIndex];
+              if (Objects.equals(splitStockData[0], "BUY")) {
+                quantity[nameIndex] += Long.parseLong(splitStockData[5]);
+              } else if (Objects.equals(splitStockData[0], "SALE")) {
+                quantity[nameIndex] -= Long.parseLong(splitStockData[5]);
+              }
               valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
                       * 100) / 100;
               stockLastKnownValueDate[nameIndex] = splitStockData[2];
               nameIndex++;
             }
           } else {
-            quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
-            double val = quantity[i]
-                    * Double.parseDouble(splitStockData[6]);
-            totalPortFolioValue -= value[i];
-            value[i] = Math.floor(val * 100) / 100;
-            totalPortFolioValue += value[i];
+            if (Objects.equals(splitStockData[0], "BUY")) {
+              quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
+            } else if (Objects.equals(splitStockData[0], "SALE")) {
+              quantity[i] = quantity[i] - Long.parseLong(splitStockData[5]);
+            }
           }
         }
       }
@@ -219,8 +217,6 @@ public class StockCompositionData {
     obj.stockName = names;
     obj.stockSymbol = symbol;
     obj.stockQuantity = quantity;
-    obj.totalValue = value;
-    obj.totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
     obj.valueOfSingleStock = valueOfSingleStock;
     obj.createdTimeStamp = createdTimeStamp;
     obj.stockLastKnownValueDate = stockLastKnownValueDate;

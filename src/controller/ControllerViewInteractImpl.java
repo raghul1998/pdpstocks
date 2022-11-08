@@ -86,8 +86,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param options the portfolio number
    * @return false if the user entered back option, else true
    */
-  private boolean portfolioViewAction(String options) {
-    String[] args = new String[2];
+  private boolean portfolioViewAction(String options, boolean isFullComposition) {
+    String[] args = new String[3];
     args[0] = options;
 
     output.println("Enter the year in format (YYYY-MM-DD) (2000 to "
@@ -102,6 +102,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
     }
     args[1] = date;
+    if (isFullComposition) {
+      args[2] = "FULL";
+    } else {
+      args[2] = "TRUE";
+    }
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args, 1);
     return true;
   }
@@ -297,12 +302,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         break;
       }
       case "2": {
-        // Composition of the portfolio
+        // Value of the portfolio on certain date
         compositionOfPortfolio();
         break;
       }
       case "3": {
-        // Value of the portfolio on a certain date
+        // Value of the portfolio on a certain date full composition
         valueOfPortfolio();
         break;
       }
@@ -538,7 +543,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           return;
         }
       }
-      if (!portfolioViewAction(options)) {
+      if (!portfolioViewAction(options, true)) {
         continue;
       }
       vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
@@ -585,7 +590,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           return;
         }
       }
-      portfolioCompositionAction(options);
+      //portfolioCompositionAction(options);
+      if (!portfolioViewAction(options, false)) {
+        continue;
+      }
       vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
       options = scan.nextLine();
       while ((options == null || options.length() == 0)
