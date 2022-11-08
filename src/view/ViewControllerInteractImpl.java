@@ -94,7 +94,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         break;
       }
       case BUY_STOCKS_INVALID_RETRY: {
-        showStockBuyInvalidRetryScreen();
+        showStockBuyInvalidRetryScreen(args);
         break;
       }
       case REVIEW_STOCK: {
@@ -143,12 +143,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     try {
       stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date);
     } catch (Exception e) {
-      output.println("Error in getting stock data " + e.getMessage());
+      output.println("View: Error in getting stock data " + e.getMessage());
       return;
     }
 
     if (stkObj == null) {
-      output.println("Error in getting stock data");
+      output.println("View: Error in getting stock data");
       return;
     }
 
@@ -158,14 +158,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       output.println("\nList of stocks available on date: " + date);
       output.print("\nS.No");
       output.print("\t" + "Name");
-      output.print(" (" + "Symbol" + ") ");
-      output.println("\t" + "Quantity\n");
+      output.println(" (" + "Symbol" + ") \n");
       for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
         if (stkObj.stockQuantity[i] != 0) {
           output.print(i + 1 + ".");
           output.print("\t" + stkObj.stockName[i]);
-          output.print(" (" + stkObj.stockSymbol[i] + ") ");
-          output.println("\t" + stkObj.stockQuantity[i]);
+          output.println(" (" + stkObj.stockSymbol[i] + ") ");
         }
       }
       output.println("\nWhich stock would you like to sell?");
@@ -339,8 +337,13 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    * This method renders the below-mentioned output if the user inputs an invalid entry while
    * trying to buy the shares.
    */
-  private void showStockBuyInvalidRetryScreen() {
-    output.println("Not a valid input. Please enter number of shares as natural numbers.");
+  private void showStockBuyInvalidRetryScreen(String[] args) {
+    if(args == null) {
+      output.println("Not a valid input. Please enter number of shares as natural numbers.");
+    } else {
+      output.println("Not a valid input. You can only sell until" + args[0] + " shares." +
+              " Also please enter number of shares as natural numbers.");
+    }
     output.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
   }
 

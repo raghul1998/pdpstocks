@@ -301,10 +301,21 @@ public class StockCompositionData {
     }
 
     StockPortFolioData obj = new StockPortFolioData();
-    obj.stockSymbol = stockSymbol;
+    int indexReal = 0;
+    for (int i = 0; i < stockName.length; i++) {
+      if (stockQuantity[i] != 0) {
+        stockQuantity[indexReal] = stockQuantity[i];
+        stockSymbol[indexReal] = stockSymbol[i];
+        stockName[indexReal] = stockName[i];
+        indexReal++;
+      }
+    }
+
     obj.stockQuantity = stockQuantity;
+    obj.stockSymbol = stockSymbol;
     obj.stockName = stockName;
-    obj.numberOfUniqueStocks = index;
+    obj.numberOfUniqueStocks = indexReal;
+
     return obj;
   }
 
