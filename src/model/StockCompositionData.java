@@ -113,12 +113,19 @@ public class StockCompositionData {
    * @param index the index of the portfolio
    * @return the stock related data as 'stockPortFolioData' object
    */
-  public StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique) {
+  public StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
+                                                       boolean includeSale) {
     String filename = getPortFolioFileNameByIndex(index);
     int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
 
     boolean found;
     int nameIndex = 0;
+
+    if (dateStr == null) {
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+      Date dateToday = new Date();
+      dateStr = formatter.format(dateToday);
+    }
 
     String createdTimeStamp = null;
     String[] names = new String[numberOfStocks];
@@ -128,6 +135,14 @@ public class StockCompositionData {
     double[] value = new double[numberOfStocks];
     double[] valueOfSingleStock = new double[numberOfStocks];
     double totalPortFolioValue = 0;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date date1;
+    try {
+      date1 = sdf.parse(dateStr);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
 
     BufferedReader stockData;
     try {
@@ -154,55 +169,59 @@ public class StockCompositionData {
 
         splitStockData = line.split(splitBy);
         found = false;
+        Date date2 = sdf.parse(splitStockData[2]);
         int i;
-        for (i = 0; i < symbol.length; i++) {
-          if (symbol[i] == null) {
-            break;
+
+        if (date2.compareTo(date1) <= 0) {
+          for (i = 0; i < symbol.length; i++) {
+            if (symbol[i] == null) {
+              break;
+            }
+            if (Objects.equals(symbol[i], splitStockData[3])) {
+              found = true;
+              break;
+            }
           }
-          if (Objects.equals(symbol[i], splitStockData[3])) {
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          names[nameIndex] = splitStockData[4];
-          symbol[nameIndex] = splitStockData[3];
-          if (Objects.equals(splitStockData[0], "BUY")) {
-            quantity[nameIndex] += Long.parseLong(splitStockData[5]);
-          } else if (Objects.equals(splitStockData[0], "SALE")) {
-            quantity[nameIndex] -= Long.parseLong(splitStockData[5]);
-          }
-          valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
-                  * 100) / 100;
-          stockLastKnownValueDate[nameIndex] = splitStockData[2];
-          nameIndex++;
-        } else {
-          if (!unique) {
-            // Combine if the stock last known value date are same
-            if (Objects.equals(stockLastKnownValueDate[i], splitStockData[2])) {
-              if (Objects.equals(splitStockData[0], "BUY")) {
-                quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
-              } else if (Objects.equals(splitStockData[0], "SALE")) {
-                quantity[i] = quantity[i] - Long.parseLong(splitStockData[5]);
+          if (!found) {
+            names[nameIndex] = splitStockData[4];
+            symbol[nameIndex] = splitStockData[3];
+            if (Objects.equals(splitStockData[0], "BUY")) {
+              quantity[nameIndex] += Long.parseLong(splitStockData[5]);
+            } else if (Objects.equals(splitStockData[0], "SALE") && includeSale) {
+              quantity[nameIndex] -= Long.parseLong(splitStockData[5]);
+            }
+            valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
+                    * 100) / 100;
+            stockLastKnownValueDate[nameIndex] = splitStockData[2];
+            nameIndex++;
+          } else {
+            if (!unique) {
+              // Combine if the stock last known value date are same
+              if (Objects.equals(stockLastKnownValueDate[i], splitStockData[2])) {
+                if (Objects.equals(splitStockData[0], "BUY")) {
+                  quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
+                } else if (Objects.equals(splitStockData[0], "SALE") && includeSale) {
+                  quantity[i] = quantity[i] - Long.parseLong(splitStockData[5]);
+                }
+              } else {
+                names[nameIndex] = splitStockData[4];
+                symbol[nameIndex] = splitStockData[3];
+                if (Objects.equals(splitStockData[0], "BUY")) {
+                  quantity[nameIndex] += Long.parseLong(splitStockData[5]);
+                } else if (Objects.equals(splitStockData[0], "SALE") && includeSale) {
+                  quantity[nameIndex] -= Long.parseLong(splitStockData[5]);
+                }
+                valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
+                        * 100) / 100;
+                stockLastKnownValueDate[nameIndex] = splitStockData[2];
+                nameIndex++;
               }
             } else {
-              names[nameIndex] = splitStockData[4];
-              symbol[nameIndex] = splitStockData[3];
               if (Objects.equals(splitStockData[0], "BUY")) {
-                quantity[nameIndex] += Long.parseLong(splitStockData[5]);
-              } else if (Objects.equals(splitStockData[0], "SALE")) {
-                quantity[nameIndex] -= Long.parseLong(splitStockData[5]);
+                quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
+              } else if (Objects.equals(splitStockData[0], "SALE") && includeSale) {
+                quantity[i] = quantity[i] - Long.parseLong(splitStockData[5]);
               }
-              valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
-                      * 100) / 100;
-              stockLastKnownValueDate[nameIndex] = splitStockData[2];
-              nameIndex++;
-            }
-          } else {
-            if (Objects.equals(splitStockData[0], "BUY")) {
-              quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
-            } else if (Objects.equals(splitStockData[0], "SALE")) {
-              quantity[i] = quantity[i] - Long.parseLong(splitStockData[5]);
             }
           }
         }
@@ -223,7 +242,7 @@ public class StockCompositionData {
     return obj;
   }
 
-  public StockPortFolioData getAvailableStockDataOnADate(int pfIndex, String dateStr) throws ParseException {
+  public StockPortFolioData getAvailableStockDataOnADate(int pfIndex, String dateStr, boolean isIncludeSale) throws ParseException {
     String filename = getPortFolioFileNameByIndex(pfIndex);
     int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
 
@@ -279,11 +298,13 @@ public class StockCompositionData {
             }
           }
 
-          if (Objects.equals(splitStockData[0], "SALE") && date2.compareTo(date1) <= 0) {
-            int i;
-            for (i = 0; i < stockSymbol.length; i++) {
-              if (Objects.equals(stockSymbol[i], splitStockData[3])) {
-                stockQuantity[i] -= Long.parseLong(splitStockData[5]);
+          if (isIncludeSale) {
+            if (Objects.equals(splitStockData[0], "SALE") && date2.compareTo(date1) <= 0) {
+              int i;
+              for (i = 0; i < stockSymbol.length; i++) {
+                if (Objects.equals(stockSymbol[i], splitStockData[3])) {
+                  stockQuantity[i] -= Long.parseLong(splitStockData[5]);
+                }
               }
             }
           }

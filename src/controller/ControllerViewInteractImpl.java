@@ -86,7 +86,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param options the portfolio number
    * @return false if the user entered back option, else true
    */
-  private boolean portfolioViewAction(String options, boolean isFullComposition) {
+  private boolean portfolioViewAction(String options, String type) {
     String[] args = new String[3];
     args[0] = options;
 
@@ -102,11 +102,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
     }
     args[1] = date;
-    if (isFullComposition) {
-      args[2] = "FULL";
-    } else {
-      args[2] = "TRUE";
-    }
+    args[2] = type;
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args, 1);
     return true;
   }
@@ -323,6 +319,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         portfolioPerformance();
         break;
       }
+      case "7": {
+        costBasisByDate();
+        break;
+      }
       case "e":
       case "E": {
         output.println("\nExiting...");
@@ -338,6 +338,49 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         }
         break;
       }
+    }
+  }
+
+  private void costBasisByDate() {
+    while (true) {
+      StockCompositionData obj = new StockCompositionData();
+      int numberOfPortFolio = obj.getNumberOfPortFolio();
+      if (numberOfPortFolio == 0) {
+        vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+        return;
+      }
+      String[] portfolioNames = obj.getPortFolioNames();
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
+              numberOfPortFolio);
+      vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
+              numberOfPortFolio);
+      String options;
+      options = scan.nextLine();
+      while ((options == null || options.length() == 0)
+              || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
+        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
+        options = scan.nextLine();
+        if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
+          return;
+        }
+      }
+      if (!portfolioViewAction(options, "COST")) {
+        continue;
+      }
+      vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
+      options = scan.nextLine();
+      while ((options == null || options.length() == 0)
+              || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
+              || (options.equals("B")))) {
+        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+        vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
+        options = scan.nextLine();
+      }
+
+      if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+        return;
+      }
+      // When user press 'B' continue
     }
   }
 
@@ -380,7 +423,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       String stockOptions = scan.nextLine();
       StockCompositionData.StockPortFolioData stkObj;
       try {
-        stkObj = obj.getAvailableStockDataOnADate(Integer.parseInt(options) - 1, date);
+        stkObj = obj.getAvailableStockDataOnADate(Integer.parseInt(options) - 1, date, true);
       } catch (Exception e) {
         output.println("Controller: Error in getting stock data " + e.getMessage());
         return;
@@ -543,16 +586,16 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           return;
         }
       }
-      if (!portfolioViewAction(options, true)) {
+      if (!portfolioViewAction(options, "FULL")) {
         continue;
       }
-      vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+      vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
       options = scan.nextLine();
       while ((options == null || options.length() == 0)
               || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
               || (options.equals("B")))) {
         vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-        vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+        vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
         options = scan.nextLine();
       }
 
@@ -591,16 +634,16 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         }
       }
       //portfolioCompositionAction(options);
-      if (!portfolioViewAction(options, false)) {
+      if (!portfolioViewAction(options, "TRUE")) {
         continue;
       }
-      vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+      vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
       options = scan.nextLine();
       while ((options == null || options.length() == 0)
               || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
               || (options.equals("B")))) {
         vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-        vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+        vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
         options = scan.nextLine();
       }
 

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -96,7 +98,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showStockBuyInvalidRetryScreen(args);
         break;
       }
-      case REVIEW_STOCK: {
+      case GOBACK_MAINMENU_OPTION: {
         showPortfolioReviewScreen();
         break;
       }
@@ -140,7 +142,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     StockCompositionData.StockPortFolioData stkObj = null;
 
     try {
-      stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date);
+      stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date, true);
     } catch (Exception e) {
       output.println("View: Error in getting stock data " + e.getMessage());
       return;
@@ -226,10 +228,17 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     StockCompositionData.StockPortFolioData stkObj = null;
 
     if (Objects.equals(type, "FULL")) {
-      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true);
+      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, null, true);
     } else if (Objects.equals(type, "TRUE")) {
       try {
-        stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date);
+        stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date, true);
+      } catch (Exception e) {
+        output.println("Error in getting the data.");
+        return;
+      }
+    } else if (Objects.equals(type, "COST")) {
+      try {
+        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, false, date, false);
       } catch (Exception e) {
         output.println("Error in getting the data.");
         return;
@@ -266,7 +275,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       output.print(" (" + stkObj.stockSymbol[i] + ") ");
       output.print("\t " + stkObj.stockQuantity[i]);
       // Display based on the date purchased on
-      double shareValue = getShareValueOnDate(stkObj.stockSymbol[i], date);
+      double shareValue;
+      if (type.equals("COST")) {
+        shareValue = stkObj.valueOfSingleStock[i];
+      } else {
+        shareValue = getShareValueOnDate(stkObj.stockSymbol[i], date);
+      }
       shareValue = Math.floor((shareValue) * 100) / 100;
       output.print("\t $" + shareValue);
       output.println("\t $" + Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100);
@@ -274,7 +288,11 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     }
 
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
-    output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
+    if (type == "COST") {
+      output.println("\nTotal Money invested is: $" + totalPortFolioValue + "\n");
+    } else {
+      output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
+    }
   }
 
   /**
@@ -287,7 +305,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionData();
     StockCompositionData.StockPortFolioData stkObj =
-            obj.getAllStockDataInPortFolio(portfolioNumber, false);
+            obj.getAllStockDataInPortFolio(portfolioNumber, false, null, true);
 
     String[] portfolioNames = obj.getPortFolioNames();
     String date = stkObj.createdTimeStamp;
@@ -431,7 +449,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("4. Add a stock to portfolio");
     output.println("5. Sell a stock from portfolio");
     output.println("6. Performance of portfolio");
-    output.println("7. Value of portfolio");
+    output.println("7. Total amount invested on certain date");
     output.println("e. Exit\n");
     output.println("ENTER YOUR CHOICE: ");
   }
