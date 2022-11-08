@@ -170,7 +170,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.CREATE_PORTFOLIO, name, 0);
       String option;
       option = scan.nextLine();
-      if (performCreatePortfolioMenuAction(option, null)) {
+      if (performCreatePortfolioMenuAction(option, null, 0)) {
         break;
       }
     }
@@ -184,13 +184,17 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param options the option that was provided by the user that whether the user wants
    *                to buy a share
    */
-  private void buyAnotherStockMenuAction(String options) {
+  private void buyAnotherStockMenuAction(String options, String[] arg, int length) {
     if (Objects.equals(options, "Y") || Objects.equals(options, "y")) {
-      performCreatePortfolioMenuAction("1", null);
+      performCreatePortfolioMenuAction("1", null, 0);
     } else {
       String[] args = new String[1];
       args[0] = currentPortfolioName;
-      vciObj.viewControllerInteract(TypeofViews.DISPLAY_PORTFOLIO_CREATED, args, 0);
+      if (arg == null || length == 0) {
+        vciObj.viewControllerInteract(TypeofViews.DISPLAY_PORTFOLIO_CREATED, args, 0);
+      } else if (arg[0].equals("addStockScreen")) {
+        output.println("\nStock successfully added to the portfolio...!!!");
+      }
     }
   }
 
@@ -203,14 +207,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param option the option that was provided by the user that whether the user
    *               wants to buy a share
    */
-  private void buyStockValueMenuAction(String option) {
+  private void buyStockValueMenuAction(String option, String[] args, int length) {
     if (Objects.equals(option, "m") || Objects.equals(option, "M")) {
       cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
       return;
     }
-    String[] stock = new String[1];
+    String[] stock = new String[2];
     stock[0] = option;
-    cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 1);
+    stock[1] = currentPortfolioName;
+    cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
     vciObj.viewControllerInteract(TypeofViews.BUY_ANOTHER_STOCK, null, 0);
     String options;
     options = scan.nextLine();
@@ -219,7 +224,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
       options = scan.nextLine();
     }
-    buyAnotherStockMenuAction(options);
+    buyAnotherStockMenuAction(options, args, length);
   }
 
   /**
@@ -273,7 +278,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, null, 0);
       option = scan.nextLine();
     }
-    buyStockValueMenuAction(option);
+    buyStockValueMenuAction(option, args, length);
     return false;
   }
 
@@ -301,6 +306,18 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         valueOfPortfolio();
         break;
       }
+      case "4": {
+        addStockToPortfolioMainMenu();
+        break;
+      }
+      case "5": {
+        sellStockFromPortfolio();
+        break;
+      }
+      case "6": {
+        portfolioPerformance();
+        break;
+      }
       case "e":
       case "E": {
         output.println("\nExiting...");
@@ -314,6 +331,163 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         } catch (Exception e) {
           // Exception while calling sleep
         }
+        break;
+      }
+    }
+  }
+
+  private void portfolioPerformance() {
+  }
+
+  private void sellStockFromPortfolio() {
+    StockCompositionData obj = new StockCompositionData();
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+      return;
+    }
+    String[] portfolioNames = obj.getPortFolioNames();
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
+            numberOfPortFolio);
+    output.println("\nSelect the portfolio to sell stocks from.");
+    String options;
+    options = scan.nextLine();
+    while ((options == null || options.length() == 0)
+            || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
+      options = scan.nextLine();
+      if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
+        return;
+      }
+    }
+
+    String date;
+    output.println("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)");
+    date = scan.nextLine();
+    while (!validateDate(date, "yyyy-MM-dd")) {
+      vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+      date = scan.nextLine();
+      if (Objects.equals(date, "b") || Objects.equals(date, "B")) {
+        return;
+      }
+    }
+
+    String[] args = new String[2];
+    args[0] = date;
+    args[1] = options;
+    vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS_ON_DATE, args, 2);
+
+    String stockOptions = scan.nextLine();
+    StockCompositionData.StockPortFolioData stkObj;
+    try {
+      stkObj = obj.getAvailableStockDataOnADate(Integer.parseInt(options) - 1, date);
+    } catch (Exception e) {
+      output.println("Error in getting stock data " + e.getMessage());
+      return;
+    }
+
+    while ((stockOptions == null || stockOptions.length() == 0)
+            || (!validateStockSelectOption(stockOptions, stkObj.numberOfUniqueStocks))) {
+      vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
+      stockOptions = scan.nextLine();
+      if (Objects.equals(stockOptions, "m") || Objects.equals(stockOptions, "M")) {
+        return;
+      }
+    }
+
+    sellSharesOnAStock(Integer.parseInt(options) - 1,
+            stkObj.stockSymbol[Integer.parseInt(stockOptions) - 1], date);
+  }
+
+  private void sellSharesOnAStock(int pfNumber, String stockSymbol, String date) {
+    StockCompositionData stk = new StockCompositionData();
+    currentPortfolioName = stk.getPortFolioNames()[pfNumber];
+    int numberOfAvailableShares;
+
+    try {
+      numberOfAvailableShares = stk.sharesAvailableOnTheDateForSale(pfNumber, stockSymbol, date);
+    } catch (Exception e) {
+      output.println("Unable to get remaining share details on the stock for this date");
+      return;
+    }
+
+    if (numberOfAvailableShares == 0) {
+      output.println("You cannot sell any shares of this stock on this date as they are already" +
+              " sold");
+      return;
+    }
+
+    String[] stockGetData = new String[2];
+    stockGetData[0] = stockSymbol;
+    stockGetData[1] = date;
+    cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stockGetData, 2);
+    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+
+    output.println("\nYou can sell only " + numberOfAvailableShares
+            + " shares of this stock on " + date);
+    output.println("How many share would you like to sell?\n");
+
+    String sellShares = scan.nextLine();
+    while ((sellShares == null || sellShares.length() == 0) ||
+            (!validateStockSelectOption(sellShares, numberOfAvailableShares))) {
+      vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
+      sellShares = scan.nextLine();
+      if (Objects.equals(sellShares, "m") || Objects.equals(sellShares, "M")) {
+        return;
+      }
+    }
+
+    String[] data = new String[3];
+    data[0] = sellShares;
+    data[1] = currentPortfolioName;
+    cmiObj.controllerModelInteract(TypeofAction.SELL_STOCKS, data, 3);
+    output.println("Shares successfully sold.");
+  }
+
+  private void addStockToPortfolioMainMenu() {
+    StockCompositionData obj = new StockCompositionData();
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+      return;
+    }
+    String[] portfolioNames = obj.getPortFolioNames();
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
+            numberOfPortFolio);
+    output.println("\nSelect the portfolio to which you would like to add the stock.");
+    String options;
+    options = scan.nextLine();
+    while ((options == null || options.length() == 0)
+            || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
+      options = scan.nextLine();
+      if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
+        return;
+      }
+    }
+    //addStockToPortfolio(options);
+    StockCompositionData stk = new StockCompositionData();
+    currentPortfolioName = stk.getPortFolioNames()[Integer.parseInt(options) - 1];
+    String[] args = new String[1];
+    args[0] = "addStockScreen";
+    performCreatePortfolioMenuAction("1", args, 1);
+  }
+
+
+  private void addStockToPortfolio(String option) {
+    StockCompositionData stk = new StockCompositionData();
+    currentPortfolioName = stk.getPortFolioNames()[Integer.parseInt(option) - 1];
+    while (true) {
+      vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
+      String options;
+      options = scan.nextLine();
+      while (!validateStockSelectOption(options, 0)) {
+        vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
+        options = scan.nextLine();
+      }
+      String[] args = new String[1];
+      args[0] = "addStockScreen";
+      if (!performListOfStocksMenuAction(options, args, 1)) {
         break;
       }
     }
@@ -334,13 +508,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       String[] portfolioNames = obj.getPortFolioNames();
       vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
               numberOfPortFolio);
+      vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
+              numberOfPortFolio);
       String options;
       options = scan.nextLine();
       while ((options == null || options.length() == 0)
               || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
         vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
         options = scan.nextLine();
-        if (Objects.equals(options, "b")) {
+        if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
           return;
         }
       }
@@ -379,13 +555,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       String[] portfolioNames = obj.getPortFolioNames();
       vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
               numberOfPortFolio);
+      vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
+              numberOfPortFolio);
       String options;
       options = scan.nextLine();
       while ((options == null || options.length() == 0)
               || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
         vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
         options = scan.nextLine();
-        if (Objects.equals(options, "b")) {
+        if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
           return;
         }
       }
@@ -510,7 +688,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param args   helper arguments if passed by the callee
    * @return false if the option entered is invalid, else true
    */
-  private boolean performCreatePortfolioMenuAction(String option, String[] args) {
+  private boolean performCreatePortfolioMenuAction(String option, String[] args, int length) {
     switch (option) {
       case "1": {
         //Buy a new stock
@@ -518,11 +696,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
           String options;
           options = scan.nextLine();
-          while (!validateStockSelectOption(options)) {
+          StockNameMap snp = new StockNameMap();
+          while (!validateStockSelectOption(options, snp.getMapSize())) {
             vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
             options = scan.nextLine();
           }
-          if (!performListOfStocksMenuAction(options, null, 0)) {
+          if (!performListOfStocksMenuAction(options, args, length)) {
             break;
           }
         }
@@ -562,7 +741,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param option the stock option that was entered by the user
    * @return true if the input is valid, else false
    */
-  private boolean validateStockSelectOption(String option) {
+  private boolean validateStockSelectOption(String option, int maxSize) {
     if (option == null || option.length() == 0) {
       return false;
     }
@@ -578,8 +757,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    StockNameMap snp = new StockNameMap();
-    return val >= 1 && val <= snp.getMapSize();
+    return val >= 1 && val <= maxSize;
   }
 
   /**

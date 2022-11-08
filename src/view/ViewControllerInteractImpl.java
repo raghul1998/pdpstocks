@@ -70,6 +70,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showPortFolioCompositionScreen(args, length);
         break;
       }
+      case WHICH_PORTFOLIO_CHECK: {
+        whichPortfolioLikeToCheck();
+        break;
+      }
       case PORTFOLIO_INDIVIDUAL_LIST: {
         String opt = args[0];
         showPortfolioIndividualScreen(opt);
@@ -121,10 +125,59 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         correctDateScreen();
         break;
       }
+      case LIST_OF_STOCKS_ON_DATE: {
+        showListOfStocksAvailableOnADate(args[0], args[1]);
+        break;
+      }
       default: {
         break;
       }
     }
+  }
+
+  private void showListOfStocksAvailableOnADate(String date, String pfIndex) {
+    int portfolioNumber = Integer.parseInt(pfIndex) - 1;
+    StockCompositionData obj = new StockCompositionData();
+    StockCompositionData.StockPortFolioData stkObj = null;
+
+    try {
+      stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date);
+    } catch (Exception e) {
+      output.println("Error in getting stock data " + e.getMessage());
+      return;
+    }
+
+    if (stkObj == null) {
+      output.println("Error in getting stock data");
+      return;
+    }
+
+    if (stkObj.numberOfUniqueStocks == 0) {
+      noStockBeforeDate();
+    } else {
+      output.println("\nList of stocks available on date: " + date);
+      output.print("\nS.No");
+      output.print("\t" + "Name");
+      output.print(" (" + "Symbol" + ") ");
+      output.println("\t" + "Quantity\n");
+      for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
+        if (stkObj.stockQuantity[i] != 0) {
+          output.print(i + 1 + ".");
+          output.print("\t" + stkObj.stockName[i]);
+          output.print(" (" + stkObj.stockSymbol[i] + ") ");
+          output.println("\t" + stkObj.stockQuantity[i]);
+        }
+      }
+      output.println("\nWhich stock would you like to sell?");
+    }
+  }
+
+  public int numberOfStockThatCanSell() {
+    return 0;
+  }
+
+  private void noStockBeforeDate() {
+    output.println("You don't own any stocks before this date");
   }
 
   /**
@@ -258,6 +311,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     for (int i = 0; i < numberOfPortFolio; i++) {
       output.println(i + 1 + ". " + portfolioNames[i].toUpperCase());
     }
+
+  }
+
+  private void whichPortfolioLikeToCheck() {
     output.println("\nWhich portfolio would you like to check?");
   }
 
@@ -318,7 +375,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       output.println("Error in reading Supported stocks csv file.");
     }
 
-    output.println("\nCURRENT STOCK PRICE");
+    output.println("\nSTOCK DETAILS");
     output.println("StockName: " + splitStockData[0]);
     output.println("Symbol: " + splitStockData[2]);
     output.println("Time: " + splitStockData[3]);
@@ -349,7 +406,11 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("\nMENU\n");
     output.println("1. Create a portfolio");
     output.println("2. View portfolio");
-    output.println("3. Value of portfolio");
+    output.println("3. Value of portfolio on full composition");
+    output.println("4. Add a stock to portfolio");
+    output.println("5. Sell a stock from portfolio");
+    output.println("6. Performance of portfolio");
+    output.println("7. Value of portfolio");
     output.println("e. Exit\n");
     output.println("ENTER YOUR CHOICE: ");
   }

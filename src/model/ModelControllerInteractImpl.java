@@ -8,8 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
 
@@ -28,7 +26,8 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
   public void modelControllerInteract(TypeofAction type, String[] args, int length) {
     switch (type) {
       case BUY_STOCKS: {
-        buyStockData(args, length);
+        portFolioName = args[1];
+        recordStockTransactionToPortfolio(args, length, true);
         break;
       }
       case GET_STOCK_DATA: {
@@ -55,6 +54,11 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         } catch (Exception e) {
           System.out.println("MODEL: Error in creating supported stocks file");
         }
+        break;
+      }
+      case SELL_STOCKS: {
+        portFolioName = args[1];
+        recordStockTransactionToPortfolio(args, length, false);
         break;
       }
       default: {
@@ -156,7 +160,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
       }
 
       // Delete only if the portfolio is empty
-      if (Objects.equals(splitStockData[0], "PurchaseTimestamp")) {
+      if (Objects.equals(splitStockData[0], "TransactionType")) {
         stockData.close();
         file.delete();
       }
@@ -196,8 +200,12 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     csvData.append("PortfolioCreatedTimeStamp,").append(formatter.format(date));
     csvData.append('\n');
 
-    csvData.append("PurchaseTimestamp," + "PurchaseID," + "StockLastKnownValueTimestamp,"
+    /*csvData.append("PurchaseTimestamp," + "PurchaseID," + "StockLastKnownValueTimestamp,"
             + "StockSymbol," + "NameOfStock," + "NumberOfStocksPurchased,"
+            + "PriceOfShareAtPurchase");*/
+
+    csvData.append("TransactionType," + "PurchaseID," + "Timestamp,"
+            + "StockSymbol," + "NameOfStock," + "StocksTransacted,"
             + "PriceOfShareAtPurchase");
     csvData.append('\n');
 
@@ -214,7 +222,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    * @param args   helper arguments like the number of shares the user wants to purchase
    * @param length length of the arguments
    */
-  private void buyStockData(String[] args, int length) {
+  private void recordStockTransactionToPortfolio(String[] args, int length, boolean isBuy) {
     BufferedReader stockData;
     try {
       stockData = new BufferedReader(new FileReader("data/StockData.csv"));
@@ -236,9 +244,15 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
 
     StringBuilder pfBoughtStockData = new StringBuilder();
     // PurchaseTimestamp
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    /*DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
-    pfBoughtStockData.append(dtf.format(now)).append(",");
+    pfBoughtStockData.append(dtf.format(now)).append(",");*/
+    // Transaction Type
+    if(isBuy) {
+      pfBoughtStockData.append("BUY").append(",");
+    } else {
+      pfBoughtStockData.append("SALE").append(",");
+    }
     // PurchaseID
     long time = System.currentTimeMillis() / 1000;
     pfBoughtStockData.append(Long.toString(time, 0)).append(",");
@@ -249,7 +263,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     pfBoughtStockData.append(splitStockData[2]).append(",");
     // NameOfStock
     pfBoughtStockData.append(splitStockData[0]).append(",");
-    // NumberOfStocksPurchased
+    // StocksTransacted
     pfBoughtStockData.append(args[0]).append(",");
     // PriceOfShareAtPurchase
     pfBoughtStockData.append(splitStockData[1]).append('\n');

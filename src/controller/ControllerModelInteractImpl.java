@@ -21,7 +21,8 @@ public class ControllerModelInteractImpl implements ControllerModelInteract {
       case GET_STOCK_DATA:
       case CREATE_PORTFOLIO:
       case DELETE_EMPTY_PORTFOLIO:
-      case CREATE_SUPPORTED_STOCKS: {
+      case CREATE_SUPPORTED_STOCKS:
+      case SELL_STOCKS: {
         mciObj.modelControllerInteract(type, args, length);
         break;
       }

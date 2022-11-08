@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 /**
  * This class represents the stock composition data and methods that can be called upon to get the
@@ -222,6 +227,166 @@ public class StockCompositionData {
     return obj;
   }
 
+  public StockPortFolioData getAvailableStockDataOnADate(int pfIndex, String dateStr) throws ParseException {
+    String filename = getPortFolioFileNameByIndex(pfIndex);
+    int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
+
+    String[] stockSymbol = new String[numberOfStocks];
+    String[] stockName = new String[numberOfStocks];
+    long[] stockQuantity = new long[numberOfStocks];
+    int index = 0;
+
+    BufferedReader stockData;
+    try {
+      stockData = new BufferedReader(new FileReader(filename));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    String line;
+    String splitBy = ",";
+    String[] splitStockData;
+    int timesOfRead = 0;
+    boolean found;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date date1 = sdf.parse(dateStr);
+
+    try {
+      while ((line = stockData.readLine()) != null) {
+        if (timesOfRead > 3) {
+          splitStockData = line.split(splitBy);
+          Date date2 = sdf.parse(splitStockData[2]);
+
+          // Consider those stocks that are bought on that selling date and previous dates
+          // Ignore the stocks that is bought in future from this date
+          if (Objects.equals(splitStockData[0], "BUY") && date2.compareTo(date1) <= 0) {
+            found = false;
+            int i;
+            for (i = 0; i < stockSymbol.length; i++) {
+              if (stockSymbol[i] == null) {
+                break;
+              }
+              if (Objects.equals(stockSymbol[i], splitStockData[3])) {
+                found = true;
+                break;
+              }
+            }
+
+            if (!found) {
+              stockSymbol[index] = splitStockData[3];
+              stockName[index] = splitStockData[4];
+              stockQuantity[index] = Long.parseLong(splitStockData[5]);
+              index++;
+            } else {
+              stockQuantity[i] += Long.parseLong(splitStockData[5]);
+            }
+          }
+
+          if (Objects.equals(splitStockData[0], "SALE") && date2.compareTo(date1) <= 0) {
+            int i;
+            for (i = 0; i < stockSymbol.length; i++) {
+              if (Objects.equals(stockSymbol[i], splitStockData[3])) {
+                stockQuantity[i] -= Long.parseLong(splitStockData[5]);
+              }
+            }
+          }
+        } else {
+          timesOfRead++;
+        }
+      }
+      stockData.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    StockPortFolioData obj = new StockPortFolioData();
+    obj.stockSymbol = stockSymbol;
+    obj.stockQuantity = stockQuantity;
+    obj.stockName = stockName;
+    obj.numberOfUniqueStocks = index;
+    return obj;
+  }
+
+  public int sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol, String dateStr) throws ParseException {
+    String filename = getPortFolioFileNameByIndex(pfIndex);
+    Map<Date, Integer> map = new TreeMap<>();
+    BufferedReader stockData;
+    int result = 0;
+    int futureResult = 0;
+
+    try {
+      stockData = new BufferedReader(new FileReader(filename));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    String line;
+    String splitBy = ",";
+    String[] splitStockData;
+    int timesOfRead = 0;
+    boolean found;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date date1 = sdf.parse(dateStr);
+    boolean isBuyFoundAfterSale = false;
+
+    try {
+      while ((line = stockData.readLine()) != null) {
+        if (timesOfRead > 3) {
+          splitStockData = line.split(splitBy);
+          Date date2 = sdf.parse(splitStockData[2]);
+          if (Objects.equals(splitStockData[3], stockSymbol)
+                  && date2.compareTo(date1) <= 0) {
+            if (Objects.equals(splitStockData[0], "BUY")) {
+              result += Integer.parseInt(splitStockData[5]);
+            } else if (Objects.equals(splitStockData[0], "SALE")) {
+              result -= Integer.parseInt(splitStockData[5]);
+            }
+          }
+
+          if (Objects.equals(splitStockData[3], stockSymbol)
+                  && date2.compareTo(date1) > 0) {
+            if (Objects.equals(splitStockData[0], "BUY")) {
+              map.put(date2, Integer.parseInt(splitStockData[5]));
+            } else if (Objects.equals(splitStockData[0], "SALE")) {
+              map.put(date2, Integer.parseInt(splitStockData[5]) * -1);
+            }
+          }
+
+        } else {
+          timesOfRead++;
+        }
+      }
+      stockData.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    for (Map.Entry element : map.entrySet()) {
+      if ((int) element.getValue() > 0) {
+        isBuyFoundAfterSale = true;
+        futureResult += (int) element.getValue();
+      } else {
+        if (!isBuyFoundAfterSale) {
+          result += (int) element.getValue();
+        } else {
+          futureResult += (int) element.getValue();
+        }
+      }
+
+      if (result == 0) {
+        return 0;
+      }
+      if (futureResult < 0) {
+        result -= futureResult;
+      }
+
+    }
+
+    return result;
+  }
+
   /**
    * A static class inside the 'StockCompositionData' that holds the data related to the stocks and
    * shares in a portfolio.
@@ -248,4 +413,5 @@ public class StockCompositionData {
     public String createdTimeStamp;
     public String[] stockLastKnownValueDate;
   }
+
 }

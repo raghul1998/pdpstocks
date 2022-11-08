@@ -1,0 +1,9 @@
+PortfolioName,heal
+PortfolioID,1667879554
+PortfolioCreatedTimeStamp,11/07/2022 22:52:34
+TransactionType,PurchaseID,Timestamp,StockSymbol,NameOfStock,StocksTransacted,PriceOfShareAtPurchase
+BUY,1667879564,2010-11-10,MSFT,Microsoft,12,27.0100
+BUY,1667879577,2011-11-11,AAPL,Apple,6,386.6100
+BUY,1667879608,2010-11-17,MSFT,Microsoft,7,25.9000
+SALE,1667879875,2010-11-12,MSFT,Microsoft,12,26.4700
+SALE,1667892736,2011-11-11,MSFT,Microsoft,7,26.5799

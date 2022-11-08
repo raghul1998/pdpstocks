@@ -77,6 +77,7 @@ public class GetStockData {
         }
         // If the date is in the future, then take the first date in the list
         if (date1.compareTo(date2) > 0) {
+          readLine[0] = dateStr;
           break;
         }
       }
