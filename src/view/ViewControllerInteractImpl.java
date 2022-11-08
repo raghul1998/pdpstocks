@@ -244,7 +244,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     double totalPortFolioValue = 0;
 
     if (stkObj.numberOfUniqueStocks == 0) {
-      output.println("The portfolio is empty.\n");
+      output.println("The value of portfolio on date: " + date + " is $0.00\n");
       return;
     }
 
