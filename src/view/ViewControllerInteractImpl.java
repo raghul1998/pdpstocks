@@ -253,27 +253,38 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     double totalPortFolioValue = 0;
 
     if (stkObj.numberOfUniqueStocks == 0) {
-      output.println("The value of portfolio on date: " + date + " is $0.00\n");
+      if (type.equals("COST")) {
+        output.println("There are no investments until " + date + "\n");
+      } else {
+        output.println("The value of portfolio on " + date + " is $0.00\n");
+      }
       return;
     }
 
     String[] portfolioNames = obj.getPortFolioNames();
-    output.println("Value of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
+    if (type.equals("COST")) {
+      output.println("\nCOST BASIS OF " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
+    } else {
+      output.println("\nValue of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
+    }
 
-
-    output.print("\nName");
-    output.print(" (" + "Symbol" + ") ");
-    output.print("\t " + "Quantity");
-    output.print("\t " + "Share Value on " + date);
-    output.println("\t " + "Total Value\n");
+    if (!type.equals("COST")) {
+      output.print("\nName");
+      output.print(" (" + "Symbol" + ") ");
+      output.print("\t " + "Quantity");
+      output.print("\t " + "Share Value on " + date);
+      output.println("\t " + "Total Value\n");
+    }
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
       if (stkObj.stockQuantity[i] == 0) {
         continue;
       }
-      output.print(stkObj.stockName[i]);
-      output.print(" (" + stkObj.stockSymbol[i] + ") ");
-      output.print("\t " + stkObj.stockQuantity[i]);
+      if (!type.equals("COST")) {
+        output.print(stkObj.stockName[i]);
+        output.print(" (" + stkObj.stockSymbol[i] + ") ");
+        output.print("\t " + stkObj.stockQuantity[i]);
+      }
       // Display based on the date purchased on
       double shareValue;
       if (type.equals("COST")) {
@@ -282,14 +293,21 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         shareValue = getShareValueOnDate(stkObj.stockSymbol[i], date);
       }
       shareValue = Math.floor((shareValue) * 100) / 100;
-      output.print("\t $" + shareValue);
-      output.println("\t $" + Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100);
+      if (!type.equals("COST")) {
+        output.print("\t $" + shareValue);
+        output.println("\t $" + Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100);
+      }
       totalPortFolioValue += Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100;
     }
 
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
-    if (type == "COST") {
-      output.println("\nTotal Money invested is: $" + totalPortFolioValue + "\n");
+    if (type.equals("COST")) {
+      output.println("\nTotal Money invested in stocks: $" + totalPortFolioValue);
+      output.println("Commission cost per transaction is: $1.27");
+      output.println("Total number of transactions till date is: " + stkObj.numberOfTransactions);
+      output.println("Total commission charges: " + stkObj.numberOfTransactions * 1.27);
+      output.println("Total Money spent: $" + (totalPortFolioValue
+              - (stkObj.numberOfTransactions * 1.27)) + "\n");
     } else {
       output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
     }

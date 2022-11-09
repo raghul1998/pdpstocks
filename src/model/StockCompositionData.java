@@ -68,7 +68,7 @@ public class StockCompositionData {
    * @param filename the filename of the portfolio
    * @return the number of stocks as an integer
    */
-  private int getNumberOfStockDataInAPortFolio(String filename) {
+  public int getNumberOfTransactionsInAPortFolio(String filename) {
     Path path = Paths.get(filename);
     long lines = 0;
     try {
@@ -116,7 +116,7 @@ public class StockCompositionData {
   public StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
                                                        boolean includeSale) {
     String filename = getPortFolioFileNameByIndex(index);
-    int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
+    int numberOfStocks = getNumberOfTransactionsInAPortFolio(filename);
 
     boolean found;
     int nameIndex = 0;
@@ -132,9 +132,8 @@ public class StockCompositionData {
     String[] symbol = new String[numberOfStocks];
     String[] stockLastKnownValueDate = new String[numberOfStocks];
     long[] quantity = new long[numberOfStocks];
-    double[] value = new double[numberOfStocks];
     double[] valueOfSingleStock = new double[numberOfStocks];
-    double totalPortFolioValue = 0;
+    int numberOfTransactions = 0;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date date1;
@@ -173,6 +172,7 @@ public class StockCompositionData {
         int i;
 
         if (date2.compareTo(date1) <= 0) {
+          numberOfTransactions++;
           for (i = 0; i < symbol.length; i++) {
             if (symbol[i] == null) {
               break;
@@ -239,12 +239,13 @@ public class StockCompositionData {
     obj.valueOfSingleStock = valueOfSingleStock;
     obj.createdTimeStamp = createdTimeStamp;
     obj.stockLastKnownValueDate = stockLastKnownValueDate;
+    obj.numberOfTransactions = numberOfTransactions;
     return obj;
   }
 
   public StockPortFolioData getAvailableStockDataOnADate(int pfIndex, String dateStr, boolean isIncludeSale) throws ParseException {
     String filename = getPortFolioFileNameByIndex(pfIndex);
-    int numberOfStocks = getNumberOfStockDataInAPortFolio(filename);
+    int numberOfStocks = getNumberOfTransactionsInAPortFolio(filename);
 
     String[] stockSymbol = new String[numberOfStocks];
     String[] stockName = new String[numberOfStocks];
@@ -440,6 +441,7 @@ public class StockCompositionData {
     public double[] valueOfSingleStock;
     public String createdTimeStamp;
     public String[] stockLastKnownValueDate;
+    public int numberOfTransactions;
   }
 
 }
