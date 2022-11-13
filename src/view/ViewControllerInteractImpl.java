@@ -190,6 +190,9 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private String getStars(Double value, long scale) {
+    if (value == null || value == 0) {
+      return "";
+    }
     int num = (int) (value / scale);
     return "*".repeat(Math.max(0, num));
   }
