@@ -178,6 +178,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     LocalDate date = LocalDate.parse(dateStr);
     String year = String.valueOf(date.getYear());
     String month = String.valueOf(date.getMonth());
+    month = month.substring(0, 3);
     String dateIn = String.valueOf(date.getDayOfMonth());
 
     if (Objects.equals(choice, "1")) {
