@@ -4,11 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -158,7 +154,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       return;
     }
 
-    long scale = getScale(pfPerformance);
+    String[] scale = getScale(pfPerformance);
     String getTitle = null;
     try {
       getTitle = getTitle(pfPerformance, args[length - 1]);
@@ -171,10 +167,18 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
       printPerformance(set.getKey(), set.getValue(), scale, args[length - 1]);
     }
-    output.println("\nScale: * = $" + scale + "\n");
+
+    if (scale[1] == null) {
+      output.println("\nScale: * = $" + scale[0]);
+    } else {
+      output.println("\nBase Amount: * = $" + scale[1]);
+      output.println("One * is $" + scale[0] + " more than the base amount.");
+      output.println("~ is the base value.");
+    }
+    output.println("# - either no stocks or 0 value in portfolio.\n");
   }
 
-  private void printPerformance(String dateStr, Double value, long scale, String choice) {
+  private void printPerformance(String dateStr, Double value, String[] scale, String choice) {
     LocalDate date = LocalDate.parse(dateStr);
     String year = String.valueOf(date.getYear());
     String month = String.valueOf(date.getMonth());
@@ -194,15 +198,24 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     }
   }
 
-  private String getStars(Double value, long scale) {
+  private String getStars(Double value, String[] scale) {
     if (value == null || value == 0) {
-      return "";
+      return "#";
     }
-    int num = (int) (value / scale);
+
+    int num;
+    if (scale[1] == null) {
+      num = (int) (value / Long.parseLong(scale[0]));
+    } else {
+      num = (int) ((value - Long.parseLong(scale[1])) / Long.parseLong(scale[0]));
+      if (num == 0) {
+        return "~";
+      }
+    }
     return "*".repeat(Math.max(0, num));
   }
 
-  private String getTitle(Map<String, Double> pfPerformance, String choice) throws ParseException {
+  private String getTitle(Map<String, Double> pfPerformance, String choice) {
     int ind = 0;
     String dateStart = null;
     String dateEnd = null;
@@ -239,20 +252,32 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     return String.valueOf(title);
   }
 
-  private long getScale(Map<String, Double> pfPerformance) {
+  private String[] getScale(Map<String, Double> pfPerformance) {
     double max = Double.MIN_VALUE;
+    double min = Double.MAX_VALUE;
     for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
-      if (set.getValue() == null) {
+      if (set.getValue() == null || set.getValue() == 0) {
         continue;
       }
       if (set.getValue() > max) {
         max = set.getValue();
       }
+      if (set.getValue() < min) {
+        min = set.getValue();
+      }
     }
 
     double scale = (max / 50);
-    scale = Math.ceil((scale) / 100) * 100;
-    return (long) scale;
+    scale = Math.floor(scale);
+    String[] scaleStr = new String[2];
+    if (scale < min) {
+      scaleStr[0] = String.valueOf((long) scale);
+      scaleStr[1] = null;
+    } else {
+      scaleStr[0] = String.valueOf((long) (max - min) / 50);
+      scaleStr[1] = String.valueOf((long) Math.floor(min)); // base amount
+    }
+    return scaleStr;
   }
 
   private void showListOfStocksAvailableOnADate(String date, String pfIndex) {
