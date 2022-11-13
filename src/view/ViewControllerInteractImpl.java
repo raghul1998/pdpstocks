@@ -228,7 +228,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     } else if (Objects.equals(choice, "3")) {
       title.append("from ").append(startDate.getDayOfMonth()).append(" ").
               append(startDate.getMonth()).append(" ").append(startDate.getYear())
-              .append(" to ").append(startDate.getDayOfMonth()).append(" ")
+              .append(" to ").append(endDate.getDayOfMonth()).append(" ")
               .append(endDate.getMonth()).append(" ").append(endDate.getYear());
     }
 
