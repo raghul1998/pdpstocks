@@ -25,7 +25,7 @@ public class GetStockData {
    *
    * @param stock the ticker symbol of the stock that the data is required for
    */
-  public void getValue(String stock, String dateStr) throws ParseException {
+  public void getValue(String stock, String[] dateStr) throws ParseException {
     StockNameMap snp = new StockNameMap();
     Map<String, String> stockMap = snp.getMap();
     String apiKey = "L6T2FNC0UY2K71XI";
@@ -50,7 +50,10 @@ public class GetStockData {
     }
 
     InputStream in;
-    String[] readLine = new String[10];
+    String[] readLine;
+
+    String[] timestamp = new String[dateStr.length];
+    String[] price = new String[dateStr.length];
 
     try {
       in = url.openStream();
@@ -60,25 +63,36 @@ public class GetStockData {
       String splitBy = ",";
       int index = 0;
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-      Date date1 = sdf.parse(dateStr);
 
-      while ((line = reader.readLine()) != null) {
-        readLine = line.split(splitBy);    // use comma as separator
-
-        if (index == 0) {
-          index++;
-          continue;
-        }
-
-        Date date2 = sdf.parse(readLine[0]);
-        // Check if both dates are same
-        if (date1.compareTo(date2) == 0) {
+      for (int i = 0; i < dateStr.length; i++) {
+        if (dateStr[i] == null) {
           break;
         }
-        // If the date is in the future, then take the first date in the list
-        if (date1.compareTo(date2) > 0) {
-          readLine[0] = dateStr;
-          break;
+
+        Date date1 = sdf.parse(dateStr[i]);
+
+        while ((line = reader.readLine()) != null) {
+          readLine = line.split(splitBy);    // use comma as separator
+
+          if (index == 0) {
+            index++;
+            continue;
+          }
+
+          Date date2 = sdf.parse(readLine[0]);
+          // Check if both dates are same
+          if (date1.compareTo(date2) == 0) {
+            timestamp[i] = readLine[0];
+            price[i] = readLine[1];
+            continue;
+          }
+          // If the date is in the future, then take the first date in the list
+          if (date1.compareTo(date2) > 0) {
+            readLine[0] = dateStr[i];
+            timestamp[i] = readLine[0];
+            price[i] = readLine[1];
+            break;
+          }
         }
       }
       reader.close();
@@ -87,13 +101,18 @@ public class GetStockData {
     }
 
     String stockName = stockMap.get(stock);
-    String timestamp = readLine[0];
-    String price = readLine[1];
 
-    String csvBuffer = stockName + "," + price + "," + stock + "," + timestamp;
+    StringBuilder csvBuffer = new StringBuilder();
+    for (int i = 0; i < dateStr.length; i++) {
+      if (price[i] == null) {
+        break;
+      }
+      csvBuffer.append(stockName).append(",").append(price[i]).append(",").append(stock).append(",").append(timestamp[i]);
+      csvBuffer.append('\n');
+    }
 
     try {
-      writeDataToFile(csvBuffer);
+      writeDataToFile(String.valueOf(csvBuffer));
     } catch (Exception e) {
       System.out.println("Exception in writing stock info to the file " + e.getMessage());
     }

@@ -61,6 +61,10 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         recordStockTransactionToPortfolio(args, length, false);
         break;
       }
+      case GET_PORTFOLIO_PERFORMANCE: {
+        portFolioName = args[length - 3];
+        break;
+      }
       default: {
         //No Action Needed
         break;
@@ -248,7 +252,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     LocalDateTime now = LocalDateTime.now();
     pfBoughtStockData.append(dtf.format(now)).append(",");*/
     // Transaction Type
-    if(isBuy) {
+    if (isBuy) {
       pfBoughtStockData.append("BUY").append(",");
     } else {
       pfBoughtStockData.append("SALE").append(",");
@@ -299,7 +303,9 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
   private void getStockData(String stockSymbol, String date) {
     GetStockData obj = new GetStockData();
     try {
-      obj.getValue(stockSymbol, date);
+      String[] dateArr = new String[1];
+      dateArr[0] = date;
+      obj.getValue(stockSymbol, dateArr);
     } catch (Exception e) {
       System.out.println("Get stock data failed");
     }

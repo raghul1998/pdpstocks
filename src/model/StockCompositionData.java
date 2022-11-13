@@ -122,7 +122,7 @@ public class StockCompositionData {
     int nameIndex = 0;
 
     if (dateStr == null) {
-      SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
       Date dateToday = new Date();
       dateStr = formatter.format(dateToday);
     }

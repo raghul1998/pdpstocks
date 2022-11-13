@@ -4,13 +4,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
 import model.GetStockData;
+import model.PortfolioPerformance;
 import model.StockCompositionData;
 import model.StockNameMap;
 
@@ -130,10 +134,117 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showListOfStocksAvailableOnADate(args[0], args[1]);
         break;
       }
+      case PORTFOLIO_PERFORMANCE: {
+        portfolioPerformanceOverTime(args, length);
+        break;
+      }
       default: {
         break;
       }
     }
+  }
+
+  private void portfolioPerformanceOverTime(String[] args, int length) {
+    Map<String, Double> pfPerformance;
+    try {
+      PortfolioPerformance obj = new PortfolioPerformance();
+      pfPerformance = obj.computePerformanceData(args, length);
+      if (pfPerformance == null) {
+        output.println("Error in getting portfolio performance.\n");
+        return;
+      }
+    } catch (Exception e) {
+      output.println("Error in getting portfolio performance.\n");
+      return;
+    }
+
+    long scale = getScale(pfPerformance);
+    String getTitle = null;
+    try {
+      getTitle = getTitle(pfPerformance, args[length - 1]);
+    } catch (Exception e) {
+      output.println("Error in getting title");
+    }
+
+    output.println("\nPerformance of portfolio " + args[length - 3].toUpperCase() + " " + getTitle + "\n");
+
+    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
+      printPerformance(set.getKey(), set.getValue(), scale, args[length - 1]);
+    }
+    output.println("\nScale: * = $" + scale + "\n");
+  }
+
+  private void printPerformance(String dateStr, Double value, long scale, String choice) {
+    LocalDate date = LocalDate.parse(dateStr);
+    String year = String.valueOf(date.getYear());
+    String month = String.valueOf(date.getMonth());
+    String dateIn = String.valueOf(date.getDayOfMonth());
+
+    if (Objects.equals(choice, "1")) {
+      output.println(year + ": " + getStars(value, scale));
+    } else if (Objects.equals(choice, "2")) {
+      output.println(month + " " + year + ": " + getStars(value, scale));
+    } else if (Objects.equals(choice, "3")) {
+      output.println(month + " " + dateIn + " " + year + ": " + getStars(value, scale));
+    }
+  }
+
+  private String getStars(Double value, long scale) {
+    int num = (int) (value / scale);
+    return "*".repeat(Math.max(0, num));
+  }
+
+  private String getTitle(Map<String, Double> pfPerformance, String choice) throws ParseException {
+    int ind = 0;
+    String dateStart = null;
+    String dateEnd = null;
+
+    StringBuilder title = new StringBuilder();
+
+    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
+      if (ind == 0) {
+        dateStart = set.getKey();
+      }
+      if (ind == pfPerformance.size() - 1) {
+        dateEnd = set.getKey();
+      }
+      ind++;
+    }
+
+    assert dateStart != null;
+    LocalDate startDate = LocalDate.parse(dateStart);
+    assert dateEnd != null;
+    LocalDate endDate = LocalDate.parse(dateEnd);
+
+    if (Objects.equals(choice, "1")) {
+      title.append("from ").append(startDate.getYear()).append(" to ").append(endDate.getYear());
+    } else if (Objects.equals(choice, "2")) {
+      title.append("from ").append(startDate.getMonth()).append(" ").append(startDate.getYear())
+              .append(" to ").append(endDate.getMonth()).append(" ").append(endDate.getYear());
+    } else if (Objects.equals(choice, "3")) {
+      title.append("from ").append(startDate.getDayOfMonth()).append(" ").
+              append(startDate.getMonth()).append(" ").append(startDate.getYear())
+              .append(" to ").append(startDate.getDayOfMonth()).append(" ")
+              .append(endDate.getMonth()).append(" ").append(endDate.getYear());
+    }
+
+    return String.valueOf(title);
+  }
+
+  private long getScale(Map<String, Double> pfPerformance) {
+    double max = Double.MIN_VALUE;
+    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
+      if (set.getValue() == null) {
+        continue;
+      }
+      if (set.getValue() > max) {
+        max = set.getValue();
+      }
+    }
+
+    double scale = (max / 50);
+    scale = Math.ceil((scale) / 100) * 100;
+    return (long) scale;
   }
 
   private void showListOfStocksAvailableOnADate(String date, String pfIndex) {
@@ -554,7 +665,9 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private double getShareValueOnDate(String stockSymbol, String date) {
     GetStockData gsd = new GetStockData();
     try {
-      gsd.getValue(stockSymbol, date);
+      String[] dateArr = new String[1];
+      dateArr[0] = date;
+      gsd.getValue(stockSymbol, dateArr);
     } catch (Exception e) {
       output.println("Error in getting stock data on " + date);
       return 0;

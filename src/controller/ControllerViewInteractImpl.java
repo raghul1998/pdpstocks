@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -316,7 +317,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         break;
       }
       case "6": {
-        portfolioPerformance();
+        portfolioPerformanceMainMenu();
         break;
       }
       case "7": {
@@ -384,7 +385,154 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
-  private void portfolioPerformance() {
+  private void portfolioPerformanceMainMenu() {
+    while (true) {
+      StockCompositionData obj = new StockCompositionData();
+      int numberOfPortFolio = obj.getNumberOfPortFolio();
+      if (numberOfPortFolio == 0) {
+        vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+        return;
+      }
+      String[] portfolioNames = obj.getPortFolioNames();
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
+              numberOfPortFolio);
+      vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
+              numberOfPortFolio);
+      String options;
+      options = scan.nextLine();
+      while ((options == null || options.length() == 0)
+              || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
+        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
+        options = scan.nextLine();
+        if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
+          return;
+        }
+      }
+
+      currentPortfolioName = obj.getPortFolioNames()[Integer.parseInt(options) - 1];
+
+      output.println("Enter the choice of timestamps\n");
+      output.println("1. View by year");
+      output.println("2. View by month");
+      output.println("3. View by date");
+      String choice;
+      choice = scan.nextLine();
+      while (choice == null || choice.length() == 0 || !validatePortfolioSelectOption(choice, 3)) {
+        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
+        output.println("Press 'm' to go back to main menu.");
+        choice = scan.nextLine();
+        if (Objects.equals(choice, "m") || Objects.equals(choice, "M")) {
+          return;
+        }
+      }
+      if (portfolioPerformance(options, choice)) {
+        break;
+      }
+    }
+  }
+
+  private boolean portfolioPerformance(String pfNumber, String choice) {
+    String date;
+    String format = null;
+    if (Objects.equals(choice, "1")) {
+      output.println("Enter the start year in format (YYYY) from year 2000:");
+      format = "yyyy";
+    } else if (Objects.equals(choice, "2")) {
+      output.println("Enter the start month in format (YYYY-MM) from year 2000:");
+      format = "yyyy-MM";
+    } else if (Objects.equals(choice, "3")) {
+      output.println("Enter the start date in format (YYYY-MM-DD) from year 2000:");
+      format = "yyyy-MM-dd";
+    }
+
+    date = scan.nextLine();
+    while (!validateDate(date, format)) {
+      vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+      date = scan.nextLine();
+      if (Objects.equals(date, "b") || Objects.equals(date, "B")) {
+        return false;
+      }
+    }
+
+    if (Objects.equals(choice, "1")) {
+      output.println("Enter the number of years (5 to 30): ");
+    } else if (Objects.equals(choice, "2")) {
+      output.println("Enter the number of months (5 to 30): ");
+    } else if (Objects.equals(choice, "3")) {
+      output.println("Enter the number of days (5 to 30): ");
+    }
+
+    String number = scan.nextLine();
+    while (!validateStockSelectOption(number, 5, 30)) {
+      vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+      vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
+      number = scan.nextLine();
+      if (Objects.equals(number, "b") || Objects.equals(number, "B")) {
+        return false;
+      }
+    }
+    if (Objects.equals(number, "m") || Objects.equals(number, "M")) {
+      return true;
+    }
+
+    String[] dates;
+
+    try {
+      dates = getDatesFromUserInput(choice, date, number, format);
+    } catch (Exception e) {
+      output.println("Error in parsing the dates. Try again");
+      return true;
+    }
+
+    dates[Integer.parseInt(number)] = currentPortfolioName;
+    dates[Integer.parseInt(number) + 1] = pfNumber;
+    dates[Integer.parseInt(number) + 2] = choice;
+    cmiObj.controllerModelInteract(TypeofAction.GET_PORTFOLIO_PERFORMANCE, dates, dates.length);
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_PERFORMANCE, dates, dates.length);
+    return true;
+  }
+
+  private String[] getDatesFromUserInput(String choice, String date, String number, String format) throws ParseException {
+    String[] dates = new String[Integer.parseInt(number) + 3];
+    Date convertedDate;
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+    convertedDate = dateFormat.parse(date);
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(convertedDate);
+
+    if (Objects.equals(choice, "1")) {
+      cal.set(Calendar.DAY_OF_YEAR, cal.getActualMaximum(Calendar.DAY_OF_YEAR));
+      Date lastDayOfYear = cal.getTime();
+      DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      LocalDate startDate = LocalDate.parse(sdf.format(lastDayOfYear));
+      dates[0] = String.valueOf(startDate);
+      for (int i = 1; i < Integer.parseInt(number); i++) {
+        dates[i] = String.valueOf(startDate.plusYears(i));
+      }
+    } else if (Objects.equals(choice, "2")) {
+      cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+      Date lastDayOfMonth = cal.getTime();
+      DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      LocalDate startDate = LocalDate.parse(sdf.format(lastDayOfMonth));
+      dates[0] = String.valueOf(startDate);
+      for (int i = 1; i < Integer.parseInt(number); i++) {
+        startDate = startDate.plusMonths(1);
+        convertedDate = sdf.parse(String.valueOf(startDate));
+        cal.setTime(convertedDate);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        lastDayOfMonth = cal.getTime();
+        startDate = LocalDate.parse(sdf.format(lastDayOfMonth));
+        dates[i] = String.valueOf(startDate);
+      }
+    } else if (Objects.equals(choice, "3")) {
+      LocalDate startDate = LocalDate.parse(date);
+      dates[0] = String.valueOf(startDate);
+      for (int i = 1; i < Integer.parseInt(number); i++) {
+        dates[i] = String.valueOf(startDate.plusDays(i));
+      }
+    }
+    return dates;
   }
 
   private void sellStockFromPortfolio() {
@@ -430,7 +578,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
 
       while ((stockOptions == null || stockOptions.length() == 0)
-              || (!validateStockSelectOption(stockOptions, stkObj.numberOfUniqueStocks))) {
+              || (!validateStockSelectOption(stockOptions, 1, stkObj.numberOfUniqueStocks))) {
         vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
         stockOptions = scan.nextLine();
         if (Objects.equals(stockOptions, "m") || Objects.equals(stockOptions, "M")) {
@@ -489,7 +637,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
     String sellShares = scan.nextLine();
     while ((sellShares == null || sellShares.length() == 0) ||
-            (!validateStockSelectOption(sellShares, numberOfAvailableShares))) {
+            (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
       String[] args = new String[1];
       args[0] = String.valueOf(numberOfAvailableShares);
       vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, args, 1);
@@ -547,7 +695,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
       String options;
       options = scan.nextLine();
-      while (!validateStockSelectOption(options, 0)) {
+      while (!validateStockSelectOption(options, 1, 0)) {
         vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
         options = scan.nextLine();
       }
@@ -766,7 +914,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           String options;
           options = scan.nextLine();
           StockNameMap snp = new StockNameMap();
-          while (!validateStockSelectOption(options, snp.getMapSize())) {
+          while (!validateStockSelectOption(options, 1, snp.getMapSize())) {
             vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
             options = scan.nextLine();
           }
@@ -810,7 +958,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param option the stock option that was entered by the user
    * @return true if the input is valid, else false
    */
-  private boolean validateStockSelectOption(String option, int maxSize) {
+  private boolean validateStockSelectOption(String option, int minVal, int maxSize) {
     if (option == null || option.length() == 0) {
       return false;
     }
@@ -826,7 +974,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    return val >= 1 && val <= maxSize;
+    return val >= minVal && val <= maxSize;
   }
 
   /**
