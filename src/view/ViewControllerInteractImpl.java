@@ -180,6 +180,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     String month = String.valueOf(date.getMonth());
     month = month.substring(0, 3);
     String dateIn = String.valueOf(date.getDayOfMonth());
+    if (dateIn.length() == 1) {
+      // Append 0 to dates with single digit
+      dateIn = "0" + dateIn;
+    }
 
     if (Objects.equals(choice, "1")) {
       output.println(year + ": " + getStars(value, scale));
