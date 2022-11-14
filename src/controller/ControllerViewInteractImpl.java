@@ -491,6 +491,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       remainder = (int) ChronoUnit.YEARS.between(LocalDate.parse(tempDateStr),
               LocalDate.now().withDayOfMonth(1));
       if (remainder != 5) {
+        if (remainder > 30) {
+          remainder = 30;
+        }
         output.println("Enter the number of years (5 to " + remainder + "): ");
       }
     } else if (Objects.equals(choice, "2")) {
@@ -498,6 +501,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       remainder = (int) ChronoUnit.MONTHS.between(LocalDate.parse(tempDateStr),
               LocalDate.now().withDayOfMonth(1));
       if (remainder != 5) {
+        if (remainder > 30) {
+          remainder = 30;
+        }
         output.println("Enter the number of months (5 to " + remainder + "): ");
       }
     } else if (Objects.equals(choice, "3")) {

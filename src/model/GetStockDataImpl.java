@@ -78,14 +78,14 @@ public class GetStockDataImpl implements GetStockData {
           if (date1.compareTo(date2) == 0) {
             timestamp[i] = readLine[0];
             price[i] = readLine[1];
-            continue;
+            break;
           }
           // If the date is in the future, then take the first date in the list
           if (date1.compareTo(date2) > 0) {
             readLine[0] = dateStr[i];
             timestamp[i] = readLine[0];
             price[i] = readLine[1];
-            continue;
+            break;
           }
 
           // If no stock info is available on this date, then assign the last know value
