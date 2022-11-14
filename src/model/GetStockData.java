@@ -90,8 +90,13 @@ public class GetStockData {
             readLine[0] = dateStr[i];
             timestamp[i] = readLine[0];
             price[i] = readLine[1];
-            break;
+            continue;
           }
+
+          // If no stock info is available on this date, then assign the last know value
+          readLine[0] = dateStr[i];
+          timestamp[i] = readLine[0];
+          price[i] = readLine[1];
         }
       }
       reader.close();

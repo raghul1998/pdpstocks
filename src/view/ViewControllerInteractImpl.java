@@ -286,7 +286,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     StockCompositionData.StockPortFolioData stkObj;
 
     try {
-      stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date, true);
+      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, date, true, true);
     } catch (Exception e) {
       output.println("View: Error in getting stock data " + e.getMessage());
       return;
@@ -368,17 +368,17 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     StockCompositionData.StockPortFolioData stkObj = null;
 
     if (Objects.equals(type, "FULL")) {
-      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, null, true);
+      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, null, true, false);
     } else if (Objects.equals(type, "TRUE")) {
       try {
-        stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date, true);
+        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, date, true, true);
       } catch (Exception e) {
         output.println("Error in getting the data.");
         return;
       }
     } else if (Objects.equals(type, "COST")) {
       try {
-        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, false, date, false);
+        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, false, date, false, false);
       } catch (Exception e) {
         output.println("Error in getting the data.");
         return;
@@ -463,7 +463,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionData();
     StockCompositionData.StockPortFolioData stkObj =
-            obj.getAllStockDataInPortFolio(portfolioNumber, false, null, true);
+            obj.getAllStockDataInPortFolio(portfolioNumber, false, null, true, false);
 
     String[] portfolioNames = obj.getPortFolioNames();
     String date = stkObj.createdTimeStamp;

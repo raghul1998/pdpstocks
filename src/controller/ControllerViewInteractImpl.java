@@ -62,6 +62,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     cmiObj.controllerModelInteract(TypeofAction.CREATE_SUPPORTED_STOCKS, null, 0);
     String option;
     do {
+      try {
+        sleep(500);
+      } catch (Exception e) {
+        // Exception while sleep
+      }
       vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
       option = scan.nextLine();
       performMainMenuAction(option);
@@ -358,11 +363,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
       default: {
         output.println("Invalid command. Enter the right option number.");
-        try {
-          sleep(500);
-        } catch (Exception e) {
-          // Exception while calling sleep
-        }
         break;
       }
     }
@@ -624,14 +624,19 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       args[1] = options;
       vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS_ON_DATE, args, 2);
 
-      String stockOptions = scan.nextLine();
       StockCompositionData.StockPortFolioData stkObj;
       try {
-        stkObj = obj.getAvailableStockDataOnADate(Integer.parseInt(options) - 1, date, true);
+        stkObj = obj.getAllStockDataInPortFolio(Integer.parseInt(options) - 1, true, date, true, true);
       } catch (Exception e) {
         output.println("Controller: Error in getting stock data " + e.getMessage());
         return;
       }
+
+      if (stkObj.numberOfUniqueStocks == 0) {
+        return;
+      }
+
+      String stockOptions = scan.nextLine();
 
       while ((stockOptions == null || stockOptions.length() == 0)
               || (!validateStockSelectOption(stockOptions, 1, stkObj.numberOfUniqueStocks))) {
@@ -996,11 +1001,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
       default: {
         output.println("Invalid command. Enter the right option number.");
-        try {
-          sleep(500);
-        } catch (Exception e) {
-          // Exception while calling sleep
-        }
         return false;
       }
     }

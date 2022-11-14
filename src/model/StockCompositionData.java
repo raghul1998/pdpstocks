@@ -114,7 +114,7 @@ public class StockCompositionData {
    * @return the stock related data as 'stockPortFolioData' object
    */
   public StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
-                                                       boolean includeSale) {
+                                                       boolean includeSale, boolean realValue) {
     String filename = getPortFolioFileNameByIndex(index);
     int numberOfStocks = getNumberOfTransactionsInAPortFolio(filename);
 
@@ -233,6 +233,20 @@ public class StockCompositionData {
 
     StockPortFolioData obj = new StockPortFolioData();
     obj.numberOfUniqueStocks = nameIndex;
+
+    if (realValue) {
+      int indexReal = 0;
+      for (int i = 0; i < names.length; i++) {
+        if (quantity[i] != 0) {
+          quantity[indexReal] = quantity[i];
+          symbol[indexReal] = symbol[i];
+          names[indexReal] = names[i];
+          indexReal++;
+        }
+      }
+      obj.numberOfUniqueStocks = indexReal;
+    }
+
     obj.stockName = names;
     obj.stockSymbol = symbol;
     obj.stockQuantity = quantity;
@@ -240,9 +254,11 @@ public class StockCompositionData {
     obj.createdTimeStamp = createdTimeStamp;
     obj.stockLastKnownValueDate = stockLastKnownValueDate;
     obj.numberOfTransactions = numberOfTransactions;
+
     return obj;
   }
 
+  /*
   public StockPortFolioData getAvailableStockDataOnADate(int pfIndex, String dateStr, boolean isIncludeSale) throws ParseException {
     String filename = getPortFolioFileNameByIndex(pfIndex);
     int numberOfStocks = getNumberOfTransactionsInAPortFolio(filename);
@@ -335,7 +351,7 @@ public class StockCompositionData {
     obj.numberOfUniqueStocks = indexReal;
 
     return obj;
-  }
+  }*/
 
   public int sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol, String dateStr) throws ParseException {
     String filename = getPortFolioFileNameByIndex(pfIndex);

@@ -19,7 +19,7 @@ public class PortfolioPerformance {
       StockCompositionData stk = new StockCompositionData();
       StockCompositionData.StockPortFolioData obj =
               stk.getAllStockDataInPortFolio(pfNumber - 1, true,
-                      args[i], true);
+                      args[i], true, false);
       dateStockSymbolMap.put(args[i], obj.stockSymbol);
       dateStockMapQuantity.put(args[i], obj.stockQuantity);
     }
