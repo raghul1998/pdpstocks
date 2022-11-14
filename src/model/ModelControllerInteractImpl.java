@@ -301,7 +301,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    * @param date        the date on which the user wants to buy the stock
    */
   private void getStockData(String stockSymbol, String date) {
-    GetStockData obj = new GetStockData();
+    GetStockData obj = new GetStockDataImpl();
     try {
       String[] dateArr = new String[1];
       dateArr[0] = date;

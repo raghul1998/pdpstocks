@@ -10,9 +10,11 @@ import java.util.Objects;
 import java.util.Random;
 
 import model.GetStockData;
-import model.PortfolioPerformance;
+import model.GetStockDataImpl;
 import model.StockCompositionData;
+import model.StockCompositionDataImpl;
 import model.StockNameMap;
+import model.StockNameMapImpl;
 
 /**
  * This class represents the view and provides the implementation to dispatch the actions to the
@@ -163,7 +165,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void portfolioPerformanceOverTime(String[] args, int length) {
     Map<String, Double> pfPerformance;
     try {
-      PortfolioPerformance obj = new PortfolioPerformance();
+      StockCompositionData obj = new StockCompositionDataImpl();
       pfPerformance = obj.computePerformanceData(args, length);
       if (pfPerformance == null) {
         output.println("Error in getting portfolio performance.\n");
@@ -302,7 +304,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
   private void showListOfStocksAvailableOnADate(String date, String pfIndex) {
     int portfolioNumber = Integer.parseInt(pfIndex) - 1;
-    StockCompositionData obj = new StockCompositionData();
+    StockCompositionData obj = new StockCompositionDataImpl();
     StockCompositionData.StockPortFolioData stkObj;
 
     try {
@@ -384,7 +386,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    */
   private void showPortfolioIndividualWithDateScreen(String option, String date, String type) {
     int portfolioNumber = Integer.parseInt(option) - 1;
-    StockCompositionData obj = new StockCompositionData();
+    StockCompositionData obj = new StockCompositionDataImpl();
     StockCompositionData.StockPortFolioData stkObj = null;
 
     if (Objects.equals(type, "FULL")) {
@@ -481,7 +483,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    */
   private void showPortfolioIndividualScreen(String option) {
     int portfolioNumber = Integer.parseInt(option) - 1;
-    StockCompositionData obj = new StockCompositionData();
+    StockCompositionData obj = new StockCompositionDataImpl();
     StockCompositionData.StockPortFolioData stkObj =
             obj.getAllStockDataInPortFolio(portfolioNumber, false, null, true, false);
 
@@ -604,7 +606,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    */
   private void listOfSupportedStocksScreen() {
     int index = 0;
-    StockNameMap snp = new StockNameMap();
+    StockNameMap snp = new StockNameMapImpl();
     Map<String, String> map = snp.getMap();
     output.println("\n");
     for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -712,7 +714,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   private double getShareValueOnDate(String stockSymbol, String date) {
-    GetStockData gsd = new GetStockData();
+    GetStockData gsd = new GetStockDataImpl();
     try {
       String[] dateArr = new String[1];
       dateArr[0] = date;

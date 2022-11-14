@@ -14,9 +14,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
-import model.TypeofAction;
-import model.StockNameMap;
 import model.StockCompositionData;
+import model.StockNameMap;
+import model.TypeofAction;
+import model.StockNameMapImpl;
+import model.StockCompositionDataImpl;
 import view.ViewControllerInteract;
 import view.ViewControllerInteractImpl;
 import view.TypeofViews;
@@ -287,7 +289,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
     }
 
-    StockNameMap snp = new StockNameMap();
+    StockNameMap snp = new StockNameMapImpl();
     Map<String, String> map = snp.getMap();
     String[] stockSymbolIndexArray = new String[snp.getMapSize()];
     String[] stock = new String[2];
@@ -370,7 +372,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   private void costBasisByDate() {
     while (true) {
-      StockCompositionData obj = new StockCompositionData();
+      StockCompositionData obj = new StockCompositionDataImpl();
       int numberOfPortFolio = obj.getNumberOfPortFolio();
       if (numberOfPortFolio == 0) {
         vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
@@ -413,7 +415,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   private void portfolioPerformanceMainMenu() {
     while (true) {
-      StockCompositionData obj = new StockCompositionData();
+      StockCompositionData obj = new StockCompositionDataImpl();
       int numberOfPortFolio = obj.getNumberOfPortFolio();
       if (numberOfPortFolio == 0) {
         vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
@@ -588,7 +590,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   private void sellStockFromPortfolio() {
     while (true) {
-      StockCompositionData obj = new StockCompositionData();
+      StockCompositionData obj = new StockCompositionDataImpl();
       int numberOfPortFolio = obj.getNumberOfPortFolio();
       if (numberOfPortFolio == 0) {
         vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
@@ -664,7 +666,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   private boolean sellSharesOnAStock(int pfNumber, String stockSymbol, String date) {
-    StockCompositionData stk = new StockCompositionData();
+    StockCompositionData stk = new StockCompositionDataImpl();
     currentPortfolioName = stk.getPortFolioNames()[pfNumber];
     int numberOfAvailableShares;
 
@@ -715,7 +717,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   private void addStockToPortfolioMainMenu() {
-    StockCompositionData obj = new StockCompositionData();
+    StockCompositionData obj = new StockCompositionDataImpl();
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
       vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
@@ -736,7 +738,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
     }
     //addStockToPortfolio(options);
-    StockCompositionData stk = new StockCompositionData();
+    StockCompositionData stk = new StockCompositionDataImpl();
     currentPortfolioName = stk.getPortFolioNames()[Integer.parseInt(options) - 1];
     String[] args = new String[1];
     args[0] = "addStockScreen";
@@ -745,7 +747,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
 
   private void addStockToPortfolio(String option) {
-    StockCompositionData stk = new StockCompositionData();
+    StockCompositionData stk = new StockCompositionDataImpl();
     currentPortfolioName = stk.getPortFolioNames()[Integer.parseInt(option) - 1];
     while (true) {
       vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
@@ -769,7 +771,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    */
   private void valueOfPortfolio() {
     while (true) {
-      StockCompositionData obj = new StockCompositionData();
+      StockCompositionData obj = new StockCompositionDataImpl();
       int numberOfPortFolio = obj.getNumberOfPortFolio();
       if (numberOfPortFolio == 0) {
         vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
@@ -816,7 +818,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    */
   private void compositionOfPortfolio() {
     while (true) {
-      StockCompositionData obj = new StockCompositionData();
+      StockCompositionData obj = new StockCompositionDataImpl();
       int numberOfPortFolio = obj.getNumberOfPortFolio();
       if (numberOfPortFolio == 0) {
         vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
@@ -969,7 +971,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
           String options;
           options = scan.nextLine();
-          StockNameMap snp = new StockNameMap();
+          StockNameMap snp = new StockNameMapImpl();
           while (!validateStockSelectOption(options, 1, snp.getMapSize())) {
             vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
             options = scan.nextLine();
