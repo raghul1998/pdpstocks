@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -23,7 +22,6 @@ import view.ViewControllerInteractImpl;
 import view.TypeofViews;
 
 import static java.lang.System.exit;
-import static java.lang.System.out;
 import static java.lang.Thread.sleep;
 
 /**

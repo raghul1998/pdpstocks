@@ -283,7 +283,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void showListOfStocksAvailableOnADate(String date, String pfIndex) {
     int portfolioNumber = Integer.parseInt(pfIndex) - 1;
     StockCompositionData obj = new StockCompositionData();
-    StockCompositionData.StockPortFolioData stkObj = null;
+    StockCompositionData.StockPortFolioData stkObj;
 
     try {
       stkObj = obj.getAvailableStockDataOnADate(portfolioNumber, date, true);
@@ -313,10 +313,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       }
       output.println("\nWhich stock would you like to sell?");
     }
-  }
-
-  public int numberOfStockThatCanSell() {
-    return 0;
   }
 
   private void noStockBeforeDate() {
@@ -555,7 +551,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
   /**
    * This method helps in showing the current stock data, and it's share price that the user wants
-   * to pruchase.
+   * to purchase.
    */
   private void showStockDataScreen() {
     String line;

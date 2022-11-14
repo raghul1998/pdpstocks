@@ -12,7 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * This class represents the stock data and methods that can be called upon to get the value of a

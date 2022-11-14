@@ -354,7 +354,6 @@ public class StockCompositionData {
     String splitBy = ",";
     String[] splitStockData;
     int timesOfRead = 0;
-    boolean found;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date date1 = sdf.parse(dateStr);
