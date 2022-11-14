@@ -193,7 +193,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     if (scale[1] == null) {
       output.println("\nScale: * = $" + scale[0]);
     } else {
-      output.println("\nBase Amount: * = $" + scale[1]);
+      output.println("\nBase Amount: $" + scale[1]);
       output.println("One * is $" + scale[0] + " more than the base amount.");
       output.println("~ is the base value.");
     }
