@@ -436,16 +436,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
 
       currentPortfolioName = obj.getPortFolioNames()[Integer.parseInt(options) - 1];
-
-      output.println("Enter the choice of timestamps\n");
-      output.println("1. View by year");
-      output.println("2. View by month");
-      output.println("3. View by date");
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_PERFORMANCE_DATE_INPUT, null, 0);
       String choice;
       choice = scan.nextLine();
       while (choice == null || choice.length() == 0 || !validatePortfolioSelectOption(choice, 3)) {
-        output.println("Not a valid input. Please enter the correct option.");
-        output.println("Press 'm' to go back to main menu.\n");
+        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_MAIN_MENU, null, 0);
         choice = scan.nextLine();
         if (Objects.equals(choice, "m") || Objects.equals(choice, "M")) {
           return;
