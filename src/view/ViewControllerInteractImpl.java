@@ -81,11 +81,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       }
       case PORTFOLIO_INDIVIDUAL_LIST: {
         String opt = args[0];
-        showPortfolioIndividualScreen(opt);
+        // This case is not being used
+        // showPortfolioIndividualScreen(opt, args[1]);
         break;
       }
       case PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE: {
-        showPortfolioIndividualWithDateScreen(args[0], args[1], args[2]);
+        showPortfolioIndividualWithDateScreen(args[0], args[1], args[2], args[3]);
         break;
       }
       case PORTFOLIO_NAME_REENTER: {
@@ -129,7 +130,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         break;
       }
       case LIST_OF_STOCKS_ON_DATE: {
-        showListOfStocksAvailableOnADate(args[0], args[1]);
+        showListOfStocksAvailableOnADate(args[0], args[1], args[2]);
         break;
       }
       case PORTFOLIO_PERFORMANCE: {
@@ -144,10 +145,21 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         dateInputPortfolioPerformance();
         break;
       }
+      case TYPEOF_PORTFOLIO_SCREEN: {
+        displayTypesOfPortfolioToCreate();
+        break;
+      }
       default: {
         break;
       }
     }
+  }
+
+  private void displayTypesOfPortfolioToCreate() {
+    output.println("\nWhat type of portfolio would you like to create?\n");
+    output.println("1. Flexible / Customizable Portfolio");
+    output.println("2. Inflexible / Non Customizable Portfolio\n");
+    output.println("Enter your choice:");
   }
 
   private void dateInputPortfolioPerformance() {
@@ -164,9 +176,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
   private void portfolioPerformanceOverTime(String[] args, int length) {
     Map<String, Double> pfPerformance;
+    String portfolioType = "FLEXIBLE";
     try {
-      StockCompositionData obj = new StockCompositionDataImpl();
-      pfPerformance = obj.computePerformanceData(args, length);
+      StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
+      pfPerformance = obj.computePerformanceData(args, length, portfolioType);
       if (pfPerformance == null) {
         output.println("Error in getting portfolio performance.\n");
         return;
@@ -302,13 +315,14 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     return scaleStr;
   }
 
-  private void showListOfStocksAvailableOnADate(String date, String pfIndex) {
+  private void showListOfStocksAvailableOnADate(String date, String pfIndex, String portfolioType) {
     int portfolioNumber = Integer.parseInt(pfIndex) - 1;
-    StockCompositionData obj = new StockCompositionDataImpl();
+    StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
     StockCompositionData.StockPortFolioData stkObj;
 
     try {
-      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, date, true, true);
+      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true,
+              date, true, true, portfolioType);
     } catch (Exception e) {
       output.println("View: Error in getting stock data " + e.getMessage());
       return;
@@ -384,23 +398,27 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    * @param option the index of the portfolio
    * @param date   the date entered by the user
    */
-  private void showPortfolioIndividualWithDateScreen(String option, String date, String type) {
+  private void showPortfolioIndividualWithDateScreen(String option, String date, String type,
+                                                     String portfolioType) {
     int portfolioNumber = Integer.parseInt(option) - 1;
-    StockCompositionData obj = new StockCompositionDataImpl();
+    StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
     StockCompositionData.StockPortFolioData stkObj = null;
 
     if (Objects.equals(type, "FULL")) {
-      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, null, true, false);
+      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, null,
+              true, false, portfolioType);
     } else if (Objects.equals(type, "TRUE")) {
       try {
-        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, date, true, true);
+        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true,
+                date, true, true, portfolioType);
       } catch (Exception e) {
         output.println("Error in getting the data.");
         return;
       }
     } else if (Objects.equals(type, "COST")) {
       try {
-        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, false, date, false, false);
+        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, false,
+                date, false, false, portfolioType);
       } catch (Exception e) {
         output.println("Error in getting the data.");
         return;
@@ -423,7 +441,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       return;
     }
 
-    String[] portfolioNames = obj.getPortFolioNames();
+    String[] portfolioNames = obj.getPortFolioNames(portfolioType);
     if (type.equals("COST")) {
       output.println("\nCOST BASIS OF " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
     } else {
@@ -481,13 +499,14 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    *
    * @param option the index of the portfolio
    */
-  private void showPortfolioIndividualScreen(String option) {
+  private void showPortfolioIndividualScreen(String option, String portfolioType) {
     int portfolioNumber = Integer.parseInt(option) - 1;
-    StockCompositionData obj = new StockCompositionDataImpl();
+    StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
     StockCompositionData.StockPortFolioData stkObj =
-            obj.getAllStockDataInPortFolio(portfolioNumber, false, null, true, false);
+            obj.getAllStockDataInPortFolio(portfolioNumber, false, null,
+                    true, false, portfolioType);
 
-    String[] portfolioNames = obj.getPortFolioNames();
+    String[] portfolioNames = obj.getPortFolioNames(portfolioType);
     String date = stkObj.createdTimeStamp;
     if (date == null) {
       output.println("The portfolio is empty.\n");

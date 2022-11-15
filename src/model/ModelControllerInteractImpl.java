@@ -36,7 +36,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
       }
       case CREATE_PORTFOLIO: {
         try {
-          createPortFolio(args[0]);
+          createPortFolio(args[0], args[1]);
           portFolioName = args[0];
         } catch (Exception e) {
           System.out.println("Exception in creating a portfolio" + e.getMessage());
@@ -178,9 +178,10 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    * the portfolio, unique ID and the titles for the stock data.
    *
    * @param name the name of the portfolio
+   * @param type the type of the portfolio
    * @throws IOException if there is an issue in creating a file
    */
-  private void createPortFolio(String name) throws IOException {
+  private void createPortFolio(String name, String type) throws IOException {
     String directoryName = "userdata/user1/";
     File directory = new File(directoryName);
     if (!directory.exists()) {
@@ -196,7 +197,14 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
     csvData.append('\n');
 
     long time = System.currentTimeMillis() / 1000;
-    csvData.append("PortfolioID,").append(Long.toString(time, 0));
+    csvData.append("PortfolioID,").append(Long.toString(time, 0)).append(",");
+    if (Objects.equals(type, "1")) {
+      // Flexible portfolio
+      csvData.append("PortfolioType,").append("FLEXIBLE");
+    } else if (Objects.equals(type, "2")) {
+      // Inflexible portfolio
+      csvData.append("PortfolioType,").append("INFLEXIBLE");
+    }
     csvData.append('\n');
 
     SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");

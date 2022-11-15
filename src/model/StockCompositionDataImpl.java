@@ -30,14 +30,50 @@ public class StockCompositionDataImpl implements StockCompositionData {
    * A constructor that reads the user directory to find the number of portfolios that the user
    * has or created and assigns the number to the global variable.
    */
-  public StockCompositionDataImpl() {
+  public StockCompositionDataImpl(String portfolioType) {
     int count = 0;
     Path path = Paths.get("userdata/user1");
     if (Files.exists(path)) {
       File directory = new File("userdata/user1");
-      count = Objects.requireNonNull(directory.list()).length;
+      if (Objects.equals(portfolioType, "ALL")) {
+        count = Objects.requireNonNull(directory.list()).length;
+      } else {
+        try {
+          count = computeNumberOfPortfolioUsingTypes(portfolioType);
+        } catch (Exception e) {
+          // Do nothing
+        }
+      }
     }
     this.numberOfPortFolio = count;
+  }
+
+  private int computeNumberOfPortfolioUsingTypes(String portfolioType) {
+    File dir = new File("userdata/user1");
+    File[] files = dir.listFiles();
+    assert files != null;
+    int total = 0;
+
+    for (File file : files) {
+      if (isPortfolioOfGivenType("userdata/user1/" + file.getName(), portfolioType)) {
+        total++;
+      }
+    }
+    return total;
+  }
+
+  private boolean isPortfolioOfGivenType(String filename, String portfolioType) {
+    BufferedReader stockData;
+    String lines;
+    try {
+      stockData = new BufferedReader(new FileReader(filename));
+      stockData.readLine();
+      lines = stockData.readLine();
+    } catch (Exception e) {
+      return false;
+    }
+
+    return (lines.split(",")[3].equalsIgnoreCase(portfolioType));
   }
 
   @Override
@@ -51,10 +87,28 @@ public class StockCompositionDataImpl implements StockCompositionData {
    * @param index the index of the portfolio
    * @return the name of the portfolio as a string
    */
-  private String getPortFolioFileNameByIndex(int index) {
+  private String getPortFolioFileNameByIndex(int index, String portfolioType) {
     File dir = new File("userdata/user1");
     File[] files = dir.listFiles();
     assert files != null;
+
+    int temp = index;
+    int count = index;
+    if (!Objects.equals(portfolioType, "ALL")) {
+      for (File file : files) {
+        if (!isPortfolioOfGivenType("userdata/user1/" + file.getName(), portfolioType)) {
+          count += 1;
+        } else {
+          temp--;
+        }
+
+        if (temp == -1) {
+          index = count;
+          break;
+        }
+      }
+    }
+
     File file = files[index];
     return "userdata/user1/" + file.getName();
   }
@@ -73,7 +127,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
   }
 
   @Override
-  public String[] getPortFolioNames() {
+  public String[] getPortFolioNames(String portfolioType) {
     int index = 0;
     if (numberOfPortFolio == 0) {
       return null;
@@ -86,9 +140,15 @@ public class StockCompositionDataImpl implements StockCompositionData {
         String filename = file.getName();
         String[] arrOfStr = filename.split("pf_", 2);
         arrOfStr = arrOfStr[1].split("\\.", 2);
-        // Name of the portFolio
-        data[index] = arrOfStr[0];
-        index++;
+
+        if (Objects.equals(portfolioType, "ALL")) {
+          data[index] = arrOfStr[0];
+          index++;
+        } else if (isPortfolioOfGivenType("userdata/user1/" + file.getName(), portfolioType)) {
+          // Name of the portFolio
+          data[index] = arrOfStr[0];
+          index++;
+        }
       }
       return data;
     }
@@ -96,8 +156,9 @@ public class StockCompositionDataImpl implements StockCompositionData {
 
   @Override
   public StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
-                                                       boolean includeSale, boolean realValue) {
-    String filename = getPortFolioFileNameByIndex(index);
+                                                       boolean includeSale, boolean realValue,
+                                                       String portfolioType) {
+    String filename = getPortFolioFileNameByIndex(index, portfolioType);
     int numberOfStocks = getNumberOfTransactionsInAPortFolio(filename);
 
     boolean found;
@@ -336,8 +397,9 @@ public class StockCompositionDataImpl implements StockCompositionData {
   }*/
 
   @Override
-  public int sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol, String dateStr) throws ParseException {
-    String filename = getPortFolioFileNameByIndex(pfIndex);
+  public int sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol, String dateStr,
+                                             String portfolioType) throws ParseException {
+    String filename = getPortFolioFileNameByIndex(pfIndex, portfolioType);
     Map<Date, Integer> map = new TreeMap<>();
     BufferedReader stockData;
     int result = 0;
@@ -415,7 +477,8 @@ public class StockCompositionDataImpl implements StockCompositionData {
   }
 
   @Override
-  public Map<String, Double> computePerformanceData(String[] args, int length) throws IOException {
+  public Map<String, Double> computePerformanceData(String[] args, int length,
+                                                    String portfolioType) throws IOException {
     Map<String, String[]> dateStockSymbolMap = new HashMap<>();
     Map<String, long[]> dateStockMapQuantity = new HashMap<>();
     Map<String, Double> finalDateAmountMap = new TreeMap<>();
@@ -424,7 +487,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
     for (int i = 0; i < length - 3; i++) {
       StockCompositionDataImpl.StockPortFolioData obj =
               getAllStockDataInPortFolio(pfNumber - 1, true,
-                      args[i], true, false);
+                      args[i], true, false, portfolioType);
       dateStockSymbolMap.put(args[i], obj.stockSymbol);
       dateStockMapQuantity.put(args[i], obj.stockQuantity);
     }

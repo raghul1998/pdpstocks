@@ -28,7 +28,7 @@ public interface StockCompositionData {
    *
    * @return the names of the portfolio as a string array
    */
-  String[] getPortFolioNames();
+  String[] getPortFolioNames(String portfolioType);
 
   /**
    * This method gets all the stock related data that is in a portfolio and some data relevant to
@@ -43,7 +43,7 @@ public interface StockCompositionData {
    */
   StockCompositionDataImpl.StockPortFolioData
   getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
-                             boolean includeSale, boolean realValue);
+                             boolean includeSale, boolean realValue, String portfolioType);
 
   /**
    * This method gets all the stocks on a particular date that are available for sale.
@@ -55,7 +55,7 @@ public interface StockCompositionData {
    * @throws ParseException if error while parsing the csv data
    */
   int sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol,
-                                      String dateStr) throws ParseException;
+                                      String dateStr, String portfolioType) throws ParseException;
 
   /**
    * This method obtains the complete performance data of the portfolio on the given date.
@@ -65,7 +65,8 @@ public interface StockCompositionData {
    * @return the map of the date and value of the portfolio on that date
    * @throws IOException if there is an error in IO operation
    */
-  Map<String, Double> computePerformanceData(String[] args, int length) throws IOException;
+  Map<String, Double> computePerformanceData(String[] args, int length,
+                                             String portfolioType) throws IOException;
 
   /**
    * A static class inside the 'StockCompositionData' that holds the data related to the stocks and
