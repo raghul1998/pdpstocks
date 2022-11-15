@@ -51,12 +51,13 @@ public class GetStockDataImpl implements GetStockData {
 
     try {
       in = url.openStream();
-
       BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String line;
       String splitBy = ",";
       int index = 0;
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+      reader.mark(1000000000);
 
       for (int i = 0; i < dateStr.length; i++) {
         if (dateStr[i] == null) {
@@ -64,6 +65,11 @@ public class GetStockDataImpl implements GetStockData {
         }
 
         Date date1 = sdf.parse(dateStr[i]);
+
+        if (i != 0) {
+          reader.reset();
+          index = 0;
+        }
 
         while ((line = reader.readLine()) != null) {
           readLine = line.split(splitBy);    // use comma as separator

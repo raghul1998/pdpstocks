@@ -159,20 +159,20 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       if (minDifference != 0) {
         switch (format) {
           case "yyyy":
-            if (calendar.get(Calendar.YEAR) + 5 > LocalDate.now().getYear()) {
+            if (calendar.get(Calendar.YEAR) + minDifference > LocalDate.now().getYear()) {
               return false;
             }
             break;
           case "yyyy-MM":
             String tempDateStr = dateStr + "-01";
             if (ChronoUnit.MONTHS.between(LocalDate.parse(tempDateStr),
-                    LocalDate.now()) < 5) {
+                    LocalDate.now()) < minDifference) {
               return false;
             }
             break;
           case "yyyy-MM-dd":
             if (ChronoUnit.DAYS.between(LocalDate.parse(dateStr),
-                    LocalDate.now()) < 5) {
+                    LocalDate.now()) < minDifference) {
               return false;
             }
             break;
@@ -472,23 +472,23 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
     if (Objects.equals(choice, "1")) {
       output.println("Enter the start year in format (YYYY) from year 2000 to "
-              + today.minusYears(5).getYear() + ":");
+              + today.minusYears(4).getYear() + ":");
       format = "yyyy";
     } else if (Objects.equals(choice, "2")) {
       output.println("Enter the start month in format (YYYY-MM) from year 2000 to "
-              + today.minusMonths(5).getMonth() + " "
-              + today.minusMonths(5).getYear() + ":");
+              + today.minusMonths(4).getMonth() + " "
+              + today.minusMonths(4).getYear() + ":");
       format = "yyyy-MM";
     } else if (Objects.equals(choice, "3")) {
       output.println("Enter the start date in format (YYYY-MM-DD) from year 2000 to "
-              + today.minusDays(5).getYear() + "-"
-              + today.minusDays(5).getMonth() + "-"
-              + today.minusDays(5).getDayOfMonth() + ":");
+              + today.minusDays(4).getYear() + "-"
+              + today.minusDays(4).getMonth() + "-"
+              + today.minusDays(4).getDayOfMonth() + ":");
       format = "yyyy-MM-dd";
     }
 
     date = scan.nextLine();
-    while (!validateDate(date, format, 5)) {
+    while (!validateDate(date, format, 4)) {
       vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
       date = scan.nextLine();
       if (Objects.equals(date, "b") || Objects.equals(date, "B")) {
@@ -500,36 +500,36 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       String tempDateStr = date + "-01-01";
       remainder = (int) ChronoUnit.YEARS.between(LocalDate.parse(tempDateStr),
               LocalDate.now().withDayOfMonth(1));
-      if (remainder != 5) {
+      if (remainder != 4) {
         if (remainder > 30) {
           remainder = 30;
         }
-        output.println("Enter the number of years (5 to " + remainder + "): ");
+        output.println("Enter the number of years (5 to " + (remainder + 1) + "): ");
       }
     } else if (Objects.equals(choice, "2")) {
       String tempDateStr = date + "-01";
       remainder = (int) ChronoUnit.MONTHS.between(LocalDate.parse(tempDateStr),
               LocalDate.now().withDayOfMonth(1));
-      if (remainder != 5) {
+      if (remainder != 4) {
         if (remainder > 30) {
           remainder = 30;
         }
-        output.println("Enter the number of months (5 to " + remainder + "): ");
+        output.println("Enter the number of months (5 to " + (remainder + 1) + "): ");
       }
     } else if (Objects.equals(choice, "3")) {
       remainder = (int) ChronoUnit.DAYS.between(LocalDate.parse(date), LocalDate.now());
-      if (remainder != 5) {
+      if (remainder != 4) {
         if (remainder > 30) {
           remainder = 30;
         }
-        output.println("Enter the number of days (5 to " + remainder + "): ");
+        output.println("Enter the number of days (5 to " + (remainder + 1) + "): ");
       }
     }
 
     String number;
-    if (remainder != 5) {
+    if (remainder != 4) {
       number = scan.nextLine();
-      while (!validateStockSelectOption(number, 5, remainder)) {
+      while (!validateStockSelectOption(number, 5, remainder + 1)) {
         vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
         vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
         number = scan.nextLine();
