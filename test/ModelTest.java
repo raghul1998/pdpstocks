@@ -5,12 +5,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Objects;
 
 import model.ModelControllerInteract;
 import model.ModelControllerInteractImpl;
+import model.StockCompositionData;
 import model.TypeofAction;
 
 import static org.junit.Assert.assertEquals;
@@ -19,8 +21,7 @@ import static org.junit.Assert.assertEquals;
  * This class contains tests for the Model.
  */
 
-public class ModelTest {
-
+public class ModelTest extends TestParentClass{
   @Test
   public void testModelCreatePortfolio() {
     String[] args = {"modelTest_esha"};
@@ -65,7 +66,7 @@ public class ModelTest {
 
   @Test
   public void testModelGetStockData() {
-    String[] args = {"GOOG"};
+    String[] args = {"TSLA","2022-01-01"};
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
 
@@ -90,34 +91,99 @@ public class ModelTest {
     assertEquals(expectedName, splitStockData[2]);
   }
 
+  // check if you are able to read portfolio csv file
+
   @Test
   public void testModelBuyStocks() throws IOException {
-    String[] name = {"modelTest_esha2"};
-    String[] stockTicker = {"META"};
+    deleteFileInDirectory("modelTest_esha6.csv");
+    String[] name = {"modelTest_esha6"};
+    String[] args = {"GOOG","2022-11-11"};
+    String[] args1 = {"1","modelTest_esha6"};
 
 
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
-    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, stockTicker, 0);
-    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, stockTicker, 0);
+    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
+    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
 
-    Timestamp instant = Timestamp.from(Instant.now());
-    String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(instant);
-
-    String filename = "userdata/user1/" + "pf_" + name[0] + ".csv";
-    String[] words;
-    FileReader fr = new FileReader(filename);
-    BufferedReader br = new BufferedReader(fr);
-    String str;
-    while ((str = br.readLine()) != null) {
-      words = str.split(",");
-      for (String word : words) {
-        if (word.equals(currentTime)) {
-          assertEquals(currentTime, word);
-          return;
-        }
-      }
-    }
-    assert (false);
+    long time = System.currentTimeMillis() / 1000;
+    String expected = super.readStockDataFromPortfolioCsv(name[0],
+            1,1,false);
+    String actual = String.valueOf((System.currentTimeMillis() / 1000));
+    assertEquals(expected,actual);
+    deleteFileInDirectory("modelTest_esha6.csv");
   }
+
+  // review
+  // show that selling happens based of number of stocks that are left
+
+  @Test
+  public void testSellStocks() throws IOException, ParseException {
+    deleteFileInDirectory("modelTest_esha.csv");
+    String[] name = {"modelTest_esha"};
+    String[] args = {"GOOG","2022-11-11"};
+    String[] args1 = {"3","modelTest_esha"};
+    String[] args2 = {"2","modelTest_esha"};
+
+    ModelControllerInteract obj = new ModelControllerInteractImpl();
+    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
+    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
+    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
+    obj.modelControllerInteract(TypeofAction.SELL_STOCKS, args2, 0);
+
+    long time = System.currentTimeMillis() / 1000;
+    String expected = super.readStockDataFromPortfolioCsv(name[0],
+            1,1,false);
+    String actual = String.valueOf((System.currentTimeMillis() / 1000));
+    assertEquals(expected,actual);
+    deleteFileInDirectory("modelTest_esha.csv");
+  }
+
+  @Test
+  public void testCreateSupportedStocks() throws IOException {
+    ModelControllerInteract obj = new ModelControllerInteractImpl();
+    obj.modelControllerInteract(TypeofAction.CREATE_SUPPORTED_STOCKS, null, 0);
+    BufferedReader supportedStocksData = null;
+    try {
+      supportedStocksData = new BufferedReader(new FileReader("data/SupportedStocks.csv"));
+    } catch (Exception e) {
+      System.out.println("Supported stocks file not found " + e.getMessage());
+    }
+    String actual = null;
+    try {
+      StringBuilder sb = new StringBuilder();
+      String line = supportedStocksData.readLine();
+
+      while (line != null) {
+        sb.append(line);
+        sb.append("\n");
+        line = supportedStocksData.readLine();
+      }
+      actual = sb.toString();
+    } finally {
+      supportedStocksData.close();
+    }
+
+    String expected = "StockID,StockName,StockSymbol\n" +
+            "1,Apple,AAPL\n" +
+            "2,Amazon,AMZN\n" +
+            "3,Microsoft,MSFT\n" +
+            "4,Tesla,TSLA\n" +
+            "5,Meta,META\n" +
+            "6,Walmart,WMT\n" +
+            "7,Johnson,JNJ\n" +
+            "8,JPMorgan Chase,JPM\n" +
+            "9,Google,GOOG\n" +
+            "10,UnitedHealth,UNH\n";
+
+    assertEquals(expected, actual);
+  }
+
+//  @Test
+//  public void testStockCompositionData(){
+//
+//  }
 }
+
+
+

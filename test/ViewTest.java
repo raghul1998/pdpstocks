@@ -1,4 +1,6 @@
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -7,6 +9,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 
+import model.ModelControllerInteract;
+import model.ModelControllerInteractImpl;
+import model.TypeofAction;
 import view.TypeofViews;
 import view.ViewControllerInteract;
 import view.ViewControllerInteractImpl;
@@ -16,30 +21,50 @@ import static org.junit.Assert.assertEquals;
 /**
  * This class contains tests for the View.
  */
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ViewTest extends TestParentClass {
 
+  /**
+   * This test displays main screen with the list of all options such as
+   * create portfolio, value of portfolio on certain date,
+   * value of portfolio on full composition, add stock, sell stock,
+   * performance of portfolio, total amount invested on certain date and exit.
+   *
+   */
+
   @Test
-  public void testMainScreen() {
+  public void testAMainScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.MAIN, null, 0);
 
-    String expected = "\nMENU\n" + "\n"
-            + "1. Create a portfolio\n"
-            + "2. View portfolio\n"
-            + "3. Value of portfolio\n"
-            + "e. Exit\n" + "\n"
-            + "ENTER YOUR CHOICE: \n";
+    String expected = "\n" +
+            "MENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. Value portfolio on certain date\n" +
+            "3. Value of portfolio on full composition\n" +
+            "4. Add a stock to portfolio\n" +
+            "5. Sell a stock from portfolio\n" +
+            "6. Performance of portfolio\n" +
+            "7. Total amount invested on certain date\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n";
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays a message when the user doesn't have a portfolio.
+   *
+   */
+
   @Test
-  public void testNoPortfolio() {
+  public void testBNoPortfolio() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -54,8 +79,12 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays a message to notify the user that the portfolio already exists.
+   *
+   */
   @Test
-  public void testThisPortfolioExists() {
+  public void testCThisPortfolioExists() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -70,8 +99,12 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays an invalid message when the user attempts to input incorrect option.
+   *
+   */
   @Test
-  public void testNotValidInputScreen() {
+  public void testDNotValidInputScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -86,8 +119,13 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+
+  /**
+   * This test displays a message for the user to write the name of the portfolio.
+   *
+   */
   @Test
-  public void testCreatePortfolioNameScreen() {
+  public void testECreatePortfolioNameScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -102,8 +140,13 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays a message to prompt the user to write the number of shares
+   * that are needed to be bought.
+   *
+   */
   @Test
-  public void testShowBuyStockValueScreen() {
+  public void testFShowBuyStockValueScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -119,8 +162,12 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays a message when the user wants to buy another stock or not.
+   *
+   */
   @Test
-  public void testWouldYouLikeToBuyAnotherStockScreen() {
+  public void testGWouldYouLikeToBuyAnotherStockScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -135,8 +182,13 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays an invalid message when the user doesn't enter any name
+   * at the time of portfolio creation.
+   *
+   */
   @Test
-  public void testShowPortfolioNameReenter() {
+  public void testHShowPortfolioNameReenter() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -152,8 +204,12 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays an invalid message if the user enters invalid option while buying a stock.
+   *
+   */
   @Test
-  public void testShowStockBuyReenter() {
+  public void testIShowStockBuyReenter() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -169,8 +225,13 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays an invalid message if the user enters 0 or negative numbers
+   * while buying the number of shares.
+   *
+   */
   @Test
-  public void testShowStockBuyInvalidRetryScreen() {
+  public void testJShowStockBuyInvalidRetryScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -186,13 +247,17 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays a message if the user wishes to go back to the main menu or back
+   *
+   */
   @Test
-  public void testShowPortfolioReviewScreen() {
+  public void testKShowPortfolioReviewScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.REVIEW_STOCK, null, 0);
+    vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
 
     String expected = "Press 'b' to go back and 'm' for main menu.\n" + "\n";
 
@@ -202,8 +267,13 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays an invalid message if the user enters
+   * invalid input for viewing portfolio.
+   *
+   */
   @Test
-  public void testPortfolioInvalidEntryScreen() {
+  public void testLPortfolioInvalidEntryScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -219,8 +289,13 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays a message to override if the user
+   * enters same name that already exists for portfolio creation.
+   *
+   */
   @Test
-  public void testPfReenterDuplicateName() {
+  public void testMPfReenterDuplicateName() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -237,8 +312,12 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays an invalid message if user inputs incorrect date.
+   *
+   */
   @Test
-  public void testCorrectDateScreen() {
+  public void testNCorrectDateScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -254,8 +333,13 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test displays screen after create portfolio with the list of all options such as
+   * buy stock, main menu, exit.
+   *
+   */
   @Test
-  public void testCreatePortfolio() {
+  public void testOCreatePortfolio() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     String[] name = {"esha"};
@@ -274,10 +358,15 @@ public class ViewTest extends TestParentClass {
     result = result.replace("\r\n", "\n");
 
     assertEquals(expected, result);
+    deleteFileInDirectory("pf_esha.csv");
   }
 
+  /**
+   * This test displays a message when portfolio has been successfully created.
+   *
+   */
   @Test
-  public void testShowDisplayPortFolioCreated() {
+  public void testPShowDisplayPortFolioCreated() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     String[] name = {"esha"};
@@ -294,8 +383,13 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+
+  /**
+   * This test displays a list of supported stocks.
+   *
+   */
   @Test
-  public void testListOfSupportedStocksScreen() {
+  public void testQListOfSupportedStocksScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -323,68 +417,12 @@ public class ViewTest extends TestParentClass {
   }
 
 
+  /**
+   * This test displays stock deatils.
+   *
+   */
   @Test
-  public void testShowPortfolioIndividualScreen2() throws IOException {
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-    String[] option = {"3"};
-    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, option, 0);
-
-    String expected = "\nCONTROLLERTEST11 PORTFOLIO COMPOSITION - Created on "
-            + super.readStockDataFromPortfolioCsv("controllerTest11", 1,
-            0, true) + "\n"
-            + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n" + "\n"
-            + "Tesla (TSLA) \t 28\t $"
-            + Math.floor(Double.parseDouble(
-            super.readStockDataFromPortfolioCsv(
-                    "controllerTest11", 1,
-                    6, false)) * 100) / 100 + "\t $"
-            + 28 * Math.floor(Double.parseDouble(
-            super.readStockDataFromPortfolioCsv(
-                    "controllerTest11", 1,
-                    6, false)) * 100) / 100 + "\n"
-            + "\nTotal Portfolio Value as on "
-            + super.readStockDataFromPortfolioCsv("controllerTest11", 1,
-            0, true)
-            + ": $" + 28
-            * Math.floor(Double.parseDouble(
-            super.readStockDataFromPortfolioCsv(
-                    "controllerTest11", 1,
-                    6, false)) * 100) / 100 + "\n" + "\n";
-
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void testShowPortFolioCompositionScreen() {
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-    String[] args = {"E", "ES"};
-    int length = 2;
-    StringBuilder s = new StringBuilder();
-    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, args, length);
-    for (int i = 0; i < length; i++) {
-      s.append(i + 1 + ". " + args[i].toUpperCase() + "\n");
-    }
-    String expected = "\nLIST OF PORTFOLIO\n" + "\n"
-            + s
-            + "\nWhich portfolio would you like to check?\n";
-
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expected, result);
-  }
-
-  @Test
-  public void testShowStockDataScreen() {
+  public void testRShowStockDataScreen() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
@@ -410,7 +448,7 @@ public class ViewTest extends TestParentClass {
     }
 
 
-    String expected = "\nCURRENT STOCK PRICE"
+    String expected = "\nSTOCK DETAILS"
             + "\nStockName: " + splitStockData[0]
             + "\nSymbol: " + splitStockData[2]
             + "\nTime: " + splitStockData[3]
@@ -423,45 +461,179 @@ public class ViewTest extends TestParentClass {
     assertEquals(expected, result);
   }
 
+  /**
+   * This test asks the user to input the portfolio that needs to be displayed.
+   *
+   */
   @Test
-  public void testShowPortfolioIndividualWithDateScreen() throws IOException {
+  public void testSWhichPortfolioCheck(){
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
-    String[] args = {"3", "2022-10-29"};
 
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, args, 0);
+    vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, null, 0);
 
-    String expected = "\nCONTROLLERTEST11 PORTFOLIO COMPOSITION - Created on "
-            + super.readStockDataFromPortfolioCsv("controllerTest11", 1,
-            0, true) + "\n"
-            + "\nName (Symbol) \t Quantity \t Price of each share \t Total Value\n" + "\n"
-            + "Tesla (TSLA) \t 28\t $"
-            + Math.floor(Double.parseDouble(
-            super.readStockDataFromPortfolioCsv(
-                    "controllerTest11", 1,
-                    6, false)) * 100) / 100
-            + "\t $"
-            + 28
-            * Math.floor(Double.parseDouble(
-            super.readStockDataFromPortfolioCsv(
-                    "controllerTest11", 1,
-                    6, false)) * 100) / 100 + "\n"
-            + "\nTotal Portfolio Value as on "
-            + super.readStockDataFromPortfolioCsv("controllerTest11", 1,
-            0, true)
-            + ": $"
-            + 28
-            * Math.floor(Double.parseDouble(
-            super.readStockDataFromPortfolioCsv(
-                    "controllerTest11", 1,
-                    6, false)) * 100) / 100 + "\n" + "\n";
+    String expected = "\nWhich portfolio would you like to check?\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expected, result);
+  }
+
+  /**
+   * This test displays the list of portfolios on the screen as options for the user.
+   *
+   */
+  @Test
+  public void testTShowPortFolioCompositionScreen() {
+    deleteDirectory();
+    deleteFileInDirectory("pf_view1.csv");
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    String[] args = {"view1"};
+    int length = 1;
+    StringBuilder s = new StringBuilder();
+    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, args, length);
+    for (int i = 0; i < length; i++) {
+      s.append(i + 1 + ". " + args[i].toUpperCase() + "\n");
+    }
+    String expected = "\nLIST OF PORTFOLIO\n" + "\n"
+            +"1. VIEW1\n";
 
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
 
     assertEquals(expected, result);
+    deleteFileInDirectory("pf_view1.csv");
+  }
+
+
+  /**
+   * This test displays details of a particular portfolio - FULL
+   *
+   */
+  @Test
+  public void testVOption(){
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    String[] args3 = {"1", "2022-11-11","FULL"};
+    deleteDirectory();
+    deleteFileInDirectory("pf_view2.csv");
+    String[] name = {"view2"};
+    String[] args = {"MSFT","2022-11-11"};
+    String[] args1 = {"3","view2"};
+    String[] args2 = {"2","view2"};
+
+    ModelControllerInteract obj = new ModelControllerInteractImpl();
+    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
+    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
+    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
+    obj.modelControllerInteract(TypeofAction.SELL_STOCKS, args2, 0);
+
+
+    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args3, 0);
+
+    String expected = "\nValue of VIEW2 PORTFOLIO\n" +
+            "\n" +
+            "Name (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
+            + "\nMicrosoft (MSFT) \t 1\t $"
+            + Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv())* 100) / 100
+            + "\t $"
+            + (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv())* 100) / 100)
+            + "\n\nTotal Portfolio Value is on 2022-11-11: $"
+            + (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv())* 100) / 100)
+            + "\n\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expected, result);
+    deleteFileInDirectory("pf_view2.csv");
+  }
+
+  /**
+   * This test displays the list of stocks available for the user to be sold.
+   *
+   */
+  @Test
+  public void testWListOfStocksOnDate(){
+    deleteDirectory();
+    deleteFileInDirectory("pf_view3.csv");
+    String[] name = {"view3"};
+    String[] args = {"MSFT","2022-11-11"};
+    String[] args1 = {"3","view3"};
+    String[] args2 = {"2","view3"};
+
+    ModelControllerInteract obj = new ModelControllerInteractImpl();
+    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
+    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
+    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
+    obj.modelControllerInteract(TypeofAction.SELL_STOCKS, args2, 0);
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    String[] args3 = {"2022-11-11","1"};
+
+    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
+    vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS_ON_DATE, args3, 0);
+    String expected = "\nList of stocks available on date: 2022-11-11\n" +
+            "\n" +
+            "S.No\tName (Symbol) \n" +
+            "\n" +
+            "1.\tMicrosoft (MSFT) \n" +
+            "\n" +
+            "Which stock would you like to sell?\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expected, result);
+  }
+
+
+  /**
+   * This test displays details of a particular portfolio - COST
+   *
+   */
+  @Test
+  public void testXOption2(){
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+    String[] args3 = {"1", "2022-11-11","COST"};
+    deleteDirectory();
+    deleteFileInDirectory("pf_view4.csv");
+    String[] name = {"view4"};
+    String[] args = {"MSFT","2022-11-11"};
+    String[] args1 = {"3","view4"};
+    String[] args2 = {"2","view4"};
+
+    ModelControllerInteract obj = new ModelControllerInteractImpl();
+    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
+    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
+    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
+    obj.modelControllerInteract(TypeofAction.SELL_STOCKS, args2, 0);
+
+
+    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args3, 0);
+
+    String expected = "\nCOST BASIS OF VIEW4 PORTFOLIO\n" +
+            "\n" +
+            "Total Money invested in stocks: $728.97\n" +
+            "Commission cost per transaction is: $1.27\n" +
+            "Total number of transactions till date is: 2\n" +
+            "Total commission charges: 2.54\n" +
+            "Total Money spent: $726.4300000000001\n\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expected, result);
+    deleteFileInDirectory("pf_view4.csv");
+    deleteDirectory();
   }
 
 }
