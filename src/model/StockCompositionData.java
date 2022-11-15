@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * This interface represents the portfolio and the data available in the portfolio.
  */
-public interface StockCompositionData {
+public interface StockCompositionData extends StockPortFolioData {
   /**
    * A method that tells the number of portfolio's that are available for the user.
    *
@@ -41,9 +41,9 @@ public interface StockCompositionData {
    * @param realValue   true to ignore the data of those stocks with zero shares
    * @return the object of stock portfolio data class
    */
-  StockCompositionDataImpl.StockPortFolioData
-  getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
-                             boolean includeSale, boolean realValue, String portfolioType);
+  StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
+                                                boolean includeSale, boolean realValue,
+                                                String portfolioType);
 
   /**
    * This method gets all the stocks on a particular date that are available for sale.
@@ -67,32 +67,4 @@ public interface StockCompositionData {
    */
   Map<String, Double> computePerformanceData(String[] args, int length,
                                              String portfolioType) throws IOException;
-
-  /**
-   * A static class inside the 'StockCompositionData' that holds the data related to the stocks and
-   * shares in a portfolio.
-   * This class has the following members.
-   * <ul>
-   *   <li>numberOfUniqueStocks</li>
-   *   <li>stockName - name of all the stocks in a portfolio</li>
-   *   <li>stockSymbol - symbol of all the stocks in a portfolio</li>
-   *   <li>stockQuantity - number of shares for each stock in a portfolio</li>
-   *   <li>totalValue - total value of each stock in a portfolio</li>
-   *   <li>totalPortFolioValue - total value of the complete portfolio</li>
-   *   <li>valueOfSingleStock - value of each share of a stock in the portfolio</li>
-   *   <li>createdTimeStamp - timestamp on which the portfolio was created</li>
-   * </ul>
-   */
-  class StockPortFolioData {
-    public int numberOfUniqueStocks;
-    public String[] stockName;
-    public String[] stockSymbol;
-    public long[] stockQuantity;
-    public double[] totalValue;
-    public double totalPortFolioValue;
-    public double[] valueOfSingleStock;
-    public String createdTimeStamp;
-    public String[] stockLastKnownValueDate;
-    public int numberOfTransactions;
-  }
 }

@@ -112,7 +112,8 @@ public class GetStockDataImpl implements GetStockData {
       if (price[i] == null) {
         break;
       }
-      csvBuffer.append(stockName).append(",").append(price[i]).append(",").append(stock).append(",").append(timestamp[i]);
+      csvBuffer.append(stockName).append(",").append(price[i]).append(",")
+              .append(stock).append(",").append(timestamp[i]);
       csvBuffer.append('\n');
     }
 

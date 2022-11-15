@@ -15,6 +15,7 @@ import model.StockCompositionData;
 import model.StockCompositionDataImpl;
 import model.StockNameMap;
 import model.StockNameMapImpl;
+import model.StockPortFolioDataImpl;
 
 /**
  * This class represents the view and provides the implementation to dispatch the actions to the
@@ -155,6 +156,9 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     }
   }
 
+  /**
+   * A private helper method to display the options while creating the portfolio.
+   */
   private void displayTypesOfPortfolioToCreate() {
     output.println("\nWhat type of portfolio would you like to create?\n");
     output.println("1. Flexible / Customizable Portfolio");
@@ -162,6 +166,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("Enter your choice:");
   }
 
+  /**
+   * This method displays the choice for the user for date input while calculating the performance
+   * of the portfolio.
+   */
   private void dateInputPortfolioPerformance() {
     output.println("Enter the choice of timestamps\n");
     output.println("1. View by year");
@@ -169,11 +177,20 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("3. View by date");
   }
 
+  /**
+   * A helper method to display the error and main menu option.
+   */
   private void notAValidMainMenu() {
     output.println("Not a valid input. Please enter the correct option.");
     output.println("Press 'm' to go back to main menu.\n");
   }
 
+  /**
+   * This method displays the performance of the portfolio over time.
+   *
+   * @param args   the helper arguments to display
+   * @param length length of the arguments
+   */
   private void portfolioPerformanceOverTime(String[] args, int length) {
     Map<String, Double> pfPerformance;
     String portfolioType = "FLEXIBLE";
@@ -197,7 +214,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       output.println("Error in getting title");
     }
 
-    output.println("\nPerformance of portfolio " + args[length - 3].toUpperCase() + " " + getTitle + "\n");
+    output.println("\nPerformance of portfolio " + args[length - 3].toUpperCase()
+            + " " + getTitle + "\n");
 
     for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
       printPerformance(set.getKey(), set.getValue(), scale, args[length - 1]);
@@ -213,6 +231,14 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("# - either no stocks or 0 value in portfolio.\n");
   }
 
+  /**
+   * This method prints the performance of the portfolio.
+   *
+   * @param dateStr the date of the stock
+   * @param value   value on that date
+   * @param scale   scale for display
+   * @param choice  choice of the user
+   */
   private void printPerformance(String dateStr, Double value, String[] scale, String choice) {
     LocalDate date = LocalDate.parse(dateStr);
     String year = String.valueOf(date.getYear());
@@ -233,6 +259,13 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     }
   }
 
+  /**
+   * This helper method gets the number of stars to be displayed.
+   *
+   * @param value value of the stock
+   * @param scale scale to display
+   * @return the stars in strings
+   */
   private String getStars(Double value, String[] scale) {
     if (value == null || value == 0) {
       return "#";
@@ -250,6 +283,13 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     return "*".repeat(Math.max(0, num));
   }
 
+  /**
+   * This method helps to get the title for portfolio performance.
+   *
+   * @param pfPerformance map of the portfolio data for the dates, and it's value
+   * @param choice        choice entered by the user
+   * @return the title for the display
+   */
   private String getTitle(Map<String, Double> pfPerformance, String choice) {
     int ind = 0;
     String dateStart = null;
@@ -278,8 +318,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       title.append("from ").append(startDate.getMonth()).append(" ").append(startDate.getYear())
               .append(" to ").append(endDate.getMonth()).append(" ").append(endDate.getYear());
     } else if (Objects.equals(choice, "3")) {
-      title.append("from ").append(startDate.getDayOfMonth()).append(" ").
-              append(startDate.getMonth()).append(" ").append(startDate.getYear())
+      title.append("from ").append(startDate.getDayOfMonth()).append(" ")
+              .append(startDate.getMonth()).append(" ").append(startDate.getYear())
               .append(" to ").append(endDate.getDayOfMonth()).append(" ")
               .append(endDate.getMonth()).append(" ").append(endDate.getYear());
     }
@@ -287,6 +327,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     return String.valueOf(title);
   }
 
+  /**
+   * This helper method helps to calculate the scale based on the date ranges.
+   *
+   * @param pfPerformance the performance map of the portfolio
+   * @return the scale and it's type
+   */
   private String[] getScale(Map<String, Double> pfPerformance) {
     double max = Double.MIN_VALUE;
     double min = Double.MAX_VALUE;
@@ -315,13 +361,20 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     return scaleStr;
   }
 
+  /**
+   * This method displays the list of stocks in the portfolio on a specific date.
+   *
+   * @param date          the date which user entered
+   * @param pfIndex       the index of the portfolio
+   * @param portfolioType type of the portfolio
+   */
   private void showListOfStocksAvailableOnADate(String date, String pfIndex, String portfolioType) {
     int portfolioNumber = Integer.parseInt(pfIndex) - 1;
     StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
-    StockCompositionData.StockPortFolioData stkObj;
+    StockPortFolioDataImpl stkObj;
 
     try {
-      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true,
+      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
               date, true, true, portfolioType);
     } catch (Exception e) {
       output.println("View: Error in getting stock data " + e.getMessage());
@@ -351,6 +404,9 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     }
   }
 
+  /**
+   * A helper method to display the no stocks on the date.
+   */
   private void noStockBeforeDate() {
     output.println("You don't own any stocks before this date");
   }
@@ -402,14 +458,14 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
                                                      String portfolioType) {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
-    StockCompositionData.StockPortFolioData stkObj = null;
+    StockPortFolioDataImpl stkObj = null;
 
     if (Objects.equals(type, "FULL")) {
-      stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true, null,
+      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true, null,
               true, false, portfolioType);
     } else if (Objects.equals(type, "TRUE")) {
       try {
-        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, true,
+        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
                 date, true, true, portfolioType);
       } catch (Exception e) {
         output.println("Error in getting the data.");
@@ -417,7 +473,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       }
     } else if (Objects.equals(type, "COST")) {
       try {
-        stkObj = obj.getAllStockDataInPortFolio(portfolioNumber, false,
+        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, false,
                 date, false, false, portfolioType);
       } catch (Exception e) {
         output.println("Error in getting the data.");
@@ -443,7 +499,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
     String[] portfolioNames = obj.getPortFolioNames(portfolioType);
     if (type.equals("COST")) {
-      output.println("\nCOST BASIS OF " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
+      output.println("\nCOST BASIS OF " + portfolioNames[portfolioNumber].toUpperCase()
+              + " PORTFOLIO");
     } else {
       output.println("\nValue of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
     }
@@ -502,8 +559,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void showPortfolioIndividualScreen(String option, String portfolioType) {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
-    StockCompositionData.StockPortFolioData stkObj =
-            obj.getAllStockDataInPortFolio(portfolioNumber, false, null,
+    StockPortFolioDataImpl stkObj =
+            (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, false, null,
                     true, false, portfolioType);
 
     String[] portfolioNames = obj.getPortFolioNames(portfolioType);
@@ -576,8 +633,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     if (args == null) {
       output.println("Not a valid input. Please enter number of shares as natural numbers.");
     } else {
-      output.println("Not a valid input. You can only sell until" + args[0] + " shares." +
-              " Also please enter number of shares as natural numbers.");
+      output.println("Not a valid input. You can only sell until" + args[0] + " shares."
+              + " Also please enter number of shares as natural numbers.");
     }
     output.println("Press 'b' to go back to the previous menu, 'm' to main menu.\n");
   }

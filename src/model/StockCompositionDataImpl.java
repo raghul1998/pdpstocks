@@ -144,7 +144,8 @@ public class StockCompositionDataImpl implements StockCompositionData {
         if (Objects.equals(portfolioType, "ALL")) {
           data[index] = arrOfStr[0];
           index++;
-        } else if (isPortfolioOfGivenType("userdata/user1/" + file.getName(), portfolioType)) {
+        } else if (isPortfolioOfGivenType("userdata/user1/" + file.getName(),
+                portfolioType)) {
           // Name of the portFolio
           data[index] = arrOfStr[0];
           index++;
@@ -155,9 +156,10 @@ public class StockCompositionDataImpl implements StockCompositionData {
   }
 
   @Override
-  public StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
-                                                       boolean includeSale, boolean realValue,
-                                                       String portfolioType) {
+  public StockPortFolioDataImpl getAllStockDataInPortFolio(int index, boolean unique,
+                                                           String dateStr, boolean includeSale,
+                                                           boolean realValue,
+                                                           String portfolioType) {
     String filename = getPortFolioFileNameByIndex(index, portfolioType);
     int numberOfStocks = getNumberOfTransactionsInAPortFolio(filename);
 
@@ -274,7 +276,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
       throw new RuntimeException(e);
     }
 
-    StockPortFolioData obj = new StockPortFolioData();
+    StockPortFolioDataImpl obj = new StockPortFolioDataImpl();
     obj.numberOfUniqueStocks = nameIndex;
 
     if (realValue) {
@@ -300,101 +302,6 @@ public class StockCompositionDataImpl implements StockCompositionData {
 
     return obj;
   }
-
-  /*
-  public StockPortFolioData getAvailableStockDataOnADate(int pfIndex, String dateStr, boolean isIncludeSale) throws ParseException {
-    String filename = getPortFolioFileNameByIndex(pfIndex);
-    int numberOfStocks = getNumberOfTransactionsInAPortFolio(filename);
-
-    String[] stockSymbol = new String[numberOfStocks];
-    String[] stockName = new String[numberOfStocks];
-    long[] stockQuantity = new long[numberOfStocks];
-    int index = 0;
-
-    BufferedReader stockData;
-    try {
-      stockData = new BufferedReader(new FileReader(filename));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    String line;
-    String splitBy = ",";
-    String[] splitStockData;
-    int timesOfRead = 0;
-    boolean found;
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date date1 = sdf.parse(dateStr);
-
-    try {
-      while ((line = stockData.readLine()) != null) {
-        if (timesOfRead > 3) {
-          splitStockData = line.split(splitBy);
-          Date date2 = sdf.parse(splitStockData[2]);
-
-          // Consider those stocks that are bought on that selling date and previous dates
-          // Ignore the stocks that is bought in future from this date
-          if (Objects.equals(splitStockData[0], "BUY") && date2.compareTo(date1) <= 0) {
-            found = false;
-            int i;
-            for (i = 0; i < stockSymbol.length; i++) {
-              if (stockSymbol[i] == null) {
-                break;
-              }
-              if (Objects.equals(stockSymbol[i], splitStockData[3])) {
-                found = true;
-                break;
-              }
-            }
-
-            if (!found) {
-              stockSymbol[index] = splitStockData[3];
-              stockName[index] = splitStockData[4];
-              stockQuantity[index] = Long.parseLong(splitStockData[5]);
-              index++;
-            } else {
-              stockQuantity[i] += Long.parseLong(splitStockData[5]);
-            }
-          }
-
-          if (isIncludeSale) {
-            if (Objects.equals(splitStockData[0], "SALE") && date2.compareTo(date1) <= 0) {
-              int i;
-              for (i = 0; i < stockSymbol.length; i++) {
-                if (Objects.equals(stockSymbol[i], splitStockData[3])) {
-                  stockQuantity[i] -= Long.parseLong(splitStockData[5]);
-                }
-              }
-            }
-          }
-        } else {
-          timesOfRead++;
-        }
-      }
-      stockData.close();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    StockPortFolioData obj = new StockPortFolioData();
-    int indexReal = 0;
-    for (int i = 0; i < stockName.length; i++) {
-      if (stockQuantity[i] != 0) {
-        stockQuantity[indexReal] = stockQuantity[i];
-        stockSymbol[indexReal] = stockSymbol[i];
-        stockName[indexReal] = stockName[i];
-        indexReal++;
-      }
-    }
-
-    obj.stockQuantity = stockQuantity;
-    obj.stockSymbol = stockSymbol;
-    obj.stockName = stockName;
-    obj.numberOfUniqueStocks = indexReal;
-
-    return obj;
-  }*/
 
   @Override
   public int sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol, String dateStr,
@@ -485,9 +392,8 @@ public class StockCompositionDataImpl implements StockCompositionData {
 
     int pfNumber = Integer.parseInt(args[length - 2]);
     for (int i = 0; i < length - 3; i++) {
-      StockCompositionDataImpl.StockPortFolioData obj =
-              getAllStockDataInPortFolio(pfNumber - 1, true,
-                      args[i], true, false, portfolioType);
+      StockPortFolioDataImpl obj = getAllStockDataInPortFolio(pfNumber - 1, true,
+              args[i], true, false, portfolioType);
       dateStockSymbolMap.put(args[i], obj.stockSymbol);
       dateStockMapQuantity.put(args[i], obj.stockQuantity);
     }
