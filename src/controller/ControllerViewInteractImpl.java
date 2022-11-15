@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 import model.StockCompositionData;
 import model.StockNameMap;
+import model.StockPortFolioDataImpl;
 import model.TypeofAction;
 import model.StockNameMapImpl;
 import model.StockCompositionDataImpl;
@@ -74,18 +75,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       performMainMenuAction(option);
     }
     while (!option.equals("e"));
-  }
-
-  /**
-   * This method tells the view to display the composition of the portfolio along with the stocks
-   * details like name, symbol, quantity, price of each share and total value.
-   *
-   * @param options the portfolio number
-   */
-  private void portfolioCompositionAction(String options) {
-    String[] args = new String[1];
-    args[0] = options;
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, args, 1);
   }
 
   /**
@@ -176,6 +165,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
               return false;
             }
             break;
+          default:
+            // No action to be taken
+            break;
         }
       }
     } catch (Exception e) {
@@ -220,7 +212,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param options the option that was provided by the user that whether the user wants
    *                to buy a share
    */
-  private void buyAnotherStockMenuAction(String options, String portfolioType, String[] arg, int length) {
+  private void buyAnotherStockMenuAction(String options, String portfolioType, String[] arg,
+                                         int length) {
     if (Objects.equals(options, "Y") || Objects.equals(options, "y")) {
       performCreatePortfolioMenuAction("1", portfolioType, null, 0);
     } else {
@@ -379,6 +372,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * This method helps in determining the cost invested in a portfolio on a certain date.
+   */
   private void costBasisByDate() {
     while (true) {
       StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
@@ -423,6 +419,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * This method provides the main menu options for calculating the performance of a portfolio.
+   */
   private void portfolioPerformanceMainMenu() {
     while (true) {
       StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
@@ -464,6 +463,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * This is a helper method for calculating the performance of a portfolio.
+   *
+   * @param pfNumber the portfolio number
+   * @param choice   type of option the user choose
+   * @return true if user wants to return to main menu
+   */
   private boolean portfolioPerformance(String pfNumber, String choice) {
     String date;
     String format = null;
@@ -564,7 +570,19 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return true;
   }
 
-  private String[] getDatesFromUserInput(String choice, String date, String number, String format) throws ParseException {
+  /**
+   * This is a helper method that helps in getting the range of dates based on user input while
+   * calculating performance of the portfolio.
+   *
+   * @param choice the input choice of the user
+   * @param date   date, month or the year that the user inputted
+   * @param number the number of days, month or the year the user needs data for
+   * @param format format of the input date
+   * @return the dates as array of strings
+   * @throws ParseException if error while parsing the data
+   */
+  private String[] getDatesFromUserInput(String choice, String date, String number,
+                                         String format) throws ParseException {
     String[] dates = new String[Integer.parseInt(number) + 3];
     Date convertedDate;
 
@@ -607,6 +625,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return dates;
   }
 
+  /**
+   * A helper method for selling the stocks from the portfolio.
+   */
   private void sellStockFromPortfolio() {
     while (true) {
       StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
@@ -641,10 +662,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       args[2] = "FLEXIBLE";
       vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS_ON_DATE, args, 3);
 
-      StockCompositionData.StockPortFolioData stkObj;
+      StockPortFolioDataImpl stkObj;
       try {
-        stkObj = obj.getAllStockDataInPortFolio(Integer.parseInt(options) - 1,
-                true, date, true, true, "FLEXIBLE");
+        stkObj = (StockPortFolioDataImpl)
+                obj.getAllStockDataInPortFolio(Integer.parseInt(options) - 1,
+                        true, date, true, true, "FLEXIBLE");
       } catch (Exception e) {
         output.println("Controller: Error in getting stock data " + e.getMessage());
         return;
@@ -672,6 +694,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  /**
+   * A helper method for getting the input date from the user for selling the stocks.
+   *
+   * @return the user input as a string
+   */
   private String sellStockDateEnter() {
     String date;
     output.println("Enter the date on which you would like to sell the stock (YYYY-MM-DD)");
@@ -686,6 +713,14 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return date;
   }
 
+  /**
+   * This method sells number of shares of a stock from a portfolio on a certain date.
+   *
+   * @param pfNumber    the portfolio number
+   * @param stockSymbol the symbol of the stock
+   * @param date        date on which the user needs to sell
+   * @return true if user wants to return to main menu
+   */
   private boolean sellSharesOnAStock(int pfNumber, String stockSymbol, String date) {
     StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
     currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
@@ -700,8 +735,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
 
     if (numberOfAvailableShares == 0) {
-      output.println("You cannot sell any shares of this stock on this date as they are already" +
-              " sold.");
+      output.println("You cannot sell any shares of this stock on this date as they are already"
+              + " sold.");
       return true;
     }
 
@@ -716,8 +751,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     output.println("How many share would you like to sell?\n");
 
     String sellShares = scan.nextLine();
-    while ((sellShares == null || sellShares.length() == 0) ||
-            (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
+    while ((sellShares == null || sellShares.length() == 0)
+            || (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
       String[] args = new String[1];
       args[0] = String.valueOf(numberOfAvailableShares);
       vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, args, 1);
@@ -738,6 +773,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return true;
   }
 
+  /**
+   * This method provides the options for users to adds stocks to the portfolio.
+   */
   private void addStockToPortfolioMainMenu() {
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
@@ -765,26 +803,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     String[] args = new String[1];
     args[0] = "addStockScreen";
     performCreatePortfolioMenuAction("1", "1", args, 1);
-  }
-
-
-  private void addStockToPortfolio(String option) {
-    StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
-    currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[Integer.parseInt(option) - 1];
-    while (true) {
-      vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
-      String options;
-      options = scan.nextLine();
-      while (!validateStockSelectOption(options, 1, 0)) {
-        vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
-        options = scan.nextLine();
-      }
-      String[] args = new String[1];
-      args[0] = "addStockScreen";
-      if (!performListOfStocksMenuAction(options, "1", args, 1)) {
-        break;
-      }
-    }
   }
 
   /**
