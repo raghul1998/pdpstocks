@@ -501,35 +501,38 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       remainder = (int) ChronoUnit.YEARS.between(LocalDate.parse(tempDateStr),
               LocalDate.now().withDayOfMonth(1));
       if (remainder != 4) {
+        remainder += 1;
         if (remainder > 30) {
           remainder = 30;
         }
-        output.println("Enter the number of years (5 to " + (remainder + 1) + "): ");
+        output.println("Enter the number of years (5 to " + remainder + "): ");
       }
     } else if (Objects.equals(choice, "2")) {
       String tempDateStr = date + "-01";
       remainder = (int) ChronoUnit.MONTHS.between(LocalDate.parse(tempDateStr),
               LocalDate.now().withDayOfMonth(1));
       if (remainder != 4) {
+        remainder += 1;
         if (remainder > 30) {
           remainder = 30;
         }
-        output.println("Enter the number of months (5 to " + (remainder + 1) + "): ");
+        output.println("Enter the number of months (5 to " + remainder + "): ");
       }
     } else if (Objects.equals(choice, "3")) {
       remainder = (int) ChronoUnit.DAYS.between(LocalDate.parse(date), LocalDate.now());
       if (remainder != 4) {
+        remainder += 1;
         if (remainder > 30) {
           remainder = 30;
         }
-        output.println("Enter the number of days (5 to " + (remainder + 1) + "): ");
+        output.println("Enter the number of days (5 to " + remainder + "): ");
       }
     }
 
     String number;
     if (remainder != 4) {
       number = scan.nextLine();
-      while (!validateStockSelectOption(number, 5, remainder + 1)) {
+      while (!validateStockSelectOption(number, 5, remainder)) {
         vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
         vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
         number = scan.nextLine();
