@@ -20,24 +20,10 @@ import static org.junit.Assert.assertEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ControllerTest extends TestParentClass {
 
-  private String getMainScreen() {
-    return "\nMENU\n"
-            + "\n"
-            + "1. Create a portfolio\n"
-            + "2. Value and Composition of portfolio\n"
-            + "3. Value of portfolio on full composition\n"
-            + "4. Add a stock to portfolio\n"
-            + "5. Sell a stock from portfolio\n"
-            + "6. Performance of portfolio\n"
-            + "7. Total amount invested on certain date\n"
-            + "e. Exit\n";
-  }
-
-
   // 1
 
   /**
-   * This test displays the creation of portfolio.
+   * This test checks the creation of portfolio.
    */
   @Test
   public void testAControllerCreatePortfolio() throws IOException {
@@ -56,10 +42,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -68,23 +51,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST1 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -122,7 +94,7 @@ public class ControllerTest extends TestParentClass {
   // 2
 
   /**
-   * This test displays the output for view portfolio on certain date.
+   * This test checks the output for view portfolio on certain date.
    */
   @Test
   public void testBControllerViewPortfolio() throws IOException {
@@ -142,7 +114,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -179,7 +151,7 @@ public class ControllerTest extends TestParentClass {
   // 3
 
   /**
-   * This test displays that portfolio is not created, if user doesn't buy any stock.
+   * This test checks that portfolio is not created, if user doesn't buy any stock.
    */
   @Test
   public void testCControllerWithoutBuyingAnythingNoPortfolioCreated() {
@@ -197,10 +169,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -209,30 +178,19 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLER2 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
             + "\n"
             + "\nSTOCK DETAILS\n"
-            + "StockName: Microsoft\n" +
-            "Symbol: MSFT\n"
+            + "StockName: Microsoft\n"
+            + "Symbol: MSFT\n"
             + "Time: " + readStockDateFromStockDataCsv() + "\n"
             + "Price: $" + readStockPriceFromStockDataCsv() + "\n"
             + "\n"
@@ -245,7 +203,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -266,7 +224,7 @@ public class ControllerTest extends TestParentClass {
   // 4
 
   /**
-   * This test displays two stocks of same ticker symbol that are bought on same day
+   * This test checks two stocks of same ticker symbol that are bought on same day
    * and is seen combined in the view portfolio.
    */
   @Test
@@ -288,10 +246,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -300,23 +255,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST2 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -339,16 +283,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -377,8 +312,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -420,7 +355,7 @@ public class ControllerTest extends TestParentClass {
   // 5
 
   /**
-   * This test displays two stocks of same ticker symbol that are bought on different day
+   * This test checks two stocks of same ticker symbol that are bought on different day
    * and is seen combined in the view portfolio.
    */
   @Test
@@ -441,10 +376,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -453,23 +385,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST3 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -490,16 +411,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -526,9 +438,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -570,7 +482,7 @@ public class ControllerTest extends TestParentClass {
   //6
 
   /**
-   * This test displays how the same name portfolio gets overridden
+   * This test checks how the same name portfolio gets overridden.
    */
   @Test
   public void testFControllerOverrideSamePortfolio() throws IOException {
@@ -589,10 +501,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -604,23 +513,12 @@ public class ControllerTest extends TestParentClass {
             + "\nCREATE PORTFOLIO MENU\n"
             + "\nCONTROLLERTEST3 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -649,9 +547,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -690,7 +588,7 @@ public class ControllerTest extends TestParentClass {
   // 7
 
   /**
-   * This test displays portfolio stocks after inputting some previous date.
+   * This test checks portfolio stocks after inputting some previous date.
    */
   @Test
   public void testGControllerInputDate() throws IOException {
@@ -709,9 +607,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -741,7 +639,7 @@ public class ControllerTest extends TestParentClass {
   // 8
 
   /**
-   * This test displays portfolio stocks after inputting some previous date.
+   * This test checks portfolio stocks after inputting some previous date.
    */
   @Test
   public void testHControllerInputDate2() {
@@ -760,9 +658,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -812,9 +710,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): "
@@ -825,7 +723,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\nMicrosoft (MSFT) 	 5	 $"
+            + "\nMicrosoft (MSFT) \t 5\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100
             + "\t $"
             + (5 * (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100)) / 100)
@@ -869,9 +767,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): "
@@ -883,11 +781,12 @@ public class ControllerTest extends TestParentClass {
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
             + "\nMicrosoft (MSFT) \t 5\t $" + Math.floor(Double.parseDouble(
             readStockPriceFromStockDataCsv()) * 100) / 100 + "\t $"
-            + 5 * Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100 + "\n" +
-            "\n" +
-            "Total Portfolio Value is on 2022-02-02: $" + 5 * Math.floor(Double.parseDouble(
-            readStockPriceFromStockDataCsv()) * 100) / 100 + "\n" +
-            "\nPress 'b' to go back and 'm' for main menu.\n"
+            + 5 * Math.floor(Double.parseDouble(
+            readStockPriceFromStockDataCsv()) * 100) / 100 + "\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-02-02: $" + 5 * Math.floor(Double.parseDouble(
+            readStockPriceFromStockDataCsv()) * 100) / 100 + "\n"
+            + "\nPress 'b' to go back and 'm' for main menu.\n"
             + "\n"
             + getMainScreen()
             + "\n"
@@ -924,9 +823,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): "
@@ -937,8 +836,8 @@ public class ControllerTest extends TestParentClass {
             + "\nValue of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
             + "\nMicrosoft (MSFT) \t 5\t $" + Math.floor(Double.parseDouble(
-            readStockPriceFromStockDataCsv()) * 100) / 100 +
-            "\t $" + 5 * Math.floor(Double.parseDouble(
+            readStockPriceFromStockDataCsv()) * 100) / 100
+            + "\t $" + 5 * Math.floor(Double.parseDouble(
             readStockPriceFromStockDataCsv()) * 100) / 100 + "\n"
             + "\n"
             + "Total Portfolio Value is on 2022-02-02: $" + 5 * Math.floor(Double.parseDouble(
@@ -981,9 +880,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -1037,13 +936,13 @@ public class ControllerTest extends TestParentClass {
   // 14
 
   /**
-   * This test tests set of all invalid inputs
+   * This test tests set of all invalid inputs.
    */
   @Test
   public void testNControllerInvalidInputs() {
-    String userInput = "8" + "\n" + "1" + "\n" + "1" + "\n" + "" + "\n" + "controllerTest4" + "\n" + "6"
-            + "\n" + "1" + "\n" + "11" + "\n" + "10" + "\n" + "9900-72-00" + "\n" + "2022-01-01"
-            + "\n" + "-4" + "\n" + "4.3" + "\n" + "m" + "\n" + "e";
+    String userInput = "8" + "\n" + "1" + "\n" + "1" + "\n" + "" + "\n" + "controllerTest4"
+            + "\n" + "6" + "\n" + "1" + "\n" + "11" + "\n" + "10" + "\n" + "9900-72-00" + "\n"
+            + "2022-01-01" + "\n" + "-4" + "\n" + "4.3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1060,10 +959,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -1075,9 +971,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST4 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "Invalid command. Enter the right option number.\n"
@@ -1086,23 +980,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST4 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Not a valid input. Please enter the correct stock.\n"
@@ -1161,10 +1044,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -1173,23 +1053,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST4 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1243,10 +1112,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -1255,23 +1121,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST4 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?"
             + "\nEnter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1337,10 +1192,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -1349,23 +1201,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST4 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1387,16 +1228,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1418,16 +1250,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1450,16 +1273,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1520,10 +1334,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -1532,23 +1343,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST5 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1570,16 +1370,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1601,16 +1392,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1632,16 +1414,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1663,16 +1436,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1738,10 +1502,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -1750,23 +1511,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST6 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1785,16 +1535,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1813,16 +1554,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1841,16 +1573,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1869,16 +1592,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1897,16 +1611,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1925,16 +1630,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1953,16 +1649,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -1981,16 +1668,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -2009,16 +1687,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -2099,10 +1768,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2111,9 +1777,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST7 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "Invalid command. Enter the right option number.\n"
@@ -2122,9 +1786,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST7 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "Invalid command. Enter the right option number.\n"
@@ -2133,23 +1795,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST7 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -2202,10 +1853,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2246,13 +1894,13 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -2292,13 +1940,13 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -2320,7 +1968,7 @@ public class ControllerTest extends TestParentClass {
   // 25
 
   /**
-   * This test displays invalid input for buying stock.
+   * This test displays an invalid input message when user enters invalid entry while buying stock.
    */
   @Test
   public void testYBuyStockEnterWrongStockOption() {
@@ -2337,10 +1985,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2349,23 +1994,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "TEST Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Not a valid input. Please enter the correct stock.\n"
@@ -2389,12 +2023,13 @@ public class ControllerTest extends TestParentClass {
   // 26
 
   /**
-   * This test displays invalid input entry for the number of stocks.
+   * This test displays an invalid input message when user enters invalid entry while
+   * entering number of stocks.
    */
   @Test
   public void testZBuyStockEnterInvalidHowManyStocks() {
-    String userInput = "1" + "\n" + "1" + "\n" + "e" + "\n" + "1" + "\n" + "9" + "\n" + "2022-11-11" + "\n" + "0"
-            + "\n" + "-85" + "\n" + "8.90" + "\n" + "m" + "\n" + "e";
+    String userInput = "1" + "\n" + "1" + "\n" + "e" + "\n" + "1" + "\n" + "9" + "\n"
+            + "2022-11-11" + "\n" + "0" + "\n" + "-85" + "\n" + "8.90" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -2406,10 +2041,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2418,23 +2050,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "E Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -2471,7 +2092,7 @@ public class ControllerTest extends TestParentClass {
   // 27
 
   /**
-   * This test displays the operations of back and main menu.
+   * This test checks the operations of back and main menu.
    */
   @Test
   public void testZAToggleBetweenMainMenuAndBack() {
@@ -2490,10 +2111,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2502,9 +2120,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "TEST Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "Invalid command. Enter the right option number.\n"
@@ -2513,9 +2129,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "TEST Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + getMainScreen()
@@ -2532,13 +2146,13 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -2548,13 +2162,13 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Not a valid input. Please enter the correct portfolio.\n"
@@ -2564,10 +2178,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2576,23 +2187,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "TEST Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Not a valid input. Please enter the correct stock.\n"
@@ -2634,10 +2234,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2646,23 +2243,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST8 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -2752,10 +2338,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2764,23 +2347,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST9 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -2831,21 +2403,21 @@ public class ControllerTest extends TestParentClass {
   //30
 
   /**
-   * This test displays the combinations of stocks purchased while creating portfolio,
+   * This test checks the combinations of stocks purchased while creating portfolio,
    * stocks added and sold.
    */
 
   @Test
   public void testZDBuyAndSell3() {
     deleteFileInDirectory("controllerTest90.csv");
-    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest90" + "\n" + "1" + "\n" + "5" + "\n"
-            + "2022-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "6" + "\n" + "2022-01-01"
+    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest90" + "\n" + "1" + "\n" + "5"
+            + "\n" + "2022-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "6" + "\n" + "2022-01-01"
             + "\n" + "50" + "\n" + "y" + "\n" + "10" + "\n" + "2022-02-02" + "\n" + "150"
             + "\n" + "n" + "\n" + "5" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "1" + "\n"
-            + "20" + "\n" + "m" + "\n" + "5" + "\n" + "10" + "\n" + "2022-03-03" + "\n" + "3"
-            + "\n" + "30" + "\n" + "m" + "\n" + "4" + "\n" + "10" + "\n" + "10" + "\n" + "2022-02-14"
-            + "\n" + "7" + "\n" + "n" + "\n" + "5" + "\n" + "10" + "\n" + "2022-02-15" + "\n"
-            + "2" + "\n" + "6" + "\n" + "m" + "\n" + "e";
+            + "20" + "\n" + "m" + "\n" + "5" + "\n" + "10" + "\n" + "2022-03-03" + "\n"
+            + "3" + "\n" + "30" + "\n" + "m" + "\n" + "4" + "\n" + "10" + "\n" + "10"
+            + "\n" + "2022-02-14" + "\n" + "7" + "\n" + "n" + "\n" + "5" + "\n" + "10" + "\n"
+            + "2022-02-15" + "\n" + "2" + "\n" + "6" + "\n" + "m" + "\n" + "e";
 
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -2858,10 +2430,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -2870,23 +2439,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST90 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -2903,16 +2461,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -2929,714 +2478,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
-            + "\n"
-            + "Which stock would you like to buy?\n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: Walmart\n"
-            + "Symbol: WMT\n"
-            + "Time: 2022-02-02\n"
-            + "Price: $141.0000\n"
-            + "\n"
-            + "How many shares would you like to buy?\n"
-            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
-            + "\n"
-            + "Would you like to buy another stock? (Y|N)\n"
-            + "\n"
-            + "CONTROLLERTEST90 PORTFOLIO CREATED...!!!\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Select the portfolio to sell stocks from.\n"
-            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
-            + "\n"
-            + "List of stocks available on date: 2022-01-01\n"
-            + "\n"
-            + "S.No\tName (Symbol) \n"
-            + "\n"
-            + "1.\tJPMorgan Chase (JPM) \n"
-            + "\n"
-            + "Which stock would you like to sell?\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: JPMorgan Chase\n"
-            + "Symbol: JPM\n"
-            + "Time: 2022-01-01\n"
-            + "Price: $158.4500\n"
-            + "\n"
-            + "You can sell only 50 shares of this stock on 2022-01-01\n"
-            + "How many share would you like to sell?\n"
-            + "\n"
-            + "Shares successfully sold.\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90"
-            + "\n"
-            + "Select the portfolio to sell stocks from.\n"
-            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
-            + "\n" +
-            "List of stocks available on date: 2022-03-03\n"
-            + "\n"
-            + "S.No\tName (Symbol) \n"
-            + "\n"
-            + "1.\tTesla (TSLA) \n"
-            + "2.\tJPMorgan Chase (JPM) \n"
-            + "3.\tWalmart (WMT) \n"
-            + "\n"
-            + "Which stock would you like to sell?\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: Walmart\n"
-            + "Symbol: WMT\n"
-            + "Time: 2022-03-03\n"
-            + "Price: $137.2900\n"
-            + "\n"
-            + "You can sell only 150 shares of this stock on 2022-03-03\n"
-            + "How many share would you like to sell?\n"
-            + "\n"
-            + "Shares successfully sold.\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Select the portfolio to which you would like to add the stock.\n"
-            + "\n"
-            + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
-            + "\n"
-            + "Which stock would you like to buy?\n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: Walmart\n"
-            + "Symbol: WMT\n"
-            + "Time: 2022-02-14\n"
-            + "Price: $135.3300\n"
-            + "\n"
-            + "How many shares would you like to buy?\n"
-            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
-            + "\n"
-            + "Would you like to buy another stock? (Y|N)\n"
-            + "\n"
-            + "Stock successfully added to the portfolio...!!!\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Select the portfolio to sell stocks from.\n"
-            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
-            + "\n"
-            + "List of stocks available on date: 2022-02-15\n"
-            + "\n"
-            + "S.No\tName (Symbol) \n"
-            + "\n"
-            + "1.\tJPMorgan Chase (JPM) \n"
-            + "2.\tWalmart (WMT) \n"
-            + "\n"
-            + "Which stock would you like to sell?\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: Walmart\n"
-            + "Symbol: WMT\n"
-            + "Time: 2022-02-15\n"
-            + "Price: $134.7400\n"
-            + "\n"
-            + "You can sell only 127 shares of this stock on 2022-02-15\n"
-            + "How many share would you like to sell?\n"
-            + "\n"
-            + "Shares successfully sold.\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "Exiting...\n";
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expectedOutput, result);
-  }
-
-  //31
-
-  /**
-   * This test displays value of portfolio (option 2) on various dates
-   * for portfolio controllerTest90
-   */
-  @Test
-  public void testZEAddtoExistingPortfolioAndSell1() {
-    String userInput = "2" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "m" + "\n" + "2" + "\n"
-            + "10" + "\n" + "2022-02-02" + "\n" + "m" + "\n" + "2" + "\n" + "10" + "\n"
-            + "2022-03-03" + "\n" + "m" + "\n" + "e";
-    InputStream input = new ByteArrayInputStream(userInput.getBytes());
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-
-    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
-    obj.start();
-
-    String expectedOutput = getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Which portfolio would you like to check?\n"
-            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "\n"
-            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-01-01\t Total Value\n"
-            + "\n"
-            + "JPMorgan Chase (JPM) \t 30\t $158.44\t $4753.2\n"
-            + "\n"
-            + "Total Portfolio Value is on 2022-01-01: $4753.2\n"
-            + "\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Which portfolio would you like to check?\n"
-            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "\n"
-            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\n"
-            + "JPMorgan Chase (JPM) \t 30\t $150.5\t $4515.0\n"
-            + "Walmart (WMT) \t 150\t $141.0\t $21150.0\n"
-            + "\n"
-            + "Total Portfolio Value is on 2022-02-02: $25665.0\n"
-            + "\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Which portfolio would you like to check?\n"
-            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "\n"
-            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-03-03\t Total Value\n"
-            + "\n"
-            + "Tesla (TSLA) \t 100\t $878.77\t $87877.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $139.84\t $4195.2\n"
-            + "Walmart (WMT) \t 121\t $137.29\t $16612.09\n"
-            + "\n"
-            + "Total Portfolio Value is on 2022-03-03: $108684.29\n"
-            + "\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "Exiting...\n";
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expectedOutput, result);
-  }
-
-  //32
-
-  /**
-   * This test displays value of portfolio on full composition (option 3) on various dates
-   * for portfolio controllerTest90
-   */
-  @Test
-  public void testZFddtoExistingPortfolioAndSell2() {
-    String userInput = "3" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "m" + "\n" + "3" + "\n"
-            + "10" + "\n" + "2022-02-02" + "\n" + "m" + "\n" + "3" + "\n" + "10" + "\n"
-            + "2022-03-03" + "\n" + "m" + "\n" + "e";
-    InputStream input = new ByteArrayInputStream(userInput.getBytes());
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-
-    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
-    obj.start();
-
-    String expectedOutput = getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Which portfolio would you like to check?\n"
-            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "\n"
-            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-01-01\t Total Value\n"
-            + "\n"
-            + "Tesla (TSLA) \t 100\t $1073.44\t $107344.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $158.44\t $4753.2\n"
-            + "Walmart (WMT) \t 121\t $143.19\t $17325.98\n"
-            + "\n"
-            + "Total Portfolio Value is on 2022-01-01: $129423.18\n"
-            + "\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Which portfolio would you like to check?\n"
-            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "\n"
-            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\n"
-            + "Tesla (TSLA) \t 100\t $928.18\t $92818.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $150.5\t $4515.0\n"
-            + "Walmart (WMT) \t 121\t $141.0\t $17061.0\n"
-            + "\n"
-            + "Total Portfolio Value is on 2022-02-02: $114394.0\n"
-            + "\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Which portfolio would you like to check?\n"
-            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "\n"
-            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-03-03\t Total Value\n"
-            + "\n"
-            + "Tesla (TSLA) \t 100\t $878.77\t $87877.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $139.84\t $4195.2\n"
-            + "Walmart (WMT) \t 121\t $137.29\t $16612.09\n"
-            + "\n"
-            + "Total Portfolio Value is on 2022-03-03: $108684.29\n"
-            + "\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "Exiting...\n";
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expectedOutput, result);
-  }
-
-  //33
-
-  /**
-   * This test adds stock to the current portfolio.
-   */
-  @Test
-  public void testZG() {
-    String userInput = "4" + "\n" + "10" + "\n" + "6" + "\n" + "2022-11-11" + "\n" + "500" + "\n"
-            + "y" + "\n" + "4" + "\n" + "10" + "\n" + "5" + "\n" + "2022-11-12" + "\n" + "40" + "\n"
-            + "n" + "\n" + "2" + "\n" + "10" + "\n" + "2022-11-11" + "\n" + "m" + "\n" + "e";
-    InputStream input = new ByteArrayInputStream(userInput.getBytes());
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-
-    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
-    obj.start();
-
-    String expectedOutput = getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Select the portfolio to which you would like to add the stock.\n"
-            + "\n"
-            + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
-            + "\n"
-            + "Which stock would you like to buy?\n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: JPMorgan Chase\n"
-            + "Symbol: JPM\n"
-            + "Time: 2022-11-11\n"
-            + "Price: $135.1900\n"
-            + "\n"
-            + "How many shares would you like to buy?\n"
-            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
-            + "\n"
-            + "Would you like to buy another stock? (Y|N)\n"
-            + "\n"
-            + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
-            + "\n"
-            + "Which stock would you like to buy?\n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
-            + "Not a valid input. Please enter the correct date.\n"
-            + "Press 'b' to go back\n"
-            + "\n"
-            + "Not a valid input. Please enter the correct date.\n"
-            + "Press 'b' to go back\n"
-            + "\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: Apple\n"
-            + "Symbol: AAPL\n"
-            + "Time: 2022-11-12\n"
-            + "Price: $145.8200\n"
-            + "\n"
-            + "How many shares would you like to buy?\n"
-            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
-            + "\n"
-            + "Would you like to buy another stock? (Y|N)\n"
-            + "\n"
-            + "CONTROLLERTEST90 PORTFOLIO CREATED...!!!\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "\n"
-            + "Which portfolio would you like to check?\n"
-            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "\n"
-            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
-            + "\n"
-            + "Tesla (TSLA) \t 100\t $186.0\t $18600.0\n"
-            + "JPMorgan Chase (JPM) \t 530\t $135.19\t $71650.7\n"
-            + "Walmart (WMT) \t 121\t $142.66\t $17261.86\n"
-            + "\n"
-            + "Total Portfolio Value is on 2022-11-11: $107512.56\n"
-            + "\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "Exiting...\n";
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expectedOutput, result);
-    deleteFileInDirectory("pf_controllerTest90.csv");
-  }
-
-  //34
-
-  /**
-   * This test sells stocks from current portfolio
-   */
-  @Test
-  public void testZH() {
-    deleteFileInDirectory("pf_controllerTest90.csv");
-    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest90" + "\n" + "1" + "\n" + "5" + "\n"
-            + "2022-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "6" + "\n" + "2022-01-01"
-            + "\n" + "50" + "\n" + "y" + "\n" + "10" + "\n" + "2022-02-02" + "\n" + "150"
-            + "\n" + "n" + "\n" + "5" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "1" + "\n"
-            + "20" + "\n" + "m" + "\n" + "5" + "\n" + "10" + "\n" + "2022-03-03" + "\n" + "3"
-            + "\n" + "30" + "\n" + "m" + "\n" + "4" + "\n" + "10" + "\n" + "10" + "\n" + "2022-02-14"
-            + "\n" + "7" + "\n" + "n" + "\n" + "5" + "\n" + "10" + "\n" + "2022-02-15" + "\n" + "2"
-            + "\n" + "6" + "\n" + "m" + "\n" + "5" + "\n"
-            + "10" + "\n" + "2022-09-09" + "\n" + "1" + "\n" + "100" + "\n" + "m"
-            + "\n" + "2" + "\n" + "10" + "\n" + "2022-09-09" + "\n" + "m"
-            + "\n" + "2" + "\n" + "10" + "\n" +
-            "2022-09-08" + "\n" + "m" + "\n" + "e";
-    InputStream input = new ByteArrayInputStream(userInput.getBytes());
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-
-    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
-    obj.start();
-
-    String expectedOutput = getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
-            + "\n"
-            + "Enter your choice:\n"
-            + "Enter the name for this portfolio.\n"
-            + "\n"
-            + "CREATE PORTFOLIO MENU\n"
-            + "\n"
-            + "CONTROLLERTEST90 Portfolio\n"
-            + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
-            + "\n"
-            + "Which stock would you like to buy?\n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: Tesla\n"
-            + "Symbol: TSLA\n"
-            + "Time: 2022-03-03\n"
-            + "Price: $878.7700\n"
-            + "\n"
-            + "How many shares would you like to buy?\n"
-            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
-            + "\n"
-            + "Would you like to buy another stock? (Y|N)\n"
-            + "\n"
-            + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
-            + "\n"
-            + "Which stock would you like to buy?\n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
-            + "\n"
-            + "STOCK DETAILS\n"
-            + "StockName: JPMorgan Chase\n"
-            + "Symbol: JPM\n"
-            + "Time: 2022-01-01\n"
-            + "Price: $158.4500\n"
-            + "\n"
-            + "How many shares would you like to buy?\n"
-            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
-            + "\n"
-            + "Would you like to buy another stock? (Y|N)\n"
-            + "\n"
-            + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -3755,16 +2597,646 @@ public class ControllerTest extends TestParentClass {
             + "Select the portfolio to which you would like to add the stock.\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Walmart\n"
+            + "Symbol: WMT\n"
+            + "Time: 2022-02-14\n"
+            + "Price: $135.3300\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "Stock successfully added to the portfolio...!!!\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "List of stocks available on date: 2022-02-15\n"
+            + "\n"
+            + "S.No\tName (Symbol) \n"
+            + "\n"
+            + "1.\tJPMorgan Chase (JPM) \n"
+            + "2.\tWalmart (WMT) \n"
+            + "\n"
+            + "Which stock would you like to sell?\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Walmart\n"
+            + "Symbol: WMT\n"
+            + "Time: 2022-02-15\n"
+            + "Price: $134.7400\n"
+            + "\n"
+            + "You can sell only 127 shares of this stock on 2022-02-15\n"
+            + "How many share would you like to sell?\n"
+            + "\n"
+            + "Shares successfully sold.\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  //31
+
+  /**
+   * This test checks value of portfolio (option 2) on various dates
+   * for portfolio controllerTest90.
+   */
+  @Test
+  public void testZEAddtoExistingPortfolioAndSell1() {
+    String userInput = "2" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "m" + "\n" + "2" + "\n"
+            + "10" + "\n" + "2022-02-02" + "\n" + "m" + "\n" + "2" + "\n" + "10" + "\n"
+            + "2022-03-03" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-01-01\t Total Value\n"
+            + "\n"
+            + "JPMorgan Chase (JPM) \t 30\t $158.44\t $4753.2\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-01-01: $4753.2\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
+            + "\n"
+            + "JPMorgan Chase (JPM) \t 30\t $150.5\t $4515.0\n"
+            + "Walmart (WMT) \t 150\t $141.0\t $21150.0\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-02-02: $25665.0\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-03-03\t Total Value\n"
+            + "\n"
+            + "Tesla (TSLA) \t 100\t $878.77\t $87877.0\n"
+            + "JPMorgan Chase (JPM) \t 30\t $139.84\t $4195.2\n"
+            + "Walmart (WMT) \t 121\t $137.29\t $16612.09\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-03-03: $108684.29\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  //32
+
+  /**
+   * This test checks value of portfolio on full composition (option 3) on various dates
+   * for portfolio controllerTest90.
+   */
+  @Test
+  public void testZFddtoExistingPortfolioAndSell2() {
+    String userInput = "3" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "m" + "\n" + "3" + "\n"
+            + "10" + "\n" + "2022-02-02" + "\n" + "m" + "\n" + "3" + "\n" + "10" + "\n"
+            + "2022-03-03" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-01-01\t Total Value\n"
+            + "\n"
+            + "Tesla (TSLA) \t 100\t $1073.44\t $107344.0\n"
+            + "JPMorgan Chase (JPM) \t 30\t $158.44\t $4753.2\n"
+            + "Walmart (WMT) \t 121\t $143.19\t $17325.98\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-01-01: $129423.18\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
+            + "\n"
+            + "Tesla (TSLA) \t 100\t $928.18\t $92818.0\n"
+            + "JPMorgan Chase (JPM) \t 30\t $150.5\t $4515.0\n"
+            + "Walmart (WMT) \t 121\t $141.0\t $17061.0\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-02-02: $114394.0\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-03-03\t Total Value\n"
+            + "\n"
+            + "Tesla (TSLA) \t 100\t $878.77\t $87877.0\n"
+            + "JPMorgan Chase (JPM) \t 30\t $139.84\t $4195.2\n"
+            + "Walmart (WMT) \t 121\t $137.29\t $16612.09\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-03-03: $108684.29\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  //33
+
+  /**
+   * This test adds stock to the current portfolio.
+   */
+  @Test
+  public void testZG() {
+    String userInput = "4" + "\n" + "10" + "\n" + "6" + "\n" + "2022-11-11" + "\n" + "500" + "\n"
+            + "y" + "\n" + "4" + "\n" + "10" + "\n" + "5" + "\n" + "2022-11-12" + "\n" + "40" + "\n"
+            + "n" + "\n" + "2" + "\n" + "10" + "\n" + "2022-11-11" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "\n"
+            + "Select the portfolio to which you would like to add the stock.\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: JPMorgan Chase\n"
+            + "Symbol: JPM\n"
+            + "Time: 2022-11-11\n"
+            + "Price: $135.1900\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "Not a valid input. Please enter the correct date.\n"
+            + "Press 'b' to go back\n"
+            + "\n"
+            + "Not a valid input. Please enter the correct date.\n"
+            + "Press 'b' to go back\n"
+            + "\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Apple\n"
+            + "Symbol: AAPL\n"
+            + "Time: 2022-11-12\n"
+            + "Price: $145.8200\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "CONTROLLERTEST90 PORTFOLIO CREATED...!!!\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST90 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
+            + "\n"
+            + "Tesla (TSLA) \t 100\t $186.0\t $18600.0\n"
+            + "JPMorgan Chase (JPM) \t 530\t $135.19\t $71650.7\n"
+            + "Walmart (WMT) \t 121\t $142.66\t $17261.86\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-11-11: $107512.56\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+    deleteFileInDirectory("pf_controllerTest90.csv");
+  }
+
+  //34
+
+  /**
+   * This test sells stocks from current portfolio.
+   */
+  @Test
+  public void testZH() {
+    deleteFileInDirectory("pf_controllerTest90.csv");
+    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest90" + "\n" + "1" + "\n" + "5"
+            + "\n" + "2022-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "6" + "\n" + "2022-01-01"
+            + "\n" + "50" + "\n" + "y" + "\n" + "10" + "\n" + "2022-02-02" + "\n" + "150"
+            + "\n" + "n" + "\n" + "5" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "1" + "\n"
+            + "20" + "\n" + "m" + "\n" + "5" + "\n" + "10" + "\n" + "2022-03-03" + "\n" + "3"
+            + "\n" + "30" + "\n" + "m" + "\n" + "4" + "\n" + "10" + "\n" + "10" + "\n"
+            + "2022-02-14" + "\n" + "7" + "\n" + "n" + "\n" + "5" + "\n" + "10" + "\n"
+            + "2022-02-15" + "\n" + "2" + "\n" + "6" + "\n" + "m" + "\n" + "5" + "\n"
+            + "10" + "\n" + "2022-09-09" + "\n" + "1" + "\n" + "100" + "\n" + "m"
+            + "\n" + "2" + "\n" + "10" + "\n" + "2022-09-09" + "\n" + "m"
+            + "\n" + "2" + "\n" + "10" + "\n"
+            + "2022-09-08" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + getFlexibleInflexibleScreen()
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "CONTROLLERTEST90 Portfolio\n"
+            + "\n"
+            + getBuyStockScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Tesla\n"
+            + "Symbol: TSLA\n"
+            + "Time: 2022-03-03\n"
+            + "Price: $878.7700\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: JPMorgan Chase\n"
+            + "Symbol: JPM\n"
+            + "Time: 2022-01-01\n"
+            + "Price: $158.4500\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Walmart\n"
+            + "Symbol: WMT\n"
+            + "Time: 2022-02-02\n"
+            + "Price: $141.0000\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "CONTROLLERTEST90 PORTFOLIO CREATED...!!!\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "List of stocks available on date: 2022-01-01\n"
+            + "\n"
+            + "S.No\tName (Symbol) \n"
+            + "\n"
+            + "1.\tJPMorgan Chase (JPM) \n"
+            + "\n"
+            + "Which stock would you like to sell?\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: JPMorgan Chase\n"
+            + "Symbol: JPM\n"
+            + "Time: 2022-01-01\n"
+            + "Price: $158.4500\n"
+            + "\n"
+            + "You can sell only 50 shares of this stock on 2022-01-01\n"
+            + "How many share would you like to sell?\n"
+            + "\n"
+            + "Shares successfully sold.\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "List of stocks available on date: 2022-03-03\n"
+            + "\n"
+            + "S.No\tName (Symbol) \n"
+            + "\n"
+            + "1.\tTesla (TSLA) \n"
+            + "2.\tJPMorgan Chase (JPM) \n"
+            + "3.\tWalmart (WMT) \n"
+            + "\n"
+            + "Which stock would you like to sell?\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Walmart\n"
+            + "Symbol: WMT\n"
+            + "Time: 2022-03-03\n"
+            + "Price: $137.2900\n"
+            + "\n"
+            + "You can sell only 150 shares of this stock on 2022-03-03\n"
+            + "How many share would you like to sell?\n"
+            + "\n"
+            + "Shares successfully sold.\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "\n"
+            + "Select the portfolio to which you would like to add the stock.\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -3865,21 +3337,21 @@ public class ControllerTest extends TestParentClass {
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
             + getMainScreen()
-            + "\n" +
-            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -3901,16 +3373,16 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -3940,7 +3412,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   /**
-   * This test displays value portfolio on certain date for past date.
+   * This test checks value portfolio on certain date for past date.
    */
   @Test
   public void testZK() {
@@ -3958,16 +3430,16 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -3998,11 +3470,11 @@ public class ControllerTest extends TestParentClass {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest91" + "\n" + "1" + "\n" + "8"
             + "\n" + "2014-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "10" + "\n" + "2018-01-01"
             + "\n" + "50" + "\n" + "y" + "\n" + "1" + "\n" + "2000-02-02" + "\n" + "150"
-            + "\n" + "n" + "\n" + "5" + "\n" + "11" + "\n" + "2019-01-01" + "\n" + "1" + "\n" +
-            "20" + "\n" + "m" + "\n" + "5" + "\n" + "11" + "\n" + "2022-03-03" + "\n" + "3" + "\n"
-            + "30" + "\n" + "m" + "\n" + "4" + "\n" + "10" + "\n" + "10" + "\n" + "2022-02-14"
-            + "\n" + "7" + "\n" + "n" + "\n" + "5" + "\n" + "11" + "\n" + "2022-02-15" + "\n"
-            + "2" + "\n" + "6" + "\n" + "m" + "\n" + "e";
+            + "\n" + "n" + "\n" + "5" + "\n" + "11" + "\n" + "2019-01-01" + "\n" + "1" + "\n"
+            + "20" + "\n" + "m" + "\n" + "5" + "\n" + "11" + "\n" + "2022-03-03" + "\n" + "3"
+            + "\n" + "30" + "\n" + "m" + "\n" + "4" + "\n" + "10" + "\n" + "10" + "\n"
+            + "2022-02-14" + "\n" + "7" + "\n" + "n" + "\n" + "5" + "\n" + "11" + "\n"
+            + "2022-02-15" + "\n" + "2" + "\n" + "6" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -4014,10 +3486,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -4026,23 +3495,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST91 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4059,16 +3517,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4085,16 +3534,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4218,16 +3658,7 @@ public class ControllerTest extends TestParentClass {
             + "Select the portfolio to which you would like to add the stock.\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4245,8 +3676,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Stock successfully added to the portfolio...!!!\n"
             + getMainScreen()
-            + "\n" +
-            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
@@ -4302,11 +3733,12 @@ public class ControllerTest extends TestParentClass {
   //40
 
   /**
-   * This test displays performance by year
+   * This test checks performance by year.
    */
   @Test
   public void testZN() {
-    String userInput = "6" + "\n" + "11" + "\n" + "1" + "\n" + "2010" + "\n" + "10" + "\n" + "m" + "\n" + "e";
+    String userInput = "6" + "\n" + "11" + "\n" + "1" + "\n" + "2010" + "\n" + "10"
+            + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -4382,10 +3814,10 @@ public class ControllerTest extends TestParentClass {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest92" + "\n" + "1" + "\n" + "8"
             + "\n" + "2014-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "10" + "\n" + "2014-01-01"
             + "\n" + "50" + "\n" + "y" + "\n" + "1" + "\n" + "2014-02-02" + "\n" + "150"
-            + "\n" + "n" + "\n" + "5" + "\n" + "12" + "\n" + "2014-01-01" + "\n" + "1" + "\n" +
-            "20" + "\n" + "m" + "\n" + "5" + "\n" + "12" + "\n" + "2014-03-03" + "\n" + "3" + "\n"
-            + "30" + "\n" + "m" + "\n" + "4" + "\n" + "10" + "\n" + "10" + "\n" + "2014-02-14"
-            + "\n" + "7" + "\n" + "n"
+            + "\n" + "n" + "\n" + "5" + "\n" + "12" + "\n" + "2014-01-01" + "\n" + "1" + "\n"
+            + "20" + "\n" + "m" + "\n" + "5" + "\n" + "12" + "\n" + "2014-03-03" + "\n" + "3"
+            + "\n" + "30" + "\n" + "m" + "\n" + "4" + "\n" + "10" + "\n" + "10" + "\n"
+            + "2014-02-14" + "\n" + "7" + "\n" + "n"
             + "\n" + "5" + "\n" + "12" + "\n" + "2014-02-15" + "\n" + "2" + "\n" + "6" + "\n"
             + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -4399,10 +3831,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -4411,23 +3840,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST92 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4444,16 +3862,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4470,16 +3879,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4604,16 +4004,7 @@ public class ControllerTest extends TestParentClass {
             + "Select the portfolio to which you would like to add the stock.\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4688,11 +4079,12 @@ public class ControllerTest extends TestParentClass {
   //42
 
   /**
-   * This test displays by month
+   * This test checks by month.
    */
   @Test
   public void testZP() {
-    String userInput = "6" + "\n" + "12" + "\n" + "2" + "\n" + "2014-01" + "\n" + "5" + "\n" + "m" + "\n" + "e";
+    String userInput = "6" + "\n" + "12" + "\n" + "2" + "\n" + "2014-01"
+            + "\n" + "5" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -4756,11 +4148,12 @@ public class ControllerTest extends TestParentClass {
   //43
 
   /**
-   * This test displays by day
+   * This test checks by day.
    */
   @Test
   public void testZQ() {
-    String userInput = "6" + "\n" + "12" + "\n" + "3" + "\n" + "2014-01-01" + "\n" + "5" + "\n" + "m" + "\n" + "e";
+    String userInput = "6" + "\n" + "12" + "\n" + "3" + "\n" + "2014-01-01" + "\n"
+            + "5" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -4828,7 +4221,7 @@ public class ControllerTest extends TestParentClass {
   //44
 
   /**
-   * This test creates portfolio for day
+   * This test creates portfolio for day.
    */
   @Test
   public void testZR() {
@@ -4852,10 +4245,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -4864,23 +4254,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST93 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4897,16 +4276,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -4923,18 +4293,9 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
-            + "\n" +
-            "Which stock would you like to buy?\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
             + "\n"
             + "STOCK DETAILS\n"
@@ -5060,16 +4421,7 @@ public class ControllerTest extends TestParentClass {
             + "Select the portfolio to which you would like to add the stock.\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -5146,11 +4498,12 @@ public class ControllerTest extends TestParentClass {
   //45
 
   /**
-   * This test displays by day
+   * This test checks by day.
    */
   @Test
   public void testZS() {
-    String userInput = "6" + "\n" + "12" + "\n" + "3" + "\n" + "2015-03-01" + "\n" + "30" + "\n" + "m" + "\n" + "e";
+    String userInput = "6" + "\n" + "12" + "\n" + "3" + "\n" + "2015-03-01"
+            + "\n" + "30" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -5243,7 +4596,7 @@ public class ControllerTest extends TestParentClass {
   //46
 
   /**
-   * This test displays performance invalid year,or month or day or invalid range.
+   * This test checks performance invalid year,or month or day or invalid range.
    */
   @Test
   public void testZT() {
@@ -5360,7 +4713,7 @@ public class ControllerTest extends TestParentClass {
   //47
 
   /**
-   * This test displays performance with # when no value
+   * This test checks performance with # when no value.
    */
   @Test
   public void testZU() {
@@ -5555,8 +4908,8 @@ public class ControllerTest extends TestParentClass {
             + getMainScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
-            + "\n" +
-            "Exiting...\n";
+            + "\n"
+            + "Exiting...\n";
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
@@ -5567,11 +4920,12 @@ public class ControllerTest extends TestParentClass {
   //48
 
   /**
-   * This test displays performance for a portfolio by month.
+   * This test checks performance for a portfolio by month.
    */
   @Test
   public void testZV() {
-    String userInput = "6" + "\n" + "11" + "\n" + "2" + "\n" + "2022-01" + "\n" + "10" + "\n" + "m" + "\n" + "e";
+    String userInput = "6" + "\n" + "11" + "\n" + "2" + "\n" + "2022-01"
+            + "\n" + "10" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -5641,11 +4995,12 @@ public class ControllerTest extends TestParentClass {
   //49
 
   /**
-   * This test displays performance by year.
+   * This test checks performance by year.
    */
   @Test
   public void testZW() {
-    String userInput = "6" + "\n" + "11" + "\n" + "1" + "\n" + "2010" + "\n" + "7" + "\n" + "m" + "\n" + "e";
+    String userInput = "6" + "\n" + "11" + "\n" + "1" + "\n" + "2010"
+            + "\n" + "7" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -5714,11 +5069,12 @@ public class ControllerTest extends TestParentClass {
   //50
 
   /**
-   * This test displays performance by day.
+   * This test checks performance by day.
    */
   @Test
   public void testZX() {
-    String userInput = "6" + "\n" + "11" + "\n" + "3" + "\n" + "2010-01-01" + "\n" + "30" + "\n" + "m" + "\n" + "e";
+    String userInput = "6" + "\n" + "11" + "\n" + "3" + "\n"
+            + "2010-01-01" + "\n" + "30" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -5811,11 +5167,12 @@ public class ControllerTest extends TestParentClass {
   //51
 
   /**
-   * This test displays the operations of back and main menu.
+   * This test checks the operations of back and main menu.
    */
   @Test
   public void testZY() {
-    String userInput = "6" + "\n" + "11" + "\n" + "3" + "\n" + "2010-01-01" + "\n" + "35" + "\n" + "m" + "\n" + "e";
+    String userInput = "6" + "\n" + "11" + "\n" + "3" + "\n"
+            + "2010-01-01" + "\n" + "35" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -5874,7 +5231,7 @@ public class ControllerTest extends TestParentClass {
   //52
 
   /**
-   * This test displays the operations of back and main menu.
+   * This test checks the operations of back and main menu.
    */
   @Test
   public void testZZ() {
@@ -5891,10 +5248,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -5903,23 +5257,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "TEST1 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Not a valid input. Please enter the correct stock.\n"
@@ -5943,12 +5286,12 @@ public class ControllerTest extends TestParentClass {
   //53
 
   /**
-   * This test displays the total investment on various dates.
+   * This test checks the total investment on various dates.
    */
   @Test
   public void testZZA() {
-    String userInput = "7" + "\n" + "11" + "\n" + "2022-01-01" + "\n" + "b" + "\n" +
-            "11" + "\n" + "2014-03-03" + "\n" + "m" + "\n" + "e";
+    String userInput = "7" + "\n" + "11" + "\n" + "2022-01-01" + "\n" + "b" + "\n"
+            + "11" + "\n" + "2014-03-03" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -6034,7 +5377,7 @@ public class ControllerTest extends TestParentClass {
   //54
 
   /**
-   * This test displays value portfolio on full composition on various dates.(inflexible)
+   * This test checks value portfolio on full composition on various dates.(inflexible)
    */
   @Test
   public void testZZB() {
@@ -6057,10 +5400,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -6069,23 +5409,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST94 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -6102,16 +5431,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -6179,20 +5499,20 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "11. CONTROLLERTEST91\n"
-            + "12. CONTROLLERTEST92\n"
-            + "13. CONTROLLERTEST93\n"
-            + "14. CONTROLLERTEST94\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
+            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
+            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
+            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -6211,20 +5531,20 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "11. CONTROLLERTEST91\n"
-            + "12. CONTROLLERTEST92\n"
-            + "13. CONTROLLERTEST93\n"
-            + "14. CONTROLLERTEST94\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
+            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
+            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
+            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -6255,7 +5575,7 @@ public class ControllerTest extends TestParentClass {
   //55
 
   /**
-   * This test displays the value portfolio (option 2 on various dates)
+   * This test checks the value portfolio (option 2 on various dates).
    */
   @Test
   public void testZZC() {
@@ -6279,10 +5599,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -6291,23 +5608,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST95 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -6324,16 +5630,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -6402,21 +5699,21 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "11. CONTROLLERTEST91\n"
-            + "12. CONTROLLERTEST92\n"
-            + "13. CONTROLLERTEST93\n"
-            + "14. CONTROLLERTEST94\n"
-            + "15. CONTROLLERTEST95\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
+            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
+            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
+            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
+            + "15. CONTROLLERTEST95 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -6427,21 +5724,21 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "11. CONTROLLERTEST91\n"
-            + "12. CONTROLLERTEST92\n"
-            + "13. CONTROLLERTEST93\n"
-            + "14. CONTROLLERTEST94\n"
-            + "15. CONTROLLERTEST95\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
+            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
+            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
+            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
+            + "15. CONTROLLERTEST95 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -6452,21 +5749,21 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "11. CONTROLLERTEST91\n"
-            + "12. CONTROLLERTEST92\n"
-            + "13. CONTROLLERTEST93\n"
-            + "14. CONTROLLERTEST94\n"
-            + "15. CONTROLLERTEST95\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
+            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
+            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
+            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
+            + "15. CONTROLLERTEST95 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -6488,7 +5785,7 @@ public class ControllerTest extends TestParentClass {
 
 
   /**
-   * This test displays Value of portfolio on full composition on certain date for past date.
+   * This test checks Value of portfolio on full composition on certain date for past date.
    */
   @Test
   public void testZZD() {
@@ -6509,10 +5806,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -6521,23 +5815,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST96 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -6554,16 +5837,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -6633,22 +5907,22 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "LIST OF PORTFOLIO\n"
             + "\n"
-            + "1. CONTROLLERTEST1\n"
-            + "2. CONTROLLERTEST2\n"
-            + "3. CONTROLLERTEST3\n"
-            + "4. CONTROLLERTEST4\n"
-            + "5. CONTROLLERTEST5\n"
-            + "6. CONTROLLERTEST6\n"
-            + "7. CONTROLLERTEST7\n"
-            + "8. CONTROLLERTEST8\n"
-            + "9. CONTROLLERTEST9\n"
-            + "10. CONTROLLERTEST90\n"
-            + "11. CONTROLLERTEST91\n"
-            + "12. CONTROLLERTEST92\n"
-            + "13. CONTROLLERTEST93\n"
-            + "14. CONTROLLERTEST94\n"
-            + "15. CONTROLLERTEST95\n"
-            + "16. CONTROLLERTEST96\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
+            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
+            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
+            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
+            + "15. CONTROLLERTEST95 (FLEXIBLE)\n"
+            + "16. CONTROLLERTEST96 (FLEXIBLE)\n"
             + "\n"
             + "Which portfolio would you like to check?\n"
             + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
@@ -6678,16 +5952,17 @@ public class ControllerTest extends TestParentClass {
 
 
   /**
-   * This test displays total investments on previous dates.
+   * This test checks total investments on previous dates.
    */
   @Test
   public void testZZE() {
-    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest97" + "\n" + "1" + "\n" + "1" + "\n"
-            + "2022-11-12" + "\n" + "50" + "\n" + "y" + "\n" + "2"
-            + "\n" + "2022-11-13" + "\n" + "100" + "\n" + "n" + "\n" + "5" + "\n" + "17" + "\n"
-            + "2022-11-14" + "\n" +
-            "1" + "\n" + "10" + "\n" + "m" + "\n" + "7" + "\n" + "17" + "\n" + "2022-01-01" + "\n" + "b"
-            + "\n" + "17" + "\n" + "2022-02-02" + "\n" + "b" + "\n" + "17" + "\n" + "2022-03-03"
+    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest97" + "\n" + "1" + "\n" + "1"
+            + "\n" + "2022-11-12" + "\n" + "50" + "\n" + "y" + "\n" + "2"
+            + "\n" + "2022-11-13" + "\n" + "100" + "\n" + "n" + "\n" + "5" + "\n"
+            + "17" + "\n" + "2022-11-14" + "\n"
+            + "1" + "\n" + "10" + "\n" + "m" + "\n" + "7" + "\n" + "17"
+            + "\n" + "2022-01-01" + "\n" + "b" + "\n" + "17" + "\n" + "2022-02-02"
+            + "\n" + "b" + "\n" + "17" + "\n" + "2022-03-03"
             + "\n" + "b" + "\n" + "17" + "\n" + "2022-11-13" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -6700,10 +5975,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -6712,23 +5984,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST97 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -6745,16 +6006,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -6950,7 +6202,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   /**
-   * This test displays total amount invested on certain date.
+   * This test checks total amount invested on certain date.
    */
   @Test
   public void testZZF() {
@@ -6970,10 +6222,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -6982,23 +6231,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST98 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -7015,16 +6253,7 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -7042,11 +6271,11 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST98 PORTFOLIO CREATED...!!!\n"
             + getMainScreen()
-            + "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "LIST OF PORTFOLIO\n" +
-            "\n"
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
             + "1. CONTROLLERTEST1\n"
             + "2. CONTROLLERTEST2\n"
             + "3. CONTROLLERTEST3\n"
@@ -7142,13 +6371,15 @@ public class ControllerTest extends TestParentClass {
 
 
   /**
-   * This test displays purchase sell, sell in between
+   * This test checks purchase sell, sell in between.
    */
   @Test
   public void testZZG() {
-    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest99" + "\n" + "1" + "\n" + "8" + "\n" + "2022-11-01" + "\n" +
-            "600" + "\n" + "n" + "\n" + "5" + "\n" + "19" + "\n" + "2022-11-11" + "\n" + "1" + "\n" + "600" + "\n" + "m" + "\n" +
-            "5" + "\n" + "19" + "\n" + "2022-11-03" + "\n" + "1" + "\n" + "e";
+    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest99" + "\n"
+            + "1" + "\n" + "8" + "\n" + "2022-11-01" + "\n"
+            + "600" + "\n" + "n" + "\n" + "5" + "\n" + "19" + "\n"
+            + "2022-11-11" + "\n" + "1" + "\n" + "600" + "\n" + "m" + "\n"
+            + "5" + "\n" + "19" + "\n" + "2022-11-03" + "\n" + "1" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -7160,10 +6391,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -7172,23 +6400,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST99 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
@@ -7305,7 +6522,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   /**
-   * This test displays inflexible portfolio.
+   * This test checks inflexible portfolio.
    */
   @Test
   public void testZZH() {
@@ -7322,10 +6539,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
-            + "What type of portfolio would you like to create?\n"
-            + "\n"
-            + "1. Flexible / Customizable Portfolio\n"
-            + "2. Inflexible / Non Customizable Portfolio\n"
+            + getFlexibleInflexibleScreen()
             + "\n"
             + "Enter your choice:\n"
             + "Enter the name for this portfolio.\n"
@@ -7334,23 +6548,12 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONTROLLERTEST990 Portfolio\n"
             + "\n"
-            + "1. Buy a stock\n"
-            + "2. Main Menu\n"
-            + "e. Exit\n"
+            + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "\n"
-            + "1. Microsoft (MSFT)\n"
-            + "2. Meta (META)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Apple (AAPL)\n"
-            + "5. Tesla (TSLA)\n"
-            + "6. JPMorgan Chase (JPM)\n"
-            + "7. Johnson (JNJ)\n"
-            + "8. Amazon (AMZN)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+            + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
             + "\n"
@@ -7378,5 +6581,43 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
+  private String getMainScreen() {
+    return "\nMENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. Value and Composition of portfolio\n"
+            + "3. Value of portfolio on full composition\n"
+            + "4. Add a stock to portfolio\n"
+            + "5. Sell a stock from portfolio\n"
+            + "6. Performance of portfolio\n"
+            + "7. Total amount invested on certain date\n"
+            + "e. Exit\n";
+  }
+
+  private String getSupportedStocks() {
+    return "1. Apple (AAPL)\n"
+            + "2. Amazon (AMZN)\n"
+            + "3. Google (GOOG)\n"
+            + "4. Johnson (JNJ)\n"
+            + "5. JPMorgan Chase (JPM)\n"
+            + "6. Meta (META)\n"
+            + "7. Microsoft (MSFT)\n"
+            + "8. Tesla (TSLA)\n"
+            + "9. UnitedHealth (UNH)\n"
+            + "10. Walmart (WMT)";
+  }
+
+  private String getBuyStockScreen() {
+    return "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n";
+  }
+
+  private String getFlexibleInflexibleScreen() {
+    return "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n";
+  }
 
 }

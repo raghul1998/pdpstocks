@@ -8,8 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -568,11 +566,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     cmiObj.controllerModelInteract(TypeofAction.GET_PORTFOLIO_PERFORMANCE, dates, dates.length);
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_PERFORMANCE, dates, dates.length);
 
-    if (endMenu()) {
-      return true;
-    } else {
-      return false;
-    }
+    return endMenu();
   }
 
   /**
@@ -592,11 +586,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       options = scan.nextLine();
     }
 
-    if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
-      return true;
-    }
+    return Objects.equals(options, "m") || Objects.equals(options, "M");
     // When user presses 'B' continue
-    return false;
   }
 
   /**
@@ -804,11 +795,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     cmiObj.controllerModelInteract(TypeofAction.SELL_STOCKS, data, 3);
     output.println("Shares successfully sold.");
 
-    if (endMenu()) {
-      return true;
-    } else {
-      return false;
-    }
+    return endMenu();
   }
 
   /**

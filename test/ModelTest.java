@@ -1,18 +1,16 @@
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Objects;
 
 import model.ModelControllerInteract;
 import model.ModelControllerInteractImpl;
-import model.StockCompositionData;
 import model.TypeofAction;
 
 import static org.junit.Assert.assertEquals;
@@ -21,10 +19,15 @@ import static org.junit.Assert.assertEquals;
  * This class contains tests for the Model.
  */
 
-public class ModelTest extends TestParentClass{
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class ModelTest extends TestParentClass {
+
+  /**
+   * This test assures that flexible portfolio has been created.
+   */
   @Test
-  public void testModelCreatePortfolio() {
-    String[] args = {"modelTest_esha"};
+  public void testAModelCreatePortfolio() {
+    String[] args = {"modelTest5", "1"};
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, args, 0);
 
@@ -43,9 +46,38 @@ public class ModelTest extends TestParentClass{
     assertEquals(expectedName, pfName);
   }
 
+
+  /**
+   * This test assures that inflexible portfolio has been created.
+   */
   @Test
-  public void testModelDeleteEmptyPortfolio() {
-    String[] args = {"modelTest_esha2"};
+  public void testAModelCreatePortfolio2() {
+    String[] args = {"modelTest4", "2"};
+    ModelControllerInteract obj = new ModelControllerInteractImpl();
+    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, args, 0);
+
+    File dir = new File("userdata/user1/");
+    File[] directoryListing = dir.listFiles();
+    String expectedName = "pf_" + args[0] + ".csv";
+    String pfName = null;
+    if (directoryListing != null) {
+      for (File i : directoryListing) {
+        if (i.getName().equals("pf_" + args[0] + ".csv")) {
+          pfName = i.getName();
+          break;
+        }
+      }
+    }
+    assertEquals(expectedName, pfName);
+  }
+
+
+  /**
+   * This test assures that empty portfolio is deleted.
+   */
+  @Test
+  public void testBModelDeleteEmptyPortfolio() {
+    String[] args = {"modelTest1","Flexible"};
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, args, 0);
     obj.modelControllerInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
@@ -64,9 +96,12 @@ public class ModelTest extends TestParentClass{
     assertEquals(count, Objects.requireNonNull(dir.listFiles()).length);
   }
 
+  /**
+   * This test tests if the stock data is being received properly from the API call.
+   */
   @Test
-  public void testModelGetStockData() {
-    String[] args = {"TSLA","2022-01-01"};
+  public void testCModelGetStockData() {
+    String[] args = {"TSLA", "2022-01-01"};
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
 
@@ -91,14 +126,16 @@ public class ModelTest extends TestParentClass{
     assertEquals(expectedName, splitStockData[2]);
   }
 
-  // check if you are able to read portfolio csv file
 
+  /**
+   * This test chekcs if the stock has been bought.
+   */
   @Test
-  public void testModelBuyStocks() throws IOException {
-    deleteFileInDirectory("modelTest_esha6.csv");
-    String[] name = {"modelTest_esha6"};
-    String[] args = {"GOOG","2022-11-11"};
-    String[] args1 = {"1","modelTest_esha6"};
+  public void testDModelBuyStocks() throws IOException {
+    deleteFileInDirectory("modelTest.csv");
+    String[] name = {"modelTest", "Flexible"};
+    String[] args = {"GOOG", "2022-11-11"};
+    String[] args1 = {"1", "modelTest"};
 
 
     ModelControllerInteract obj = new ModelControllerInteractImpl();
@@ -106,24 +143,23 @@ public class ModelTest extends TestParentClass{
     obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
     obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
 
-    long time = System.currentTimeMillis() / 1000;
     String expected = super.readStockDataFromPortfolioCsv(name[0],
-            1,1,false);
+            1, 1, false);
     String actual = String.valueOf((System.currentTimeMillis() / 1000));
-    assertEquals(expected,actual);
-    deleteFileInDirectory("modelTest_esha6.csv");
+    assertEquals(expected, actual);
+    deleteFileInDirectory("modelTest.csv");
   }
 
-  // review
-  // show that selling happens based of number of stocks that are left
-
+  /**
+   * This test checks if the stock has been sold.
+   */
   @Test
-  public void testSellStocks() throws IOException, ParseException {
-    deleteFileInDirectory("modelTest_esha.csv");
-    String[] name = {"modelTest_esha"};
-    String[] args = {"GOOG","2022-11-11"};
-    String[] args1 = {"3","modelTest_esha"};
-    String[] args2 = {"2","modelTest_esha"};
+  public void testESellStocks() throws IOException, ParseException {
+    deleteFileInDirectory("modelTest1.csv");
+    String[] name = {"modelTest1", "Flexible"};
+    String[] args = {"GOOG", "2022-11-11"};
+    String[] args1 = {"3", "modelTest1"};
+    String[] args2 = {"2", "modelTest1"};
 
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
@@ -131,16 +167,18 @@ public class ModelTest extends TestParentClass{
     obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
     obj.modelControllerInteract(TypeofAction.SELL_STOCKS, args2, 0);
 
-    long time = System.currentTimeMillis() / 1000;
     String expected = super.readStockDataFromPortfolioCsv(name[0],
-            1,1,false);
+            1, 1, false);
     String actual = String.valueOf((System.currentTimeMillis() / 1000));
-    assertEquals(expected,actual);
-    deleteFileInDirectory("modelTest_esha.csv");
+    assertEquals(expected, actual);
+    deleteFileInDirectory("modelTest1.csv");
   }
 
+  /**
+   * This test checks creation of supported stocks.
+   */
   @Test
-  public void testCreateSupportedStocks() throws IOException {
+  public void testFCreateSupportedStocks() throws IOException {
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_SUPPORTED_STOCKS, null, 0);
     BufferedReader supportedStocksData = null;
@@ -164,25 +202,24 @@ public class ModelTest extends TestParentClass{
       supportedStocksData.close();
     }
 
-    String expected = "StockID,StockName,StockSymbol\n" +
-            "1,Apple,AAPL\n" +
-            "2,Amazon,AMZN\n" +
-            "3,Microsoft,MSFT\n" +
-            "4,Tesla,TSLA\n" +
-            "5,Meta,META\n" +
-            "6,Walmart,WMT\n" +
-            "7,Johnson,JNJ\n" +
-            "8,JPMorgan Chase,JPM\n" +
-            "9,Google,GOOG\n" +
-            "10,UnitedHealth,UNH\n";
+    String expected = "StockID,StockName,StockSymbol\n"
+            + "1,Apple,AAPL\n"
+            + "2,Amazon,AMZN\n"
+            + "3,Microsoft,MSFT\n"
+            + "4,Tesla,TSLA\n"
+            + "5,Meta,META\n"
+            + "6,Walmart,WMT\n"
+            + "7,Johnson,JNJ\n"
+            + "8,JPMorgan Chase,JPM\n"
+            + "9,Google,GOOG\n"
+            + "10,UnitedHealth,UNH\n";
 
     assertEquals(expected, actual);
+    deleteDirectory();
   }
 
-//  @Test
-//  public void testStockCompositionData(){
-//
-//  }
+
+
 }
 
 
