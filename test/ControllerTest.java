@@ -4344,344 +4344,467 @@ public class ControllerTest extends TestParentClass {
 
     String expectedOutput =
             "\n" +
-            "MENU\n" +
-            "\n" +
-            "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
-            "4. Add a stock to portfolio\n" +
-            "5. Sell a stock from portfolio\n" +
-            "6. Performance of portfolio\n" +
-            "7. Total amount invested on certain date\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
-            "This portfolio already exists.\n" +
-            "If you want to override this portfolio, then press 'y'. If you want to enter another name, press 'n'. If you want to go main screen, press 'b'.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "If you want to override this portfolio, then press 'y'. If you want to enter another name, press 'n'. If you want to go main screen, press 'b'.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "If you want to override this portfolio, then press 'y'. If you want to enter another name, press 'n'. If you want to go main screen, press 'b'.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "If you want to override this portfolio, then press 'y'. If you want to enter another name, press 'n'. If you want to go main screen, press 'b'.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "If you want to override this portfolio, then press 'y'. If you want to enter another name, press 'n'. If you want to go main screen, press 'b'.\n" +
-            "\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "CREATE PORTFOLIO MENU\n" +
-            "\n" +
-            "CONTROLLERTEST90 Portfolio\n" +
-            "\n" +
-            "1. Buy a stock\n" +
-            "2. Main Menu\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "\n" +
-            "1. Microsoft (MSFT)\n" +
-            "2. Meta (META)\n" +
-            "3. Google (GOOG)\n" +
-            "4. Apple (AAPL)\n" +
-            "5. Tesla (TSLA)\n" +
-            "6. JPMorgan Chase (JPM)\n" +
-            "7. Johnson (JNJ)\n" +
-            "8. Amazon (AMZN)\n" +
-            "9. UnitedHealth (UNH)\n" +
-            "10. Walmart (WMT)\n" +
-            "\n" +
-            "Which stock would you like to buy?\n" +
-            "Not a valid input. Please enter the correct stock.\n" +
-            "If you want to go back to main menu, press 'm'.\n" +
-            "\n" +
-            "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n" +
-            "Not a valid input. Please enter the correct date.\n" +
-            "Press 'b' to go back\n" +
-            "\n" +
-            "\n" +
-            "STOCK DETAILS\n" +
-            "StockName: Tesla\n" +
-            "Symbol: TSLA\n" +
-            "Time: 2022-03-03\n" +
-            "Price: $878.7700\n" +
-            "\n" +
-            "How many shares would you like to buy?\n" +
-            "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
-            "\n" +
-            "Would you like to buy another stock? (Y|N)\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "\n" +
-            "CONTROLLERTEST90 PORTFOLIO CREATED...!!!\n" +
-            "\n" +
-            "MENU\n" +
-            "\n" +
-            "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
-            "4. Add a stock to portfolio\n" +
-            "5. Sell a stock from portfolio\n" +
-            "6. Performance of portfolio\n" +
-            "7. Total amount invested on certain date\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "LIST OF PORTFOLIO\n" +
-            "\n" +
-            "1. CONTROLLERTEST1\n" +
-            "2. CONTROLLERTEST2\n" +
-            "3. CONTROLLERTEST3\n" +
-            "4. CONTROLLERTEST4\n" +
-            "5. CONTROLLERTEST5\n" +
-            "6. CONTROLLERTEST6\n" +
-            "7. CONTROLLERTEST7\n" +
-            "8. CONTROLLERTEST8\n" +
-            "9. CONTROLLERTEST9\n" +
-            "10. CONTROLLERTEST90\n" +
-            "\n" +
-            "Select the portfolio to sell stocks from.\n" +
-            "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n" +
-            "You don't own any stocks before this date\n" +
-            "\n" +
-            "MENU\n" +
-            "\n" +
-            "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
-            "4. Add a stock to portfolio\n" +
-            "5. Sell a stock from portfolio\n" +
-            "6. Performance of portfolio\n" +
-            "7. Total amount invested on certain date\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "LIST OF PORTFOLIO\n" +
-            "\n" +
-            "1. CONTROLLERTEST1\n" +
-            "2. CONTROLLERTEST2\n" +
-            "3. CONTROLLERTEST3\n" +
-            "4. CONTROLLERTEST4\n" +
-            "5. CONTROLLERTEST5\n" +
-            "6. CONTROLLERTEST6\n" +
-            "7. CONTROLLERTEST7\n" +
-            "8. CONTROLLERTEST8\n" +
-            "9. CONTROLLERTEST9\n" +
-            "10. CONTROLLERTEST90\n" +
-            "\n" +
-            "Which portfolio would you like to check?\n" +
-            "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n" +
-            "Not a valid input. Please enter the correct date.\n" +
-            "Press 'b' to go back\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct date.\n" +
-            "Press 'b' to go back\n" +
-            "\n" +
-            "The value of portfolio on 2022-09-09 is $0.00\n" +
-            "\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n" +
-            "\n" +
-            "MENU\n" +
-            "\n" +
-            "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
-            "4. Add a stock to portfolio\n" +
-            "5. Sell a stock from portfolio\n" +
-            "6. Performance of portfolio\n" +
-            "7. Total amount invested on certain date\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "LIST OF PORTFOLIO\n" +
-            "\n" +
-            "1. CONTROLLERTEST1\n" +
-            "2. CONTROLLERTEST2\n" +
-            "3. CONTROLLERTEST3\n" +
-            "4. CONTROLLERTEST4\n" +
-            "5. CONTROLLERTEST5\n" +
-            "6. CONTROLLERTEST6\n" +
-            "7. CONTROLLERTEST7\n" +
-            "8. CONTROLLERTEST8\n" +
-            "9. CONTROLLERTEST9\n" +
-            "10. CONTROLLERTEST90\n" +
-            "\n" +
-            "Which portfolio would you like to check?\n" +
-            "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n" +
-            "\n" +
-            "Value of CONTROLLERTEST90 PORTFOLIO\n" +
-            "\n" +
-            "Name (Symbol) \t Quantity\t Share Value on 2022-09-08\t Total Value\n" +
-            "\n" +
-            "Tesla (TSLA) \t 3\t $281.3\t $843.9\n" +
-            "\n" +
-            "Total Portfolio Value is on 2022-09-08: $843.9\n" +
-            "\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
-            "\n" +
-            "\n" +
-            "MENU\n" +
-            "\n" +
-            "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
-            "4. Add a stock to portfolio\n" +
-            "5. Sell a stock from portfolio\n" +
-            "6. Performance of portfolio\n" +
-            "7. Total amount invested on certain date\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "Exiting...\n";
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "What type of portfolio would you like to create?\n" +
+                    "\n" +
+                    "1. Flexible / Customizable Portfolio\n" +
+                    "2. Inflexible / Non Customizable Portfolio\n" +
+                    "\n" +
+                    "Enter your choice:\n" +
+                    "Enter the name for this portfolio.\n" +
+                    "\n" +
+                    "CREATE PORTFOLIO MENU\n" +
+                    "\n" +
+                    "CONTROLLERTEST90 Portfolio\n" +
+                    "\n" +
+                    "1. Buy a stock\n" +
+                    "2. Main Menu\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "\n" +
+                    "1. Microsoft (MSFT)\n" +
+                    "2. Meta (META)\n" +
+                    "3. Google (GOOG)\n" +
+                    "4. Apple (AAPL)\n" +
+                    "5. Tesla (TSLA)\n" +
+                    "6. JPMorgan Chase (JPM)\n" +
+                    "7. Johnson (JNJ)\n" +
+                    "8. Amazon (AMZN)\n" +
+                    "9. UnitedHealth (UNH)\n" +
+                    "10. Walmart (WMT)\n" +
+                    "\n" +
+                    "Which stock would you like to buy?\n" +
+                    "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n" +
+                    "\n" +
+                    "STOCK DETAILS\n" +
+                    "StockName: Tesla\n" +
+                    "Symbol: TSLA\n" +
+                    "Time: 2022-03-03\n" +
+                    "Price: $878.7700\n" +
+                    "\n" +
+                    "How many shares would you like to buy?\n" +
+                    "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
+                    "\n" +
+                    "Would you like to buy another stock? (Y|N)\n" +
+                    "\n" +
+                    "\n" +
+                    "1. Microsoft (MSFT)\n" +
+                    "2. Meta (META)\n" +
+                    "3. Google (GOOG)\n" +
+                    "4. Apple (AAPL)\n" +
+                    "5. Tesla (TSLA)\n" +
+                    "6. JPMorgan Chase (JPM)\n" +
+                    "7. Johnson (JNJ)\n" +
+                    "8. Amazon (AMZN)\n" +
+                    "9. UnitedHealth (UNH)\n" +
+                    "10. Walmart (WMT)\n" +
+                    "\n" +
+                    "Which stock would you like to buy?\n" +
+                    "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n" +
+                    "\n" +
+                    "STOCK DETAILS\n" +
+                    "StockName: JPMorgan Chase\n" +
+                    "Symbol: JPM\n" +
+                    "Time: 2022-01-01\n" +
+                    "Price: $158.4500\n" +
+                    "\n" +
+                    "How many shares would you like to buy?\n" +
+                    "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
+                    "\n" +
+                    "Would you like to buy another stock? (Y|N)\n" +
+                    "\n" +
+                    "\n" +
+                    "1. Microsoft (MSFT)\n" +
+                    "2. Meta (META)\n" +
+                    "3. Google (GOOG)\n" +
+                    "4. Apple (AAPL)\n" +
+                    "5. Tesla (TSLA)\n" +
+                    "6. JPMorgan Chase (JPM)\n" +
+                    "7. Johnson (JNJ)\n" +
+                    "8. Amazon (AMZN)\n" +
+                    "9. UnitedHealth (UNH)\n" +
+                    "10. Walmart (WMT)\n" +
+                    "\n" +
+                    "Which stock would you like to buy?\n" +
+                    "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n" +
+                    "\n" +
+                    "STOCK DETAILS\n" +
+                    "StockName: Walmart\n" +
+                    "Symbol: WMT\n" +
+                    "Time: 2022-02-02\n" +
+                    "Price: $141.0000\n" +
+                    "\n" +
+                    "How many shares would you like to buy?\n" +
+                    "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
+                    "\n" +
+                    "Would you like to buy another stock? (Y|N)\n" +
+                    "\n" +
+                    "CONTROLLERTEST90 PORTFOLIO CREATED...!!!\n" +
+                    "\n" +
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "LIST OF PORTFOLIO\n" +
+                    "\n" +
+                    "1. CONTROLLERTEST1\n" +
+                    "2. CONTROLLERTEST2\n" +
+                    "3. CONTROLLERTEST3\n" +
+                    "4. CONTROLLERTEST4\n" +
+                    "5. CONTROLLERTEST5\n" +
+                    "6. CONTROLLERTEST6\n" +
+                    "7. CONTROLLERTEST7\n" +
+                    "8. CONTROLLERTEST8\n" +
+                    "9. CONTROLLERTEST9\n" +
+                    "10. CONTROLLERTEST90\n" +
+                    "\n" +
+                    "Select the portfolio to sell stocks from.\n" +
+                    "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n" +
+                    "\n" +
+                    "List of stocks available on date: 2022-01-01\n" +
+                    "\n" +
+                    "S.No\tName (Symbol) \n" +
+                    "\n" +
+                    "1.\tJPMorgan Chase (JPM) \n" +
+                    "\n" +
+                    "Which stock would you like to sell?\n" +
+                    "\n" +
+                    "STOCK DETAILS\n" +
+                    "StockName: JPMorgan Chase\n" +
+                    "Symbol: JPM\n" +
+                    "Time: 2022-01-01\n" +
+                    "Price: $158.4500\n" +
+                    "\n" +
+                    "You can sell only 50 shares of this stock on 2022-01-01\n" +
+                    "How many share would you like to sell?\n" +
+                    "\n" +
+                    "Shares successfully sold.\n" +
+                    "\n" +
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "LIST OF PORTFOLIO\n" +
+                    "\n" +
+                    "1. CONTROLLERTEST1\n" +
+                    "2. CONTROLLERTEST2\n" +
+                    "3. CONTROLLERTEST3\n" +
+                    "4. CONTROLLERTEST4\n" +
+                    "5. CONTROLLERTEST5\n" +
+                    "6. CONTROLLERTEST6\n" +
+                    "7. CONTROLLERTEST7\n" +
+                    "8. CONTROLLERTEST8\n" +
+                    "9. CONTROLLERTEST9\n" +
+                    "10. CONTROLLERTEST90\n" +
+                    "\n" +
+                    "Select the portfolio to sell stocks from.\n" +
+                    "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n" +
+                    "\n" +
+                    "List of stocks available on date: 2022-03-03\n" +
+                    "\n" +
+                    "S.No\tName (Symbol) \n" +
+                    "\n" +
+                    "1.\tTesla (TSLA) \n" +
+                    "2.\tJPMorgan Chase (JPM) \n" +
+                    "3.\tWalmart (WMT) \n" +
+                    "\n" +
+                    "Which stock would you like to sell?\n" +
+                    "\n" +
+                    "STOCK DETAILS\n" +
+                    "StockName: Walmart\n" +
+                    "Symbol: WMT\n" +
+                    "Time: 2022-03-03\n" +
+                    "Price: $137.2900\n" +
+                    "\n" +
+                    "You can sell only 150 shares of this stock on 2022-03-03\n" +
+                    "How many share would you like to sell?\n" +
+                    "\n" +
+                    "Shares successfully sold.\n" +
+                    "\n" +
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "LIST OF PORTFOLIO\n" +
+                    "\n" +
+                    "1. CONTROLLERTEST1\n" +
+                    "2. CONTROLLERTEST2\n" +
+                    "3. CONTROLLERTEST3\n" +
+                    "4. CONTROLLERTEST4\n" +
+                    "5. CONTROLLERTEST5\n" +
+                    "6. CONTROLLERTEST6\n" +
+                    "7. CONTROLLERTEST7\n" +
+                    "8. CONTROLLERTEST8\n" +
+                    "9. CONTROLLERTEST9\n" +
+                    "10. CONTROLLERTEST90\n" +
+                    "\n" +
+                    "Select the portfolio to which you would like to add the stock.\n" +
+                    "\n" +
+                    "\n" +
+                    "1. Microsoft (MSFT)\n" +
+                    "2. Meta (META)\n" +
+                    "3. Google (GOOG)\n" +
+                    "4. Apple (AAPL)\n" +
+                    "5. Tesla (TSLA)\n" +
+                    "6. JPMorgan Chase (JPM)\n" +
+                    "7. Johnson (JNJ)\n" +
+                    "8. Amazon (AMZN)\n" +
+                    "9. UnitedHealth (UNH)\n" +
+                    "10. Walmart (WMT)\n" +
+                    "\n" +
+                    "Which stock would you like to buy?\n" +
+                    "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n" +
+                    "\n" +
+                    "STOCK DETAILS\n" +
+                    "StockName: Walmart\n" +
+                    "Symbol: WMT\n" +
+                    "Time: 2022-02-14\n" +
+                    "Price: $135.3300\n" +
+                    "\n" +
+                    "How many shares would you like to buy?\n" +
+                    "Press 'b' to go back to the previous menu, 'm' to main menu.\n" +
+                    "\n" +
+                    "Would you like to buy another stock? (Y|N)\n" +
+                    "\n" +
+                    "Stock successfully added to the portfolio...!!!\n" +
+                    "\n" +
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "LIST OF PORTFOLIO\n" +
+                    "\n" +
+                    "1. CONTROLLERTEST1\n" +
+                    "2. CONTROLLERTEST2\n" +
+                    "3. CONTROLLERTEST3\n" +
+                    "4. CONTROLLERTEST4\n" +
+                    "5. CONTROLLERTEST5\n" +
+                    "6. CONTROLLERTEST6\n" +
+                    "7. CONTROLLERTEST7\n" +
+                    "8. CONTROLLERTEST8\n" +
+                    "9. CONTROLLERTEST9\n" +
+                    "10. CONTROLLERTEST90\n" +
+                    "\n" +
+                    "Select the portfolio to sell stocks from.\n" +
+                    "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n" +
+                    "\n" +
+                    "List of stocks available on date: 2022-02-15\n" +
+                    "\n" +
+                    "S.No\tName (Symbol) \n" +
+                    "\n" +
+                    "1.\tJPMorgan Chase (JPM) \n" +
+                    "2.\tWalmart (WMT) \n" +
+                    "\n" +
+                    "Which stock would you like to sell?\n" +
+                    "\n" +
+                    "STOCK DETAILS\n" +
+                    "StockName: Walmart\n" +
+                    "Symbol: WMT\n" +
+                    "Time: 2022-02-15\n" +
+                    "Price: $134.7400\n" +
+                    "\n" +
+                    "You can sell only 127 shares of this stock on 2022-02-15\n" +
+                    "How many share would you like to sell?\n" +
+                    "\n" +
+                    "Shares successfully sold.\n" +
+                    "\n" +
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "LIST OF PORTFOLIO\n" +
+                    "\n" +
+                    "1. CONTROLLERTEST1\n" +
+                    "2. CONTROLLERTEST2\n" +
+                    "3. CONTROLLERTEST3\n" +
+                    "4. CONTROLLERTEST4\n" +
+                    "5. CONTROLLERTEST5\n" +
+                    "6. CONTROLLERTEST6\n" +
+                    "7. CONTROLLERTEST7\n" +
+                    "8. CONTROLLERTEST8\n" +
+                    "9. CONTROLLERTEST9\n" +
+                    "10. CONTROLLERTEST90\n" +
+                    "\n" +
+                    "Select the portfolio to sell stocks from.\n" +
+                    "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n" +
+                    "\n" +
+                    "List of stocks available on date: 2022-09-09\n" +
+                    "\n" +
+                    "S.No\tName (Symbol) \n" +
+                    "\n" +
+                    "1.\tTesla (TSLA) \n" +
+                    "2.\tJPMorgan Chase (JPM) \n" +
+                    "3.\tWalmart (WMT) \n" +
+                    "\n" +
+                    "Which stock would you like to sell?\n" +
+                    "\n" +
+                    "STOCK DETAILS\n" +
+                    "StockName: Tesla\n" +
+                    "Symbol: TSLA\n" +
+                    "Time: 2022-09-09\n" +
+                    "Price: $291.6700\n" +
+                    "\n" +
+                    "You can sell only 100 shares of this stock on 2022-09-09\n" +
+                    "How many share would you like to sell?\n" +
+                    "\n" +
+                    "Shares successfully sold.\n" +
+                    "\n" +
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "LIST OF PORTFOLIO\n" +
+                    "\n" +
+                    "1. CONTROLLERTEST1\n" +
+                    "2. CONTROLLERTEST2\n" +
+                    "3. CONTROLLERTEST3\n" +
+                    "4. CONTROLLERTEST4\n" +
+                    "5. CONTROLLERTEST5\n" +
+                    "6. CONTROLLERTEST6\n" +
+                    "7. CONTROLLERTEST7\n" +
+                    "8. CONTROLLERTEST8\n" +
+                    "9. CONTROLLERTEST9\n" +
+                    "10. CONTROLLERTEST90\n" +
+                    "\n" +
+                    "Which portfolio would you like to check?\n" +
+                    "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n" +
+                    "\n" +
+                    "Value of CONTROLLERTEST90 PORTFOLIO\n" +
+                    "\n" +
+                    "Name (Symbol) \t Quantity\t Share Value on 2022-09-09\t Total Value\n" +
+                    "\n" +
+                    "JPMorgan Chase (JPM) \t 30\t $119.14\t $3574.2\n" +
+                    "Walmart (WMT) \t 121\t $136.3\t $16492.3\n" +
+                    "\n" +
+                    "Total Portfolio Value is on 2022-09-09: $20066.5\n" +
+                    "\n" +
+                    "Press 'b' to go back and 'm' for main menu.\n" +
+                    "\n" +
+                    "\n" +
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "LIST OF PORTFOLIO\n" +
+                    "\n" +
+                    "1. CONTROLLERTEST1\n" +
+                    "2. CONTROLLERTEST2\n" +
+                    "3. CONTROLLERTEST3\n" +
+                    "4. CONTROLLERTEST4\n" +
+                    "5. CONTROLLERTEST5\n" +
+                    "6. CONTROLLERTEST6\n" +
+                    "7. CONTROLLERTEST7\n" +
+                    "8. CONTROLLERTEST8\n" +
+                    "9. CONTROLLERTEST9\n" +
+                    "10. CONTROLLERTEST90\n" +
+                    "\n" +
+                    "Which portfolio would you like to check?\n" +
+                    "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n" +
+                    "\n" +
+                    "Value of CONTROLLERTEST90 PORTFOLIO\n" +
+                    "\n" +
+                    "Name (Symbol) \t Quantity\t Share Value on 2022-09-08\t Total Value\n" +
+                    "\n" +
+                    "Tesla (TSLA) \t 100\t $281.3\t $28130.0\n" +
+                    "JPMorgan Chase (JPM) \t 30\t $115.28\t $3458.4\n" +
+                    "Walmart (WMT) \t 121\t $135.4\t $16383.4\n" +
+                    "\n" +
+                    "Total Portfolio Value is on 2022-09-08: $47971.8\n" +
+                    "\n" +
+                    "Press 'b' to go back and 'm' for main menu.\n" +
+                    "\n" +
+                    "\n" +
+                    "MENU\n" +
+                    "\n" +
+                    "1. Create a portfolio\n" +
+                    "2. Value portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition\n" +
+                    "4. Add a stock to portfolio\n" +
+                    "5. Sell a stock from portfolio\n" +
+                    "6. Performance of portfolio\n" +
+                    "7. Total amount invested on certain date\n" +
+                    "e. Exit\n" +
+                    "\n" +
+                    "ENTER YOUR CHOICE: \n" +
+                    "\n" +
+                    "Exiting...\n";
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
@@ -4792,8 +4915,15 @@ public class ControllerTest extends TestParentClass {
             "7. Total amount invested on certain date\n" +
             "e. Exit\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
+            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n"
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n" +
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
@@ -5128,6 +5258,7 @@ public class ControllerTest extends TestParentClass {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
+    LocalDate today = LocalDate.now();
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
 
@@ -5165,23 +5296,24 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start year in format (YYYY) from year 2000 to 2017:\n" +
-            "Enter the number of years (5 to 12): \n" +
+            "Enter the start year in format (YYYY) from year 2000 to "
+            + today.minusYears(4).getYear() +":\n" +
+            "Enter the number of years (5 to 13): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST91 from 2010 to 2019\n" +
             "\n" +
-            "2010: *****\n" +
-            "2011: ****\n" +
-            "2012: ****\n" +
-            "2013: ****\n" +
-            "2014: ********************************************\n" +
-            "2015: *******************************************\n" +
-            "2016: *******************************************\n" +
-            "2017: ********************************************\n" +
-            "2018: **************************************************\n" +
-            "2019: ******************************************\n" +
+            "2010: *\n" +
+            "2011: *\n" +
+            "2012: *\n" +
+            "2013: *\n" +
+            "2014: **********\n" +
+            "2015: *********************\n" +
+            "2016: ************************\n" +
+            "2017: *************************************\n" +
+            "2018: ************************************************\n" +
+            "2019: **************************************************\n" +
             "\n" +
-            "Scale: * = $786\n" +
+            "Scale: * = $3537\n" +
             "# - either no stocks or 0 value in portfolio.\n" +
             "\n" +
             "\n" +
@@ -5239,8 +5371,15 @@ public class ControllerTest extends TestParentClass {
             "7. Total amount invested on certain date\n" +
             "e. Exit\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
+            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n"
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n" +
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
@@ -5575,7 +5714,7 @@ public class ControllerTest extends TestParentClass {
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
-
+    LocalDate today = LocalDate.now();
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
 
@@ -5614,7 +5753,7 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start month in format (YYYY-MM) from year 2000 to JUNE 2022:\n" +
+            "Enter the start month in format (YYYY-MM) from year 2000 to JULY 2022:\n" +
             "Enter the number of months (5 to 30): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST92 from JANUARY 2014 to MAY 2014\n" +
@@ -5623,9 +5762,9 @@ public class ControllerTest extends TestParentClass {
             "FEB 2014: *********\n" +
             "MAR 2014: **************************************************\n" +
             "APR 2014: ********************************************\n" +
-            "MAY 2014: ********************************************\n" +
+            "MAY 2014: **********************************************\n" +
             "\n" +
-            "Scale: * = $815\n" +
+            "Scale: * = $822\n" +
             "# - either no stocks or 0 value in portfolio.\n" +
             "\n" +
             "\n" +
@@ -5701,9 +5840,9 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start date in format (YYYY-MM-DD) from year 2000 to "+ today.minusDays(5).getYear() + "-"
-            + today.minusDays(5).getMonth() + "-"
-            + today.minusDays(5).getDayOfMonth()+":\n" +
+            "Enter the start date in format (YYYY-MM-DD) from year 2000 to "+ today.minusDays(4).getYear() + "-"
+            + today.minusDays(4).getMonth() + "-"
+            + today.minusDays(4).getDayOfMonth()+":\n" +
             "Enter the number of days (5 to 30): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST92 from 1 JANUARY 2014 to 5 JANUARY 2014\n" +
@@ -5773,8 +5912,15 @@ public class ControllerTest extends TestParentClass {
             "7. Total amount invested on certain date\n" +
             "e. Exit\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
+            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n"
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n" +
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
@@ -6155,43 +6301,43 @@ public class ControllerTest extends TestParentClass {
             "2. View by month\n" +
             "3. View by date\n" +
             "Enter the start date in format (YYYY-MM-DD) from year 2000 to "
-            + today.minusDays(5).getYear() + "-"
-            + today.minusDays(5).getMonth() + "-"
-            + today.minusDays(5).getDayOfMonth()+":\n" +
+            + today.minusDays(4).getYear() + "-"
+            + today.minusDays(4).getMonth() + "-"
+            + today.minusDays(4).getDayOfMonth()+":\n" +
             "Enter the number of days (5 to 30): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST92 from 1 MARCH 2015 to 30 MARCH 2015\n" +
             "\n" +
             "MAR 01 2015: *************************************************\n" +
-            "MAR 02 2015: ************************************************\n" +
+            "MAR 02 2015: *************************************************\n" +
             "MAR 03 2015: *************************************************\n" +
-            "MAR 04 2015: *************************************************\n" +
-            "MAR 05 2015: *************************************************\n" +
+            "MAR 04 2015: **************************************************\n" +
+            "MAR 05 2015: **************************************************\n" +
             "MAR 06 2015: *************************************************\n" +
-            "MAR 07 2015: **************************************************\n" +
+            "MAR 07 2015: *************************************************\n" +
             "MAR 08 2015: *************************************************\n" +
-            "MAR 09 2015: ************************************************\n" +
+            "MAR 09 2015: *************************************************\n" +
             "MAR 10 2015: *************************************************\n" +
             "MAR 11 2015: ************************************************\n" +
-            "MAR 12 2015: *****************************************\n" +
-            "MAR 13 2015: *****************************************\n" +
-            "MAR 14 2015: *********************************************\n" +
-            "MAR 15 2015: *********************************************\n" +
-            "MAR 16 2015: ***********************************************\n" +
-            "MAR 17 2015: ***********************************************\n" +
-            "MAR 18 2015: ***********************************************\n" +
+            "MAR 12 2015: ***********************************************\n" +
+            "MAR 13 2015: ************************************************\n" +
+            "MAR 14 2015: ************************************************\n" +
+            "MAR 15 2015: ************************************************\n" +
+            "MAR 16 2015: ************************************************\n" +
+            "MAR 17 2015: ************************************************\n" +
+            "MAR 18 2015: ************************************************\n" +
             "MAR 19 2015: ************************************************\n" +
             "MAR 20 2015: ************************************************\n" +
             "MAR 21 2015: ************************************************\n" +
             "MAR 22 2015: ************************************************\n" +
             "MAR 23 2015: *************************************************\n" +
             "MAR 24 2015: ************************************************\n" +
-            "MAR 25 2015: *************************************************\n" +
-            "MAR 26 2015: *************************************************\n" +
-            "MAR 27 2015: *************************************************\n" +
-            "MAR 28 2015: *************************************************\n" +
-            "MAR 29 2015: **************************************************\n" +
-            "MAR 30 2015: *************************************************\n" +
+            "MAR 25 2015: ************************************************\n" +
+            "MAR 26 2015: ***********************************************\n" +
+            "MAR 27 2015: ***********************************************\n" +
+            "MAR 28 2015: ***********************************************\n" +
+            "MAR 29 2015: ***********************************************\n" +
+            "MAR 30 2015: ************************************************\n" +
             "\n" +
             "Scale: * = $919\n" +
             "# - either no stocks or 0 value in portfolio.\n" +
@@ -6225,13 +6371,14 @@ public class ControllerTest extends TestParentClass {
    */
   @Test
   public void testZT(){
-    String userInput = "6" + "\n" + "10" + "\n" + "1" + "\n" + "2018" +"\n" + "b" + "\n" +
-            "10" + "\n" + "2" +"\n" + "2022-07" + "\n" + "b" + "\n" + "10" +"\n" + "2022-11-10"
+    String userInput = "6" + "\n" + "10" + "\n" + "1" + "\n" + "2045" +"\n" + "b" + "\n" +
+            "10" + "\n" + "2" +"\n" + "2023-07" + "\n" + "b" + "\n" + "10" +"\n" + "2024-11-10"
             +"\n" + "b"+"\n" + "m"+ "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
+    LocalDate today = LocalDate.now();
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
 
@@ -6271,7 +6418,8 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start year in format (YYYY) from year 2000 to 2017:\n" +
+            "Enter the start year in format (YYYY) from year 2000 to "
+            + today.minusYears(4).getYear()+":\n" +
             "Not a valid input. Please enter the correct date.\n" +
             "Press 'b' to go back\n" +
             "\n" +
@@ -6298,7 +6446,7 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start month in format (YYYY-MM) from year 2000 to JUNE 2022:\n" +
+            "Enter the start month in format (YYYY-MM) from year 2000 to JULY 2022:\n" +
             "Not a valid input. Please enter the correct date.\n" +
             "Press 'b' to go back\n" +
             "\n" +
@@ -6365,7 +6513,7 @@ public class ControllerTest extends TestParentClass {
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
-
+    LocalDate today = LocalDate.now();
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
 
@@ -6405,8 +6553,9 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start year in format (YYYY) from year 2000 to 2017:\n" +
-            "Enter the number of years (5 to 22): \n" +
+            "Enter the start year in format (YYYY) from year 2000 to "
+            + today.minusYears(4).getYear()+":\n" +
+            "Enter the number of years (5 to 23): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST2 from 2000 to 2004\n" +
             "\n" +
@@ -6455,7 +6604,7 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start month in format (YYYY-MM) from year 2000 to JUNE 2022:\n" +
+            "Enter the start month in format (YYYY-MM) from year 2000 to JULY 2022:\n" +
             "Enter the number of months (5 to 30): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST2 from FEBRUARY 2000 to JULY 2002\n" +
@@ -6530,7 +6679,7 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start month in format (YYYY-MM) from year 2000 to JUNE 2022:\n" +
+            "Enter the start month in format (YYYY-MM) from year 2000 to JULY 2022:\n" +
             "Enter the number of months (5 to 30): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST2 from FEBRUARY 2000 to JULY 2002\n" +
@@ -6642,23 +6791,23 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start month in format (YYYY-MM) from year 2000 to JUNE 2022:\n" +
-            "Enter the number of months (5 to 10): \n" +
+            "Enter the start month in format (YYYY-MM) from year 2000 to JULY 2022:\n" +
+            "Enter the number of months (5 to 11): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST91 from JANUARY 2022 to OCTOBER 2022\n" +
             "\n" +
-            "JAN 2022: ************************************************\n" +
-            "FEB 2022: **************************************************\n" +
-            "MAR 2022: ********************************************\n" +
-            "APR 2022: ******************************************\n" +
-            "MAY 2022: *********************************************\n" +
-            "JUN 2022: **********************************************\n" +
-            "JUL 2022: *********************************************\n" +
-            "AUG 2022: *********************************************\n" +
-            "SEP 2022: ************************************************\n" +
-            "OCT 2022: *********************************************\n" +
+            "JAN 2022: *********************************************\n" +
+            "FEB 2022: ***********************************************\n" +
+            "MAR 2022: **************************************************\n" +
+            "APR 2022: ****************************************\n" +
+            "MAY 2022: ************************************\n" +
+            "JUN 2022: *******\n" +
+            "JUL 2022: ********\n" +
+            "AUG 2022: *******\n" +
+            "SEP 2022: *******\n" +
+            "OCT 2022: ******\n" +
             "\n" +
-            "Scale: * = $5879\n" +
+            "Scale: * = $6210\n" +
             "# - either no stocks or 0 value in portfolio.\n" +
             "\n" +
             "\n" +
@@ -6695,6 +6844,7 @@ public class ControllerTest extends TestParentClass {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
+    LocalDate today = LocalDate.now();
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
 
@@ -6734,20 +6884,21 @@ public class ControllerTest extends TestParentClass {
             "1. View by year\n" +
             "2. View by month\n" +
             "3. View by date\n" +
-            "Enter the start year in format (YYYY) from year 2000 to 2017:\n" +
-            "Enter the number of years (5 to 12): \n" +
+            "Enter the start year in format (YYYY) from year 2000 to "
+            +today.minusYears(4).getYear()+":\n" +
+            "Enter the number of years (5 to 13): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST91 from 2010 to 2016\n" +
             "\n" +
-            "2010: *****\n" +
-            "2011: *****\n" +
-            "2012: *****\n" +
-            "2013: *****\n" +
-            "2014: **************************************************\n" +
-            "2015: *************************************************\n" +
-            "2016: *************************************************\n" +
+            "2010: **\n" +
+            "2011: **\n" +
+            "2012: **\n" +
+            "2013: ***\n" +
+            "2014: **********************\n" +
+            "2015: ********************************************\n" +
+            "2016: **************************************************\n" +
             "\n" +
-            "Scale: * = $700\n" +
+            "Scale: * = $1721\n" +
             "# - either no stocks or 0 value in portfolio.\n" +
             "\n" +
             "\n" +
@@ -6824,45 +6975,45 @@ public class ControllerTest extends TestParentClass {
             "2. View by month\n" +
             "3. View by date\n" +
             "Enter the start date in format (YYYY-MM-DD) from year 2000 to "
-            + today.minusDays(5).getYear() + "-"
-            + today.minusDays(5).getMonth() + "-"
-            + today.minusDays(5).getDayOfMonth()+":\n" +
+            + today.minusDays(4).getYear() + "-"
+            + today.minusDays(4).getMonth() + "-"
+            + today.minusDays(4).getDayOfMonth()+":\n" +
             "Enter the number of days (5 to 30): \n" +
             "\n" +
             "Performance of portfolio CONTROLLERTEST91 from 1 JANUARY 2010 to 30 JANUARY 2010\n" +
             "\n" +
-            "JAN 01 2010: ***********************************************\n" +
-            "JAN 02 2010: ***********************************************\n" +
-            "JAN 03 2010: ************************************************\n" +
+            "JAN 01 2010: *************************************************\n" +
+            "JAN 02 2010: *************************************************\n" +
+            "JAN 03 2010: *************************************************\n" +
             "JAN 04 2010: *************************************************\n" +
             "JAN 05 2010: *************************************************\n" +
             "JAN 06 2010: *************************************************\n" +
-            "JAN 07 2010: ************************************************\n" +
-            "JAN 08 2010: *************************************************\n" +
-            "JAN 09 2010: *************************************************\n" +
+            "JAN 07 2010: *************************************************\n" +
+            "JAN 08 2010: ************************************************\n" +
+            "JAN 09 2010: ************************************************\n" +
             "JAN 10 2010: ************************************************\n" +
             "JAN 11 2010: *************************************************\n" +
             "JAN 12 2010: ************************************************\n" +
             "JAN 13 2010: ************************************************\n" +
             "JAN 14 2010: ************************************************\n" +
-            "JAN 15 2010: ***********************************************\n" +
-            "JAN 16 2010: ***********************************************\n" +
-            "JAN 17 2010: ***********************************************\n" +
-            "JAN 18 2010: ***********************************************\n" +
-            "JAN 19 2010: ***********************************************\n" +
-            "JAN 20 2010: ***********************************************\n" +
-            "JAN 21 2010: ***********************************************\n" +
-            "JAN 22 2010: ***********************************************\n" +
-            "JAN 23 2010: ***********************************************\n" +
-            "JAN 24 2010: ***********************************************\n" +
+            "JAN 15 2010: **************************************************\n" +
+            "JAN 16 2010: **************************************************\n" +
+            "JAN 17 2010: **************************************************\n" +
+            "JAN 18 2010: **************************************************\n" +
+            "JAN 19 2010: *************************************************\n" +
+            "JAN 20 2010: *************************************************\n" +
+            "JAN 21 2010: *************************************************\n" +
+            "JAN 22 2010: ************************************************\n" +
+            "JAN 23 2010: ************************************************\n" +
+            "JAN 24 2010: ************************************************\n" +
             "JAN 25 2010: ***********************************************\n" +
-            "JAN 26 2010: ************************************************\n" +
-            "JAN 27 2010: *************************************************\n" +
-            "JAN 28 2010: **************************************************\n" +
-            "JAN 29 2010: *************************************************\n" +
+            "JAN 26 2010: ***********************************************\n" +
+            "JAN 27 2010: ***********************************************\n" +
+            "JAN 28 2010: ************************************************\n" +
+            "JAN 29 2010: ************************************************\n" +
             "JAN 30 2010: ************************************************\n" +
             "\n" +
-            "Scale: * = $94\n" +
+            "Scale: * = $93\n" +
             "# - either no stocks or 0 value in portfolio.\n" +
             "\n" +
             "\n" +
@@ -6940,9 +7091,9 @@ public class ControllerTest extends TestParentClass {
             "2. View by month\n" +
             "3. View by date\n" +
             "Enter the start date in format (YYYY-MM-DD) from year 2000 to "
-            + today.minusDays(5).getYear() + "-"
-            + today.minusDays(5).getMonth() + "-"
-            + today.minusDays(5).getDayOfMonth()+":\n" +
+            + today.minusDays(4).getYear() + "-"
+            + today.minusDays(4).getMonth() + "-"
+            + today.minusDays(4).getDayOfMonth()+":\n" +
             "Enter the number of days (5 to 30): \n" +
             "Not a valid input. Please enter the correct option.\n" +
             "Press 'b' to go back and 'm' for main menu.\n" +
@@ -6976,7 +7127,7 @@ public class ControllerTest extends TestParentClass {
    */
   @Test
   public void testZZ(){
-    String userInput = "1" + "\n" + "1" + "\n" + "ram" + "\n" + "1" + "\n"
+    String userInput = "1" + "\n" + "1" + "\n" + "test1" + "\n" + "1" + "\n"
             + "0" + "\n" + "90" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -6997,12 +7148,19 @@ public class ControllerTest extends TestParentClass {
             "7. Total amount invested on certain date\n" +
             "e. Exit\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
+            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n"
+            + "\n"
+            + "Enter your choice:\n"
+            +"Enter the name for this portfolio.\n" +
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
-            "RAM Portfolio\n" +
+            "TEST1 Portfolio\n" +
             "\n" +
             "1. Buy a stock\n" +
             "2. Main Menu\n" +
@@ -7196,8 +7354,15 @@ public class ControllerTest extends TestParentClass {
             "7. Total amount invested on certain date\n" +
             "e. Exit\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
+            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n"
+            + "\n"
+            + "Enter your choice:\n"
+            +"Enter the name for this portfolio.\n" +
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
@@ -7449,8 +7614,15 @@ public class ControllerTest extends TestParentClass {
             "7. Total amount invested on certain date\n" +
             "e. Exit\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
+            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n"
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n" +
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
@@ -7712,8 +7884,15 @@ public class ControllerTest extends TestParentClass {
             "7. Total amount invested on certain date\n" +
             "e. Exit\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
+            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n"
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n" +
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
