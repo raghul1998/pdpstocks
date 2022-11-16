@@ -45,8 +45,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -110,8 +110,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -148,8 +148,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -185,8 +185,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -223,8 +223,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -278,8 +278,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -300,8 +300,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -341,8 +341,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -438,8 +438,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -481,8 +481,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -522,8 +522,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -615,8 +615,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -659,8 +659,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -698,8 +698,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -766,8 +766,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -807,8 +807,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -844,8 +844,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -876,8 +876,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -913,8 +913,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -945,8 +945,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -983,8 +983,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1020,8 +1020,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1058,8 +1058,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1093,8 +1093,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1131,8 +1131,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1168,8 +1168,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1206,8 +1206,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1229,8 +1229,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1267,8 +1267,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1280,8 +1280,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -1319,8 +1319,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1332,8 +1332,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1412,8 +1412,8 @@ public class ControllerTest extends TestParentClass {
             + "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1452,8 +1452,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1511,8 +1511,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1554,8 +1554,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1625,8 +1625,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1667,8 +1667,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1826,8 +1826,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -1869,8 +1869,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2057,8 +2057,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2107,8 +2107,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2420,8 +2420,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2456,8 +2456,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2496,8 +2496,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2583,8 +2583,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2618,8 +2618,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2642,8 +2642,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2679,8 +2679,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2707,8 +2707,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2743,8 +2743,8 @@ public class ControllerTest extends TestParentClass {
     String expectedOutput = "\nMENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2771,8 +2771,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2810,8 +2810,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2861,8 +2861,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2899,8 +2899,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -2963,8 +2963,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3003,8 +3003,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3045,8 +3045,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3059,8 +3059,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3073,8 +3073,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3117,8 +3117,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3165,8 +3165,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3206,8 +3206,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3265,8 +3265,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3311,8 +3311,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3351,8 +3351,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3410,8 +3410,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3439,8 +3439,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3486,8 +3486,8 @@ public class ControllerTest extends TestParentClass {
             + "MENU\n"
             + "\n"
             + "1. Create a portfolio\n"
-            + "2. Value portfolio on certain date\n"
-            + "3. Value of portfolio on full composition\n"
+            + "2. Value and Composition of portfolio on certain date\n"
+            + "3. Value of portfolio on full composition on certain date\n"
             + "4. Add a stock to portfolio\n"
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
@@ -3598,8 +3598,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -3646,8 +3646,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -3696,8 +3696,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -3752,8 +3752,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -3801,8 +3801,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -3841,8 +3841,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -3881,8 +3881,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -3922,8 +3922,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -3964,8 +3964,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4004,8 +4004,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4046,8 +4046,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4088,8 +4088,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4130,8 +4130,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4169,8 +4169,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4257,8 +4257,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4299,8 +4299,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4347,8 +4347,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4458,8 +4458,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4506,8 +4506,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4556,8 +4556,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4612,8 +4612,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4661,8 +4661,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4711,8 +4711,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4752,8 +4752,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4794,8 +4794,8 @@ public class ControllerTest extends TestParentClass {
                     "MENU\n" +
                     "\n" +
                     "1. Create a portfolio\n" +
-                    "2. Value portfolio on certain date\n" +
-                    "3. Value of portfolio on full composition\n" +
+                    "2. Value and Composition of portfolio on certain date\n" +
+                    "3. Value of portfolio on full composition on certain date\n" +
                     "4. Add a stock to portfolio\n" +
                     "5. Sell a stock from portfolio\n" +
                     "6. Performance of portfolio\n" +
@@ -4830,8 +4830,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4863,8 +4863,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -4907,8 +4907,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5018,8 +5018,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5069,8 +5069,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5120,8 +5120,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5177,8 +5177,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5228,8 +5228,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5266,8 +5266,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5320,8 +5320,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5363,8 +5363,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5474,8 +5474,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5524,8 +5524,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5576,8 +5576,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5634,8 +5634,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5685,8 +5685,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5722,8 +5722,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5771,8 +5771,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5809,8 +5809,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5860,8 +5860,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -5904,8 +5904,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6015,8 +6015,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6066,8 +6066,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6119,8 +6119,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6178,8 +6178,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6231,8 +6231,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6268,8 +6268,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6346,8 +6346,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6386,8 +6386,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6483,8 +6483,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6521,8 +6521,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6572,8 +6572,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6647,8 +6647,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6722,8 +6722,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6759,8 +6759,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6814,8 +6814,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6852,8 +6852,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6905,8 +6905,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -6942,8 +6942,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7020,8 +7020,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7058,8 +7058,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7102,8 +7102,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7140,8 +7140,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7191,8 +7191,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7229,8 +7229,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7302,8 +7302,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7346,8 +7346,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7431,8 +7431,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7484,8 +7484,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7561,8 +7561,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7606,8 +7606,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7691,8 +7691,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7745,8 +7745,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7833,8 +7833,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7876,8 +7876,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -7961,8 +7961,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -8016,8 +8016,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -8063,8 +8063,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -8083,7 +8083,7 @@ public class ControllerTest extends TestParentClass {
 
 
   /**
-   * This test displays no investments for previous dates.
+   * This test displays total investments on previous dates.
    *
    */
   @Test
@@ -8092,9 +8092,9 @@ public class ControllerTest extends TestParentClass {
             + "2022-11-12"+ "\n" + "50"+ "\n" + "y" + "\n" +"2"
             + "\n" +"2022-11-13"+ "\n" + "100"+ "\n" + "n"+ "\n" +"5"+ "\n" + "17"+ "\n"
             + "2022-11-14" + "\n" +
-            "1"+ "\n" + "17" + "\n" + "\n"+"7" + "\n" + "17" + "\n" + "2022-01-01" + "\n" + "b"
+            "1"+ "\n" + "10" + "\n" + "m"+"\n"+"7" + "\n" + "17" + "\n" + "2022-01-01" + "\n" + "b"
             + "\n" + "17" + "\n" + "2022-02-02" + "\n" + "b" + "\n" + "17" + "\n" + "2022-03-03"
-            + "\n" + "b" + "\n" + "17" + "\n" + "2022-11-11" + "\n" + "m" + "\n" +"e";
+            + "\n" + "b" + "\n" + "17" + "\n" + "2022-11-13" + "\n" + "m" + "\n" +"e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -8106,16 +8106,23 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
             "7. Total amount invested on certain date\n" +
             "e. Exit\n" +
             "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Enter the name for this portfolio.\n" +
+            "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n"
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n" +
             "\n" +
             "CREATE PORTFOLIO MENU\n" +
             "\n" +
@@ -8184,8 +8191,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -8236,26 +8243,14 @@ public class ControllerTest extends TestParentClass {
             "How many share would you like to sell?\n" +
             "\n" +
             "Shares successfully sold.\n" +
+            "Press 'b' to go back and 'm' for main menu.\n"+
+            "\n" +
             "\n" +
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
-            "4. Add a stock to portfolio\n" +
-            "5. Sell a stock from portfolio\n" +
-            "6. Performance of portfolio\n" +
-            "7. Total amount invested on certain date\n" +
-            "e. Exit\n" +
-            "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "Invalid command. Enter the right option number.\n" +
-            "\n" +
-            "MENU\n" +
-            "\n" +
-            "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -8340,9 +8335,16 @@ public class ControllerTest extends TestParentClass {
             "\n" +
             "Which portfolio would you like to check?\n" +
             "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n" +
-            "There are no investments until 2022-03-03\n" +
             "\n" +
-            "Press 'b' to go back and 'm' for main menu.\n" +
+            "COST BASIS OF CONTROLLERTEST97 PORTFOLIO\n" +
+            "\n" +
+            "Total Money invested in stocks: $23072.5\n" +
+            "Commission cost per transaction is: $1.27\n" +
+            "Total number of transactions till date is: 2\n" +
+            "Total commission charges: 2.54\n" +
+            "Total Money spent: $23069.96\n" +
+            "\n" +
+            "Press 'b' to go back and 'm' for main menu."+
             "\n" +
             "\n" +
             "LIST OF PORTFOLIO\n" +
@@ -8375,8 +8377,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -8416,8 +8418,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
@@ -8456,8 +8458,8 @@ public class ControllerTest extends TestParentClass {
             "MENU\n" +
             "\n" +
             "1. Create a portfolio\n" +
-            "2. Value portfolio on certain date\n" +
-            "3. Value of portfolio on full composition\n" +
+            "2. Value and Composition of portfolio on certain date\n" +
+            "3. Value of portfolio on full composition on certain date\n" +
             "4. Add a stock to portfolio\n" +
             "5. Sell a stock from portfolio\n" +
             "6. Performance of portfolio\n" +
