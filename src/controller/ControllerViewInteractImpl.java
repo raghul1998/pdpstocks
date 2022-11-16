@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -384,8 +386,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         return;
       }
       String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
-              numberOfPortFolio);
+      String[] args = new String[portfolioNames.length + 1];
+      System.arraycopy(portfolioNames, 0, args, 0, portfolioNames.length);
+      args[portfolioNames.length] = "FLEXIBLE";
+
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, args,
+              args.length);
       vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
               numberOfPortFolio);
       String options;
@@ -421,8 +427,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         return;
       }
       String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
-              numberOfPortFolio);
+      String[] args = new String[portfolioNames.length + 1];
+      System.arraycopy(portfolioNames, 0, args, 0, portfolioNames.length);
+      args[portfolioNames.length] = "FLEXIBLE";
+
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, args,
+              args.length);
       vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
               numberOfPortFolio);
       String options;
@@ -656,8 +666,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         return;
       }
       String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
-              numberOfPortFolio);
+      String[] arg = new String[portfolioNames.length + 1];
+      System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
+      arg[portfolioNames.length] = "FLEXIBLE";
+
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
+              arg.length);
       output.println("\nSelect the portfolio to sell stocks from.");
       String options;
       options = scan.nextLine();
@@ -808,8 +822,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return;
     }
     String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
-            numberOfPortFolio);
+    String[] arg = new String[portfolioNames.length + 1];
+    System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
+    arg[portfolioNames.length] = "FLEXIBLE";
+
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
+            arg.length);
     output.println("\nSelect the portfolio to which you would like to add the stock.");
     String options;
     options = scan.nextLine();
@@ -842,8 +860,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         return;
       }
       String[] portfolioNames = obj.getPortFolioNames("ALL");
-      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
-              numberOfPortFolio);
+      String[] args = new String[portfolioNames.length + 1];
+      System.arraycopy(portfolioNames, 0, args, 0, portfolioNames.length);
+      args[portfolioNames.length] = "ALL";
+
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, args,
+              args.length);
       vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
               numberOfPortFolio);
       String options;
@@ -879,8 +901,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         return;
       }
       String[] portfolioNames = obj.getPortFolioNames("ALL");
-      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
-              numberOfPortFolio);
+      String[] args = new String[portfolioNames.length + 1];
+      System.arraycopy(portfolioNames, 0, args, 0, portfolioNames.length);
+      args[portfolioNames.length] = "ALL";
+
+      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, args,
+              args.length);
       vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
               numberOfPortFolio);
       String options;

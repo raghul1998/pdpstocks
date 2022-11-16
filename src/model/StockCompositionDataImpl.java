@@ -15,6 +15,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
+import controller.GetStockData;
+import controller.GetStockDataImpl;
+
 /**
  * This class represents the stock composition data and methods that can be called upon to get the
  * data related to the stocks.
