@@ -538,13 +538,14 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     }
 
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
+    double totalMoneyInvested = Math.floor((totalPortFolioValue
+            + (stkObj.numberOfTransactions * 1.27)) * 100) / 100;
     if (type.equals("COST")) {
       output.println("\nTotal Money invested in stocks: $" + totalPortFolioValue);
       output.println("Commission cost per transaction is: $1.27");
       output.println("Total number of transactions till date is: " + stkObj.numberOfTransactions);
       output.println("Total commission charges: " + stkObj.numberOfTransactions * 1.27);
-      output.println("Total Money spent: $" + (totalPortFolioValue
-              - (stkObj.numberOfTransactions * 1.27)) + "\n");
+      output.println("Total Money spent: $" + totalMoneyInvested + "\n");
     } else {
       output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
     }
