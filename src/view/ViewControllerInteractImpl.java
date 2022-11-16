@@ -9,13 +9,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
-import model.GetStockData;
-import model.GetStockDataImpl;
+import controller.GetStockData;
+import controller.GetStockDataImpl;
 import model.StockCompositionData;
 import model.StockCompositionDataImpl;
 import model.StockNameMap;
 import model.StockNameMapImpl;
-import model.StockPortFolioData;
 import model.StockPortFolioDataImpl;
 
 /**

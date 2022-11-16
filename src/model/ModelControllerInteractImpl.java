@@ -11,6 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+import controller.GetStockData;
+import controller.GetStockDataImpl;
+
 /**
  * This class represents the model and provides the implementation to dispatch the actions to the
  * corresponding methods.
