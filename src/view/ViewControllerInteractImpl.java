@@ -701,8 +701,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void mainScreen() {
     output.println("\nMENU\n");
     output.println("1. Create a portfolio");
-    output.println("2. Value and Composition of portfolio on certain date");
-    output.println("3. Value of portfolio on full composition on certain date");
+    output.println("2. Value and Composition of portfolio");
+    output.println("3. Value of portfolio on full composition");
     output.println("4. Add a stock to portfolio");
     output.println("5. Sell a stock from portfolio");
     output.println("6. Performance of portfolio");
