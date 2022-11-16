@@ -62,7 +62,8 @@ public class StockCompositionDataImpl implements StockCompositionData {
     return total;
   }
 
-  private boolean isPortfolioOfGivenType(String filename, String portfolioType) {
+  @Override
+  public boolean isPortfolioOfGivenType(String filename, String portfolioType) {
     BufferedReader stockData;
     String lines;
     try {
@@ -81,13 +82,8 @@ public class StockCompositionDataImpl implements StockCompositionData {
     return numberOfPortFolio;
   }
 
-  /**
-   * A helper method that returns the name of the portfolio by the index that is provided.
-   *
-   * @param index the index of the portfolio
-   * @return the name of the portfolio as a string
-   */
-  private String getPortFolioFileNameByIndex(int index, String portfolioType) {
+  @Override
+  public String getPortFolioFileNameByIndex(int index, String portfolioType) {
     File dir = new File("userdata/user1");
     File[] files = dir.listFiles();
     assert files != null;

@@ -82,8 +82,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       }
       case PORTFOLIO_INDIVIDUAL_LIST: {
         String opt = args[0];
-        // This case is not being used
-        // showPortfolioIndividualScreen(opt, args[1]);
+        String portfolioType = args[1];
+        showPortfolioIndividualScreen(opt, portfolioType);
         break;
       }
       case PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE: {
@@ -461,20 +461,20 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     StockPortFolioDataImpl stkObj = null;
 
     if (Objects.equals(type, "FULL")) {
-      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true, null,
-              true, false, portfolioType);
+      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
+              null, true, false, portfolioType);
     } else if (Objects.equals(type, "TRUE")) {
       try {
-        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
-                date, true, true, portfolioType);
+        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber,
+                true, date, true, true, portfolioType);
       } catch (Exception e) {
         output.println("Error in getting the data.");
         return;
       }
     } else if (Objects.equals(type, "COST")) {
       try {
-        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, false,
-                date, false, false, portfolioType);
+        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber,
+                false, date, false, false, portfolioType);
       } catch (Exception e) {
         output.println("Error in getting the data.");
         return;
@@ -560,8 +560,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
     StockPortFolioDataImpl stkObj =
-            (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, false, null,
-                    true, false, portfolioType);
+            (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, false,
+                    null, true, false, portfolioType);
 
     String[] portfolioNames = obj.getPortFolioNames(portfolioType);
     String date = stkObj.createdTimeStamp;
@@ -570,7 +570,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       return;
     }
     date = date.substring(0, 10);
-    output.println("\n" + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO"
+    output.println("\n" + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO (inflexible)"
             + " COMPOSITION - Created on " + date + "\n");
 
     output.print("Name");
@@ -700,8 +700,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void mainScreen() {
     output.println("\nMENU\n");
     output.println("1. Create a portfolio");
-    output.println("2. Value portfolio on certain date");
-    output.println("3. Value of portfolio on full composition");
+    output.println("2. Value and Composition of portfolio on certain date");
+    output.println("3. Value of portfolio on full composition on certain date");
     output.println("4. Add a stock to portfolio");
     output.println("5. Sell a stock from portfolio");
     output.println("6. Performance of portfolio");
