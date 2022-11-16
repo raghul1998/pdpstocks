@@ -13,15 +13,20 @@ The application will not create an empty portfolio.
 STEPS TO CREATE A PORTFOLIO WITH 3 DIFFERENT STOCKS STOCKS
 
 1. In the Main Menu, enter '1' to create a portfolio.
-2. You will be prompted to enter the name for the portfolio. If the name already exists, the application will ask you if you want to override the already existing portfolio.
-3. Once the portfolio is created, press '1' to buy stocks. If you don't buy any stocks and return to main menu or exit the application, the empty portfolio will be deleted.
-4. You will be provided with a list of supported stocks. Choose one by inputting the number of that stock.
-5. The application now will fetch the data of the stock like current price, the date/time at which the value is last known of. You can only buy shares only from that last known value.
+2. You will be prompted to enter the type of portfolio you would like to create. Choose a type.
+3. You will be prompted to enter the name for the portfolio. If the name already exists, the application will ask you if you want to override the already existing portfolio.
+4. Once the portfolio is created, press '1' to buy stocks. If you don't buy any stocks and return to main menu or exit the application, the empty portfolio will be deleted.
+5. You will be provided with a list of supported stocks. Choose one by inputting the number of that stock.
+6. If you had choosen a flexible portfolio option, the application will ask you the date on which you would like to buy the
+   stocks for. If you had choosen inflexible portfolio, then this option will be skipped.
+7. The application now will fetch the data of the stock like current price, the date/time at which the value is last known of. 
+   You can only buy shares only from that last known value.
    Now enter the number of shares you would like to buy (can only buy from 1 to 2147483647 shares).
    Application will not allow you to buy 0 shares or shares that are more than 2147483647.
-6. Once the shares are bought, the application will ask you if you want to buy more shares. If you press 'Y', then the process repeats from step 4. 
+8. Once the shares are bought, the application will ask you if you want to buy more shares. If you press 'Y', then the process repeats from step 5. 
    If you press 'N', then the application will show the portfolio is created message and take you to the Main Menu.
-   Press 'Y' and repeat step 4 and 5 two times for different stocks.
+   
+   Press 'Y' and repeat from step 5 two more times to buy shares for different stocks.
    Once 3 different stocks are bought, press 'N' to exit to the Menu Menu and the portfolio will be created.
 
 
@@ -37,13 +42,22 @@ COMPOSITON OF PORTFOLIO
    
 
 VALUE OF PORTFOLIO ON A CERTAIN DATE
-1. In the Main Menu, press '3' to check the value of the portfolio on a certain date.
+1. In the Main Menu, press '2' to check the value of the portfolio on a certain date.
 2. Once pressed, the application will display the list of available portfolio's and will ask you for the input for which you would like to
-   check the contents of. Input the number accordingly.
+   check the contents of. Input the number accordingly. Also choose the flexible portfolio.
 3. Then the application will ask you the date for which you would like to know the value of. The supported date ranges are
    (from Jan 1st 2000 to the current date). Enter the date in the format YYYY-MM-DD as mentioned in the screen.
 4. The application will show the details of the stocks and it's shares, it's price and the total value of the portfolio on the
    date mentioned by the user.
+   
+   
+COST BASIS OF PORTFOLIO ON A CERTAIN DATE
+1. In the Main Menu, press '7' to check the cost basis of the portfolio on a certain date.
+2. Once pressed, the application will display the list of available flexible portfolio's and 
+   will ask you for the input for which you would like to check the cost basis of. Input the number accordingly.
+3. Then the application will ask you the date for which you would like to know the value of. The supported date ranges are
+   (from Jan 1st 2000 to the current date). Enter the date in the format YYYY-MM-DD as mentioned in the screen.
+4. The application will show the details of the money invested alone with the commission charges.
    
 
 STOCKS SUPPORTED BY THE APPLICATION
@@ -60,3 +74,4 @@ STOCKS SUPPORTED BY THE APPLICATION
 10. UnitedHealth 	(UNH)
 
 The last known value of these stocks are detemined by the API call and will be displayed in the screen for the user.
+The use can buy or view the stock value only from Jan 01 2000 to till date.
