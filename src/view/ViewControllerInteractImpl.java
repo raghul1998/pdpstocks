@@ -15,6 +15,7 @@ import model.StockCompositionData;
 import model.StockCompositionDataImpl;
 import model.StockNameMap;
 import model.StockNameMapImpl;
+import model.StockPortFolioData;
 import model.StockPortFolioDataImpl;
 
 /**
@@ -599,8 +600,20 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void showPortFolioCompositionScreen(String[] portfolioNames, int numberOfPortFolio) {
     output.println("\nLIST OF PORTFOLIO");
     output.println();
-    for (int i = 0; i < numberOfPortFolio; i++) {
-      output.println(i + 1 + ". " + portfolioNames[i].toUpperCase());
+    StockCompositionData obj = new StockCompositionDataImpl("ALL");
+    for (int i = 0; i < numberOfPortFolio - 1; i++) {
+      if (Objects.equals(portfolioNames[numberOfPortFolio - 1], "ALL")) {
+        String fileName = obj.getPortFolioFileNameByIndex(i, "ALL");
+        String pfType;
+        if (obj.isPortfolioOfGivenType(fileName, "FLEXIBLE")) {
+          pfType = "FLEXIBLE";
+        } else {
+          pfType = "INFLEXIBLE";
+        }
+        output.println(i + 1 + ". " + portfolioNames[i].toUpperCase() + " (" + pfType + ")");
+      } else {
+        output.println(i + 1 + ". " + portfolioNames[i].toUpperCase());
+      }
     }
 
   }
