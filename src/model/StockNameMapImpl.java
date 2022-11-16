@@ -2,8 +2,8 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * This class represents the supported stocks and the methods that can be called upon related to
@@ -13,7 +13,7 @@ import java.util.TreeMap;
  * </ul>
  */
 public class StockNameMapImpl implements StockNameMap {
-  private final Map<String, String> stockNameMap = new TreeMap<>();
+  private final Map<String, String> stockNameMap = new HashMap<>();
 
   /**
    * Constructor that reads the 'SupportedStocks.csv' file and reads the list of supported stocks
