@@ -67,4 +67,21 @@ public interface StockCompositionData extends StockPortFolioData {
    */
   Map<String, Double> computePerformanceData(String[] args, int length,
                                              String portfolioType) throws IOException;
+
+  /**
+   * This method that returns the name of the portfolio by the index that is provided.
+   *
+   * @param index the index of the portfolio
+   * @return the name of the portfolio as a string
+   */
+  String getPortFolioFileNameByIndex(int index, String portfolioType);
+
+  /**
+   * This method helps to determine what type of portfolio based on the input.
+   *
+   * @param filename      name of the portfolio
+   * @param portfolioType type of portfolio
+   * @return true if portfolio is of the given type
+   */
+  boolean isPortfolioOfGivenType(String filename, String portfolioType);
 }

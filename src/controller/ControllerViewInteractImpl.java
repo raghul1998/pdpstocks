@@ -402,20 +402,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       if (!portfolioViewAction(options, "COST", "FLEXIBLE")) {
         continue;
       }
-      vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
-      options = scan.nextLine();
-      while ((options == null || options.length() == 0)
-              || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
-              || (options.equals("B")))) {
-        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-        vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
-        options = scan.nextLine();
-      }
 
-      if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+      if (endMenu()) {
         return;
       }
-      // When user press 'B' continue
     }
   }
 
@@ -567,7 +557,36 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     dates[Integer.parseInt(number) + 2] = choice;
     cmiObj.controllerModelInteract(TypeofAction.GET_PORTFOLIO_PERFORMANCE, dates, dates.length);
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_PERFORMANCE, dates, dates.length);
-    return true;
+
+    if (endMenu()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * A helper method to get user input to go back to previous option or to main menu.
+   *
+   * @return true if user wants to go to main menu
+   */
+  private boolean endMenu() {
+    String options;
+    vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
+    options = scan.nextLine();
+    while ((options == null || options.length() == 0)
+            || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
+            || (options.equals("B")))) {
+      vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+      vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
+      options = scan.nextLine();
+    }
+
+    if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+      return true;
+    }
+    // When user presses 'B' continue
+    return false;
   }
 
   /**
@@ -770,7 +789,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     data[1] = currentPortfolioName;
     cmiObj.controllerModelInteract(TypeofAction.SELL_STOCKS, data, 3);
     output.println("Shares successfully sold.");
-    return true;
+
+    if (endMenu()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -835,20 +859,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       if (!portfolioViewAction(options, "FULL", "ALL")) {
         continue;
       }
-      vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
-      options = scan.nextLine();
-      while ((options == null || options.length() == 0)
-              || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
-              || (options.equals("B")))) {
-        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-        vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
-        options = scan.nextLine();
-      }
 
-      if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+      if (endMenu()) {
         return;
       }
-      // When user press 'B' continue
     }
   }
 
@@ -858,13 +872,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    */
   private void compositionOfPortfolio() {
     while (true) {
-      StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+      StockCompositionData obj = new StockCompositionDataImpl("ALL");
       int numberOfPortFolio = obj.getNumberOfPortFolio();
       if (numberOfPortFolio == 0) {
         vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
         return;
       }
-      String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
+      String[] portfolioNames = obj.getPortFolioNames("ALL");
       vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, portfolioNames,
               numberOfPortFolio);
       vciObj.viewControllerInteract(TypeofViews.WHICH_PORTFOLIO_CHECK, portfolioNames,
@@ -879,25 +893,35 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           return;
         }
       }
-      //portfolioCompositionAction(options);
-      if (!portfolioViewAction(options, "TRUE", "FLEXIBLE")) {
-        continue;
-      }
-      vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
-      options = scan.nextLine();
-      while ((options == null || options.length() == 0)
-              || !((options.equals("M")) || (options.equals("m")) || (options.equals("b"))
-              || (options.equals("B")))) {
-        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-        vciObj.viewControllerInteract(TypeofViews.GOBACK_MAINMENU_OPTION, null, 0);
-        options = scan.nextLine();
+
+      String fileName = obj.getPortFolioFileNameByIndex(Integer.parseInt(options) - 1,
+              "ALL");
+
+      if (obj.isPortfolioOfGivenType(fileName, "INFLEXIBLE")) {
+        portfolioCompositionAction(options, "ALL");
+      } else {
+        if (!portfolioViewAction(options, "TRUE", "ALL")) {
+          continue;
+        }
       }
 
-      if (Objects.equals(options, "m") || Objects.equals(options, "M")) {
+      if (endMenu()) {
         return;
       }
-      // When user presses 'B' continue
     }
+  }
+
+  /**
+   * This method tells the view to display the composition of the portfolio along with the stocks
+   * details like name, symbol, quantity, price of each share and total value.
+   *
+   * @param options the portfolio number
+   */
+  private void portfolioCompositionAction(String options, String portfolioType) {
+    String[] args = new String[2];
+    args[0] = options;
+    args[1] = portfolioType;
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST, args, 2);
   }
 
   /**
