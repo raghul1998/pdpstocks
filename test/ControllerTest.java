@@ -28,7 +28,7 @@ public class ControllerTest extends TestParentClass {
    * This test checks the creation of portfolio.
    */
   @Test
-  public void testAControllerCreatePortfolio() throws IOException {
+  public void testAController_CreatePortfolio() throws IOException {
     deleteDirectory();
     deleteFileInDirectory("pf_controllerTest1.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest1" + "\n" + "1" + "\n" + "1"
@@ -99,7 +99,7 @@ public class ControllerTest extends TestParentClass {
    * This test checks the output for view portfolio on certain date.
    */
   @Test
-  public void testBControllerViewPortfolio() throws IOException {
+  public void testBController_ViewPortfolio() throws IOException {
     String userInput = "2" + "\n" + "1" + "\n" + "2022-11-11" + "\n"
             + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -156,7 +156,7 @@ public class ControllerTest extends TestParentClass {
    * This test checks that portfolio is not created, if user doesn't buy any stock.
    */
   @Test
-  public void testCControllerWithoutBuyingAnythingNoPortfolioCreated() {
+  public void testCController_WithoutBuyingAnythingNoPortfolioCreated() {
     String userInput = "1" + "\n" + "1" + "\n" + "controller2" + "\n" + "1" + "\n" + "1" + "\n"
             + "2022-11-11" + "\n" + "m" + "\n" + "2" + "\n" + "e" + "\n" + "b" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -230,7 +230,7 @@ public class ControllerTest extends TestParentClass {
    * and is seen combined in the view portfolio.
    */
   @Test
-  public void testDControllerClubTwoStocksOfSameTickerComposition() throws IOException {
+  public void testDController_ClubTwoStocksOfSameTickerComposition() throws IOException {
     deleteFileInDirectory("pf_controllerTest2.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest2" + "\n" + "1" + "\n" + "1" + "\n"
             + "2022-11-11" + "\n" + "2" + "\n" + "y" + "\n" + "1" + "\n" + "2022-11-11"
@@ -361,7 +361,7 @@ public class ControllerTest extends TestParentClass {
    * and is seen combined in the view portfolio.
    */
   @Test
-  public void testEControllerClubTwoStocksOfSameTickerComposition2() throws IOException {
+  public void testEController_ClubTwoStocksOfSameTickerComposition2() throws IOException {
     deleteFileInDirectory("pf_controllerTest3.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest3" + "\n" + "1" + "\n" + "1" + "\n"
             + "2022-11-11" + "\n" + "2" + "\n" + "y" + "\n" + "1" + "\n" + "2022-11-12" + "\n" + "3"
@@ -487,7 +487,7 @@ public class ControllerTest extends TestParentClass {
    * This test checks how the same name portfolio gets overridden.
    */
   @Test
-  public void testFControllerOverrideSamePortfolio() throws IOException {
+  public void testFController_OverrideSamePortfolio() throws IOException {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest3" + "\n" + "y" + "\n"
             + "1" + "\n" + "1" + "\n" + "2022-11-11" + "\n" + "5" + "\n" + "n"
             + "\n" + "2" + "\n" + "3" + "\n" + "2022-11-11" + "\n" + "m" + "\n" + "e";
@@ -593,7 +593,7 @@ public class ControllerTest extends TestParentClass {
    * This test checks portfolio stocks after inputting some previous date.
    */
   @Test
-  public void testGControllerInputDate() throws IOException {
+  public void testGController_InputDate() throws IOException {
     String userInput = "3" + "\n" + "3" + "\n" + "2022-11-12" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -644,7 +644,7 @@ public class ControllerTest extends TestParentClass {
    * This test checks portfolio stocks after inputting some previous date.
    */
   @Test
-  public void testHControllerInputDate2() {
+  public void testHController_InputDate2() {
     String userInput = "3" + "\n" + "3" + "\n" + "2019-12-12" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -695,7 +695,7 @@ public class ControllerTest extends TestParentClass {
    * This test displays message when wrong input date is given by the user.
    */
   @Test
-  public void testIControllerInvalidDate() {
+  public void testIController_InvalidDate() {
     String userInput = "3" + "\n" + "3" + "\n" + "9999-98-88" + "\n" + "2022-02-02"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -752,7 +752,7 @@ public class ControllerTest extends TestParentClass {
    * This test displays message when wrong input date is given by the user.
    */
   @Test
-  public void testJControllerInvalidDate2() {
+  public void testJController_InvalidDate2() {
     String userInput = "3" + "\n" + "3" + "\n" + "123445" + "\n" + "2022-02-02"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -808,7 +808,7 @@ public class ControllerTest extends TestParentClass {
    * This test displays message when a future date is given by the user.
    */
   @Test
-  public void testKControllerInvalidDate3FutureDate() {
+  public void testKController_InvalidDate3FutureDate() {
     String userInput = "3" + "\n" + "3" + "\n" + "2024-10-10" + "\n" + "2022-02-02"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -866,7 +866,7 @@ public class ControllerTest extends TestParentClass {
    * wrong option for selecting portfolio.
    */
   @Test
-  public void testLControllerEnterWrongOptionForSelectingPortfolio() {
+  public void testLController_EnterInvalidOptionForSelectingPortfolio() {
     String userInput = "2" + "\n" + "89" + "\n" + "b" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -902,14 +902,248 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
+
   // 13
+
+  /**
+   * This test displays an invalid message when the user inputs
+   * future date on purchase.
+   */
+
+  @Test
+  public void testMController_EnterFutureDateForPurchase(){
+    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n"+ "9" + "\n"
+            + "2023-10-01" + "\n" + "b" + "\n"+ "e" + "\n";
+    // 1 1 name 1 9 2023-10-01 b e
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + getFlexibleInflexibleScreen()
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "TEST Portfolio\n"
+            +"\n"
+            + getBuyStockScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "Not a valid input. Please enter the correct date.\n"
+            + "Press 'b' to go back"
+            + "\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // 14
+
+  /**
+   * This test displays an invalid message when the user inputs
+   * invalid date on purchase.
+   */
+
+  @Test
+  public void testNController_EnterInvalidDateForPurchase(){
+    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n"+ "9" + "\n"
+            + "2021-13-13" + "\n" + "b" + "\n"+ "e" + "\n";
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + getFlexibleInflexibleScreen()
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "TEST Portfolio\n"
+            +"\n"
+            + getBuyStockScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "Not a valid input. Please enter the correct date.\n"
+            + "Press 'b' to go back"
+            + "\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // 15
+
+  /**
+   * This test displays an invalid message when the user inputs
+   * future date while selling.
+   */
+
+  @Test
+  public void testOController_EnterFutureDateForSell(){
+    String userInput = "5" + "\n" + "1" + "\n" + "2023-01-01" + "\n" + "b"
+            + "\n" + "m" + "\n" + "b" + "\n" + "e";
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
+            + "Not a valid input. Please enter the correct date.\n"
+            + "Press 'b' to go back\n"
+            + "\n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Not a valid input. Please enter the correct portfolio.\n"
+            + "Press 'b' to go back to the previous menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+
+  // 16
+
+  /**
+   * This test displays an invalid message when the user inputs
+   * invalid date while selling.
+   */
+
+  @Test
+  public void testPController_EnterInvalidDateForSell(){
+    String userInput = "5" + "\n" + "2" + "\n" + "2680-34-13" + "\n" + "b"
+            + "\n" + "m" + "\n" + "b" + "\n" + "e";
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
+            + "Not a valid input. Please enter the correct date.\n"
+            + "Press 'b' to go back\n"
+            + "\n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Not a valid input. Please enter the correct portfolio.\n"
+            + "Press 'b' to go back to the previous menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // 17
 
   /**
    * This test displays an invalid message when the user inputs
    * wrong option for initial choice of inputs.
    */
   @Test
-  public void testMControllerInvalidInitialChoice() {
+  public void testQController_InvalidInitialChoice() {
     String userInput = "8" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -935,13 +1169,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 14
+  // 18
 
   /**
    * This test tests set of all invalid inputs.
    */
   @Test
-  public void testNControllerInvalidInputs() {
+  public void testRController_InvalidInputs() {
     String userInput = "8" + "\n" + "1" + "\n" + "1" + "\n" + "" + "\n" + "controllerTest4"
             + "\n" + "6" + "\n" + "1" + "\n" + "11" + "\n" + "10" + "\n" + "9900-72-00" + "\n"
             + "2022-01-01" + "\n" + "-4" + "\n" + "4.3" + "\n" + "m" + "\n" + "e";
@@ -1025,13 +1259,13 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  // 15
+  // 19
 
   /**
    * This test displays no portfolio creation if the number of stocks inputted by the user is zero.
    */
   @Test
-  public void testOControllerHowManyStocksIsZeroSoPortfolioNotCreated() {
+  public void testSOController_HowManyStocksIsZeroSoPortfolioNotCreated() {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest4" + "\n" + "1" + "\n" + "1" + "\n"
             + "2022-08-08" + "\n" + "0" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -1089,14 +1323,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 16
+  // 20
 
   /**
    * This test does not display the entry inside the portfolio when
    * the number of stocks inputted by the user is zero.
    */
   @Test
-  public void testPControllerHowManyStocksIsZeroSoStockNotDisplayedInPortfolio()
+  public void testTController_HowManyStocksIsZeroSoStockNotDisplayedInPortfolio()
           throws IOException {
     deleteFileInDirectory("pf_controllerTest4.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest4" + "\n" + "1" + "\n" + "4" + "\n"
@@ -1169,13 +1403,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 17
+  // 21
 
   /**
    * This test displays 4 stocks bought by user.
    */
   @Test
-  public void testQController4StocksBoughtByTheUser() throws IOException {
+  public void testUController_4StocksBoughtByTheUser() throws IOException {
     deleteFileInDirectory("pf_controllerTest4.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest4" + "\n" + "1" + "\n"
             + "1" + "\n" + "2022-11-11" + "\n" + "10" + "\n" + "Y" + "\n"
@@ -1310,13 +1544,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 18
+  // 22
 
   /**
    * This test displays 5 stocks bought by user on different dates.
    */
   @Test
-  public void testRController5ByTheUser() throws IOException {
+  public void testVController_5ByTheUser() throws IOException {
     deleteFileInDirectory("pf_controllerTest5.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest5" + "\n" + "1" + "\n"
             + "1" + "\n" + "2022-10-01" + "\n" + "10" + "\n" + "Y" + "\n"
@@ -1473,13 +1707,13 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  // 19
+  // 23
 
   /**
    * This test displays 10 stocks bought by user.
    */
   @Test
-  public void testSController10StocksBoughtByUser() throws IOException {
+  public void testWController_10StocksBoughtByUser() throws IOException {
     deleteFileInDirectory("pf_controllerTest6.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest6" + "\n" + "1" + "\n"
             + "2" + "\n" + "2022-10-10" + "\n" + "1" + "\n" + "Y" + "\n"
@@ -1720,13 +1954,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 20
+  // 24
 
   /**
    * This test takes initial input as exit.
    */
   @Test
-  public void testTInitialChoiceExit() {
+  public void testXController_InitialChoiceExit() {
     String userInput = "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1747,13 +1981,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 21
+  // 25
 
   /**
    * This test tests for large input for the number of stocks.
    */
   @Test
-  public void testUInvalidHowMany() throws IOException {
+  public void testYController_InvalidHowMany() throws IOException {
     deleteFileInDirectory("pf_controllerTest7.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest7" + "\n" + "2"
             + "1" + "\n" + "controllerTest7" + "\n"
@@ -1836,13 +2070,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 22
+  // 26
 
   /**
    * This test throws a message when portfolio name is an empty string.
    */
   @Test
-  public void testVStringEmptyForName() {
+  public void testZController_StringEmptyForName() {
     String userInput = "1" + "\n" + "1" + "\n" + "" + "\n" + "0" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1874,14 +2108,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 23
+  // 27
 
   /**
    * This test throws error message when user inputs wrong option for displaying portfolio
    * from a list of portfolio.
    */
   @Test
-  public void testWViewPortfolioAndEnterWrongOption() {
+  public void testZAController_ViewPortfolioAndEnterWrongOption() {
     String userInput = "2" + "\n" + "-52" + "\n" + "b" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1920,14 +2154,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 24
+  // 28
 
   /**
    * This test throws error message when user inputs wrong option for displaying portfolio
    * from a list of portfolio.
    */
   @Test
-  public void testXValueOfPortfolioEnterWrongPortfolioNumber() {
+  public void testZBController_ValueOfPortfolioEnterWrongPortfolioNumber() {
     String userInput = "3" + "\n" + "-9" + "\n" + "b" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1967,13 +2201,13 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  // 25
+  // 29
 
   /**
    * This test displays an invalid input message when user enters invalid entry while buying stock.
    */
   @Test
-  public void testYBuyStockEnterWrongStockOption() {
+  public void testZCController_BuyStockEnterWrongStockOption() {
     String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n"
             + "0" + "\n" + "90" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -2022,14 +2256,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 26
+  // 30
 
   /**
    * This test displays an invalid input message when user enters invalid entry while
    * entering number of stocks.
    */
   @Test
-  public void testZBuyStockEnterInvalidHowManyStocks() {
+  public void testZDController_BuyStockEnterInvalidHowManyStocks() {
     String userInput = "1" + "\n" + "1" + "\n" + "e" + "\n" + "1" + "\n" + "9" + "\n"
             + "2022-11-11" + "\n" + "0" + "\n" + "-85" + "\n" + "8.90" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -2091,13 +2325,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 27
+  // 31
 
   /**
    * This test checks the operations of back and main menu.
    */
   @Test
-  public void testZAToggleBetweenMainMenuAndBack() {
+  public void testZEController_ToggleBetweenMainMenuAndBack() {
     String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + " 2" + "\n" + "2" + "\n"
             + "-1" + "\n" + "b" + "\n" + "3" + "\n" + "1" + "\n" + "-1" + "\n" + "b"
             + "\n" + "-1" + "\n" + "b" + "\n" + "1" + "\n" + "1" + "\n"
@@ -2212,14 +2446,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 28
+  // 32
 
   /**
    * This test checks when stock purchased on a specifc date
    * and sold the same stock at a later date.
    */
   @Test
-  public void testZBBuyAndSell1() {
+  public void testZFController_BuyAndSell1() {
     deleteFileInDirectory("pf_controllerTest8.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest8" + "\n" + "1" + "\n"
             + "2" + "\n" + "2022-02-02" + "\n" + "100" + "\n" + "n" + "\n"
@@ -2317,14 +2551,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 29
+  // 33
 
   /**
    * This test throws a message when stock purchased on a specific date
    * and sold the same stock at a previous date than that of the purchase.
    */
   @Test
-  public void testZCBuyAndSell2() {
+  public void testZGController_BuyAndSell2() {
     deleteFileInDirectory("pf_controllerTest9.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest9" + "\n" + "1" + "\n"
             + "2" + "\n" + "2022-02-02" + "\n" + "100" + "\n" + "n" + "\n"
@@ -2402,7 +2636,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //30
+  //34
 
   /**
    * This test checks the combinations of stocks purchased while creating portfolio,
@@ -2410,7 +2644,7 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testZDBuyAndSell3() {
+  public void testZHController_BuyAndSell3() {
     deleteFileInDirectory("pf_controllerTest90.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest90" + "\n" + "1" + "\n" + "5"
             + "\n" + "2022-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "6" + "\n" + "2022-01-01"
@@ -2669,14 +2903,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //31
+  //35
 
   /**
    * This test checks value of portfolio (option 2) on various dates
    * for portfolio controllerTest90.
    */
   @Test
-  public void testZEAddtoExistingPortfolioAndSell1() {
+  public void testZIController_AddtoExistingPortfolioAndSell1() {
     String userInput = "2" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "m" + "\n" + "2" + "\n"
             + "10" + "\n" + "2022-02-02" + "\n" + "m" + "\n" + "2" + "\n" + "10" + "\n"
             + "2022-03-03" + "\n" + "m" + "\n" + "e";
@@ -2792,14 +3026,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //32
+  //36
 
   /**
    * This test checks value of portfolio on full composition (option 3) on various dates
    * for portfolio controllerTest90.
    */
   @Test
-  public void testZFAddtoExistingPortfolioAndSell2() {
+  public void testZKController_AddtoExistingPortfolioAndSell2() {
     String userInput = "3" + "\n" + "10" + "\n" + "2022-01-01" + "\n" + "m" + "\n" + "3" + "\n"
             + "10" + "\n" + "2022-02-02" + "\n" + "m" + "\n" + "3" + "\n" + "10" + "\n"
             + "2022-03-03" + "\n" + "m" + "\n" + "e";
@@ -2918,13 +3152,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //33
+  //37
 
   /**
    * This test adds stock to the current portfolio.
    */
   @Test
-  public void testZGAddStockToCurrentPortfolio() {
+  public void testZLController_AddStockToCurrentPortfolio() {
     String userInput = "4" + "\n" + "10" + "\n" + "6" + "\n" + "2022-11-11" + "\n" + "500" + "\n"
             + "y" + "\n" + "4" + "\n" + "10" + "\n" + "5" + "\n" + "2022-11-12" + "\n" + "40" + "\n"
             + "n" + "\n" + "2" + "\n" + "10" + "\n" + "2022-11-11" + "\n" + "m" + "\n" + "e";
@@ -3040,13 +3274,13 @@ public class ControllerTest extends TestParentClass {
     deleteFileInDirectory("pf_controllerTest90.csv");
   }
 
-  //34
+  // 38
 
   /**
    * This test sells stocks from current portfolio.
    */
   @Test
-  public void testZHSellStockFromCurrentPortfolio() {
+  public void testZMController_SellStockFromCurrentPortfolio() {
     deleteFileInDirectory("pf_controllerTest90.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest90" + "\n" + "1" + "\n" + "5"
             + "\n" + "2022-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "6" + "\n" + "2022-01-01"
@@ -3413,11 +3647,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
+  // 39
+
   /**
    * This test checks value portfolio on certain date for past date.
    */
   @Test
-  public void testZKValueOfPortfolioOnCertainDate() {
+  public void testZNController_ValueOfPortfolioOnCertainDate() {
     String userInput = "2" + "\n" + "10" + "\n" + "2014-01-01" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -3462,13 +3698,13 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  //39
+  //40
 
   /**
    * This test creates portfolio with combination of purchases and sells in different dates.
    */
   @Test
-  public void testZMPurchasesAndSells() {
+  public void testZOController_PurchasesAndSells() {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest91" + "\n" + "1" + "\n" + "8"
             + "\n" + "2014-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "10" + "\n" + "2018-01-01"
             + "\n" + "50" + "\n" + "y" + "\n" + "1" + "\n" + "2000-02-02" + "\n" + "150"
@@ -3732,13 +3968,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //40
+  //41
 
   /**
    * This test checks performance by year.
    */
   @Test
-  public void testZNPerformanceByYear() {
+  public void testZPController_PerformanceByYear() {
     String userInput = "6" + "\n" + "11" + "\n" + "1" + "\n" + "2010" + "\n" + "10"
             + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -3806,13 +4042,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //41
+  //42
 
   /**
    * This test creates portfolio.
    */
   @Test
-  public void testZOCreationOfPortfolioFlexible() {
+  public void testZQController_CreationOfPortfolioFlexible() {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest92" + "\n" + "1" + "\n" + "8"
             + "\n" + "2014-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "10" + "\n" + "2014-01-01"
             + "\n" + "50" + "\n" + "y" + "\n" + "1" + "\n" + "2014-02-02" + "\n" + "150"
@@ -4078,13 +4314,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //42
+  //43
 
   /**
    * This test checks by month.
    */
   @Test
-  public void testZPPerformanceByMonth() {
+  public void testZRController_PerformanceByMonth() {
     String userInput = "6" + "\n" + "12" + "\n" + "2" + "\n" + "2014-01"
             + "\n" + "5" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -4147,13 +4383,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //43
+  //44
 
   /**
    * This test checks by day.
    */
   @Test
-  public void testZQPerformanceByDay() {
+  public void testZSController_PerformanceByDay() {
     String userInput = "6" + "\n" + "12" + "\n" + "3" + "\n" + "2014-01-01" + "\n"
             + "5" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -4220,14 +4456,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //44
+  //45
 
   /**
    * This test creates portfolio where the buying and selling takes place within days.
    * This testcase is written for showing performance for DAY.
    */
   @Test
-  public void testZRCreationOfPortfolioForShowingPerformanceForDay() {
+  public void testZTController_CreationOfPortfolioForShowingPerformanceForDay() {
     deleteFileInDirectory("controllerTest93.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest93" + "\n" + "1" + "\n" + "8"
             + "\n" + "2015-03-03" + "\n" + "100" + "\n" + "y" + "\n" + "10" + "\n" + "2015-03-01"
@@ -4498,13 +4734,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //45
+  //46
 
   /**
    * This test checks by day.
    */
   @Test
-  public void testZSPerformanceByDay2() {
+  public void testZUController_PerformanceByDay2() {
     String userInput = "6" + "\n" + "12" + "\n" + "3" + "\n" + "2015-03-01"
             + "\n" + "30" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -4596,13 +4832,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //46
+  //47
 
   /**
    * This test checks performance invalid year,or month or day or invalid range.
    */
   @Test
-  public void testZTChecksInvalidInputForPerformanceByYearMonthDay() {
+  public void testZVController_ChecksInvalidInputForPerformanceByYearMonthDay() {
     String userInput = "6" + "\n" + "10" + "\n" + "1" + "\n" + "2045" + "\n" + "b" + "\n"
             + "10" + "\n" + "2" + "\n" + "2023-07" + "\n" + "b" + "\n" + "10" + "\n" + "2024-11-10"
             + "\n" + "b" + "\n" + "m" + "\n" + "e";
@@ -4713,13 +4949,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //47
+  //48
 
   /**
    * This test checks performance with # when no value.
    */
   @Test
-  public void testZUPerformanceToShowHash_noValue() {
+  public void testZWController_PerformanceToShowHash_noValue() {
     String userInput = "6" + "\n" + "2" + "\n" + "1" + "\n" + "2000" + "\n" + "5" + "\n" + "m"
             + "\n" + "6" + "\n" + "2" + "\n" + "2" + "\n" + "2000-02" + "\n" + "30" + "\n"
             + "m" + "\n" + "6" + "\n" + "2" + "\n" + "2" + "\n" + "2000-02" + "\n" + "30"
@@ -4920,13 +5156,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //48
+  //49
 
   /**
    * This test checks performance for a portfolio by month.
    */
   @Test
-  public void testZVPerformanceByMonth() {
+  public void testZXController_PerformanceByMonth() {
     String userInput = "6" + "\n" + "11" + "\n" + "2" + "\n" + "2022-01"
             + "\n" + "10" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -4995,13 +5231,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //49
+  //50
 
   /**
    * This test checks performance by year.
    */
   @Test
-  public void testZWPerformanceByYear() {
+  public void testZYController_PerformanceByYear() {
     String userInput = "6" + "\n" + "11" + "\n" + "1" + "\n" + "2010"
             + "\n" + "7" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -5069,13 +5305,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //50
+  //51
 
   /**
    * This test checks performance by day.
    */
   @Test
-  public void testZXPerformanceByDay3() {
+  public void testZZController_PerformanceByDay3() {
     String userInput = "6" + "\n" + "11" + "\n" + "3" + "\n"
             + "2010-01-01" + "\n" + "30" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -5167,13 +5403,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //51
+  //52
 
   /**
    * This test checks invalid input for performance.
    */
   @Test
-  public void testZYInvalidInputForPerformance() {
+  public void testZZAController_InvalidInputForPerformance() {
     String userInput = "6" + "\n" + "11" + "\n" + "3" + "\n"
             + "2010-01-01" + "\n" + "35" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -5231,13 +5467,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //52
+  //53
 
   /**
    * This test checks the operations of back and main menu.
    */
   @Test
-  public void testZZInvalidInput() {
+  public void testZZBController_InvalidInput() {
     String userInput = "1" + "\n" + "1" + "\n" + "test1" + "\n" + "1" + "\n"
             + "0" + "\n" + "90" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -5286,13 +5522,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //53
+  //54
 
   /**
    * This test checks the total investment on various dates.
    */
   @Test
-  public void testZZATotalInvestmentOnVariousDates() {
+  public void testZZCController_TotalInvestmentOnVariousDates() {
     String userInput = "7" + "\n" + "11" + "\n" + "2022-01-01" + "\n" + "b" + "\n"
             + "11" + "\n" + "2014-03-03" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -5377,13 +5613,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //54
+  //55
 
   /**
    * This test checks value portfolio on full composition on various dates.(inflexible)
    */
   @Test
-  public void testZZBFullCompositionInflexible() {
+  public void testZZDController_FullCompositionInflexible() {
 
     deleteFileInDirectory("pf_controllerTest94.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest94" + "\n" + "1" + "\n" + "1"
@@ -5575,13 +5811,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //55
+  //56
 
   /**
    * This test checks the value portfolio (option 2 on various dates).
    */
   @Test
-  public void testZZCValueOfPortfolioOption2() {
+  public void testZZEController_ValueOfPortfolioOption2() {
 
     deleteFileInDirectory("controllerTest95.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest95" + "\n" + "1" + "\n" + "1"
@@ -5786,12 +6022,12 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-
+  // 57
   /**
    * This test checks Value of portfolio on full composition on certain date for past date.
    */
   @Test
-  public void testZZDValueOfPortfolioOnCertainPastDate() {
+  public void testZZFController_ValueOfPortfolioOnCertainPastDate() {
     deleteFileInDirectory("pf_controllerTest96.csv");
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest96" + "\n" + "1" + "\n" + "1"
             + "\n" + "2022-11-12" + "\n" + "50" + "\n" + "y" + "\n" + "2"
@@ -5954,11 +6190,12 @@ public class ControllerTest extends TestParentClass {
   }
 
 
+  // 58
   /**
    * This test checks total investments on previous dates.
    */
   @Test
-  public void testZZEChecksInvestmentsOnPreviousDates() {
+  public void testZZGController_ChecksInvestmentsOnPreviousDates() {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest97" + "\n" + "1" + "\n" + "1"
             + "\n" + "2022-11-12" + "\n" + "50" + "\n" + "y" + "\n" + "2"
             + "\n" + "2022-11-13" + "\n" + "100" + "\n" + "n" + "\n" + "5" + "\n"
@@ -6204,11 +6441,12 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
+  // 59
   /**
    * This test checks total amount invested on certain date.
    */
   @Test
-  public void testZZFInvestmentsOnCertainDate() {
+  public void testZZHController_InvestmentsOnCertainDate() {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest98" + "\n" + "1" + "\n" + "1"
             + "\n" + "2022-11-12" + "\n" + "50" + "\n" + "y" + "\n" + "2"
             + "\n" + "2022-11-13" + "\n" + "100" + "\n" + "n" + "\n" + "5" + "\n" + "18" + "\n"
@@ -6372,14 +6610,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-
+  // 60
   /**
    * This test checks when a purchase and sell takes place of a particular stock
    * and there are no stocks left to be sold. This test prints a message
    * when no stocks are left.
    */
   @Test
-  public void testZZGPurchasedAndSoldAlreadySoldStocks() {
+  public void testZZIController_PurchasedAndSoldAlreadySoldStocks() {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest99" + "\n"
             + "1" + "\n" + "8" + "\n" + "2022-11-01" + "\n"
             + "600" + "\n" + "n" + "\n" + "5" + "\n" + "19" + "\n"
@@ -6526,11 +6764,131 @@ public class ControllerTest extends TestParentClass {
 
   }
 
+  // 60
+  /**
+   * This test checks when a purchase and sell takes place of a particular stock
+   * where the number of stocks sold is greater
+   * and there are no stocks left to be sold. This test prints a message
+   * when no stocks are left.
+   */
+  @Test
+  public void testZZJController_PurchasedAndSoldAlreadySoldStocks() {
+    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest990" + "\n"
+            + "1" + "\n" + "8" + "\n" + "2022-11-01" + "\n"
+            + "600" + "\n" + "n" + "\n" + "5" + "\n" + "20" + "\n"
+            + "2022-11-11" + "\n" + "1" + "\n" + "700" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + getFlexibleInflexibleScreen()
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "CONTROLLERTEST990 Portfolio\n"
+            + "\n"
+            + getBuyStockScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Amazon\n"
+            + "Symbol: AMZN\n"
+            + "Time: 2022-11-01\n"
+            + "Price: $103.9900\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "CONTROLLERTEST990 PORTFOLIO CREATED...!!!\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "14. CONTROLLERTEST94\n"
+            + "15. CONTROLLERTEST95\n"
+            + "16. CONTROLLERTEST96\n"
+            + "17. CONTROLLERTEST97\n"
+            + "18. CONTROLLERTEST98\n"
+            + "19. CONTROLLERTEST99\n"
+            + "20. CONTROLLERTEST990\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "List of stocks available on date: 2022-11-11\n"
+            + "\n"
+            + "S.No\tName (Symbol) \n"
+            + "\n"
+            + "1.\tAmazon (AMZN) \n"
+            + "\n"
+            + "Which stock would you like to sell?\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Amazon\n"
+            + "Symbol: AMZN\n"
+            + "Time: 2022-11-11\n"
+            + "Price: $97.8800\n"
+            + "\n"
+            + "You can sell only 600 shares of this stock on 2022-11-11\n"
+            + "How many share would you like to sell?\n"
+            + "\n"
+            + "Not a valid input. You can only sell until600 shares. Also please enter number "
+            + "of shares as natural numbers.\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+
+  }
+
+  // 61
   /**
    * This test checks inflexible portfolio.
    */
   @Test
-  public void testZZHInflexiblePortfolio() {
+  public void testZZKController_InflexiblePortfolio() {
     String userInput = "1" + "\n" + "2" + "\n" + "controllerTest9900" + "\n" + "1" + "\n"
             + "10" + "\n" + "80" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
