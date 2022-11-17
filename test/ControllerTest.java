@@ -1,5 +1,3 @@
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -89,7 +87,9 @@ public class ControllerTest extends TestParentClass {
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
-    input.close(); bytes.close(); output.close();
+    input.close();
+    bytes.close();
+    output.close();
     assertEquals(expectedOutput, result);
   }
 
