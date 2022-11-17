@@ -166,9 +166,10 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         splitStockData = line.split(splitBy);
       }
 
+      stockData.close();
+
       // Delete only if the portfolio is empty
       if (Objects.equals(splitStockData[0], "TransactionType")) {
-        stockData.close();
         file.delete();
       }
     } catch (Exception e) {

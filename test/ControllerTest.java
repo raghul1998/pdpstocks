@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -88,9 +89,8 @@ public class ControllerTest extends TestParentClass {
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
-
+    input.close(); bytes.close(); output.close();
     assertEquals(expectedOutput, result);
-    deleteFileInDirectory("pf_controllerTest1.csv");
   }
 
   // 2

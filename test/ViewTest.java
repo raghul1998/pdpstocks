@@ -462,7 +462,7 @@ public class ViewTest extends TestParentClass {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
-    String[] name = {"view1","2"};
+    String[] name = {"view1","1"};
     String[] stocks = {"MSFT", "2022-11-11"};
 
     String[] portfolioNames = {"view1", "ALL"};

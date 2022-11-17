@@ -73,6 +73,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
       stockData = new BufferedReader(new FileReader(filename));
       stockData.readLine();
       lines = stockData.readLine();
+      stockData.close();
     } catch (Exception e) {
       return false;
     }
@@ -476,6 +477,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
         }
         finalDateAmountMap.put(splitStockData[3], Math.floor(finalStockValue * 100) / 100);
       }
+      stockData.close();
     }
     return finalDateAmountMap;
   }

@@ -679,6 +679,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       assert stockData != null;
       line = stockData.readLine();
       splitStockData = line.split(splitBy);
+      stockData.close();
     } catch (Exception e) {
       output.println("Error in reading Supported stocks csv file.");
     }
