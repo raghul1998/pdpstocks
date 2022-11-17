@@ -25,6 +25,7 @@ import view.ViewControllerInteractImpl;
 import view.TypeofViews;
 
 import static java.lang.System.exit;
+import static java.lang.System.out;
 import static java.lang.Thread.sleep;
 
 /**
@@ -63,6 +64,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   @Override
   public void start() {
     cmiObj.controllerModelInteract(TypeofAction.CREATE_SUPPORTED_STOCKS, null, 0);
+    storeCommissionCost("1.27"); // Default value
     String option;
     do {
       try {
@@ -359,6 +361,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         costBasisByDate();
         break;
       }
+      case "8": {
+        commissionCostMainMenu();
+        break;
+      }
       case "e":
       case "E": {
         output.println("\nExiting...");
@@ -370,6 +376,54 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         break;
       }
     }
+  }
+
+  private void commissionCostMainMenu() {
+    StockCompositionData stk = new StockCompositionDataImpl("ALL");
+    output.println("\nCONFIGURE COMMISSION COST\n");
+    output.println("Current commission cost is: $" + stk.getCommissionCost());
+    output.println("Enter the commission cost per transaction:");
+    String cost;
+    cost = scan.nextLine();
+    while (!validateCommissionCost(cost)) {
+      vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+      output.println("Commission cost should be greater than 0. Enter 'm' for main menu.");
+      cost = scan.nextLine();
+      if (cost.equalsIgnoreCase("m")) {
+        return;
+      }
+    }
+    storeCommissionCost(cost);
+    output.println("Commission cost set to " + cost);
+  }
+
+  private void storeCommissionCost(String cost) {
+    String[] args = new String[1];
+    args[0] = cost;
+    cmiObj.controllerModelInteract(TypeofAction.STORE_COMMISSION_COST, args, 1);
+  }
+
+  /**
+   * A helper function to validate the commission cost.
+   *
+   * @param cost cost as string
+   * @return true if cost is valid
+   */
+  private boolean validateCommissionCost(String cost) {
+    double commissionCost;
+    if (cost == null || cost.length() == 0) {
+      return false;
+    }
+    try {
+      commissionCost = Double.parseDouble(cost);
+    } catch (Exception e) {
+      return false;
+    }
+
+    if (commissionCost <= 0) {
+      return false;
+    }
+    return true;
   }
 
   /**

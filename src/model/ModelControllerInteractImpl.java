@@ -68,11 +68,31 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         portFolioName = args[length - 3];
         break;
       }
+      case STORE_COMMISSION_COST: {
+        try {
+          storeCommissionCost(args[0]);
+        } catch (Exception e) {
+          // Do nothing
+        }
+        break;
+      }
       default: {
         //No Action Needed
         break;
       }
     }
+  }
+
+  private void storeCommissionCost(String arg) throws IOException {
+    String fileName = "data/CommissionCost.txt";
+    File file = new File(fileName);
+    if (!file.exists()) {
+      file.createNewFile();
+    }
+    PrintWriter write = new PrintWriter(fileName);
+    write.write(arg);
+    write.flush();
+    write.close();
   }
 
   /**

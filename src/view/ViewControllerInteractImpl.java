@@ -458,6 +458,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
                                                      String portfolioType) {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
+    double commissionCost = obj.getCommissionCost();
     StockPortFolioDataImpl stkObj = null;
 
     if (Objects.equals(type, "FULL")) {
@@ -539,12 +540,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
 
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
     double totalMoneyInvested = Math.floor((totalPortFolioValue
-            + (stkObj.numberOfTransactions * 1.27)) * 100) / 100;
+            + (stkObj.numberOfTransactions * commissionCost)) * 100) / 100;
     if (type.equals("COST")) {
       output.println("\nTotal Money invested in stocks: $" + totalPortFolioValue);
-      output.println("Commission cost per transaction is: $1.27");
+      output.println("Commission cost per transaction is: $" + commissionCost);
       output.println("Total number of transactions till date is: " + stkObj.numberOfTransactions);
-      output.println("Total commission charges: " + stkObj.numberOfTransactions * 1.27);
+      output.println("Total commission charges: " + stkObj.numberOfTransactions * commissionCost);
       output.println("Total Money spent: $" + totalMoneyInvested + "\n");
     } else {
       output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
@@ -720,6 +721,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("5. Sell a stock from portfolio");
     output.println("6. Performance of portfolio");
     output.println("7. Total amount invested on certain date");
+    output.println("8. Configure the commission cost");
     output.println("e. Exit\n");
     output.println("ENTER YOUR CHOICE: ");
   }

@@ -84,4 +84,11 @@ public interface StockCompositionData extends StockPortFolioData {
    * @return true if portfolio is of the given type
    */
   boolean isPortfolioOfGivenType(String filename, String portfolioType);
+
+  /**
+   * This method helps to retrive the commission cost.
+   *
+   * @return the commission cost as a double
+   */
+  double getCommissionCost();
 }
