@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -180,6 +181,7 @@ public class TestParentClass {
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
             + "7. Total amount invested on certain date\n"
+            + "8. Configure the commission cost\n"
             + "e. Exit\n";
   }
 
@@ -196,5 +198,6 @@ public class TestParentClass {
             + "1. Flexible / Customizable Portfolio\n"
             + "2. Inflexible / Non Customizable Portfolio\n";
   }
+
 
 }

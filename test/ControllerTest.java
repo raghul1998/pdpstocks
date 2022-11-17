@@ -1019,7 +1019,65 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
+
   // 15
+
+  /**
+   * This test displays an invalid message when the user inputs
+   * invalid date on adding to existing portfolio.
+   */
+
+  @Test
+  public void testOController_EnterInvalidDateForAdd(){
+    String userInput = "4" + "\n" + "1" + "\n" + "4" + "\n" + "2011-20-32" + "\n"+ "b" + "\n"
+            + "\n"+ "e";
+    // 4 1 4 20111-20-32 b e
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "\n"
+            + "Select the portfolio to which you would like to add the stock.\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "Not a valid input. Please enter the correct date.\n"
+            + "Press 'b' to go back"
+            + "\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Invalid command. Enter the right option number.\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // 16
 
   /**
    * This test displays an invalid message when the user inputs
@@ -1027,7 +1085,7 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testOController_EnterFutureDateForSell(){
+  public void testPController_EnterFutureDateForSell(){
     String userInput = "5" + "\n" + "1" + "\n" + "2023-01-01" + "\n" + "b"
             + "\n" + "m" + "\n" + "b" + "\n" + "e";
 
@@ -1078,7 +1136,7 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  // 16
+  // 17
 
   /**
    * This test displays an invalid message when the user inputs
@@ -1086,7 +1144,7 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testPController_EnterInvalidDateForSell(){
+  public void testQController_EnterInvalidDateForSell(){
     String userInput = "5" + "\n" + "2" + "\n" + "2680-34-13" + "\n" + "b"
             + "\n" + "m" + "\n" + "b" + "\n" + "e";
 
@@ -1136,15 +1194,15 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 17
+  // 18
 
   /**
    * This test displays an invalid message when the user inputs
    * wrong option for initial choice of inputs.
    */
   @Test
-  public void testQController_InvalidInitialChoice() {
-    String userInput = "8" + "\n" + "e";
+  public void testRController_InvalidInitialChoice() {
+    String userInput = "9" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1169,14 +1227,14 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 18
+  // 19
 
   /**
    * This test tests set of all invalid inputs.
    */
   @Test
-  public void testRController_InvalidInputs() {
-    String userInput = "8" + "\n" + "1" + "\n" + "1" + "\n" + "" + "\n" + "controllerTest4"
+  public void testSController_InvalidInputs() {
+    String userInput = "9" + "\n" + "1" + "\n" + "1" + "\n" + "" + "\n" + "controllerTest4"
             + "\n" + "6" + "\n" + "1" + "\n" + "11" + "\n" + "10" + "\n" + "9900-72-00" + "\n"
             + "2022-01-01" + "\n" + "-4" + "\n" + "4.3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -1259,7 +1317,7 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  // 19
+  // 20
 
   /**
    * This test displays no portfolio creation if the number of stocks inputted by the user is zero.
@@ -1323,7 +1381,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 20
+  // 21
 
   /**
    * This test does not display the entry inside the portfolio when
@@ -1403,7 +1461,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 21
+  // 22
 
   /**
    * This test displays 4 stocks bought by user.
@@ -1544,7 +1602,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 22
+  // 23
 
   /**
    * This test displays 5 stocks bought by user on different dates.
@@ -1707,7 +1765,7 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  // 23
+  // 24
 
   /**
    * This test displays 10 stocks bought by user.
@@ -1954,7 +2012,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 24
+  // 25
 
   /**
    * This test takes initial input as exit.
@@ -1981,7 +2039,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 25
+  // 26
 
   /**
    * This test tests for large input for the number of stocks.
@@ -2070,7 +2128,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 26
+  // 27
 
   /**
    * This test throws a message when portfolio name is an empty string.
@@ -2108,7 +2166,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 27
+  // 28
 
   /**
    * This test throws error message when user inputs wrong option for displaying portfolio
@@ -2154,7 +2212,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 28
+  // 29
 
   /**
    * This test throws error message when user inputs wrong option for displaying portfolio
@@ -2201,7 +2259,7 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  // 29
+  // 30
 
   /**
    * This test displays an invalid input message when user enters invalid entry while buying stock.
@@ -2256,7 +2314,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 30
+  // 31
 
   /**
    * This test displays an invalid input message when user enters invalid entry while
@@ -2325,7 +2383,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 31
+  // 32
 
   /**
    * This test checks the operations of back and main menu.
@@ -2446,7 +2504,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 32
+  // 33
 
   /**
    * This test checks when stock purchased on a specifc date
@@ -2551,7 +2609,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 33
+  // 34
 
   /**
    * This test throws a message when stock purchased on a specific date
@@ -2636,7 +2694,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //34
+  //35
 
   /**
    * This test checks the combinations of stocks purchased while creating portfolio,
@@ -2903,7 +2961,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //35
+  //36
 
   /**
    * This test checks value of portfolio (option 2) on various dates
@@ -3026,7 +3084,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //36
+  //37
 
   /**
    * This test checks value of portfolio on full composition (option 3) on various dates
@@ -3152,7 +3210,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //37
+  //38
 
   /**
    * This test adds stock to the current portfolio.
@@ -3274,7 +3332,7 @@ public class ControllerTest extends TestParentClass {
     deleteFileInDirectory("pf_controllerTest90.csv");
   }
 
-  // 38
+  // 39
 
   /**
    * This test sells stocks from current portfolio.
@@ -3647,7 +3705,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 39
+  // 40
 
   /**
    * This test checks value portfolio on certain date for past date.
@@ -3698,7 +3756,7 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  //40
+  //41
 
   /**
    * This test creates portfolio with combination of purchases and sells in different dates.
@@ -3968,7 +4026,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //41
+  //42
 
   /**
    * This test checks performance by year.
@@ -4042,7 +4100,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //42
+  //43
 
   /**
    * This test creates portfolio.
@@ -4314,7 +4372,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //43
+  //44
 
   /**
    * This test checks by month.
@@ -4383,7 +4441,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //44
+  //45
 
   /**
    * This test checks by day.
@@ -4456,7 +4514,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //45
+  //46
 
   /**
    * This test creates portfolio where the buying and selling takes place within days.
@@ -4734,7 +4792,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //46
+  //47
 
   /**
    * This test checks by day.
@@ -4832,7 +4890,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //47
+  //48
 
   /**
    * This test checks performance invalid year,or month or day or invalid range.
@@ -4949,7 +5007,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //48
+  //49
 
   /**
    * This test checks performance with # when no value.
@@ -5156,7 +5214,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //49
+  //50
 
   /**
    * This test checks performance for a portfolio by month.
@@ -5231,7 +5289,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //50
+  //51
 
   /**
    * This test checks performance by year.
@@ -5305,7 +5363,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //51
+  //52
 
   /**
    * This test checks performance by day.
@@ -5403,7 +5461,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //52
+  //53
 
   /**
    * This test checks invalid input for performance.
@@ -5467,7 +5525,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //53
+  //54
 
   /**
    * This test checks the operations of back and main menu.
@@ -5522,7 +5580,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //54
+  //55
 
   /**
    * This test checks the total investment on various dates.
@@ -5613,7 +5671,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //55
+  //56
 
   /**
    * This test checks value portfolio on full composition on various dates.(inflexible)
@@ -5811,7 +5869,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  //56
+  //57
 
   /**
    * This test checks the value portfolio (option 2 on various dates).
@@ -6022,7 +6080,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 57
+  // 58
   /**
    * This test checks Value of portfolio on full composition on certain date for past date.
    */
@@ -6190,7 +6248,7 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-  // 58
+  // 59
   /**
    * This test checks total investments on previous dates.
    */
@@ -6441,7 +6499,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 59
+  // 60
   /**
    * This test checks total amount invested on certain date.
    */
@@ -6610,7 +6668,7 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
-  // 60
+  // 61
   /**
    * This test checks when a purchase and sell takes place of a particular stock
    * and there are no stocks left to be sold. This test prints a message
@@ -6764,7 +6822,7 @@ public class ControllerTest extends TestParentClass {
 
   }
 
-  // 60
+  // 62
   /**
    * This test checks when a purchase and sell takes place of a particular stock
    * where the number of stocks sold is greater
@@ -6772,7 +6830,7 @@ public class ControllerTest extends TestParentClass {
    * when no stocks are left.
    */
   @Test
-  public void testZZJController_PurchasedAndSoldAlreadySoldStocks() {
+  public void testZZJController_SellStocksHigherThanPurchased() {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest990" + "\n"
             + "1" + "\n" + "8" + "\n" + "2022-11-01" + "\n"
             + "600" + "\n" + "n" + "\n" + "5" + "\n" + "20" + "\n"
@@ -6883,12 +6941,386 @@ public class ControllerTest extends TestParentClass {
 
   }
 
-  // 61
+  // 63
+  /**
+   * This test checks if after selling 8 stocks for available 10 stocks
+   * , correct quantity is being displayed in the view option.
+   */
+  @Test
+  public void testZZLController_InflexiblePortfolio() {
+    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest991" + "\n" + "1" + "\n"
+           + "8" + "\n" + "2022-11-13" + "\n" + "10" + "\n" + "n"+ "\n" + "5"+ "\n" + "21"
+            + "\n" + "2022-11-14"+ "\n" + "1"+ "\n" + "8"+ "\n" + "m"+ "\n" + "2"+ "\n" + "21"
+            + "\n" + "2022-11-15"+ "\n" + "m"+ "\n" + "e";
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + getFlexibleInflexibleScreen()
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "CONTROLLERTEST991 Portfolio\n"
+            + "\n"
+            + getBuyStockScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Which stock would you like to buy?\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Amazon\n"
+            + "Symbol: AMZN\n"
+            + "Time: 2022-11-13\n"
+            + "Price: $97.8800\n"
+            + "\n"
+            + "How many shares would you like to buy?\n"
+            + "Press 'b' to go back to the previous menu, 'm' to main menu.\n"
+            + "\n"
+            + "Would you like to buy another stock? (Y|N)\n"
+            + "\n"
+            + "CONTROLLERTEST991 PORTFOLIO CREATED...!!!"
+            +"\n"
+            + getMainScreen()
+            +"\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "14. CONTROLLERTEST94\n"
+            + "15. CONTROLLERTEST95\n"
+            + "16. CONTROLLERTEST96\n"
+            + "17. CONTROLLERTEST97\n"
+            + "18. CONTROLLERTEST98\n"
+            + "19. CONTROLLERTEST99\n"
+            + "20. CONTROLLERTEST990\n"
+            + "21. CONTROLLERTEST991\n"
+            + "\n"
+            + "Select the portfolio to sell stocks from.\n"
+            + "Enter the date on which you would like to sell the stock (YYYY-MM-DD)\n"
+            + "\n"
+            + "List of stocks available on date: 2022-11-14\n"
+            + "\n"
+            + "S.No\tName (Symbol) \n"
+            + "\n"
+            + "1.\tAmazon (AMZN) \n"
+            + "\n"
+            + "Which stock would you like to sell?\n"
+            + "\n"
+            + "STOCK DETAILS\n"
+            + "StockName: Amazon\n"
+            + "Symbol: AMZN\n"
+            + "Time: 2022-11-14\n"
+            + "Price: $98.7700\n"
+            + "\n"
+            + "You can sell only 10 shares of this stock on 2022-11-14\n"
+            + "How many share would you like to sell?\n"
+            + "\n"
+            + "Shares successfully sold.\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            +"\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
+            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
+            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
+            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
+            + "15. CONTROLLERTEST95 (FLEXIBLE)\n"
+            + "16. CONTROLLERTEST96 (FLEXIBLE)\n"
+            + "17. CONTROLLERTEST97 (FLEXIBLE)\n"
+            + "18. CONTROLLERTEST98 (FLEXIBLE)\n"
+            + "19. CONTROLLERTEST99 (FLEXIBLE)\n"
+            + "20. CONTROLLERTEST990 (FLEXIBLE)\n"
+            + "21. CONTROLLERTEST991 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST991 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-11-15\t Total Value\n"
+            + "\n"
+            + "Amazon (AMZN) \t 2\t $103.21\t $206.42\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-11-15: $206.42\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu."
+            +"\n"
+            +"\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+
+  // 64
+  /**
+   * This test takes commission fee as input from user
+   * and displays the total amount invested based on the input entered.
+   */
+  @Test
+  public void testZZLController_UserInputtingCommissionFeesAndDisplayingOutput() {
+    String userInput = "8" + "\n" + "3" + "\n" + "7" + "\n" + "1" + "\n"
+            + "2022-11-12" + "\n" + "m" + "\n" + "e";
+
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "CONFIGURE COMMISSION COST\n"
+            + "\n"
+            + "Current commission cost is: $1.27\n" +
+            "Enter the commission cost per transaction:\n"
+            + "Commission cost set to 3\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "14. CONTROLLERTEST94\n"
+            + "15. CONTROLLERTEST95\n"
+            + "16. CONTROLLERTEST96\n"
+            + "17. CONTROLLERTEST97\n"
+            + "18. CONTROLLERTEST98\n"
+            + "19. CONTROLLERTEST99\n"
+            + "20. CONTROLLERTEST990\n"
+            + "21. CONTROLLERTEST991\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "COST BASIS OF CONTROLLERTEST1 PORTFOLIO\n"
+            + "\n"
+            + "Total Money invested in stocks: $485.98\n"
+            + "Commission cost per transaction is: $3.0\n"
+            + "Total number of transactions till date is: 1\n"
+            + "Total commission charges: 3.0\n"
+            + "Total Money spent: $488.98\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // 65
+  /**
+   * This test takes commission fee as input from user and displays
+   * the total amount invested based on the input entered.
+   */
+  @Test
+  public void testZZMController_UserInputtingCommissionFeesAndDisplayingOutput2() {
+    String userInput = "8" + "\n" + "4.5" + "\n" + "7" + "\n" + "2" + "\n"
+            + "2022-11-12" + "\n" + "m" + "\n" + "e";
+
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "CONFIGURE COMMISSION COST\n"
+            + "\n"
+            + "Current commission cost is: $1.27\n" +
+            "Enter the commission cost per transaction:\n"
+            + "Commission cost set to 4.5\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "14. CONTROLLERTEST94\n"
+            + "15. CONTROLLERTEST95\n"
+            + "16. CONTROLLERTEST96\n"
+            + "17. CONTROLLERTEST97\n"
+            + "18. CONTROLLERTEST98\n"
+            + "19. CONTROLLERTEST99\n"
+            + "20. CONTROLLERTEST990\n"
+            + "21. CONTROLLERTEST991\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "COST BASIS OF CONTROLLERTEST2 PORTFOLIO\n"
+            + "\n"
+            + "Total Money invested in stocks: $1214.95\n"
+            + "Commission cost per transaction is: $4.5\n"
+            + "Total number of transactions till date is: 2\n"
+            + "Total commission charges: 9.0\n"
+            + "Total Money spent: $1223.95\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // 66
+  /**
+   * This test takes input as invalid commission fee from the user and throws message
+   * as the fee must be greater than 0.
+   */
+  @Test
+  public void testZZNController_UserInputtingInvalidCommissionFeesAndDisplayingOutput() {
+    String userInput = "8" + "\n" + "-5" + "\n" + "m" + "\n" + "8" + "\n"
+            + "0" + "\n" + "m" + "\n" + "e";
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "CONFIGURE COMMISSION COST\n" +
+            "\n" +
+            "Current commission cost is: $1.27\n" +
+            "Enter the commission cost per transaction:\n" +
+            "Not a valid input. Please enter the correct option.\n" +
+            "Commission cost should be greater than 0. Enter 'm' for main menu.\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "CONFIGURE COMMISSION COST\n" +
+            "\n" +
+            "Current commission cost is: $1.27\n" +
+            "Enter the commission cost per transaction:\n" +
+            "Not a valid input. Please enter the correct option.\n" +
+            "Commission cost should be greater than 0. Enter 'm' for main menu.\n"
+            + getMainScreen()
+            + "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "Exiting...\n";
+
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  // 67
   /**
    * This test checks inflexible portfolio.
    */
   @Test
-  public void testZZKController_InflexiblePortfolio() {
+  public void testZZOController_InflexiblePortfolio2() {
     String userInput = "1" + "\n" + "2" + "\n" + "controllerTest9900" + "\n" + "1" + "\n"
             + "10" + "\n" + "80" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -6944,4 +7376,6 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
     deleteDirectory();
   }
+
+
 }

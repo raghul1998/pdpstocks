@@ -48,6 +48,7 @@ public class ViewTest extends TestParentClass {
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
             + "7. Total amount invested on certain date\n"
+            + "8. Configure the commission cost\n"
             + "e. Exit\n"
             + "\n"
             + "ENTER YOUR CHOICE: \n";
