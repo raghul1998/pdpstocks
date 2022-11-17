@@ -592,10 +592,10 @@ public class ViewTest extends TestParentClass {
     String expected = "\nCOST BASIS OF VIEW4 PORTFOLIO\n"
             + "\n"
             + "Total Money invested in stocks: $728.97\n"
-            + "Commission cost per transaction is: $1.27\n"
+            + "Commission cost per transaction is: $4.5\n"
             + "Total number of transactions till date is: 2\n"
-            + "Total commission charges: 2.54\n"
-            + "Total Money spent: $731.51\n\n";
+            + "Total commission charges: $9.0\n"
+            + "Total Money spent: $737.97\n\n";
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");

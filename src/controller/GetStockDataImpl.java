@@ -37,6 +37,7 @@ public class GetStockDataImpl implements GetStockData {
       try {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         obtainDataAndWriteToFile(stock, dateStr, stockMap, timestamp, price, reader);
+        reader.close();
       } catch (Exception e) {
         return false;
       }
@@ -81,6 +82,7 @@ public class GetStockDataImpl implements GetStockData {
       in = url.openStream();
       BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       obtainDataAndWriteToFile(stock, dateStr, stockMap, timestamp, price, reader);
+      reader.close();
     } catch (IOException e) {
       throw new IllegalArgumentException("No price data found for " + stock);
     }
@@ -139,7 +141,6 @@ public class GetStockDataImpl implements GetStockData {
         price[i] = readLine[1];
       }
     }
-    reader.close();
 
     String stockName = stockMap.get(stock);
 

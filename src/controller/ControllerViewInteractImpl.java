@@ -15,17 +15,16 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import model.StockCompositionData;
+import model.StockCompositionDataImpl;
 import model.StockNameMap;
+import model.StockNameMapImpl;
 import model.StockPortFolioDataImpl;
 import model.TypeofAction;
-import model.StockNameMapImpl;
-import model.StockCompositionDataImpl;
+import view.TypeofViews;
 import view.ViewControllerInteract;
 import view.ViewControllerInteractImpl;
-import view.TypeofViews;
 
 import static java.lang.System.exit;
-import static java.lang.System.out;
 import static java.lang.Thread.sleep;
 
 /**
@@ -62,10 +61,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
 
+  @Override
   public void setup() {
     output.println("\nSetting up the application. Please wait...");
     cmiObj.controllerModelInteract(TypeofAction.INITIAL_SETUP, null, 0);
-    storeCommissionCost("1.27"); // Default value
+    String fileName = "data/CommissionCost.txt";
+    File file = new File(fileName);
+    if (!file.exists()) {
+      storeCommissionCost("1.27"); // Default value
+    }
     output.println("Setup complete...!!!\n");
   }
 
@@ -426,10 +430,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       return false;
     }
 
-    if (commissionCost <= 0) {
-      return false;
-    }
-    return true;
+    return (commissionCost > 0);
   }
 
   /**

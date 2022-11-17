@@ -136,3 +136,10 @@ value. If the range is small, the application will follow absolute scale.
 This option is available only for the flexible portfolio. This option allows users to determine how much money is invested in
 a portfolio on a certain date real-time along with the commission charges. The application charges $1.27 dollars as fee for 
 every transaction. The cost will be displayed alone with these commission charges.
+
+8. CONFIGURE THE COMMISSION COST
+
+This option allows user to configure the commission cost per transaction for all the portfolios in common. The commission
+cost value should be greater than 0. By default, the commission cost will be $1.27 per transaction. As user configures, the
+commission cost is stored in the model as well as to a support file. This data can be retrived for calculating the cost
+basis of the portfolio.

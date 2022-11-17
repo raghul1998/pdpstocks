@@ -2,7 +2,6 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,7 +28,6 @@ import controller.GetStockDataImpl;
  */
 public class StockCompositionDataImpl implements StockCompositionData {
   private final int numberOfPortFolio;
-  private double currentCommissionCost;
 
   /**
    * A constructor that reads the user directory to find the number of portfolios that the user
@@ -86,10 +84,12 @@ public class StockCompositionDataImpl implements StockCompositionData {
   @Override
   public double getCommissionCost() {
     BufferedReader data;
+    double currentCommissionCost;
     try {
       data = new BufferedReader(new FileReader("data/CommissionCost.txt"));
       String costStr = data.readLine();
       currentCommissionCost = Double.parseDouble(costStr);
+      data.close();
     } catch (Exception e) {
       System.out.println("MODEL: Unable to get the commission cost");
       currentCommissionCost = 1.27; // Setting it to default value

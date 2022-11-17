@@ -36,9 +36,10 @@ public class ControllerTest extends TestParentClass {
     PrintStream output = new PrintStream(bytes);
 
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.setup();
     obj.start();
 
-    String expectedOutput = getMainScreen()
+    String expectedOutput = getSetupScreen() + getMainScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
@@ -911,9 +912,9 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testMController_EnterFutureDateForPurchase(){
-    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n"+ "9" + "\n"
-            + "2023-10-01" + "\n" + "b" + "\n"+ "e" + "\n";
+  public void testMController_EnterFutureDateForPurchase() {
+    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n" + "9" + "\n"
+            + "2023-10-01" + "\n" + "b" + "\n" + "e" + "\n";
     // 1 1 name 1 9 2023-10-01 b e
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -935,7 +936,7 @@ public class ControllerTest extends TestParentClass {
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
             + "TEST Portfolio\n"
-            +"\n"
+            + "\n"
             + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
@@ -969,9 +970,9 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testNController_EnterInvalidDateForPurchase(){
-    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n"+ "9" + "\n"
-            + "2021-13-13" + "\n" + "b" + "\n"+ "e" + "\n";
+  public void testNController_EnterInvalidDateForPurchase() {
+    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n" + "9" + "\n"
+            + "2021-13-13" + "\n" + "b" + "\n" + "e" + "\n";
 
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -993,7 +994,7 @@ public class ControllerTest extends TestParentClass {
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
             + "TEST Portfolio\n"
-            +"\n"
+            + "\n"
             + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
@@ -1028,9 +1029,9 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testOController_EnterInvalidDateForAdd(){
-    String userInput = "4" + "\n" + "1" + "\n" + "4" + "\n" + "2011-20-32" + "\n"+ "b" + "\n"
-            + "\n"+ "e";
+  public void testOController_EnterInvalidDateForAdd() {
+    String userInput = "4" + "\n" + "1" + "\n" + "4" + "\n" + "2011-20-32" + "\n" + "b" + "\n"
+            + "\n" + "e";
     // 4 1 4 20111-20-32 b e
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -1085,7 +1086,7 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testPController_EnterFutureDateForSell(){
+  public void testPController_EnterFutureDateForSell() {
     String userInput = "5" + "\n" + "1" + "\n" + "2023-01-01" + "\n" + "b"
             + "\n" + "m" + "\n" + "b" + "\n" + "e";
 
@@ -1144,7 +1145,7 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testQController_EnterInvalidDateForSell(){
+  public void testQController_EnterInvalidDateForSell() {
     String userInput = "5" + "\n" + "2" + "\n" + "2680-34-13" + "\n" + "b"
             + "\n" + "m" + "\n" + "b" + "\n" + "e";
 
@@ -5622,10 +5623,10 @@ public class ControllerTest extends TestParentClass {
             + "COST BASIS OF CONTROLLERTEST91 PORTFOLIO\n"
             + "\n"
             + "Total Money invested in stocks: $56209.0\n"
-            + "Commission cost per transaction is: $1.27\n"
+            + "Commission cost per transaction is: $4.5\n"
             + "Total number of transactions till date is: 4\n"
-            + "Total commission charges: 5.08\n"
-            + "Total Money spent: $56214.08\n"
+            + "Total commission charges: $18.0\n"
+            + "Total Money spent: $56227.0\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -5652,10 +5653,10 @@ public class ControllerTest extends TestParentClass {
             + "COST BASIS OF CONTROLLERTEST91 PORTFOLIO\n"
             + "\n"
             + "Total Money invested in stocks: $51239.0\n"
-            + "Commission cost per transaction is: $1.27\n"
+            + "Commission cost per transaction is: $4.5\n"
             + "Total number of transactions till date is: 2\n"
-            + "Total commission charges: 2.54\n"
-            + "Total Money spent: $51241.54\n"
+            + "Total commission charges: $9.0\n"
+            + "Total Money spent: $51248.0\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -6081,6 +6082,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 58
+
   /**
    * This test checks Value of portfolio on full composition on certain date for past date.
    */
@@ -6249,6 +6251,7 @@ public class ControllerTest extends TestParentClass {
 
 
   // 59
+
   /**
    * This test checks total investments on previous dates.
    */
@@ -6480,10 +6483,10 @@ public class ControllerTest extends TestParentClass {
             + "COST BASIS OF CONTROLLERTEST97 PORTFOLIO\n"
             + "\n"
             + "Total Money invested in stocks: $23072.5\n"
-            + "Commission cost per transaction is: $1.27\n"
+            + "Commission cost per transaction is: $4.5\n"
             + "Total number of transactions till date is: 2\n"
-            + "Total commission charges: 2.54\n"
-            + "Total Money spent: $23075.04\n"
+            + "Total commission charges: $9.0\n"
+            + "Total Money spent: $23081.5\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -6500,6 +6503,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 60
+
   /**
    * This test checks total amount invested on certain date.
    */
@@ -6649,10 +6653,10 @@ public class ControllerTest extends TestParentClass {
             + "COST BASIS OF CONTROLLERTEST9 PORTFOLIO\n"
             + "\n"
             + "Total Money invested in stocks: $32782.0\n"
-            + "Commission cost per transaction is: $1.27\n"
+            + "Commission cost per transaction is: $4.5\n"
             + "Total number of transactions till date is: 1\n"
-            + "Total commission charges: 1.27\n"
-            + "Total Money spent: $32783.26\n"
+            + "Total commission charges: $4.5\n"
+            + "Total Money spent: $32786.5\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
@@ -6669,6 +6673,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 61
+
   /**
    * This test checks when a purchase and sell takes place of a particular stock
    * and there are no stocks left to be sold. This test prints a message
@@ -6823,6 +6828,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 62
+
   /**
    * This test checks when a purchase and sell takes place of a particular stock
    * where the number of stocks sold is greater
@@ -6942,6 +6948,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 63
+
   /**
    * This test checks if after selling 8 stocks for available 10 stocks
    * , correct quantity is being displayed in the view option.
@@ -6949,9 +6956,9 @@ public class ControllerTest extends TestParentClass {
   @Test
   public void testZZLController_InflexiblePortfolio() {
     String userInput = "1" + "\n" + "1" + "\n" + "controllerTest991" + "\n" + "1" + "\n"
-           + "8" + "\n" + "2022-11-13" + "\n" + "10" + "\n" + "n"+ "\n" + "5"+ "\n" + "21"
-            + "\n" + "2022-11-14"+ "\n" + "1"+ "\n" + "8"+ "\n" + "m"+ "\n" + "2"+ "\n" + "21"
-            + "\n" + "2022-11-15"+ "\n" + "m"+ "\n" + "e";
+            + "8" + "\n" + "2022-11-13" + "\n" + "10" + "\n" + "n" + "\n" + "5" + "\n" + "21"
+            + "\n" + "2022-11-14" + "\n" + "1" + "\n" + "8" + "\n" + "m" + "\n" + "2" + "\n" + "21"
+            + "\n" + "2022-11-15" + "\n" + "m" + "\n" + "e";
 
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -6995,9 +7002,9 @@ public class ControllerTest extends TestParentClass {
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
             + "CONTROLLERTEST991 PORTFOLIO CREATED...!!!"
-            +"\n"
+            + "\n"
             + getMainScreen()
-            +"\n"
+            + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "LIST OF PORTFOLIO\n"
@@ -7048,7 +7055,7 @@ public class ControllerTest extends TestParentClass {
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
             + getMainScreen()
-            +"\n"
+            + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "LIST OF PORTFOLIO\n"
@@ -7087,8 +7094,8 @@ public class ControllerTest extends TestParentClass {
             + "Total Portfolio Value is on 2022-11-15: $206.42\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu."
-            +"\n"
-            +"\n"
+            + "\n"
+            + "\n"
             + getMainScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
@@ -7104,6 +7111,7 @@ public class ControllerTest extends TestParentClass {
 
 
   // 64
+
   /**
    * This test takes commission fee as input from user
    * and displays the total amount invested based on the input entered.
@@ -7127,8 +7135,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONFIGURE COMMISSION COST\n"
             + "\n"
-            + "Current commission cost is: $1.27\n" +
-            "Enter the commission cost per transaction:\n"
+            + "Current commission cost is: $4.5\n"
+            + "Enter the commission cost per transaction:\n"
             + "Commission cost set to 3\n"
             + getMainScreen()
             + "\n"
@@ -7166,7 +7174,7 @@ public class ControllerTest extends TestParentClass {
             + "Total Money invested in stocks: $485.98\n"
             + "Commission cost per transaction is: $3.0\n"
             + "Total number of transactions till date is: 1\n"
-            + "Total commission charges: 3.0\n"
+            + "Total commission charges: $3.0\n"
             + "Total Money spent: $488.98\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
@@ -7185,6 +7193,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 65
+
   /**
    * This test takes commission fee as input from user and displays
    * the total amount invested based on the input entered.
@@ -7208,8 +7217,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CONFIGURE COMMISSION COST\n"
             + "\n"
-            + "Current commission cost is: $1.27\n" +
-            "Enter the commission cost per transaction:\n"
+            + "Current commission cost is: $3.0\n"
+            + "Enter the commission cost per transaction:\n"
             + "Commission cost set to 4.5\n"
             + getMainScreen()
             + "\n"
@@ -7247,7 +7256,7 @@ public class ControllerTest extends TestParentClass {
             + "Total Money invested in stocks: $1214.95\n"
             + "Commission cost per transaction is: $4.5\n"
             + "Total number of transactions till date is: 2\n"
-            + "Total commission charges: 9.0\n"
+            + "Total commission charges: $9.0\n"
             + "Total Money spent: $1223.95\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
@@ -7266,6 +7275,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 66
+
   /**
    * This test takes input as invalid commission fee from the user and throws message
    * as the fee must be greater than 0.
@@ -7284,29 +7294,29 @@ public class ControllerTest extends TestParentClass {
 
     String expectedOutput = getMainScreen()
             + "\n"
-            + "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "CONFIGURE COMMISSION COST\n" +
-            "\n" +
-            "Current commission cost is: $1.27\n" +
-            "Enter the commission cost per transaction:\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Commission cost should be greater than 0. Enter 'm' for main menu.\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "CONFIGURE COMMISSION COST\n"
+            + "\n"
+            + "Current commission cost is: $4.5\n"
+            + "Enter the commission cost per transaction:\n"
+            + "Not a valid input. Please enter the correct option.\n"
+            + "Commission cost should be greater than 0. Enter 'm' for main menu.\n"
             + getMainScreen()
             + "\n"
-            + "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "CONFIGURE COMMISSION COST\n" +
-            "\n" +
-            "Current commission cost is: $1.27\n" +
-            "Enter the commission cost per transaction:\n" +
-            "Not a valid input. Please enter the correct option.\n" +
-            "Commission cost should be greater than 0. Enter 'm' for main menu.\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "CONFIGURE COMMISSION COST\n"
+            + "\n"
+            + "Current commission cost is: $4.5\n"
+            + "Enter the commission cost per transaction:\n"
+            + "Not a valid input. Please enter the correct option.\n"
+            + "Commission cost should be greater than 0. Enter 'm' for main menu.\n"
             + getMainScreen()
-            + "\n" +
-            "ENTER YOUR CHOICE: \n" +
-            "\n" +
-            "Exiting...\n";
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
 
 
     String result = bytes.toString();
@@ -7316,6 +7326,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 67
+
   /**
    * This test checks inflexible portfolio.
    */
