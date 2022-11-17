@@ -61,12 +61,16 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     scan = new Scanner(input);
   }
 
-  @Override
-  public void start() {
+
+  public void setup() {
     output.println("\nSetting up the application. Please wait...");
     cmiObj.controllerModelInteract(TypeofAction.INITIAL_SETUP, null, 0);
     storeCommissionCost("1.27"); // Default value
-    output.println("Setup complete...!!!");
+    output.println("Setup complete...!!!\n");
+  }
+
+  @Override
+  public void start() {
     String option;
     do {
       try {

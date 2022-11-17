@@ -29,7 +29,6 @@ public class GetStockDataImpl implements GetStockData {
     if (!file.exists()) {
       return false;
     } else {
-      String[] readLine;
       String[] timestamp = new String[dateStr.length];
       String[] price = new String[dateStr.length];
       StockNameMapImpl snp = new StockNameMapImpl();
@@ -37,73 +36,8 @@ public class GetStockDataImpl implements GetStockData {
 
       try {
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        String line;
-        String splitBy = ",";
-        int index = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        reader.mark(1000000000);
-
-        for (int i = 0; i < dateStr.length; i++) {
-          if (dateStr[i] == null) {
-            break;
-          }
-
-          Date date1 = sdf.parse(dateStr[i]);
-
-          if (i != 0) {
-            reader.reset();
-            index = 0;
-          }
-
-          while ((line = reader.readLine()) != null) {
-            readLine = line.split(splitBy);    // use comma as separator
-            if (index == 0) {
-              index++;
-              continue;
-            }
-
-            Date date2 = sdf.parse(readLine[0]);
-            // Check if both dates are same
-            if (date1.compareTo(date2) == 0) {
-              timestamp[i] = readLine[0];
-              price[i] = readLine[1];
-              break;
-            }
-            // If the date is in the future, then take the first date in the list
-            if (date1.compareTo(date2) > 0) {
-              readLine[0] = dateStr[i];
-              timestamp[i] = readLine[0];
-              price[i] = readLine[1];
-              break;
-            }
-
-            // If no stock info is available on this date, then assign the last know value
-            readLine[0] = dateStr[i];
-            timestamp[i] = readLine[0];
-            price[i] = readLine[1];
-          }
-        }
-        reader.close();
+        obtainDataAndWriteToFile(stock, dateStr, stockMap, timestamp, price, reader);
       } catch (Exception e) {
-        return false;
-      }
-      String stockName = stockMap.get(stock);
-
-      StringBuilder csvBuffer = new StringBuilder();
-      for (int i = 0; i < dateStr.length; i++) {
-        if (price[i] == null) {
-          break;
-        }
-        csvBuffer.append(stockName).append(",").append(price[i]).append(",")
-                .append(stock).append(",").append(timestamp[i]);
-        csvBuffer.append('\n');
-      }
-
-      try {
-        filename = "data/StockData.csv";
-        writeDataToFile(String.valueOf(csvBuffer), filename);
-      } catch (Exception e) {
-        System.out.println("Exception in writing stock info to the file " + e.getMessage());
         return false;
       }
     }
@@ -140,66 +74,72 @@ public class GetStockDataImpl implements GetStockData {
     }
 
     InputStream in;
-    String[] readLine;
-
     String[] timestamp = new String[dateStr.length];
     String[] price = new String[dateStr.length];
 
     try {
       in = url.openStream();
       BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-      String line;
-      String splitBy = ",";
-      int index = 0;
-      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-      reader.mark(1000000000);
-
-      for (int i = 0; i < dateStr.length; i++) {
-        if (dateStr[i] == null) {
-          break;
-        }
-
-        Date date1 = sdf.parse(dateStr[i]);
-
-        if (i != 0) {
-          reader.reset();
-          index = 0;
-        }
-
-        while ((line = reader.readLine()) != null) {
-          readLine = line.split(splitBy);    // use comma as separator
-
-          if (index == 0) {
-            index++;
-            continue;
-          }
-
-          Date date2 = sdf.parse(readLine[0]);
-          // Check if both dates are same
-          if (date1.compareTo(date2) == 0) {
-            timestamp[i] = readLine[0];
-            price[i] = readLine[1];
-            break;
-          }
-          // If the date is in the future, then take the first date in the list
-          if (date1.compareTo(date2) > 0) {
-            readLine[0] = dateStr[i];
-            timestamp[i] = readLine[0];
-            price[i] = readLine[1];
-            break;
-          }
-
-          // If no stock info is available on this date, then assign the last know value
-          readLine[0] = dateStr[i];
-          timestamp[i] = readLine[0];
-          price[i] = readLine[1];
-        }
-      }
-      reader.close();
+      obtainDataAndWriteToFile(stock, dateStr, stockMap, timestamp, price, reader);
     } catch (IOException e) {
       throw new IllegalArgumentException("No price data found for " + stock);
     }
+  }
+
+  private void obtainDataAndWriteToFile(String stock, String[] dateStr,
+                                        Map<String, String> stockMap, String[] timestamp,
+                                        String[] price, BufferedReader reader)
+          throws IOException, ParseException {
+    String[] readLine;
+    String line;
+    String splitBy = ",";
+    int index = 0;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    reader.mark(1000000000);
+
+    for (int i = 0; i < dateStr.length; i++) {
+      if (dateStr[i] == null) {
+        break;
+      }
+
+      Date date1 = sdf.parse(dateStr[i]);
+
+      if (i != 0) {
+        reader.reset();
+        index = 0;
+      }
+
+      while ((line = reader.readLine()) != null) {
+        readLine = line.split(splitBy);    // use comma as separator
+
+        if (index == 0) {
+          index++;
+          continue;
+        }
+
+        Date date2 = sdf.parse(readLine[0]);
+        // Check if both dates are same
+        if (date1.compareTo(date2) == 0) {
+          timestamp[i] = readLine[0];
+          price[i] = readLine[1];
+          break;
+        }
+        // If the date is in the future, then take the first date in the list
+        if (date1.compareTo(date2) > 0) {
+          readLine[0] = dateStr[i];
+          timestamp[i] = readLine[0];
+          price[i] = readLine[1];
+          break;
+        }
+
+        // If no stock info is available on this date, then assign the last know value
+        readLine[0] = dateStr[i];
+        timestamp[i] = readLine[0];
+        price[i] = readLine[1];
+      }
+    }
+    reader.close();
 
     String stockName = stockMap.get(stock);
 
@@ -212,7 +152,6 @@ public class GetStockDataImpl implements GetStockData {
               .append(stock).append(",").append(timestamp[i]);
       csvBuffer.append('\n');
     }
-
     try {
       String filename = "data/StockData.csv";
       writeDataToFile(String.valueOf(csvBuffer), filename);

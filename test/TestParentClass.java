@@ -170,6 +170,12 @@ public class TestParentClass {
             + "10. Walmart (WMT)\n";
   }
 
+  protected String getSetupScreen() {
+    return "\n"
+            + "Setting up the application. Please wait...\n"
+            + "Setup complete...!!!\n\n";
+  }
+
   protected String getMainScreen() {
     return "\nMENU\n"
             + "\n"
@@ -180,6 +186,7 @@ public class TestParentClass {
             + "5. Sell a stock from portfolio\n"
             + "6. Performance of portfolio\n"
             + "7. Total amount invested on certain date\n"
+            + "8. Configure the commission cost\n"
             + "e. Exit\n";
   }
 

@@ -10,4 +10,9 @@ public interface ControllerViewInteract {
    * entry point to the application.
    */
   void start();
+
+  /**
+   * This method setups the basic data for the application to run. This is an initial process.
+   */
+  void setup();
 }

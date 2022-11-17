@@ -36,9 +36,10 @@ public class ControllerTest extends TestParentClass {
     PrintStream output = new PrintStream(bytes);
 
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.setup();
     obj.start();
 
-    String expectedOutput = getMainScreen()
+    String expectedOutput = getSetupScreen() + getMainScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
@@ -911,9 +912,9 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testMController_EnterFutureDateForPurchase(){
-    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n"+ "9" + "\n"
-            + "2023-10-01" + "\n" + "b" + "\n"+ "e" + "\n";
+  public void testMController_EnterFutureDateForPurchase() {
+    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n" + "9" + "\n"
+            + "2023-10-01" + "\n" + "b" + "\n" + "e" + "\n";
     // 1 1 name 1 9 2023-10-01 b e
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -935,7 +936,7 @@ public class ControllerTest extends TestParentClass {
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
             + "TEST Portfolio\n"
-            +"\n"
+            + "\n"
             + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
@@ -969,9 +970,9 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testNController_EnterInvalidDateForPurchase(){
-    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n"+ "9" + "\n"
-            + "2021-13-13" + "\n" + "b" + "\n"+ "e" + "\n";
+  public void testNController_EnterInvalidDateForPurchase() {
+    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + "1" + "\n" + "9" + "\n"
+            + "2021-13-13" + "\n" + "b" + "\n" + "e" + "\n";
 
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
@@ -993,7 +994,7 @@ public class ControllerTest extends TestParentClass {
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
             + "TEST Portfolio\n"
-            +"\n"
+            + "\n"
             + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
@@ -1027,7 +1028,7 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testOController_EnterFutureDateForSell(){
+  public void testOController_EnterFutureDateForSell() {
     String userInput = "5" + "\n" + "1" + "\n" + "2023-01-01" + "\n" + "b"
             + "\n" + "m" + "\n" + "b" + "\n" + "e";
 
@@ -1086,7 +1087,7 @@ public class ControllerTest extends TestParentClass {
    */
 
   @Test
-  public void testPController_EnterInvalidDateForSell(){
+  public void testPController_EnterInvalidDateForSell() {
     String userInput = "5" + "\n" + "2" + "\n" + "2680-34-13" + "\n" + "b"
             + "\n" + "m" + "\n" + "b" + "\n" + "e";
 
@@ -6023,6 +6024,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 57
+
   /**
    * This test checks Value of portfolio on full composition on certain date for past date.
    */
@@ -6191,6 +6193,7 @@ public class ControllerTest extends TestParentClass {
 
 
   // 58
+
   /**
    * This test checks total investments on previous dates.
    */
@@ -6442,6 +6445,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 59
+
   /**
    * This test checks total amount invested on certain date.
    */
@@ -6611,6 +6615,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 60
+
   /**
    * This test checks when a purchase and sell takes place of a particular stock
    * and there are no stocks left to be sold. This test prints a message
@@ -6765,6 +6770,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 60
+
   /**
    * This test checks when a purchase and sell takes place of a particular stock
    * where the number of stocks sold is greater
@@ -6884,6 +6890,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   // 61
+
   /**
    * This test checks inflexible portfolio.
    */

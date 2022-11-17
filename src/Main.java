@@ -16,6 +16,7 @@ public class Main {
    */
   public static void main(String[] args) {
     ControllerViewInteract obj = new ControllerViewInteractImpl(System.in, System.out);
+    obj.setup();
     obj.start();
   }
 }
