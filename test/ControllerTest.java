@@ -89,6 +89,7 @@ public class ControllerTest extends TestParentClass {
     result = result.replace("\r\n", "\n");
 
     assertEquals(expectedOutput, result);
+    deleteFileInDirectory("pf_controllerTest1.csv");
   }
 
   // 2

@@ -387,7 +387,7 @@ public class ViewTest extends TestParentClass {
             + "7. Microsoft (MSFT)\n"
             + "8. Tesla (TSLA)\n"
             + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)"+"\n"
+            + "10. Walmart (WMT)\n"
             + "\n"
             + "Which stock would you like to buy?\n";
 
