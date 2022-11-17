@@ -32,6 +32,7 @@ public class ViewTest extends TestParentClass {
 
   @Test
   public void testAMainScreen() {
+    deleteDirectory();
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
@@ -378,16 +379,7 @@ public class ViewTest extends TestParentClass {
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
 
-    String expected = "\n" + "\n" + "1. Apple (AAPL)\n"
-            + "2. Amazon (AMZN)\n"
-            + "3. Google (GOOG)\n"
-            + "4. Johnson (JNJ)\n"
-            + "5. JPMorgan Chase (JPM)\n"
-            + "6. Meta (META)\n"
-            + "7. Microsoft (MSFT)\n"
-            + "8. Tesla (TSLA)\n"
-            + "9. UnitedHealth (UNH)\n"
-            + "10. Walmart (WMT)\n"
+    String expected = "\n" + "\n" + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n";
 
@@ -466,12 +458,11 @@ public class ViewTest extends TestParentClass {
    */
   @Test
   public void testTShowPortFolioCompositionScreen() {
-    deleteDirectory();
     deleteFileInDirectory("pf_view1.csv");
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
-    String[] name = {"view1","1"};
+    String[] name = {"view1","2"};
     String[] stocks = {"MSFT", "2022-11-11"};
 
     String[] portfolioNames = {"view1", "ALL"};
@@ -492,7 +483,6 @@ public class ViewTest extends TestParentClass {
     result = result.replace("\r\n", "\n");
 
     assertEquals(expected, result);
-    deleteFileInDirectory("pf_view1.csv");
   }
 
 
@@ -500,51 +490,47 @@ public class ViewTest extends TestParentClass {
    * This test displays details of a particular portfolio - FULL.
    */
   @Test
-  public void testVOption() {
+  public void testUShowParticularPortfolioFullComposition() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     String[] args3 = {"1", "2022-11-11", "FULL", "ALL"};
     deleteDirectory();
-    deleteFileInDirectory("pf_view2.csv");
-    String[] name = {"view2","Flexible"};
-    String[] args = {"MSFT", "2022-11-11"};
-    String[] args1 = {"3", "view2"};
-    String[] args2 = {"2", "view2"};
+    String[] name = {"controllerTest9900","1"};
+    String[] args = {"WMT", "2022-11-11"};
+    String[] args1 = {"80", "controllerTest9900"};
 
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
     obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
     obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
-    obj.modelControllerInteract(TypeofAction.SELL_STOCKS, args2, 0);
 
 
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args3, 0);
 
-    String expected = "\nValue of VIEW2 PORTFOLIO\n"
+    String expected = "\nValue of CONTROLLERTEST9900 PORTFOLIO\n"
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
-            + "\nMicrosoft (MSFT) \t 1\t $"
+            + "\nWalmart (WMT) \t 80\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100
             + "\t $"
-            + (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
+            + 80*(Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
             + "\n\nTotal Portfolio Value is on 2022-11-11: $"
-            + (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
+            + 80*(Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
             + "\n\n";
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
 
     assertEquals(expected, result);
-    deleteFileInDirectory("pf_view2.csv");
   }
 
   /**
    * This test displays the list of stocks available for the user to be sold.
    */
   @Test
-  public void testWListOfStocksOnDate() {
-    deleteDirectory();
+  public void testVListOfStocksOnDate() {
+
     deleteFileInDirectory("pf_view3.csv");
     String[] name = {"view3","Flexible"};
     String[] args = {"MSFT", "2022-11-11"};
@@ -581,7 +567,7 @@ public class ViewTest extends TestParentClass {
    * This test displays details of a particular portfolio - COST.
    */
   @Test
-  public void testXOption2() {
+  public void testWShowParticularPortfolioCostAnalysis() {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
     String[] args3 = {"1", "2022-11-11", "COST","ALL"};

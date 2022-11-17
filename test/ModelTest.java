@@ -27,6 +27,7 @@ public class ModelTest extends TestParentClass {
    */
   @Test
   public void testAModelCreatePortfolio() {
+    deleteDirectory();
     String[] args = {"modelTest5", "1"};
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, args, 0);
@@ -133,7 +134,7 @@ public class ModelTest extends TestParentClass {
   @Test
   public void testDModelBuyStocks() throws IOException {
     deleteFileInDirectory("modelTest.csv");
-    String[] name = {"modelTest", "Flexible"};
+    String[] name = {"modelTest", "1"};
     String[] args = {"GOOG", "2022-11-11"};
     String[] args1 = {"1", "modelTest"};
 
@@ -156,7 +157,7 @@ public class ModelTest extends TestParentClass {
   @Test
   public void testESellStocks() throws IOException, ParseException {
     deleteFileInDirectory("modelTest1.csv");
-    String[] name = {"modelTest1", "Flexible"};
+    String[] name = {"modelTest1", "1"};
     String[] args = {"GOOG", "2022-11-11"};
     String[] args1 = {"3", "modelTest1"};
     String[] args2 = {"2", "modelTest1"};
@@ -217,9 +218,6 @@ public class ModelTest extends TestParentClass {
     assertEquals(expected, actual);
     deleteDirectory();
   }
-
-
-
 }
 
 
