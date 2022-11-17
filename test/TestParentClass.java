@@ -10,7 +10,7 @@ import java.util.Objects;
 public class TestParentClass {
 
   // A helper function to read date from StockData.csv
-  String readStockDateFromStockDataCsv() {
+  protected String readStockDateFromStockDataCsv() {
     String line;
     String splitBy = ",";
     BufferedReader stockData;
@@ -26,12 +26,17 @@ public class TestParentClass {
       splitStockData = line.split(splitBy);
     } catch (Exception e) {
       throw new RuntimeException();
+    }
+    try {
+      stockData.close();
+    } catch (Exception e) {
+      //
     }
     return splitStockData[3];
   }
 
   // A helper function to read price from StockData.csv
-  String readStockPriceFromStockDataCsv() {
+  protected String readStockPriceFromStockDataCsv() {
     String line;
     String splitBy = ",";
     BufferedReader stockData;
@@ -47,28 +52,38 @@ public class TestParentClass {
       splitStockData = line.split(splitBy);
     } catch (Exception e) {
       throw new RuntimeException();
+    }
+
+    try {
+      stockData.close();
+    } catch (Exception e) {
+      //
     }
     return splitStockData[1];
   }
 
   // A helper function to delete a file
 
-  void deleteDirectory() {
+  protected void deleteDirectory() {
     File directory = new File("userdata/user1");
     if (directory.exists()) {
-      String[] filename = directory.list();
+      File[] filename = directory.listFiles();
       assert filename != null;
-      for (String fName : filename) {
-        File currentFile = new File(directory.getPath(), fName);
-        currentFile.delete();
+      for (File fName : filename) {
+        if (fName.delete()) {
+          // Do nothing
+        } else {
+          System.out.println("Unable to delete file: " + fName.getName());
+        }
       }
     }
+    directory.delete();
   }
 
   // A helper function to get the stock data from the portfolio
 
-  String readStockDataFromPortfolioCsv(String portfolioName, int lineNumber, int colNumber,
-                                       boolean needSplit)
+  protected String readStockDataFromPortfolioCsv(String portfolioName, int lineNumber, int colNumber,
+                                                 boolean needSplit)
           throws IOException {
     String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
     String[] cols;
@@ -90,10 +105,17 @@ public class TestParentClass {
       assert value != null;
       return value.substring(0, 10);
     }
+
+    try {
+      br.close();
+      fr.close();
+    } catch (Exception e) {
+      //
+    }
     return value;
   }
 
-  int readPortfolioCsvIndex(String portfolioName) throws IOException {
+  protected int readPortfolioCsvIndex(String portfolioName) throws IOException {
     String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
     String[] cols;
     FileReader fr = new FileReader(filename);
@@ -108,22 +130,71 @@ public class TestParentClass {
       }
       l++;
     }
+    try {
+      br.close();
+      fr.close();
+    } catch (Exception e) {
+      //
+    }
     return value;
   }
 
-  void deleteFileInDirectory(String fileName) {
+  protected void deleteFileInDirectory(String fileName) {
     File directory = new File("userdata/user1");
     if (directory.exists()) {
-      String[] filename = directory.list();
+      File[] filename = directory.listFiles();
       assert filename != null;
-      for (String fName : filename) {
-        if (Objects.equals(fileName, fName)) {
-          File currentFile = new File(directory.getPath(), fName);
-          currentFile.delete();
+      for (File fName : filename) {
+        if (Objects.equals(fileName, fName.getName())) {
+          if (fName.delete()) {
+            // Do nothing
+          } else {
+            System.out.println("Unable to delete");
+          }
           break;
         }
       }
     }
+  }
+
+  protected String getSupportedStocks() {
+    return "1. Microsoft (MSFT)\n"
+            + "2. Meta (META)\n"
+            + "3. Google (GOOG)\n"
+            + "4. Apple (AAPL)\n"
+            + "5. Tesla (TSLA)\n"
+            + "6. JPMorgan Chase (JPM)\n"
+            + "7. Johnson (JNJ)\n"
+            + "8. Amazon (AMZN)\n"
+            + "9. UnitedHealth (UNH)\n"
+            + "10. Walmart (WMT)\n";
+  }
+
+  protected String getMainScreen() {
+    return "\nMENU\n"
+            + "\n"
+            + "1. Create a portfolio\n"
+            + "2. Value and Composition of portfolio\n"
+            + "3. Value of portfolio on full composition\n"
+            + "4. Add a stock to portfolio\n"
+            + "5. Sell a stock from portfolio\n"
+            + "6. Performance of portfolio\n"
+            + "7. Total amount invested on certain date\n"
+            + "e. Exit\n";
+  }
+
+
+  protected String getBuyStockScreen() {
+    return "1. Buy a stock\n"
+            + "2. Main Menu\n"
+            + "e. Exit\n";
+  }
+
+  protected String getFlexibleInflexibleScreen() {
+    return "What type of portfolio would you like to create?\n"
+            + "\n"
+            + "1. Flexible / Customizable Portfolio\n"
+            + "2. Inflexible / Non Customizable Portfolio\n";
   }
 
 }
