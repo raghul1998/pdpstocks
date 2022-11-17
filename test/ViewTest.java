@@ -495,9 +495,9 @@ public class ViewTest extends TestParentClass {
     PrintStream output = new PrintStream(bytes);
     String[] args3 = {"1", "2022-11-11", "FULL", "ALL"};
     deleteDirectory();
-    String[] name = {"controllerTest9900","1"};
-    String[] args = {"WMT", "2022-11-11"};
-    String[] args1 = {"80", "controllerTest9900"};
+    String[] name = {"view2","1"};
+    String[] args = {"GOOG", "2022-11-11"};
+    String[] args1 = {"1", "view2"};
 
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
@@ -508,15 +508,15 @@ public class ViewTest extends TestParentClass {
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args3, 0);
 
-    String expected = "\nValue of CONTROLLERTEST9900 PORTFOLIO\n"
+    String expected = "\nValue of VIEW2 PORTFOLIO\n"
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
-            + "\nWalmart (WMT) \t 80\t $"
+            + "\nGoogle (GOOG) \t 1\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100
             + "\t $"
-            + 80*(Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
+            + (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
             + "\n\nTotal Portfolio Value is on 2022-11-11: $"
-            + 80*(Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
+            + (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
             + "\n\n";
 
     String result = bytes.toString();
@@ -552,7 +552,7 @@ public class ViewTest extends TestParentClass {
             + "\n"
             + "S.No\tName (Symbol) \n"
             + "\n"
-            + "1.\tWalmart (WMT) \n"
+            + "1.\tGoogle (GOOG) \n"
             + "\n"
             + "Which stock would you like to sell?\n";
 
