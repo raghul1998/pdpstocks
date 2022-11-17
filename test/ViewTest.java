@@ -552,7 +552,7 @@ public class ViewTest extends TestParentClass {
             + "\n"
             + "S.No\tName (Symbol) \n"
             + "\n"
-            + "1.\tMicrosoft (MSFT) \n"
+            + "1.\tWalmart (WMT) \n"
             + "\n"
             + "Which stock would you like to sell?\n";
 
