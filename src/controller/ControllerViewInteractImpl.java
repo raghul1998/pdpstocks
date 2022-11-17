@@ -63,8 +63,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
   @Override
   public void start() {
-    cmiObj.controllerModelInteract(TypeofAction.CREATE_SUPPORTED_STOCKS, null, 0);
+    output.println("\nSetting up the application. Please wait...");
+    cmiObj.controllerModelInteract(TypeofAction.INITIAL_SETUP, null, 0);
     storeCommissionCost("1.27"); // Default value
+    output.println("Setup complete...!!!");
     String option;
     do {
       try {

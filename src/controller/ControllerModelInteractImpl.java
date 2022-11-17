@@ -21,7 +21,7 @@ public class ControllerModelInteractImpl implements ControllerModelInteract {
       case GET_STOCK_DATA:
       case CREATE_PORTFOLIO:
       case DELETE_EMPTY_PORTFOLIO:
-      case CREATE_SUPPORTED_STOCKS:
+      case INITIAL_SETUP:
       case SELL_STOCKS:
       case GET_PORTFOLIO_PERFORMANCE:
       case STORE_COMMISSION_COST: {

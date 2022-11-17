@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 /**
@@ -15,5 +16,12 @@ public interface GetStockData {
    * @param dateStr data on which the stock is required for
    * @throws ParseException if there is an error in parsing the data
    */
-  void getValue(String stock, String[] dateStr) throws ParseException;
+  void getValue(String stock, String[] dateStr) throws ParseException, IOException;
+
+  /**
+   * This method helps to initialize and setup all values for a stock data.
+   *
+   * @param stock the ticker symbol of the stock that the data is required for
+   */
+  void getAllValue(String stock);
 }

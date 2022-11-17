@@ -181,7 +181,7 @@ public class ModelTest extends TestParentClass {
   @Test
   public void testFCreateSupportedStocks() throws IOException {
     ModelControllerInteract obj = new ModelControllerInteractImpl();
-    obj.modelControllerInteract(TypeofAction.CREATE_SUPPORTED_STOCKS, null, 0);
+    obj.modelControllerInteract(TypeofAction.INITIAL_SETUP, null, 0);
     BufferedReader supportedStocksData = null;
     try {
       supportedStocksData = new BufferedReader(new FileReader("data/SupportedStocks.csv"));

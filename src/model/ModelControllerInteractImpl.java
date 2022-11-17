@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import controller.GetStockData;
@@ -50,7 +51,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
         deleteEmptyPortFolio(null);
         break;
       }
-      case CREATE_SUPPORTED_STOCKS: {
+      case INITIAL_SETUP: {
         try {
           createSupportedStocksFile();
           deleteEmptyPortFolioAll();
@@ -124,8 +125,12 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    */
   private void createSupportedStocksFile() throws IOException {
     File directory = new File("data");
+    File dir = new File("data/AllStockData");
     if (!directory.exists()) {
       directory.mkdir();
+    }
+    if (!dir.exists()) {
+      dir.mkdir();
     }
     String fileName = "data/SupportedStocks.csv";
     File file = new File(fileName);
@@ -136,6 +141,17 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
       write.write(supportedStockData);
       write.flush();
       write.close();
+    }
+    setupAllStockData();
+  }
+
+  private void setupAllStockData() {
+    GetStockData gsd = new GetStockDataImpl();
+    StockNameMap snm = new StockNameMapImpl();
+    Map<String, String> data = snm.getMap();
+
+    for (Map.Entry<String, String> entry : data.entrySet()) {
+      gsd.getAllValue(entry.getKey());
     }
   }
 
