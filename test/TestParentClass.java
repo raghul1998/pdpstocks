@@ -82,8 +82,8 @@ public class TestParentClass {
 
   // A helper function to get the stock data from the portfolio
 
-  protected String readStockDataFromPortfolioCsv(String portfolioName, int lineNumber, int colNumber,
-                                                 boolean needSplit)
+  protected String readStockDataFromPortfolioCsv(String portfolioName, int lineNumber,
+                                                 int colNumber, boolean needSplit)
           throws IOException {
     String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
     String[] cols;
