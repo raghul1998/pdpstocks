@@ -134,10 +134,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showListOfStocksAvailableOnADate(args[0], args[1], args[2]);
         break;
       }
-      case PORTFOLIO_PERFORMANCE: {
+      /*case PORTFOLIO_PERFORMANCE: {
         portfolioPerformanceOverTime(args, length);
         break;
-      }
+      }*/
       case NOT_VALID_MAIN_MENU: {
         notAValidMainMenu();
         break;
@@ -191,28 +191,9 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    * @param args   the helper arguments to display
    * @param length length of the arguments
    */
-  private void portfolioPerformanceOverTime(String[] args, int length) {
-    Map<String, Double> pfPerformance;
-    String portfolioType = "FLEXIBLE";
-    try {
-      StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
-      pfPerformance = obj.computePerformanceData(args, length, portfolioType);
-      if (pfPerformance == null) {
-        output.println("Error in getting portfolio performance.\n");
-        return;
-      }
-    } catch (Exception e) {
-      output.println("Error in getting portfolio performance.\n");
-      return;
-    }
-
-    String[] scale = getScale(pfPerformance);
-    String getTitle = null;
-    try {
-      getTitle = getTitle(pfPerformance, args[length - 1]);
-    } catch (Exception e) {
-      output.println("Error in getting title");
-    }
+  public void portfolioPerformanceOverTime(String[] args, int length,
+                                           Map<String, Double> pfPerformance,
+                                           String[] scale, String getTitle) {
 
     output.println("\nPerformance of portfolio " + args[length - 3].toUpperCase()
             + " " + getTitle + "\n");
@@ -281,84 +262,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       }
     }
     return "*".repeat(Math.max(0, num));
-  }
-
-  /**
-   * This method helps to get the title for portfolio performance.
-   *
-   * @param pfPerformance map of the portfolio data for the dates, and it's value
-   * @param choice        choice entered by the user
-   * @return the title for the display
-   */
-  private String getTitle(Map<String, Double> pfPerformance, String choice) {
-    int ind = 0;
-    String dateStart = null;
-    String dateEnd = null;
-
-    StringBuilder title = new StringBuilder();
-
-    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
-      if (ind == 0) {
-        dateStart = set.getKey();
-      }
-      if (ind == pfPerformance.size() - 1) {
-        dateEnd = set.getKey();
-      }
-      ind++;
-    }
-
-    assert dateStart != null;
-    LocalDate startDate = LocalDate.parse(dateStart);
-    assert dateEnd != null;
-    LocalDate endDate = LocalDate.parse(dateEnd);
-
-    if (Objects.equals(choice, "1")) {
-      title.append("from ").append(startDate.getYear()).append(" to ").append(endDate.getYear());
-    } else if (Objects.equals(choice, "2")) {
-      title.append("from ").append(startDate.getMonth()).append(" ").append(startDate.getYear())
-              .append(" to ").append(endDate.getMonth()).append(" ").append(endDate.getYear());
-    } else if (Objects.equals(choice, "3")) {
-      title.append("from ").append(startDate.getDayOfMonth()).append(" ")
-              .append(startDate.getMonth()).append(" ").append(startDate.getYear())
-              .append(" to ").append(endDate.getDayOfMonth()).append(" ")
-              .append(endDate.getMonth()).append(" ").append(endDate.getYear());
-    }
-
-    return String.valueOf(title);
-  }
-
-  /**
-   * This helper method helps to calculate the scale based on the date ranges.
-   *
-   * @param pfPerformance the performance map of the portfolio
-   * @return the scale and it's type
-   */
-  private String[] getScale(Map<String, Double> pfPerformance) {
-    double max = Double.MIN_VALUE;
-    double min = Double.MAX_VALUE;
-    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
-      if (set.getValue() == null || set.getValue() == 0) {
-        continue;
-      }
-      if (set.getValue() > max) {
-        max = set.getValue();
-      }
-      if (set.getValue() < min) {
-        min = set.getValue();
-      }
-    }
-
-    double scale = (max / 50);
-    scale = Math.floor(scale);
-    String[] scaleStr = new String[2];
-    if (scale < min) {
-      scaleStr[0] = String.valueOf((long) scale);
-      scaleStr[1] = null;
-    } else {
-      scaleStr[0] = String.valueOf((long) (max - min) / 50);
-      scaleStr[1] = String.valueOf((long) Math.floor(min)); // base amount
-    }
-    return scaleStr;
   }
 
   /**
@@ -768,6 +671,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   /**
+   * THIS METHOD IS NOT IN USE.
    * A helper method that calculates the pseudo-random share values based on the stock value during
    * purchase and the date provided.
    *
@@ -792,6 +696,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   /**
+   * THIS METHOD IS NOT IN USE.
    * This helper method helps in calculating the sum of all the integers with a given integer.
    *
    * @param number the number for which the sum needs to be calculated

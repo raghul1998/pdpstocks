@@ -1,5 +1,7 @@
 import controller.ControllerViewInteract;
 import controller.ControllerViewInteractImpl;
+import view.GUIView;
+import view.JFrameViewImpl;
 
 /**
  * This class represents the main method for the application.
@@ -15,7 +17,9 @@ public class Main {
    * @param args arguments for the main method if any
    */
   public static void main(String[] args) {
+    GUIView guiView = new JFrameViewImpl();
     ControllerViewInteract obj = new ControllerViewInteractImpl(System.in, System.out);
+    obj.setView(guiView);
     obj.setup();
     obj.start();
   }

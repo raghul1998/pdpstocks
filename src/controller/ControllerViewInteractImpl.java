@@ -20,6 +20,7 @@ import model.StockNameMap;
 import model.StockNameMapImpl;
 import model.StockPortFolioDataImpl;
 import model.TypeofAction;
+import view.GUIView;
 import view.TypeofViews;
 import view.ViewControllerInteract;
 import view.ViewControllerInteractImpl;
@@ -43,6 +44,8 @@ import static java.lang.Thread.sleep;
 public class ControllerViewInteractImpl implements ControllerViewInteract {
   private final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
   private final ViewControllerInteract vciObj;
+
+  private GUIView viewGUI;
   private String currentPortfolioName;
   private final PrintStream output;
   private final Scanner scan;
@@ -68,9 +71,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     String fileName = "data/CommissionCost.txt";
     File file = new File(fileName);
     if (!file.exists()) {
-      storeCommissionCost("1.27"); // Default value
+      storeCommissionCost("4.5"); // Default value
     }
     output.println("Setup complete...!!!\n");
+  }
+
+  @Override
+  public void setView(GUIView guiView) {
+    viewGUI = guiView;
+    viewGUI.addFeatures(this);
   }
 
   @Override
@@ -625,9 +634,111 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     dates[Integer.parseInt(number) + 1] = pfNumber;
     dates[Integer.parseInt(number) + 2] = choice;
     cmiObj.controllerModelInteract(TypeofAction.GET_PORTFOLIO_PERFORMANCE, dates, dates.length);
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_PERFORMANCE, dates, dates.length);
+
+    // Get the performance data
+    Map<String, Double> pfPerformance;
+    String portfolioType = "FLEXIBLE";
+    try {
+      StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
+      pfPerformance = obj.computePerformanceData(dates, dates.length, portfolioType);
+      if (pfPerformance == null) {
+        output.println("Error in getting portfolio performance.\n");
+        return false;
+      }
+    } catch (Exception e) {
+      output.println("Error in getting portfolio performance.\n");
+      return false;
+    }
+
+    String[] scale = getScale(pfPerformance);
+    String getTitle = null;
+    try {
+      getTitle = getTitle(pfPerformance, dates[dates.length - 1]);
+    } catch (Exception e) {
+      output.println("Error in getting title");
+    }
+
+    vciObj.portfolioPerformanceOverTime(dates, dates.length, pfPerformance, scale, getTitle);
 
     return endMenu();
+  }
+
+  /**
+   * This helper method helps to calculate the scale based on the date ranges.
+   *
+   * @param pfPerformance the performance map of the portfolio
+   * @return the scale and it's type
+   */
+  private String[] getScale(Map<String, Double> pfPerformance) {
+    double max = Double.MIN_VALUE;
+    double min = Double.MAX_VALUE;
+    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
+      if (set.getValue() == null || set.getValue() == 0) {
+        continue;
+      }
+      if (set.getValue() > max) {
+        max = set.getValue();
+      }
+      if (set.getValue() < min) {
+        min = set.getValue();
+      }
+    }
+
+    double scale = (max / 50);
+    scale = Math.floor(scale);
+    String[] scaleStr = new String[2];
+    if (scale < min) {
+      scaleStr[0] = String.valueOf((long) scale);
+      scaleStr[1] = null;
+    } else {
+      scaleStr[0] = String.valueOf((long) (max - min) / 50);
+      scaleStr[1] = String.valueOf((long) Math.floor(min)); // base amount
+    }
+    return scaleStr;
+  }
+
+  /**
+   * This method helps to get the title for portfolio performance.
+   *
+   * @param pfPerformance map of the portfolio data for the dates, and it's value
+   * @param choice        choice entered by the user
+   * @return the title for the display
+   */
+  private String getTitle(Map<String, Double> pfPerformance, String choice) {
+    int ind = 0;
+    String dateStart = null;
+    String dateEnd = null;
+
+    StringBuilder title = new StringBuilder();
+
+    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
+      if (ind == 0) {
+        dateStart = set.getKey();
+      }
+      if (ind == pfPerformance.size() - 1) {
+        dateEnd = set.getKey();
+      }
+      ind++;
+    }
+
+    assert dateStart != null;
+    LocalDate startDate = LocalDate.parse(dateStart);
+    assert dateEnd != null;
+    LocalDate endDate = LocalDate.parse(dateEnd);
+
+    if (Objects.equals(choice, "1")) {
+      title.append("from ").append(startDate.getYear()).append(" to ").append(endDate.getYear());
+    } else if (Objects.equals(choice, "2")) {
+      title.append("from ").append(startDate.getMonth()).append(" ").append(startDate.getYear())
+              .append(" to ").append(endDate.getMonth()).append(" ").append(endDate.getYear());
+    } else if (Objects.equals(choice, "3")) {
+      title.append("from ").append(startDate.getDayOfMonth()).append(" ")
+              .append(startDate.getMonth()).append(" ").append(startDate.getYear())
+              .append(" to ").append(endDate.getDayOfMonth()).append(" ")
+              .append(endDate.getMonth()).append(" ").append(endDate.getYear());
+    }
+
+    return String.valueOf(title);
   }
 
   /**
