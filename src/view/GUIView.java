@@ -9,4 +9,6 @@ public interface GUIView {
   void errorReenterName();
   int jOptionPortfolioAlreadyExists();
   void screen3();
+  void resetFlexibleScreen();
+
 }

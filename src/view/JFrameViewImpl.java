@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -13,9 +15,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   JPanel card2 = new JPanel();  // type of portfolio screen
   JPanel card3 = new JPanel();
   CardLayout c1 = new CardLayout();
-  private JLabel display1, display2, display3, display4;
-  private JTextField inputName, setPurchaseDate;
-  private JButton exitButton1, exitButton2, submitButton, submitButton2;
+  private JLabel display1, display2, display3, display4,display5, display6, display7;
+  private JTextField inputName, setPurchaseDate, howManyShares;
+  private JButton exitButton1, exitButton2, submitButton1, submitButton2, backButton1;
 
   // constructor
   public JFrameViewImpl(String caption) {
@@ -42,11 +44,12 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
 
     exitButton1 = new JButton("Exit");
-    submitButton = new JButton("Submit");
+    submitButton1 = new JButton("Submit");
     submitButton2 = new JButton("Submit");
+    backButton1 = new JButton("Back");
 
-    card1.setLayout(new BoxLayout(card1, BoxLayout.Y_AXIS));
-    comboBoxMainMenu.setPreferredSize(new Dimension(1, 10));
+    card1.setLayout(new FlowLayout());
+
 
     card1.add(display1);
     card1.add(comboBoxMainMenu);
@@ -62,10 +65,41 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void addFeatures(Features feature) {
-    comboBoxMainMenu.addActionListener(evt -> feature.createAPortfolioGUI());
-    submitButton.addActionListener(evt -> feature.flexibleScreenSubmit(comboBoxTypeOfPortfolio.getSelectedIndex(),
+    comboBoxMainMenu.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if(comboBoxMainMenu.getSelectedIndex()==0) {
+          feature.createAPortfolioGUI();
+        }
+        else if(comboBoxMainMenu.getSelectedIndex()==1){
+          feature.valueAndCompositionGUI();
+        }
+//        else if(comboBoxMainMenu.getSelectedIndex()==2){
+//          c1.show(cards,"listOfPortfolioScreen");
+//        }
+//        else if(comboBoxMainMenu.getSelectedIndex()==3){
+//          c1.show(cards,"listOfPortfolioScreenWithoutInflex");
+//        }
+//        else if(comboBoxMainMenu.getSelectedIndex()==4){
+//          c1.show(cards,"listOfPortfolioScreenWithoutInflex");
+//        }
+//        else if(comboBoxMainMenu.getSelectedIndex()==5){
+//          c1.show(cards,"listOfPortfolioScreenWithoutInflex");
+//        }
+//        else if(comboBoxMainMenu.getSelectedIndex()==6){
+//          c1.show(cards,"listOfPortfolioScreenWithoutInflex");
+//        }
+//        else {
+//          c1.show(cards,"commissionCostScreen");
+//        }
+      }
+    });
+    //comboBoxMainMenu.addActionListener(evt -> feature.createAPortfolioGUI());
+    submitButton1.addActionListener(evt -> feature.CreatePortfolioScreenSubmit(comboBoxTypeOfPortfolio.getSelectedIndex(),
             inputName.getText(),comboBoxSupportedStocks.getSelectedIndex()));
+    submitButton2.addActionListener(evt -> feature.buyStockSubmit());
     exitButton1.addActionListener(evt -> feature.exitProgram());
+    //backButton1.addActionListener(evt -> c1.show(cards,"screen2"));
     //exitButton2.addActionListener(evt -> feature.exitProgram());
   }
 
@@ -77,32 +111,27 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     String[] typeOfPortfolio = {"Flexible",
             "Inflexible"};
     comboBoxTypeOfPortfolio = new JComboBox(typeOfPortfolio);
+    comboBoxTypeOfPortfolio.setSelectedIndex(-1);
 
     display3 = new JLabel("write the name of the portfolio");
     inputName = new JTextField(10);
 
-    display4 = new JLabel("Select a stock from below stocks");
-    // review -  hardcoded
-    // todo - read it from csv and store in supportedStocks
-    String[] supportedStocks = {"1. Microsoft (MSFT)",
-            "2. Meta (META)",
-            "3. Google (GOOG)",
-            "4. Apple (AAPL)",
-            "5. Tesla (TSLA)",
-            "6. JPMorgan Chase (JPM)",
-            "7. Johnson (JNJ)",
-            "8. Amazon (AMZN)",
-            "9. UnitedHealth (UNH)",
-            "10. Walmart (WMT)"};
+    display4 = new JLabel("Select options");
 
-    // String[] supportedStocks = readSupportedStocksFromCSV();
-    comboBoxSupportedStocks = new JComboBox(supportedStocks);
+    String[] options = {"Buy a Stock",
+    "Invest by dollar cost averaging"};
+
+    comboBoxSupportedStocks = new JComboBox(options);
+    comboBoxSupportedStocks.setSelectedIndex(-1);
     exitButton2 = new JButton("Exit");
     card2.setLayout(new FlowLayout());
+    card2.add(display2);
     card2.add(comboBoxTypeOfPortfolio);
+    card2.add(display3);
     card2.add(inputName);
+    card2.add(display4);
     card2.add(comboBoxSupportedStocks);
-    card2.add(submitButton);
+    card2.add(submitButton1);
     card2.add(exitButton2);
     cards.add(card2, "screen2");
     c1.show(cards, "screen2");
@@ -135,18 +164,45 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void screen3() {
-    display4 = new JLabel("Enter date");
-        // card 6
+    // card 6
     // Flexible Screen
     //displayEnterDate = new JLabel("Please Enter Date");
+    display5 = new JLabel("Enter date");
     setPurchaseDate = new JTextField(10);
+    display6 = new JLabel("Select stock from supported list of stocks");
+    // review -  hardcoded
+    // todo - read it from csv and store in supportedStocks
+    String[] supportedStocks = {"1. Microsoft (MSFT)",
+            "2. Meta (META)",
+            "3. Google (GOOG)",
+            "4. Apple (AAPL)",
+            "5. Tesla (TSLA)",
+            "6. JPMorgan Chase (JPM)",
+            "7. Johnson (JNJ)",
+            "8. Amazon (AMZN)",
+            "9. UnitedHealth (UNH)",
+            "10. Walmart (WMT)"};
+    comboBoxSupportedStocks = new JComboBox(supportedStocks);
+    display7 = new JLabel("How many shares would you like to buy");
+    howManyShares = new JTextField(10);
     submitButton2 = new JButton("Submit");
-    card3.add(display4);
+    backButton1 = new JButton("Back");
+    card3.add(display5);
     card3.add(setPurchaseDate);
+    card3.add(display6);
+    card3.add(comboBoxSupportedStocks);
+    card3.add(display7);
+    card3.add(howManyShares);
     card3.add(submitButton2);
+    card3.add(backButton1);
     cards.add(card3,"screen3");
     c1.show(cards,"screen3");
   }
 
-
+  @Override
+  public void resetFlexibleScreen() {
+    comboBoxTypeOfPortfolio.setSelectedIndex(-1);
+    inputName.setText("");
+    comboBoxSupportedStocks.setSelectedIndex(-1);
+  }
 }
