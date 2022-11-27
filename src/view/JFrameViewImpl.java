@@ -1,23 +1,47 @@
 package view;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.NumberFormat;
+import java.util.Properties;
 
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 
 import controller.Features;
 
 public class JFrameViewImpl extends JFrame implements GUIView {
+  private ViewControllerInteract vciObj;
   JComboBox comboBoxMainMenu, comboBoxTypeOfPortfolio, comboBoxSupportedStocks;
   JPanel cards = new JPanel();  // default screen
   JPanel card1 = new JPanel();  // main menu screen which is the default screen
   JPanel card2 = new JPanel();  // type of portfolio screen
   JPanel card3 = new JPanel();
   CardLayout c1 = new CardLayout();
-  private JLabel display1, display2, display3, display4,display5, display6, display7;
+  private JLabel display1, display2, display3, display4,display5, display6, display7, display8;
   private JTextField inputName, setPurchaseDate, howManyShares;
-  private JButton exitButton1, exitButton2, submitButton1, submitButton2, backButton1;
+  private JButton exitButton1, exitButton2, submitButton1, submitButton2, backButton1, checkPrice;
+
+//  UtilDateModel model1 = new UtilDateModel();
+//  Properties p = new Properties();
+//  p.put("text.today", "Today");
+//  p.put("text.month", "Month");
+//  p.put("text.year", "Year");
+//  JDatePanelImpl datePanel = new JDatePanelImpl(model1, p);
+//  // Don't know about the formatter, but there it is...
+//  JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+// cards.add(datePicker);
+
 
   // constructor
   public JFrameViewImpl(String caption) {
@@ -43,12 +67,17 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     comboBoxMainMenu.setSelectedIndex(-1);
 
 
+    checkPrice = new JButton("Check Price");
+
     exitButton1 = new JButton("Exit");
+    exitButton2 = new JButton("Exit");
     submitButton1 = new JButton("Submit");
     submitButton2 = new JButton("Submit");
     backButton1 = new JButton("Back");
 
-    card1.setLayout(new FlowLayout());
+    howManyShares = new JTextField(10);
+
+    card1.setLayout(new FlowLayout(FlowLayout.CENTER,10,3));
 
 
     card1.add(display1);
@@ -95,12 +124,41 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       }
     });
     //comboBoxMainMenu.addActionListener(evt -> feature.createAPortfolioGUI());
-    submitButton1.addActionListener(evt -> feature.CreatePortfolioScreenSubmit(comboBoxTypeOfPortfolio.getSelectedIndex(),
+    submitButton1.addActionListener(evt -> feature.createPortfolioScreenSubmit(
+            comboBoxTypeOfPortfolio.getSelectedIndex(),
             inputName.getText(),comboBoxSupportedStocks.getSelectedIndex()));
-    submitButton2.addActionListener(evt -> feature.buyStockSubmit());
+//    submitButton2.addActionListener(evt -> feature.buyStockSubmit(setPurchaseDate.getText(),
+//            comboBoxSupportedStocks.getSelectedIndex()));
+
     exitButton1.addActionListener(evt -> feature.exitProgram());
+    exitButton2.addActionListener(evt -> feature.exitProgram());
+    checkPrice.addActionListener(evt -> feature.checkCurrentPrice(setPurchaseDate.getText(), comboBoxSupportedStocks.getSelectedIndex()+1));
+    howManyShares.addKeyListener(new KeyListener() {
+      public void keyTyped(KeyEvent ke) {
+        //String value = howManyShares.getText();
+        //int l = value.length();
+        if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
+          howManyShares.setEditable(true);
+        } else {
+          howManyShares.setText("");
+          howManyShares.setEditable(true);
+          errorNotNumber();
+
+        }
+      }
+
+      @Override
+      public void keyPressed(KeyEvent e) {
+
+      }
+
+      @Override
+      public void keyReleased(KeyEvent e) {
+
+      }
+    });
+
     //backButton1.addActionListener(evt -> c1.show(cards,"screen2"));
-    //exitButton2.addActionListener(evt -> feature.exitProgram());
   }
 
   @Override
@@ -123,7 +181,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     comboBoxSupportedStocks = new JComboBox(options);
     comboBoxSupportedStocks.setSelectedIndex(-1);
-    exitButton2 = new JButton("Exit");
     card2.setLayout(new FlowLayout());
     card2.add(display2);
     card2.add(comboBoxTypeOfPortfolio);
@@ -138,17 +195,24 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   }
 
   @Override
-  public void errorReenterName() {
+  public void errorNotNumber() {
     JOptionPane.showMessageDialog(cards,
-            "Name cannot be empty. Please Re-enter name",
+            "Given input is not digit. Please enter a digit.",
             "Error",
             JOptionPane.ERROR_MESSAGE);
     }
 
   @Override
+  public void errorReenterName() {
+    JOptionPane.showMessageDialog(cards,
+            "Name cannot be empty. Please Re-enter name",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+  }
+  @Override
   public int jOptionPortfolioAlreadyExists() {
-    Object[] options = {"Yes, please",
-            "No way!"};
+    Object[] options = {"Yes",
+            "No"};
     int yesToOverride = JOptionPane.showOptionDialog(cards,
             "The portfolio with this name already exists. Do you want to override?",
             "Question",
@@ -161,10 +225,17 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   }
 
+  @Override
+  public void displayStockDataUsingJOption(String stockName, String symbol, String time, String price) {
+    JOptionPane.showMessageDialog(cards,
+            "\nSTOCK DETAILS\nStockName:" + stockName + "\nSymbol:"
+                    + symbol + "\nTime:" + time + "\nPrice: $" + price,
+            "Information",
+            JOptionPane.INFORMATION_MESSAGE);
+  }
 
   @Override
-  public void screen3() {
-    // card 6
+  public void flexiblePortfolioScreenWithDateInput() {
     // Flexible Screen
     //displayEnterDate = new JLabel("Please Enter Date");
     display5 = new JLabel("Enter date");
@@ -184,19 +255,23 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             "10. Walmart (WMT)"};
     comboBoxSupportedStocks = new JComboBox(supportedStocks);
     display7 = new JLabel("How many shares would you like to buy");
-    howManyShares = new JTextField(10);
+    //howManyShares = new JTextField(10);
+
+
     submitButton2 = new JButton("Submit");
     backButton1 = new JButton("Back");
     card3.add(display5);
     card3.add(setPurchaseDate);
     card3.add(display6);
     card3.add(comboBoxSupportedStocks);
+    card3.add(checkPrice);
     card3.add(display7);
     card3.add(howManyShares);
     card3.add(submitButton2);
     card3.add(backButton1);
     cards.add(card3,"screen3");
     c1.show(cards,"screen3");
+
   }
 
   @Override
@@ -205,4 +280,5 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     inputName.setText("");
     comboBoxSupportedStocks.setSelectedIndex(-1);
   }
+
 }

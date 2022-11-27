@@ -6,8 +6,8 @@ public interface Features {
   void setView(GUIView guiView);
   void createAPortfolioGUI();
   void valueAndCompositionGUI();
-  void CreatePortfolioScreenSubmit(int type, String name, int stockSelected);
-  void buyStockSubmit();
+  void createPortfolioScreenSubmit(int type, String name, int optionSelected);
+  void checkCurrentPrice(String name, int stockSelected);
   void exitProgram();
 
 

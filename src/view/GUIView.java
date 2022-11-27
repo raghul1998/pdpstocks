@@ -7,8 +7,12 @@ public interface GUIView {
   void addFeatures(Features feature);
   void displayTypeOfPortfolioFlexibleOrInFlexibleScreen();
   void errorReenterName();
+  void errorNotNumber();
   int jOptionPortfolioAlreadyExists();
-  void screen3();
+  void flexiblePortfolioScreenWithDateInput();
   void resetFlexibleScreen();
+
+
+  void displayStockDataUsingJOption(String stockName, String symbol, String time, String pric);
 
 }

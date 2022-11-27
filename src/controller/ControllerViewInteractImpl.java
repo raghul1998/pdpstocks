@@ -47,7 +47,7 @@ import static java.lang.Thread.sleep;
  * </ul>
  */
 public class ControllerViewInteractImpl implements ControllerViewInteract {
-  private final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
+  protected final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
   private final ViewControllerInteract vciObj;
 
  // private GUIView viewGUI;
