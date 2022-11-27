@@ -20,6 +20,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   // constructor
   public JFrameViewImpl(String caption) {
     super(caption);
+
     setSize(500, 300);
     setLocation(500, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,6 +39,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             "Configure the commission cost"};
     comboBoxMainMenu = new JComboBox(mainMenuOptions);
     comboBoxMainMenu.setSelectedIndex(-1);
+
 
     exitButton1 = new JButton("Exit");
     submitButton = new JButton("Submit");

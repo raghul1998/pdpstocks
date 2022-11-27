@@ -424,7 +424,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       if (!type.equals("COST")) {
         output.print(stkObj.stockName[i]);
         output.print(" (" + stkObj.stockSymbol[i] + ") ");
-        output.print("\t " + stkObj.stockQuantity[i]);
+        output.print("\t " + Math.floor(stkObj.stockQuantity[i] * 100) / 100);
       }
       // Display based on the date purchased on
       double shareValue;
@@ -487,7 +487,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
       output.print(stkObj.stockName[i]);
       output.print(" (" + stkObj.stockSymbol[i] + ") ");
-      output.print("\t " + stkObj.stockQuantity[i]);
+      output.print("\t " + Math.floor(stkObj.stockQuantity[i] * 100) / 100);
       output.print("\t " + stkObj.stockLastKnownValueDate[i]);
       output.println("\t $" + stkObj.valueOfSingleStock[i]);
     }
@@ -608,7 +608,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       output.print(entry.getValue());
       output.println(" (" + entry.getKey() + ")");
     }
-    output.println("\nWhich stock would you like to buy?");
   }
 
   /**
@@ -625,6 +624,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("6. Performance of portfolio");
     output.println("7. Total amount invested on certain date");
     output.println("8. Configure the commission cost");
+    output.println("9. Add stocks to portfolio using Dollar-Cost strategy");
     output.println("e. Exit\n");
     output.println("ENTER YOUR CHOICE: ");
   }
@@ -639,7 +639,8 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("\nCREATE PORTFOLIO MENU\n");
     output.println(name.toUpperCase() + " Portfolio\n");
     output.println("1. Buy a stock");
-    output.println("2. Main Menu");
+    output.println("2. Invest by dollar-cost averaging");
+    output.println("3. Main Menu");
     output.println("e. Exit\n");
     output.println("ENTER YOUR CHOICE: ");
   }
@@ -657,7 +658,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    * and the mentioned output is rendered on the screen.
    */
   private void showStockBuyReenter() {
-    output.println("Not a valid input. Please enter the correct stock.");
+    output.println("Not a valid input. Please enter the correct number.");
     output.println("If you want to go back to main menu, press 'm'.\n");
   }
 

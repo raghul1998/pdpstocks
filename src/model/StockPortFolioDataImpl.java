@@ -19,7 +19,7 @@ public class StockPortFolioDataImpl implements StockPortFolioData {
   public int numberOfUniqueStocks;
   public String[] stockName;
   public String[] stockSymbol;
-  public long[] stockQuantity;
+  public double[] stockQuantity;
   public double[] valueOfSingleStock;
   public String createdTimeStamp;
   public String[] stockLastKnownValueDate;
