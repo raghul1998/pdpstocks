@@ -45,7 +45,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   private final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
   private final ViewControllerInteract vciObj;
 
-  private GUIView viewGUI;
+ // private GUIView viewGUI;
   private String currentPortfolioName;
   private final PrintStream output;
   private final Scanner scan;
@@ -76,11 +76,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     output.println("Setup complete...!!!\n");
   }
 
-  @Override
-  public void setView(GUIView guiView) {
-    viewGUI = guiView;
-    viewGUI.addFeatures(this);
-  }
 
   @Override
   public void start() {

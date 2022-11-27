@@ -18,5 +18,5 @@ public interface ControllerViewInteract {
    */
   void setup();
 
-  void setView(GUIView guiView);
+ // void setView(GUIView guiView);
 }

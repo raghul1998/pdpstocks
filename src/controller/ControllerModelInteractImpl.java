@@ -11,7 +11,7 @@ import model.TypeofAction;
  *   <li> mciObj - an object for the model </li>
  * </ul>
  */
-public class ControllerModelInteractImpl implements ControllerModelInteract {
+public class ControllerModelInteractImpl implements ControllerModelInteract{
   private final ModelControllerInteract mciObj = new ModelControllerInteractImpl();
 
   @Override

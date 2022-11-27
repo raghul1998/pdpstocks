@@ -1,5 +1,6 @@
 import controller.ControllerViewInteract;
 import controller.ControllerViewInteractImpl;
+import controller.GUIController;
 import view.GUIView;
 import view.JFrameViewImpl;
 
@@ -17,10 +18,11 @@ public class Main {
    * @param args arguments for the main method if any
    */
   public static void main(String[] args) {
-    GUIView guiView = new JFrameViewImpl();
+    GUIView guiView = new JFrameViewImpl("STOCKS GUI APPLICATION");
     ControllerViewInteract obj = new ControllerViewInteractImpl(System.in, System.out);
-    obj.setView(guiView);
-    obj.setup();
+    GUIController guiController = new GUIController();
+    guiController.setView(guiView);
+    //obj.setup();
     obj.start();
   }
 }

@@ -1,7 +1,11 @@
 package view;
 
 import controller.ControllerViewInteract;
+import controller.Features;
 
 public interface GUIView {
-  void addFeatures(ControllerViewInteract cvi);
+  void addFeatures(Features feature);
+  void displayTypeOfPortfolioFlexibleOrInFlexibleScreen();
+  void errorReenter();
+  void screen3();
 }
