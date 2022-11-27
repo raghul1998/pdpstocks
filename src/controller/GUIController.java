@@ -65,7 +65,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
 
 
-    //viewGUI.screen3();
+    viewGUI.screen3();
   }
 
 

@@ -121,8 +121,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     Object[] options = {"Yes, please",
             "No way!"};
     int yesToOverride = JOptionPane.showOptionDialog(cards,
-            "Would you like green eggs and ham?",
-            "A Silly Question",
+            "The portfolio with this name already exists. Do you want to override?",
+            "Question",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE,
             null,     //do not use a custom Icon
