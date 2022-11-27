@@ -51,7 +51,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   private final ViewControllerInteract vciObj;
 
  // private GUIView viewGUI;
-  private String currentPortfolioName;
+  protected String currentPortfolioName;
   private final PrintStream output;
   private final Scanner scan;
 
@@ -67,7 +67,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     vciObj = new ViewControllerInteractImpl(output);
     scan = new Scanner(input);
   }
-
 
   @Override
   public void setup() {
@@ -298,7 +297,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param options the options that are provided by the user
    * @param args    the helper arguments that are passed by the callee
    */
-  private void createPortfolioNameScreenAction(String options, String[] args) {
+  protected void createPortfolioNameScreenAction(String options, String[] args) {
     try {
       sleep(100);
     } catch (Exception e) {
@@ -1328,7 +1327,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param name the name of the portfolio that user wants to create
    * @return true if the portfolio exists, else false
    */
-  private boolean checkIfPortfolioExists(String name) {
+  protected boolean checkIfPortfolioExists(String name) {
     String directoryName = "userdata/user1/Portfolio/";
     File directory = new File(directoryName);
     if (!directory.exists()) {

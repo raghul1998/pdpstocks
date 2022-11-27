@@ -109,12 +109,29 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   }
 
   @Override
-  public void errorReenter() {
+  public void errorReenterName() {
     JOptionPane.showMessageDialog(cards,
             "Name cannot be empty. Please Re-enter name",
             "Error",
             JOptionPane.ERROR_MESSAGE);
     }
+
+  @Override
+  public int jOptionPortfolioAlreadyExists() {
+    Object[] options = {"Yes, please",
+            "No way!"};
+    int yesToOverride = JOptionPane.showOptionDialog(cards,
+            "Would you like green eggs and ham?",
+            "A Silly Question",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,     //do not use a custom Icon
+            options,  //the titles of buttons
+            options[0]); //default button title
+    return yesToOverride;
+
+  }
+
 
   @Override
   public void screen3() {

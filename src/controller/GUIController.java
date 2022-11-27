@@ -1,15 +1,26 @@
 package controller;
 
+import java.io.InputStream;
+import java.io.PrintStream;
+
 import view.GUIView;
-import view.TypeofViews;
 import view.ViewControllerInteract;
 
-public class GUIController implements Features {
+public class GUIController extends ControllerViewInteractImpl implements Features {
   private GUIView viewGUI;
   private ViewControllerInteract vciObj;
 
-  public GUIController() {
+  /**
+   * Constructor for the controller that interacts with the view that takes in two arguments and
+   * initializes them to the global variables.
+   *
+   * @param input  the input stream
+   * @param output the output stream
+   */
+  public GUIController(InputStream input, PrintStream output) {
+    super(input, output);
   }
+
 
   @Override
   public void setView(GUIView guiView) {
@@ -19,56 +30,42 @@ public class GUIController implements Features {
 
   public void createAPortfolioGUI() {
     viewGUI.displayTypeOfPortfolioFlexibleOrInFlexibleScreen();
-    }
+  }
 
   @Override
-  public void flexibleScreenSubmit(int type,String name,int stockSelected) {
+  public void flexibleScreenSubmit(int type, String name, int stockSelected) {
 
     // reenter if not entered anything
     // if the user didn't enter a string, display the error message and then the same screen
-      if (name.length() == 0) {
-        viewGUI.errorReenter();
-        viewGUI.displayTypeOfPortfolioFlexibleOrInFlexibleScreen();
-      }
-//        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_NAME_REENTER, null, 0);
-//        name = scan.nextLine();
-//        if (name.equals("0")) {
-//          return;
-//        }
-//      }
-//
-//      // override
-//      if (checkIfPortfolioExists(name)) {
-//        vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_ALREADY_EXISTS, null, 0);
-//        vciObj.viewControllerInteract(TypeofViews.PF_REENTER_DUPLICATE_NAME, null, 0);
-//        String input;
-//        input = scan.nextLine();
-//        while ((input.length() == 0) || !(input.equals("B") || input.equals("b")
-//                || input.equals("Y") || input.equals("y") || input.equals("N")
-//                || input.equals("n"))) {
-//          vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
-//          vciObj.viewControllerInteract(TypeofViews.PF_REENTER_DUPLICATE_NAME,
-//                  null, 0);
-//          input = scan.nextLine();
-//        }
-//        if (input.equals("B") || input.equals("b")) {
-//          return;
-//        }
-//        if (input.equals("N") || input.equals("n")) {
-//          continue;
-//        }
-//        // This case is 'Y', we want to override.
-//      }
-//
-//      String[] args = new String[2];
-//      args[0] = name;
-//      args[1] = type;
-//      currentPortfolioName = name;
-//      createPortfolioNameScreenAction(option, args);
-//      break;
-//    }
+    if (name.length() == 0) {
+      viewGUI.errorReenterName();
+      return;
+    }
+    // override
 
-    viewGUI.screen3();
+    String typeStr = null;
+    if (type == 0) {
+      typeStr = "1";
+    } else if (type == 1) {
+      typeStr = "2";
+    }
+
+    if (checkIfPortfolioExists(name)) {
+      int yesToOverride = viewGUI.jOptionPortfolioAlreadyExists();
+      if (yesToOverride == 0) {
+        String[] args = new String[2];
+        args[0] = name;
+        args[1] = typeStr;
+        super.currentPortfolioName = name;
+        createPortfolioNameScreenAction(null, args);
+      } else {
+        return;
+      }
+
+    }
+
+
+    //viewGUI.screen3();
   }
 
 
