@@ -35,9 +35,9 @@ public class StockCompositionDataImpl implements StockCompositionData {
    */
   public StockCompositionDataImpl(String portfolioType) {
     int count = 0;
-    Path path = Paths.get("userdata/user1");
+    Path path = Paths.get("userdata/user1/Portfolio/");
     if (Files.exists(path)) {
-      File directory = new File("userdata/user1");
+      File directory = new File("userdata/user1/Portfolio/");
       if (Objects.equals(portfolioType, "ALL")) {
         count = Objects.requireNonNull(directory.list()).length;
       } else {
@@ -52,13 +52,14 @@ public class StockCompositionDataImpl implements StockCompositionData {
   }
 
   private int computeNumberOfPortfolioUsingTypes(String portfolioType) {
-    File dir = new File("userdata/user1");
+    File dir = new File("userdata/user1/Portfolio/");
     File[] files = dir.listFiles();
     assert files != null;
     int total = 0;
 
     for (File file : files) {
-      if (isPortfolioOfGivenType("userdata/user1/" + file.getName(), portfolioType)) {
+      if (isPortfolioOfGivenType("userdata/user1/Portfolio/"
+              + file.getName(), portfolioType)) {
         total++;
       }
     }
@@ -104,7 +105,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
 
   @Override
   public String getPortFolioFileNameByIndex(int index, String portfolioType) {
-    File dir = new File("userdata/user1");
+    File dir = new File("userdata/user1/Portfolio/");
     File[] files = dir.listFiles();
     assert files != null;
 
@@ -112,7 +113,8 @@ public class StockCompositionDataImpl implements StockCompositionData {
     int count = index;
     if (!Objects.equals(portfolioType, "ALL")) {
       for (File file : files) {
-        if (!isPortfolioOfGivenType("userdata/user1/" + file.getName(), portfolioType)) {
+        if (!isPortfolioOfGivenType("userdata/user1/Portfolio/"
+                + file.getName(), portfolioType)) {
           count += 1;
         } else {
           temp--;
@@ -126,7 +128,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
     }
 
     File file = files[index];
-    return "userdata/user1/" + file.getName();
+    return "userdata/user1/Portfolio/" + file.getName();
   }
 
   @Override
@@ -149,7 +151,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
       return null;
     } else {
       String[] data = new String[numberOfPortFolio];
-      File dir = new File("userdata/user1");
+      File dir = new File("userdata/user1/Portfolio/");
       File[] files = dir.listFiles();
       assert files != null;
       for (File file : files) {
@@ -160,7 +162,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
         if (Objects.equals(portfolioType, "ALL")) {
           data[index] = arrOfStr[0];
           index++;
-        } else if (isPortfolioOfGivenType("userdata/user1/" + file.getName(),
+        } else if (isPortfolioOfGivenType("userdata/user1/Portfolio/" + file.getName(),
                 portfolioType)) {
           // Name of the portFolio
           data[index] = arrOfStr[0];
@@ -192,7 +194,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
     String[] names = new String[numberOfStocks];
     String[] symbol = new String[numberOfStocks];
     String[] stockLastKnownValueDate = new String[numberOfStocks];
-    long[] quantity = new long[numberOfStocks];
+    double[] quantity = new double[numberOfStocks];
     double[] valueOfSingleStock = new double[numberOfStocks];
     int numberOfTransactions = 0;
 
@@ -247,9 +249,9 @@ public class StockCompositionDataImpl implements StockCompositionData {
             names[nameIndex] = splitStockData[4];
             symbol[nameIndex] = splitStockData[3];
             if (Objects.equals(splitStockData[0], "BUY")) {
-              quantity[nameIndex] += Long.parseLong(splitStockData[5]);
+              quantity[nameIndex] += Double.parseDouble(splitStockData[5]);
             } else if (Objects.equals(splitStockData[0], "SALE") && includeSale) {
-              quantity[nameIndex] -= Long.parseLong(splitStockData[5]);
+              quantity[nameIndex] -= Double.parseDouble(splitStockData[5]);
             }
             valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
                     * 100) / 100;
@@ -260,17 +262,17 @@ public class StockCompositionDataImpl implements StockCompositionData {
               // Combine if the stock last known value date are same
               if (Objects.equals(stockLastKnownValueDate[i], splitStockData[2])) {
                 if (Objects.equals(splitStockData[0], "BUY")) {
-                  quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
+                  quantity[i] = quantity[i] + Double.parseDouble(splitStockData[5]);
                 } else if (Objects.equals(splitStockData[0], "SALE") && includeSale) {
-                  quantity[i] = quantity[i] - Long.parseLong(splitStockData[5]);
+                  quantity[i] = quantity[i] - Double.parseDouble(splitStockData[5]);
                 }
               } else {
                 names[nameIndex] = splitStockData[4];
                 symbol[nameIndex] = splitStockData[3];
                 if (Objects.equals(splitStockData[0], "BUY")) {
-                  quantity[nameIndex] += Long.parseLong(splitStockData[5]);
+                  quantity[nameIndex] += Double.parseDouble(splitStockData[5]);
                 } else if (Objects.equals(splitStockData[0], "SALE") && includeSale) {
-                  quantity[nameIndex] -= Long.parseLong(splitStockData[5]);
+                  quantity[nameIndex] -= Double.parseDouble(splitStockData[5]);
                 }
                 valueOfSingleStock[nameIndex] = Math.floor(Double.parseDouble(splitStockData[6])
                         * 100) / 100;
@@ -279,9 +281,9 @@ public class StockCompositionDataImpl implements StockCompositionData {
               }
             } else {
               if (Objects.equals(splitStockData[0], "BUY")) {
-                quantity[i] = quantity[i] + Long.parseLong(splitStockData[5]);
+                quantity[i] = quantity[i] + Double.parseDouble(splitStockData[5]);
               } else if (Objects.equals(splitStockData[0], "SALE") && includeSale) {
-                quantity[i] = quantity[i] - Long.parseLong(splitStockData[5]);
+                quantity[i] = quantity[i] - Double.parseDouble(splitStockData[5]);
               }
             }
           }
@@ -403,7 +405,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
   public Map<String, Double> computePerformanceData(String[] args, int length,
                                                     String portfolioType) throws IOException {
     Map<String, String[]> dateStockSymbolMap = new HashMap<>();
-    Map<String, long[]> dateStockMapQuantity = new HashMap<>();
+    Map<String, double[]> dateStockMapQuantity = new HashMap<>();
     Map<String, Double> finalDateAmountMap = new TreeMap<>();
 
     int pfNumber = Integer.parseInt(args[length - 2]);
@@ -480,8 +482,8 @@ public class StockCompositionDataImpl implements StockCompositionData {
           continue;
         }
 
-        long[] stockQuantityArray = dateStockMapQuantity.get(splitStockData[3]);
-        int stockQuantity = (int) stockQuantityArray[quantityInd];
+        double[] stockQuantityArray = dateStockMapQuantity.get(splitStockData[3]);
+        double stockQuantity = stockQuantityArray[quantityInd];
         double finalStockValue;
 
         if (finalDateAmountMap.get(splitStockData[3]) == null) {

@@ -102,7 +102,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    * terminate gracefully.
    */
   private void deleteEmptyPortFolioAll() {
-    File directory = new File("userdata/user1");
+    File directory = new File("userdata/user1/Portfolio/");
     if (directory.exists()) {
       directory.mkdir();
       File[] files = directory.listFiles();
@@ -183,7 +183,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
       pfName = portFolioName;
     }
 
-    String fileName = "userdata/user1/" + "pf_" + pfName + ".csv";
+    String fileName = "userdata/user1/Portfolio/" + "pf_" + pfName + ".csv";
     try {
       File file = new File(fileName);
       BufferedReader stockData;
@@ -222,7 +222,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    * @throws IOException if there is an issue in creating a file
    */
   private void createPortFolio(String name, String type) throws IOException {
-    String directoryName = "userdata/user1/";
+    String directoryName = "userdata/user1/Portfolio/";
     File directory = new File(directoryName);
     if (!directory.exists()) {
       directory.mkdirs();
@@ -335,7 +335,7 @@ public class ModelControllerInteractImpl implements ModelControllerInteract {
    * @throws FileNotFoundException if the portfolio doesn't exist
    */
   private void writeStockDataToPortfolio(CharSequence data) throws FileNotFoundException {
-    String filename = "userdata/user1/" + "pf_" + portFolioName + ".csv";
+    String filename = "userdata/user1/Portfolio/" + "pf_" + portFolioName + ".csv";
     PrintWriter write = new PrintWriter(new FileOutputStream(filename, true));
     write.append(data);
     write.flush();

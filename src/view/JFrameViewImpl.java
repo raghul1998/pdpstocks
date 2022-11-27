@@ -11,7 +11,6 @@ import controller.ControllerViewInteract;
 
 public class JFrameViewImpl extends JFrame implements GUIView {
   private JLabel display;
-  private JList
   private JButton button;
   private JTextField input;
   public JFrameViewImpl() {
@@ -25,7 +24,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     JPanel pan = new JPanel();
     pan.add(display);
-    pan.add("abv");
     this.add(pan);
 
     //pack();

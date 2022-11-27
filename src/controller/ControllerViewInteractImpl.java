@@ -1,8 +1,12 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +30,7 @@ import view.ViewControllerInteract;
 import view.ViewControllerInteractImpl;
 
 import static java.lang.System.exit;
+import static java.lang.System.out;
 import static java.lang.Thread.sleep;
 
 /**
@@ -73,6 +78,13 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     if (!file.exists()) {
       storeCommissionCost("4.5"); // Default value
     }
+
+    try {
+      readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
+
     output.println("Setup complete...!!!\n");
   }
 
@@ -96,6 +108,91 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       performMainMenuAction(option);
     }
     while (!option.equals("e"));
+  }
+
+  private void readStrategyAndImplement() throws IOException {
+    String path = "userdata/user1/Strategy";
+    File directory = new File(path);
+    // Check if strategy directory exists
+    if (directory.exists()) {
+      File[] files = directory.listFiles();
+      assert files != null;
+      for (File file : files) {
+        String filename = file.getName();
+        // Name of the portFolio
+        String[] arrOfStr = filename.split("\\.", 2);
+        File pfFile = new File("userdata/user1/Portfolio/pf_" + filename);
+        // Check if corresponding portfolio file exists
+        if (pfFile.exists()) {
+          BufferedReader strategyData;
+          try {
+            strategyData = new BufferedReader(new FileReader(pfFile));
+          } catch (IOException e) {
+            System.out.println("CONTROLLER: Unable to get strategy data\n");
+            return;
+          }
+
+          String line;
+          String splitBy = ",";
+          String[] splitData;
+
+          boolean isSharesBought = false;
+          StringBuilder newData = new StringBuilder();
+          StringBuilder tempData = new StringBuilder();
+
+          while ((line = strategyData.readLine()) != null) {
+            tempData.setLength(0);
+            tempData.append(line);
+            splitData = line.split(splitBy);    // use comma as separator
+
+            // Check the type of strategy
+            if (Objects.equals(splitData[0], "DOLLAR-COST")) {
+              // Check if the last purchase date has exceeded the recurring date
+              String lastPurchaseDate = splitData[1];
+              String frequency = splitData[2];
+              LocalDate dateToBePurchasedNext = LocalDate.parse(lastPurchaseDate)
+                      .plusDays(Long.parseLong(frequency));
+              LocalDate today = LocalDate.now();
+              if (dateToBePurchasedNext.compareTo(today) <= 0) {
+                isSharesBought = true;
+                // if stocks are bought, store the new date in the strategy file
+                newData.replace(0, 10, dateToBePurchasedNext.toString());
+
+                // Buy stocks on this date
+                String[] dateArg = new String[1];
+                dateArg[0] = dateToBePurchasedNext.toString();
+                String cost = splitData[3];
+                int number = Integer.parseInt(splitData[4]);
+                String[] stockSymbol = new String[number];
+                String[] proportion = new String[number];
+
+                for (int i = 0; i < number; i++) {
+                  stockSymbol[i] = splitData[5 + i];
+                  proportion[i] = splitData[5 + i];
+                }
+
+                // Buy shares
+                calculateAndBuySharesBasedOnStrategy(dateArg, cost,
+                        proportion, stockSymbol, number, arrOfStr[0]);
+              }
+            }
+
+            tempData.append('\n');
+            newData.append(tempData);
+          }
+          strategyData.close();
+
+          if (isSharesBought) {
+            // Re-write the new buy date in the strategy
+            try {
+              persistStrategyToFile(String.valueOf(newData), arrOfStr[0]);
+            } catch (Exception e) {
+              output.println("CONTROLLER: Error in persisting the strategy. " + e.getMessage());
+            }
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -356,32 +453,76 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
       case "2": {
         // Value of the portfolio on certain date
+        try {
+          readStrategyAndImplement();
+        } catch (Exception e) {
+          output.println("Error in reading strategy.");
+        }
         compositionOfPortfolio();
         break;
       }
       case "3": {
         // Value of the portfolio on a certain date full composition
+        try {
+          readStrategyAndImplement();
+        } catch (Exception e) {
+          output.println("Error in reading strategy.");
+        }
         valueOfPortfolio();
         break;
       }
       case "4": {
+        try {
+          readStrategyAndImplement();
+        } catch (Exception e) {
+          output.println("Error in reading strategy.");
+        }
         addStockToPortfolioMainMenu();
         break;
       }
       case "5": {
+        try {
+          readStrategyAndImplement();
+        } catch (Exception e) {
+          output.println("Error in reading strategy.");
+        }
         sellStockFromPortfolio();
         break;
       }
       case "6": {
+        try {
+          readStrategyAndImplement();
+        } catch (Exception e) {
+          output.println("Error in reading strategy.");
+        }
         portfolioPerformanceMainMenu();
         break;
       }
       case "7": {
+        try {
+          readStrategyAndImplement();
+        } catch (Exception e) {
+          output.println("Error in reading strategy.");
+        }
         costBasisByDate();
         break;
       }
       case "8": {
+        try {
+          readStrategyAndImplement();
+        } catch (Exception e) {
+          output.println("Error in reading strategy.");
+        }
         commissionCostMainMenu();
+        break;
+      }
+      case "9": {
+        try {
+          readStrategyAndImplement();
+        } catch (Exception e) {
+          output.println("Error in reading strategy.");
+        }
+        addStockUsingDollarCostMainMenu();
         break;
       }
       case "e":
@@ -970,15 +1111,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return endMenu();
   }
 
-  /**
-   * This method provides the options for users to adds stocks to the portfolio.
-   */
-  private void addStockToPortfolioMainMenu() {
+  private boolean abstractAddStockScreen() {
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
       vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
-      return;
+      return false;
     }
     String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
     String[] arg = new String[portfolioNames.length + 1];
@@ -995,15 +1133,34 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
       options = scan.nextLine();
       if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
-        return;
+        return false;
       }
     }
     //addStockToPortfolio(options);
     StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
-    currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[Integer.parseInt(options) - 1];
+    currentPortfolioName =
+            stk.getPortFolioNames("FLEXIBLE")[Integer.parseInt(options) - 1];
+    return true;
+  }
+
+  /**
+   * This method provides the options for users to adds stocks to the portfolio.
+   */
+  private void addStockToPortfolioMainMenu() {
+    if (!abstractAddStockScreen()) {
+      return;
+    }
+
     String[] args = new String[1];
     args[0] = "addStockScreen";
     performCreatePortfolioMenuAction("1", "1", args, 1);
+  }
+
+  private void addStockUsingDollarCostMainMenu() {
+    if (!abstractAddStockScreen()) {
+      return;
+    }
+    dollarCostAverage();
   }
 
   /**
@@ -1177,12 +1334,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @return true if the portfolio exists, else false
    */
   private boolean checkIfPortfolioExists(String name) {
-    String directoryName = "userdata/user1/";
+    String directoryName = "userdata/user1/Portfolio/";
     File directory = new File(directoryName);
     if (!directory.exists()) {
       return false;
     }
-    File dir = new File("userdata/user1");
+    File dir = new File("userdata/user1/Portfolio/");
     File[] files = dir.listFiles();
     assert files != null;
     for (File file : files) {
@@ -1231,6 +1388,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         //Buy a new stock
         while (true) {
           vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
+          output.println("\nWhich stock would you like to buy?");
           String options;
           options = scan.nextLine();
           StockNameMap snp = new StockNameMapImpl();
@@ -1247,6 +1405,15 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         break;
       }
       case "2": {
+        if (Objects.equals(portfolioType, "1")) {
+          dollarCostAverage();
+        } else {
+          cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+          output.println("This option is not available for inflexible portfolio.");
+        }
+        break;
+      }
+      case "3": {
         // Go to Main menu
         cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
         break;
@@ -1264,6 +1431,400 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
     }
     return true;
+  }
+
+  private void dollarCostAverage() {
+    // Dollar-Cost Averaging investing
+    // Ask for the date of investment
+    output.println("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
+            + " (from year 2000 to current day)");
+    String startDate = scan.nextLine();
+    while (!validateDate(startDate, "yyyy-MM-dd", 0)) {
+      vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+      startDate = scan.nextLine();
+      if (Objects.equals(startDate, "b") || Objects.equals(startDate, "B")) {
+        cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+        return;
+      }
+    }
+
+    // Ask for recurring investment
+    output.println("Do you want to investment to be recurring? (Y|N)");
+    String recurringStr = scan.nextLine();
+    while (!(recurringStr.equalsIgnoreCase("y")
+            || recurringStr.equalsIgnoreCase("n"))) {
+      vciObj.viewControllerInteract(TypeofViews.NOT_VALID_MAIN_MENU, null, 0);
+      recurringStr = scan.nextLine();
+      if (Objects.equals(recurringStr, "m") || Objects.equals(recurringStr, "M")) {
+        cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+        return;
+      }
+    }
+
+    String frequencyStr = null;
+    String endDate = null;
+    String onGoingStr = null;
+    // If it is recurring investment, then check if it is ongoing
+    if (recurringStr.equalsIgnoreCase("y")) {
+      output.println("Is this an ongoing strategy? (Y|N)");
+      onGoingStr = scan.nextLine();
+      while (!(onGoingStr.equalsIgnoreCase("y")
+              || onGoingStr.equalsIgnoreCase("n"))) {
+        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_MAIN_MENU, null, 0);
+        onGoingStr = scan.nextLine();
+        if (Objects.equals(onGoingStr, "m") || Objects.equals(onGoingStr, "M")) {
+          cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+          return;
+        }
+      }
+
+      // If it is not ongoing, then ask the end date
+      if (onGoingStr.equalsIgnoreCase("n")) {
+        // If the strategy is not going, then ask for the end date
+        // The end date can be in future as well
+
+        if (Objects.equals(LocalDate.parse(startDate), LocalDate.now())) {
+          output.println("Since start date is today, the end date will be today as well.");
+          endDate = String.valueOf(LocalDate.now());
+        } else {
+          output.println("Enter the end date for the strategy (YYYY-MM-DD)"
+                  + "(from " + startDate + " to current day)");
+          endDate = scan.nextLine();
+          while (!validateDate(endDate, "yyyy-MM-dd", 0)
+                  || (LocalDate.parse(endDate).compareTo(LocalDate.parse(startDate)) < 0)) {
+            vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+            endDate = scan.nextLine();
+            if (Objects.equals(endDate, "b") || Objects.equals(endDate, "B")) {
+              cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+              return;
+            }
+          }
+        }
+      }
+    }
+
+    if (recurringStr.equalsIgnoreCase("y")) {
+      assert onGoingStr != null;
+      if (onGoingStr.equalsIgnoreCase("n")) {
+        assert endDate != null;
+        int remainder = (int) ChronoUnit.DAYS.between(LocalDate.parse(startDate),
+                LocalDate.parse(endDate));
+
+        if (remainder > 30) {
+          remainder = 30;
+        }
+
+        if (remainder == 0) {
+          output.println("Since the start date is today, there is no recurring investment applied.");
+          frequencyStr = "0";
+        } else {
+          if (remainder == 1) {
+            output.println("The frequency is auto applied to 1 since it is only 1 day");
+            frequencyStr = "1";
+          } else {
+            output.println("Enter the recurring frequency (1 to " + remainder + " days)");
+            frequencyStr = scan.nextLine();
+            while (!validateStockSelectOption(frequencyStr, 1, 30)) {
+              vciObj.viewControllerInteract(TypeofViews.NOT_VALID_MAIN_MENU, null, 0);
+              frequencyStr = scan.nextLine();
+              if (frequencyStr.equalsIgnoreCase("m")) {
+                cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+                return;
+              }
+            }
+          }
+        }
+      } else {
+        // Ask frequency for ongoing strategy
+        output.println("Enter the recurring frequency for the ongoing strategy (1 to 30 days)");
+        frequencyStr = scan.nextLine();
+        while (!validateStockSelectOption(frequencyStr, 1, 30)) {
+          vciObj.viewControllerInteract(TypeofViews.NOT_VALID_MAIN_MENU, null, 0);
+          frequencyStr = scan.nextLine();
+          if (frequencyStr.equalsIgnoreCase("m")) {
+            cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+            return;
+          }
+        }
+      }
+    }
+
+    // Ask how many stocks would the user like to buy
+    StockNameMap snp = new StockNameMapImpl();
+    output.println("How many stocks would you like to buy? (1 to " + snp.getMapSize()
+            + ")");
+    String numberOfStocks;
+    numberOfStocks = scan.nextLine();
+    while (!validateStockSelectOption(numberOfStocks, 1, snp.getMapSize())) {
+      vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
+      numberOfStocks = scan.nextLine();
+      // Return to main menu
+      if (Objects.equals(numberOfStocks, "m") || Objects.equals(numberOfStocks, "M")) {
+        cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+        return;
+      }
+    }
+
+    // Show list of stocks and ask which one would like to buy
+    vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
+    int number = Integer.parseInt(numberOfStocks);
+    String[] options = new String[number];
+
+    for (int i = 0; i < number; i++) {
+      output.println("\nEnter the stock option (" + (i + 1) + " out of " + number + ")");
+      options[i] = scan.nextLine();
+      while (!validateStockSelectOption(options[i], 1, snp.getMapSize())) {
+        vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
+        options[i] = scan.nextLine();
+        i--;
+      }
+      if (Objects.equals(options[i], "m") || Objects.equals(options[i], "M")) {
+        cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO,
+                null, 0);
+        return;
+      }
+    }
+
+    // Ask the amount of money the user would like to invest
+    output.println("How much money you would like to invest?");
+    String cost;
+    cost = scan.nextLine();
+    while (!validateCommissionCost(cost)) {
+      vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+      output.println("Investment amount should be greater than 0. Enter 'm' for main menu.");
+      cost = scan.nextLine();
+      if (cost.equalsIgnoreCase("m")) {
+        cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+        return;
+      }
+    }
+
+    // Ask for the proportion on the stocks
+    Map<String, String> data = snp.getMap();
+    String[] stockNameIndexArray = new String[snp.getMapSize()];
+    String[] stockSymbolIndexArray = new String[snp.getMapSize()];
+    int index = 0;
+    for (Map.Entry<String, String> entry : data.entrySet()) {
+      stockSymbolIndexArray[index] = entry.getKey();
+      stockNameIndexArray[index++] = entry.getValue();
+    }
+
+    String[] proportion = new String[number];
+    double totalProportion = 100;
+    int i;
+
+    for (i = 0; i < number - 1; i++) {
+      output.println("Enter the proportion percent for "
+              + stockNameIndexArray[Integer.parseInt(options[i])]
+              + " (out of " + totalProportion + "%)");
+      proportion[i] = scan.nextLine();
+
+      while (!validateCommissionCost(proportion[i])) {
+        vciObj.viewControllerInteract(TypeofViews.NOT_VALID_INPUT_SCREEN, null, 0);
+        output.println("Enter 'm' for main menu.");
+        proportion[i] = scan.nextLine();
+
+        if (proportion[i].equalsIgnoreCase("m")) {
+          cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+          return;
+        }
+      }
+
+      totalProportion -= Double.parseDouble(proportion[i]);
+      if (totalProportion < 0) {
+        totalProportion += Double.parseDouble(proportion[i]);
+        output.println("Cannot enter this value. The  proportion has to be equal to 100%");
+        i--;
+        continue;
+      }
+
+      if (totalProportion == 0) {
+        output.println("No more proportions available.");
+        output.println("All the remaining stocks will have 0 proportion and hence they will"
+                + "not be bought.");
+        i++; // since we break here, 'i' won't be incremented by loop, hence manually increment
+        break;
+      }
+    }
+
+    if (i == number - 1) {
+      output.println("The remaining " + totalProportion + " percentage will be automatically"
+              + " applied to " + stockNameIndexArray[Integer.parseInt(options[i])]
+              + " stock.");
+      proportion[i] = String.valueOf(totalProportion);
+    } else {
+      // 'i' is already initialized
+      for (; i < number; i++) {
+        // Stocks that have no remaining proportion, assign it to 0
+        proportion[i] = String.valueOf(0);
+      }
+    }
+
+    String[] dateArr;
+    int remainderDays = 0;
+    if (recurringStr.equalsIgnoreCase("y")
+            && !Objects.equals(frequencyStr, "0")) {
+      assert endDate != null;
+
+      if (onGoingStr.equalsIgnoreCase("n")) {
+        remainderDays = (int) ChronoUnit.DAYS.between(LocalDate.parse(startDate)
+                , LocalDate.parse(endDate));
+      } else {
+        remainderDays = (int) ChronoUnit.DAYS.between(LocalDate.parse(startDate)
+                , LocalDate.now());
+      }
+      assert frequencyStr != null;
+      remainderDays = (remainderDays / Integer.parseInt(frequencyStr)) + 1;
+
+      dateArr = new String[remainderDays];
+      if (remainderDays == 0) {
+        dateArr[0] = startDate;
+      } else {
+        LocalDate sDate = LocalDate.parse(startDate);
+        dateArr[0] = startDate;
+        for (int k = 1; k < remainderDays; k++) {
+          sDate = sDate.plusDays(Long.parseLong(frequencyStr));
+          dateArr[k] = sDate.toString();
+        }
+      }
+    } else {
+      dateArr = new String[1];
+      dateArr[0] = startDate;
+    }
+
+    String[] stockSymbolRequired = new String[options.length];
+    for(int j = 0; j < options.length; j++) {
+      stockSymbolRequired[j] = stockSymbolIndexArray[Integer.parseInt(options[j])];
+    }
+
+    output.println("Buying shares, please wait...");
+    // Calculate the number of shares to be bought for the
+    calculateAndBuySharesBasedOnStrategy(dateArr, cost, proportion,
+            stockSymbolRequired, number, currentPortfolioName);
+
+    // Save ongoing strategy data
+    // The final data will be like
+    // 2022-11-26, 2000, 3, MSFT, 20, GOOG, 60, WMT, 20)
+    if (recurringStr.equalsIgnoreCase("y")
+            && onGoingStr.equalsIgnoreCase("y")) {
+      // Entry for ongoing strategy
+      StringBuilder strategyArgs = new StringBuilder();
+
+      // Type of Strategy
+      strategyArgs.append("DOLLAR-COST").append(",");
+
+      // Last known date on which the stocks were bought
+      strategyArgs.append(dateArr[remainderDays - 1]).append(",");
+
+      // Frequency to buy stocks
+      strategyArgs.append(frequencyStr).append(",");
+
+      // Cost invested
+      strategyArgs.append(cost).append(",");
+
+      // Number of stocks in the strategy
+      strategyArgs.append(stockSymbolRequired.length).append(",");
+
+      // Shares in the strategy
+      // Proportion for each shares
+      for (int j = 0; j < stockSymbolRequired.length; j++) {
+        strategyArgs.append(stockSymbolRequired[j]).append(",");
+        strategyArgs.append(proportion[j]).append(",");
+      }
+
+      // Persist the strategy
+      try {
+        persistStrategyToFile(String.valueOf(strategyArgs), currentPortfolioName);
+      } catch (Exception e) {
+        output.println("CONTROLLER: Error in persisting the strategy. " + e.getMessage());
+      }
+    }
+
+    output.println("\nStock successfully added to the portfolio...!!!");
+  }
+
+  private void calculateAndBuySharesBasedOnStrategy(String[] dateArr, String cost,
+                                                    String[] proportion,
+                                                    String[] stockSymbolIndexArray,
+                                                    int number, String pfName) {
+    double costInDouble = Double.parseDouble(cost);
+    int index;
+    for (int j = 0; j < dateArr.length; j++) {
+      for (index = 0; index < number; index++) {
+        double prop = Double.parseDouble(proportion[index]);
+        if (prop != 0) {
+          // Get the stock price on that date
+          String[] args = new String[2];
+          args[0] = stockSymbolIndexArray[index]; // Stock Symbol
+          args[1] = dateArr[j];  // date
+          cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, args, 2);
+          String[] splitStockData = readGetStockData();
+          double priceOfSingleShare = Double.parseDouble(splitStockData[1]);
+          double totalAmountDedicatedToThisStock
+                  = costInDouble * Double.parseDouble(proportion[index]) / 100;
+          double amountOfSharesToBeBought = totalAmountDedicatedToThisStock / priceOfSingleShare;
+          amountOfSharesToBeBought = Math.floor(amountOfSharesToBeBought * 100) / 100;
+
+          String[] buyArgs = new String[2];
+          buyArgs[0] = String.valueOf(amountOfSharesToBeBought);
+          buyArgs[1] = pfName;
+          cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, buyArgs, 2);
+        }
+      }
+    }
+  }
+
+  /**
+   * A private helper method that writes the strategy data to the file
+   *
+   * @param strategyArgs strategy data
+   * @throws IOException if there is any issue in writing data
+   */
+  private void persistStrategyToFile(String strategyArgs, String pfName) throws IOException {
+    String path = "userdata/user1/Strategy/";
+    File directory = new File(path);
+    if (!directory.exists()) {
+      directory.mkdir();
+    }
+
+    String fileName = path + pfName + ".csv";
+    File file = new File(fileName);
+    if (!file.exists()) {
+      file.createNewFile();
+    }
+
+    PrintWriter write = new PrintWriter(fileName);
+    write.write(strategyArgs);
+    write.flush();
+    write.close();
+  }
+
+  /**
+   * A private helper method to read and get the stock data from the StockData CSV file.
+   *
+   * @return the stock data as a string
+   */
+  private String[] readGetStockData() {
+    BufferedReader stockData;
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    String line;
+    String splitBy = ",";
+    String[] splitStockData;
+
+    try {
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+      stockData.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+    return splitStockData;
   }
 
   /**
