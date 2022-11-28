@@ -108,7 +108,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     if(type == 0) {
       if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
         // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-        viewGUI.invalidDate();
+        viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
         viewGUI.resetDateInput();
         return;
       }
@@ -374,14 +374,14 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     // invalid date
     if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
       // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-      viewGUI.invalidDate();
+      viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
       viewGUI.resetDateInput();
       return;
     }
 
     // empty no of stocks
     if(noOfStocks.equals("")){
-      viewGUI.noOfSharesNotEntered();
+      viewGUI.displayErrorMessage("Number of shares not entered. Please enter a valid natural number");
       return;
     }
 
@@ -443,14 +443,14 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 // invalid date
     if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
       // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-      viewGUI.invalidDate();
+      viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
       viewGUI.resetDateInput();
       return;
     }
 
     // empty no of stocks
     if(noOfStocks.equals("")){
-      viewGUI.noOfSharesNotEntered();
+      viewGUI.displayErrorMessage("Number of shares not entered. Please enter a valid natural number");
       return;
     }
 

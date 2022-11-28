@@ -375,14 +375,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
 
   @Override
-  public void invalidDate() {
-    JOptionPane.showMessageDialog(cards,
-            "Invalid Date. Please reenter valid date",
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
-  }
-
-  @Override
   public void resetDateInput() {
     setPurchaseDate.setText("");
   }
@@ -475,14 +467,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   @Override
   public void resetHowManyShares() {
     howManyShares.setText("");
-  }
-
-  @Override
-  public void noOfSharesNotEntered() {
-    JOptionPane.showMessageDialog(cards,
-            "Number of shares not entered. Please enter a valid natural number",
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
   }
 
   @Override
