@@ -104,7 +104,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     while (!option.equals("e"));
   }
 
-  private void readStrategyAndImplement() throws IOException {
+  protected void readStrategyAndImplement() throws IOException {
     String path = "userdata/user1/Strategy";
     File directory = new File(path);
     // Check if strategy directory exists
@@ -1140,7 +1140,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   /**
    * This method provides the options for users to adds stocks to the portfolio.
    */
-  private void addStockToPortfolioMainMenu() {
+  protected void addStockToPortfolioMainMenu() {
     if (!abstractAddStockScreen()) {
       return;
     }

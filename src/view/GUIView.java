@@ -25,4 +25,7 @@ public interface GUIView {
   void resetHowManyShares();
   void noOfSharesNotEntered();
   void displayBoughtSuccessfulScreenForAnotherBoughtStock();
+  void displayAddScreen();
+  void displaySellScreen();
+  void displayListOfPortfolioScreen(String[] getListOfPortfolioNames);
 }

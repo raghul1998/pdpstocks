@@ -16,4 +16,8 @@ public interface Features {
   void buyStockSubmit(String date, int stockSelected, String noOfStocks, String portfolioName);
   void buyAnotherStockButton(String portfolioName);
   void checkHowManyShares();
+  void selectPortfolio();
+  void addStockSubmit(String date, int stockSelected, String noOfStocks, String portfolioName);
+  void sellStock();
+  void selectStockSubmit(String portfolioName);
 }
