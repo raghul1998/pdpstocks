@@ -9,6 +9,7 @@ public interface GUIView {
   void displayTypeOfPortfolioFlexibleOrInFlexibleScreen();
   int jOptionPortfolioAlreadyExists();
   void flexiblePortfolioScreenWithDateInput();
+  void inflexiblePortfolioScreen();
   void displayPerformanceOfPortfolio(String[] displayString);
   void resetMainMenu();
   void performanceDateEnter(int timestampType);

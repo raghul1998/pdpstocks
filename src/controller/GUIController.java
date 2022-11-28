@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -89,18 +91,29 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     super.currentPortfolioName = name;
     super.cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
     //createPortfolioNameScreenAction(null, args);
-    viewGUI.flexiblePortfolioScreenWithDateInput();
+    if(type==0) {
+      viewGUI.flexiblePortfolioScreenWithDateInput();
+    }
+    else if(type==1)
+      viewGUI.inflexiblePortfolioScreen();
   }
 
 
 
   @Override
-  public void checkCurrentPrice(String date, int stockSelected) {
-    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
-      // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-      viewGUI.invalidDate();
-      viewGUI.resetDateInput();
-      return;
+  public void checkCurrentPrice(int type, String date, int stockSelected) {
+    if(type == 0) {
+      if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
+        // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+        viewGUI.invalidDate();
+        viewGUI.resetDateInput();
+        return;
+      }
+    }
+    else if(type==1){
+      SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+      Date now = new Date();
+      date = sdfDate.format(now);
     }
 
     String[] stock = new String[2];
