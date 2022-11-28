@@ -31,9 +31,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   JPanel card5 = new JPanel();
   CardLayout c1 = new CardLayout();
   private JLabel display1, display2, display3, display4,display5, display6, display7, display8,
-          display9;
+          display9, display10, display11;
   private JTextField inputName, setPurchaseDate, howManyShares;
-  private JButton exitButton1, exitButton2, submitButton1, submitButton2, backButton1, checkPrice,
+  private JButton exitButton1, exitButton2, submitButton1, submitButton2, submitButton3, backButton1, checkPrice,
   buyAnotherButton, goBackMainMenu;
 
 //  UtilDateModel model1 = new UtilDateModel();
@@ -77,6 +77,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     exitButton2 = new JButton("Exit");
     submitButton1 = new JButton("Submit");
     submitButton2 = new JButton("Submit");
+    submitButton3 = new JButton("Submit");
     backButton1 = new JButton("Back");
     buyAnotherButton = new JButton("Buy Another");
     goBackMainMenu = new JButton("Go Back to Main Menu");
@@ -148,7 +149,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             comboBoxTypeOfPortfolio.getSelectedIndex(),
             inputName.getText(),comboBoxBuyOrInvest.getSelectedIndex()));*/
 
-    checkPrice.addActionListener(evt -> feature.checkCurrentPrice(setPurchaseDate.getText(), comboBoxSupportedStocks.getSelectedIndex()+1));
+    checkPrice.addActionListener(evt -> feature.checkCurrentPrice(comboBoxTypeOfPortfolio.getSelectedIndex(),
+            setPurchaseDate.getText(), comboBoxSupportedStocks.getSelectedIndex()+1));
     howManyShares.addKeyListener(new KeyListener() {
       public void keyTyped(KeyEvent ke) {
         //String value = howManyShares.getText();
@@ -263,6 +265,43 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       c1.show(cards,"screen4");
     }
 
+    // card 5
+
+  @Override
+  public void inflexiblePortfolioScreen() {
+    // inflexible Screen
+
+    display10 = new JLabel("Select stock from supported list of stocks");
+    // review -  hardcoded
+    // todo - read it from csv and store in supportedStocks
+    String[] supportedStocks = {"1. Microsoft (MSFT)",
+            "2. Meta (META)",
+            "3. Google (GOOG)",
+            "4. Apple (AAPL)",
+            "5. Tesla (TSLA)",
+            "6. JPMorgan Chase (JPM)",
+            "7. Johnson (JNJ)",
+            "8. Amazon (AMZN)",
+            "9. UnitedHealth (UNH)",
+            "10. Walmart (WMT)"};
+    comboBoxSupportedStocks = new JComboBox(supportedStocks);
+    display11 = new JLabel("How many shares would you like to buy");
+    //howManyShares = new JTextField(10);
+  //  comboBoxSupportedStocks.setSelectedIndex(-1);
+
+    card5.add(display10);
+    card5.add(comboBoxSupportedStocks);
+    card5.add(checkPrice);
+    card5.add(display11);
+    card5.add(howManyShares);
+    card5.add(submitButton3);
+    card5.add(backButton1);
+    cards.add(card5,"screen5");
+    c1.show(cards,"screen5");
+
+  }
+
+
   @Override
   public void invalidDate() {
     JOptionPane.showMessageDialog(cards,
@@ -346,14 +385,14 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   @Override
   public void displayBoughtSuccessfulScreenForAnotherBoughtStock(){
     //reset the fields.
-    display8.setText("");
-    display9.setText("Bought Successful");
-    card5.add(display8);
-    card5.add(display9);
-    card5.add(buyAnotherButton);
-    card5.add(goBackMainMenu);
-    cards.add(card5,"screen5");
-    c1.show(cards,"screen5");
+//    display8.setText("");
+//    display9.setText("Bought Successful");
+//    card5.add(display8);
+//    card5.add(display9);
+//    card5.add(buyAnotherButton);
+//    card5.add(goBackMainMenu);
+//    cards.add(card5,"screen5");
+//    c1.show(cards,"screen5");
   }
 
 }

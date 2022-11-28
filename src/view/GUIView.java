@@ -10,6 +10,7 @@ public interface GUIView {
   void errorNotNumber();
   int jOptionPortfolioAlreadyExists();
   void flexiblePortfolioScreenWithDateInput();
+  void inflexiblePortfolioScreen();
   void resetCreatePortfolioScreen();
 
   void resetFlexiblePortfolioScreen();

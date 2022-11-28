@@ -87,13 +87,17 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     super.currentPortfolioName = name;
     super.cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
     //createPortfolioNameScreenAction(null, args);
-    viewGUI.flexiblePortfolioScreenWithDateInput();
+    if(type==0) {
+      viewGUI.flexiblePortfolioScreenWithDateInput();
+    }
+    else if(type==1)
+      viewGUI.inflexiblePortfolioScreen();
   }
 
 
 
   @Override
-  public void checkCurrentPrice(String date, int stockSelected) {
+  public void checkCurrentPrice(int type, String date, int stockSelected) {
 
 
     // ControllerViewInteractImpl performListOfStocksMenuAction
@@ -101,11 +105,18 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 //      cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
 //      return false;
 //    }
-    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
-      // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-      viewGUI.invalidDate();
-      viewGUI.resetDateInput();
-      return;
+    if(type == 0) {
+      if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
+        // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+        viewGUI.invalidDate();
+        viewGUI.resetDateInput();
+        return;
+      }
+    }
+    else if(type==1){
+      SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+      Date now = new Date();
+      date = sdfDate.format(now);
     }
     String[] stock = new String[2];
 
@@ -223,7 +234,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     //viewGUI.resetCreatePortfolioScreen();
     viewGUI.resetFlexiblePortfolioScreen();
     viewGUI.flexiblePortfolioScreenWithDateInput();
-    
+
 
   }
   @Override
