@@ -225,7 +225,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param dateStr the date that user entered
    * @return true of the input is valid, else false
    */
-  private boolean validateDate(String dateStr, String format, int minDifference) {
+  protected boolean validateDate(String dateStr, String format, int minDifference) {
     if (dateStr == null || dateStr.length() == 0) {
       return false;
     }

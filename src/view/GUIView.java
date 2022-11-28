@@ -10,9 +10,18 @@ public interface GUIView {
   void errorNotNumber();
   int jOptionPortfolioAlreadyExists();
   void flexiblePortfolioScreenWithDateInput();
-  void resetFlexibleScreen();
+  void resetCreatePortfolioScreen();
 
+  void resetFlexiblePortfolioScreen();
+  void displayStockDataUsingJOption(String stockName, String symbol, String time, String price);
 
-  void displayStockDataUsingJOption(String stockName, String symbol, String time, String pric);
+  void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName);
+  void invalidDate();
+  void resetDateInput();
 
+  void resetHowManyShares();
+
+  void noOfSharesNotEntered();
+
+  void displayBoughtSuccessfulScreenForAnotherBoughtStock();
 }
