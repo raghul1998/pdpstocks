@@ -28,9 +28,10 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   private JPanel card6_showListOfStocks;
   private JPanel card7_showAddScreen;
   private CardLayout c1 = new CardLayout();
-  private JLabel display1, display2, display3, display4, display5,
-          display6, display7, display8, display9, display10,
+  private JLabel display1, display2, display3, display4,
+          display5, display6, display7, display8, display9, display10,
           display11, display12, display13, display14, display15;
+  ;
   private JTextField inputName, setPurchaseDate, howManyShares, howManyShares1;
   private JTextField inputDate, date;
   private JButton exitButton1, exitButton2, submitButton1, submitButton2, submitButton3,
@@ -41,6 +42,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   private JButton pfPerformanceButtonSubmit;
   private JTextField inputRemainderNumberForPfPerformance;
   private JButton pfPerformanceButtonGetData;
+
+  private JButton dollarCostMainButton;
 
   //  UtilDateModel model1 = new UtilDateModel();
   //  Properties p = new Properties();
@@ -71,6 +74,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     card7_showAddScreen = new JPanel();
     c1 = new CardLayout();
     pfPerformanceButton = new JButton("Next");
+    dollarCostMainButton = new JButton("Next");
     mainMenuButton = new JButton("Main Menu");
     pfPerformanceButtonSubmit = new JButton("Next");
     cards.setLayout(c1);
@@ -85,7 +89,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             "Sell a stock from portfolio",
             "Performance of portfolio",
             "Total amount invested on certain date",
-            "Configure the commission cost"};
+            "Configure the commission cost",
+            "Add stocks to portfolio using Dollar-Cost strategy"};
 
     comboBoxMainMenu = new JComboBox(mainMenuOptions);
     comboBoxMainMenu.setSelectedIndex(-1);
@@ -118,10 +123,16 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void addFeatures(Features feature) {
+    dollarCostMainButton.addActionListener(e-> {
+      feature.dollarValueScreenOne(comboCommon.getSelectedIndex(), inputDate.getText(),
+              combo2.getSelectedIndex());
+    });
+
     mainMenuButton.addActionListener(e -> {
       resetMainMenu();
       c1.first(cards);
     });
+
     comboBoxMainMenu.addActionListener(e -> {
       if (comboBoxMainMenu.getSelectedIndex() == 0) {
         feature.createAPortfolioGUI();
@@ -139,6 +150,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 //          c1.show(cards,"listOfPortfolioScreenWithoutInflex");
 //        }
       else if (comboBoxMainMenu.getSelectedIndex() == 5) {
+        feature.performanceOfPortfolioMain();
+      } else if (comboBoxMainMenu.getSelectedIndex() == 8) {
         feature.performanceOfPortfolioMain();
       }
 //        else if(comboBoxMainMenu.getSelectedIndex()==6){
@@ -175,6 +188,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     checkPrice.addActionListener(evt ->
             feature.checkCurrentPrice(comboBoxTypeOfPortfolio.getSelectedIndex(),
                     setPurchaseDate.getText(), comboBoxSupportedStocks.getSelectedIndex() + 1));
+
     checkPrice1.addActionListener(evt ->
             feature.checkCurrentPrice(comboBoxTypeOfPortfolio.getSelectedIndex(),
                     setPurchaseDate.getText(), comboBoxSupportedStocks.getSelectedIndex() + 1));
@@ -541,6 +555,33 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   @Override
   public void displaySellScreen() {
 
+  }
+
+  @Override
+  public void displayAddStocksUsingDollarStrategyMain(String[] displayString) {
+    JLabel displayCommon = new JLabel("Select the portfolio");
+    comboCommon = new JComboBox(displayString);
+    comboCommon.setSelectedIndex(-1);
+
+    display3 = new JLabel("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
+                          + "(from year 2000 to current day)");
+    inputDate = new JTextField();
+
+    display8 = new JLabel("Recurring?");
+    String[] recur = {"Yes", "No"};
+    combo2 = new JComboBox(recur);
+
+    JPanel cardCommon = new JPanel();
+    cardCommon.add(displayCommon);
+    cardCommon.add(comboCommon);
+    cardCommon.add(display3);
+    cardCommon.add(inputDate);
+    cardCommon.add(display8);
+    cardCommon.add(combo2);
+    cardCommon.add(dollarCostMainButton);
+    cardCommon.add(mainMenuButton);
+    cards.add(cardCommon, "Dollar Cost Main Screen");
+    c1.show(cards, "Dollar Cost Main Screen");
   }
 
   public void resetMainMenu() {

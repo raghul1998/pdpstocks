@@ -28,4 +28,5 @@ public interface GUIView {
   void displayAddScreen();
   void displaySellScreen();
   void displayListOfPortfolioScreen(String[] getListOfPortfolioNames);
+  void displayAddStocksUsingDollarStrategyMain(String[] displayString);
 }

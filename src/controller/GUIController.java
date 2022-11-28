@@ -188,6 +188,31 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     return getPortfolioNames(args, args.length);
   }
 
+  public void addStocksUsingDollarMain() {
+    StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      viewGUI.displayInformationalMessage("You dont have any portfolio");
+      viewGUI.resetMainMenu();
+      return;
+    }
+
+    String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
+    String[] args = new String[portfolioNames.length + 1];
+    System.arraycopy(portfolioNames, 0, args, 0, portfolioNames.length);
+    args[portfolioNames.length] = "FLEXIBLE";
+
+    String[] displayString = getPortfolioNames(args, args.length);
+    viewGUI.displayAddStocksUsingDollarStrategyMain(displayString);
+  }
+
+  @Override
+  public void dollarValueScreenOne(int pfIndex, String date, int recurIndex) {
+    if(!super.validateDate(date, "yyyy-MM-dd", 0)) {
+
+    }
+  }
+
   @Override
   public void performancePortfolioMainMenu(int pfIndex, int timestampType) {
     if (pfIndex == -1) {
