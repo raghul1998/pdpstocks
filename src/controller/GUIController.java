@@ -21,7 +21,10 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   private GUIView viewGUI;
   private PortfolioPerformanceDataImpl ppd;
   //private ViewControllerInteract vciObj;
+  boolean visited = false;
   //private ControllerModelInteract cmiObj;
+
+  // todo handle back and back to main menu
 
   /**
    * Constructor for the controller that interacts with the view that takes in two arguments and
@@ -73,22 +76,33 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     if (checkIfPortfolioExists(name)) {
       int yesToOverride = viewGUI.jOptionPortfolioAlreadyExists();
       if (yesToOverride == 0) {
-        String[] args = new String[2];
-        args[0] = name;
-        args[1] = typeStr;
-        super.currentPortfolioName = name;
-        createPortfolioNameScreenAction(null, args);
-      } else if (yesToOverride == 1) {
-        viewGUI.resetFlexibleScreen();
+        // do nothing
+      } else if(yesToOverride == 1){
+        viewGUI.resetCreatePortfolioScreen();
         return;
       }
-
     }
+
+    String[] args = new String[2];
+    args[0] = name;
+    args[1] = typeStr;
+    super.currentPortfolioName = name;
+    super.cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
+    //createPortfolioNameScreenAction(null, args);
     viewGUI.flexiblePortfolioScreenWithDateInput();
   }
 
+
+
   @Override
   public void checkCurrentPrice(String date, int stockSelected) {
+    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
+      // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+      viewGUI.invalidDate();
+      viewGUI.resetDateInput();
+      return;
+    }
+
     String[] stock = new String[2];
 
     StockNameMap snp = new StockNameMapImpl();
@@ -302,5 +316,59 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     viewGUI.getGraph(pfPerformance, super.currentPortfolioName);
     //vciObj.portfolioPerformanceOverTime(dates, dates.length, pfPerformance, scale, getTitle);
+  }
+  public void buyStockSubmit(String date, int stockSelected, String noOfStocks,
+                             String portfolioName) {
+    // invalid date
+    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
+      // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
+      viewGUI.invalidDate();
+      viewGUI.resetDateInput();
+      return;
+    }
+
+    // empty no of stocks
+    if(noOfStocks.equals("")){
+      viewGUI.noOfSharesNotEntered();
+      return;
+    }
+
+    StockNameMap snp = new StockNameMapImpl();
+    Map<String, String> map = snp.getMap();
+    String[] stockSymbolIndexArray = new String[snp.getMapSize()];
+    String[] stock = new String[2];
+    int index = 0;
+    for (Map.Entry<String, String> entry : map.entrySet()) {
+      stockSymbolIndexArray[index++] = entry.getKey();
+    }
+    stock[0] = stockSymbolIndexArray[stockSelected];
+    stock[1] = date;
+    super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
+
+    super.currentPortfolioName = portfolioName;
+    //String[] stock = new String[2];
+    stock[0] = noOfStocks;
+    stock[1] = super.currentPortfolioName;
+    cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
+    if(!visited) {
+      viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName);
+    }
+    else{
+      visited = true;
+      viewGUI.displayBoughtSuccessfulScreenForAnotherBoughtStock();
+    }
+    cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+  }
+
+  @Override
+  public void buyAnotherStockButton(String portfolioName) {
+    viewGUI.resetFlexiblePortfolioScreen();
+    viewGUI.flexiblePortfolioScreenWithDateInput();
+  }
+
+  @Override
+  public void checkHowManyShares(){
+    viewGUI.displayErrorMessage("Given input is not digit. Please enter a digit.");
+    viewGUI.resetHowManyShares();
   }
 }

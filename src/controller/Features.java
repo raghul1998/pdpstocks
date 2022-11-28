@@ -12,6 +12,8 @@ public interface Features {
   void performancePortfolioMainMenu(int pfIndex, int timestampType);
   void exitProgram();
   void performancePortfolioSubmit(String date, int timestampType);
-
   void performanceOfPortfolioGetData(String text);
+  void buyStockSubmit(String date, int stockSelected, String noOfStocks, String portfolioName);
+  void buyAnotherStockButton(String portfolioName);
+  void checkHowManyShares();
 }

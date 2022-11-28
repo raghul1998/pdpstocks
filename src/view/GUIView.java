@@ -9,16 +9,19 @@ public interface GUIView {
   void displayTypeOfPortfolioFlexibleOrInFlexibleScreen();
   int jOptionPortfolioAlreadyExists();
   void flexiblePortfolioScreenWithDateInput();
-  void resetFlexibleScreen();
-  void displayStockDataUsingJOption(String stockName, String symbol, String time, String price);
   void displayPerformanceOfPortfolio(String[] displayString);
   void resetMainMenu();
   void performanceDateEnter(int timestampType);
-
   void displayErrorMessage(String error);
   void displayInformationalMessage(String info);
-
   void displayPerformanceNumberOfDaysInput(String str);
-
   void getGraph(Map<String, Double> pfPerformance, String pfName);
+  void resetCreatePortfolioScreen();
+  void resetFlexiblePortfolioScreen();
+  void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName);
+  void invalidDate();
+  void resetDateInput();
+  void resetHowManyShares();
+  void noOfSharesNotEntered();
+  void displayBoughtSuccessfulScreenForAnotherBoughtStock();
 }
