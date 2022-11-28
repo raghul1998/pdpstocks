@@ -176,8 +176,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             feature.checkCurrentPrice(comboBoxTypeOfPortfolio.getSelectedIndex(),
                     setPurchaseDate.getText(), comboBoxSupportedStocks.getSelectedIndex() + 1));
     checkPrice1.addActionListener(evt ->
-            feature.checkCurrentPrice(comboBoxTypeOfPortfolio.getSelectedIndex(),
-                    setPurchaseDate.getText(), comboBoxSupportedStocks.getSelectedIndex() + 1));
+            feature.checkCurrentPrice(0,
+                    date.getText(), comboBoxSupportedStocks1.getSelectedIndex() + 1));
     howManyShares.addKeyListener(new KeyListener() {
       public void keyTyped(KeyEvent ke) {
         //String value = howManyShares.getText();

@@ -376,7 +376,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     //String[] stock = new String[2];
     stock[0] = noOfStocks;
     stock[1] = super.currentPortfolioName;
-    cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
+    super.cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
     if(!visited) {
       viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName);
     }
@@ -384,7 +384,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       visited = true;
       viewGUI.displayBoughtSuccessfulScreenForAnotherBoughtStock();
     }
-    cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
   @Override
@@ -445,7 +445,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     //String[] stock = new String[2];
     stock[0] = noOfStocks;
     stock[1] = super.currentPortfolioName;
-    cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
+    super.cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
     if(!visited) {
       viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName);
     }
@@ -453,7 +453,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       visited = true;
       viewGUI.displayBoughtSuccessfulScreenForAnotherBoughtStock();
     }
-    cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
  }
 
  @Override
@@ -531,6 +531,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   @Override
   public void selectStockSubmit(String portfolioName) {
     viewGUI.displayAddScreen();
+    buyAnotherStockButton(portfolioName);
   }
 
 
