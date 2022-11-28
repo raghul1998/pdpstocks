@@ -48,7 +48,7 @@ import static java.lang.Thread.sleep;
  */
 public class ControllerViewInteractImpl implements ControllerViewInteract {
   protected final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
-  private final ViewControllerInteract vciObj;
+  protected final ViewControllerInteract vciObj;
 
  // private GUIView viewGUI;
   protected String currentPortfolioName;
@@ -225,7 +225,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param dateStr the date that user entered
    * @return true of the input is valid, else false
    */
-  private boolean validateDate(String dateStr, String format, int minDifference) {
+  protected boolean validateDate(String dateStr, String format, int minDifference) {
     if (dateStr == null || dateStr.length() == 0) {
       return false;
     }
@@ -804,7 +804,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param pfPerformance the performance map of the portfolio
    * @return the scale and it's type
    */
-  private String[] getScale(Map<String, Double> pfPerformance) {
+  protected String[] getScale(Map<String, Double> pfPerformance) {
     double max = Double.MIN_VALUE;
     double min = Double.MAX_VALUE;
     for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
@@ -839,7 +839,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param choice        choice entered by the user
    * @return the title for the display
    */
-  private String getTitle(Map<String, Double> pfPerformance, String choice) {
+  protected String getTitle(Map<String, Double> pfPerformance, String choice) {
     int ind = 0;
     String dateStart = null;
     String dateEnd = null;
@@ -908,7 +908,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @return the dates as array of strings
    * @throws ParseException if error while parsing the data
    */
-  private String[] getDatesFromUserInput(String choice, String date, String number,
+  protected String[] getDatesFromUserInput(String choice, String date, String number,
                                          String format) throws ParseException {
     String[] dates = new String[Integer.parseInt(number) + 3];
     Date convertedDate;
@@ -1828,7 +1828,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param option the stock option that was entered by the user
    * @return true if the input is valid, else false
    */
-  private boolean validateStockSelectOption(String option, int minVal, int maxSize) {
+  protected boolean validateStockSelectOption(String option, int minVal, int maxSize) {
     if (option == null || option.length() == 0) {
       return false;
     }
