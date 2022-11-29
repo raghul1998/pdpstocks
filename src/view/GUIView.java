@@ -8,7 +8,7 @@ public interface GUIView {
   void addFeatures(Features feature);
   void displayTypeOfPortfolioFlexibleOrInFlexibleScreen();
   int jOptionPortfolioAlreadyExists();
-  void flexiblePortfolioScreenWithDateInput();
+  void flexiblePortfolioScreenWithDateInput(String name);
   void inflexiblePortfolioScreen();
   void displayPerformanceOfPortfolio(String[] displayString);
   void resetMainMenu();
@@ -22,8 +22,7 @@ public interface GUIView {
   void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName);
   void resetDateInput();
   void resetHowManyShares();
-  void displayBoughtSuccessfulScreenForAnotherBoughtStock();
-  void displayAddScreen();
+ //  void displayAddScreen();
   void displaySellScreen();
   void displayListOfPortfolioScreen(String[] getListOfPortfolioNames);
   void displayAddStocksUsingDollarStrategyMain(String[] displayString);
