@@ -21,7 +21,7 @@ public interface Features {
   void selectPortfolio();
   //void addStockSubmit(String date, int stockSelected, String noOfStocks, String portfolioName);
   void sellStock(String date, int stockSelected, String noOfStocks, int pfNumber);
-  void selectStockSubmit(int portfolioName);
+  void selectStockSubmit(int buyOrSell, int portfolioName);
   void addStocksUsingDollarMain();
   void dollarValueScreenOne(int pfIndex, String date, int recurIndex);
 

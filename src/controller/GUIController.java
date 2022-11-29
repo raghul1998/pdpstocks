@@ -836,7 +836,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   }
 
   @Override
-  public void selectStockSubmit(int portfolioNameIndex) {
+  public void selectStockSubmit(int buyOrSell, int portfolioNameIndex) {
     //viewGUI.displayAddScreen();
     if (portfolioNameIndex == -1) {
       viewGUI.displayErrorMessage("Select portfolio");
@@ -856,6 +856,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "9. UnitedHealth (UNH)",
             "10. Walmart (WMT)"};
 
-    viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
+    if(buyOrSell == 3) // buy
+      viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
+    else if(buyOrSell == 4)  // sell
+      viewGUI.displaySellScreen();
   }
 }

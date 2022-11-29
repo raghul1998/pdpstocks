@@ -42,4 +42,6 @@ public interface GUIView {
 
   void valueAndCompScreenInflexibleResult(String title, String[] column,
                                           String[][] data, String subText);
+
+  //void soldSuccessfulScreen();
 }
