@@ -7,5 +7,6 @@ public class PortfolioPerformanceDataImpl implements PortfolioPerformanceData {
   public String format;
   public String number;
   public String date;
-  public String pfIndex;
+  public String pfIndexStr;
+  public int pfIndex;
 }

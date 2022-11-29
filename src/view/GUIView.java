@@ -37,4 +37,8 @@ public interface GUIView {
   void dollarValueHowManyStocksScreen(String buyStr);
 
   void dollarValueStockProportionScreen(int numberOfStocks, String[] supportedStocks);
+
+  void valueAndCompScreenOne(String[] displayString);
+
+  void valueAndCompScreenInflexibleResult(String title, String[] column, String[][] data);
 }

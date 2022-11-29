@@ -13,13 +13,13 @@ import java.util.Objects;
 
 import javax.swing.*;
 
-import model.DollarValueData;
 import model.DollarValueDataImpl;
 import model.PortfolioPerformanceDataImpl;
 import model.StockCompositionData;
 import model.StockCompositionDataImpl;
 import model.StockNameMap;
 import model.StockNameMapImpl;
+import model.StockPortFolioDataImpl;
 import model.TypeofAction;
 import view.GUIView;
 import view.TypeofViews;
@@ -58,8 +58,19 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   }
 
   @Override
-  public void valueAndCompositionGUI() {
+  public void valueAndCompositionGUIMainScreen() {
+    StockCompositionData obj = new StockCompositionDataImpl("ALL");
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      viewGUI.displayInformationalMessage("You dont have any portfolio");
+      viewGUI.resetMainMenu();
+      return;
+    }
 
+    String[] displayString = getFlexiblePortfolioNames("ALL");
+    if (displayString != null) {
+      viewGUI.valueAndCompScreenOne(displayString);
+    }
   }
 
   @Override
@@ -112,6 +123,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     } else if (type == 1) {
       viewGUI.inflexiblePortfolioScreen(supportedStocks);
     }
+    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
 
@@ -164,8 +176,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
     // vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
     String data = "\nSTOCK DETAILS\nStockName:" + splitStockData[0] + "\nSymbol:"
-            + splitStockData[2] + "\nTime:" + splitStockData[3] + "\nPrice: $" + splitStockData[1]
-            + "Information";
+            + splitStockData[2] + "\nTime:" + splitStockData[3] + "\nPrice: $" + splitStockData[1];
     viewGUI.displayInformationalMessage(data);
   }
 
@@ -466,6 +477,53 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   }
 
   @Override
+  public void valueAndCompositionScreenOne(int pfIndex) {
+    if (pfIndex == -1) {
+      viewGUI.displayErrorMessage("Select a portfolio");
+      return;
+    }
+
+    ppd.pfIndex = pfIndex;
+    String portfolioType = "ALL";
+    StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
+    String fileName = obj.getPortFolioFileNameByIndex(pfIndex, portfolioType);
+
+    if (obj.isPortfolioOfGivenType(fileName, "INFLEXIBLE")) {
+      StockPortFolioDataImpl stkObj =
+              (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(pfIndex, false,
+                      null, true, false, portfolioType);
+      String pfName = obj.getPortFolioNames("ALL")[pfIndex];
+      String date = stkObj.createdTimeStamp;
+      if (date == null) {
+        viewGUI.displayInformationalMessage("The portfolio is empty");
+        return;
+      }
+      date = date.substring(0, 10);
+
+      String[] column = {"Name", "Symbol", "Quantity",
+              "Date Of Purchase(DOP)", "Price of share on DOP"};
+
+      String title = pfName.toUpperCase() + " PORTFOLIO (inflexible)"
+                      + " COMPOSITION - Created on " + date;
+
+      String[][] data = new String[stkObj.numberOfUniqueStocks][column.length];
+
+      for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
+        data[i][0] = stkObj.stockName[i];
+        data[i][1] = stkObj.stockSymbol[i];
+        data[i][2] = String.valueOf(Math.floor(stkObj.stockQuantity[i] * 100) / 100);
+        data[i][3] = stkObj.stockLastKnownValueDate[i];
+        data[i][4] = String.valueOf(stkObj.valueOfSingleStock[i]);
+      }
+
+      viewGUI.valueAndCompScreenInflexibleResult(title, column, data);
+      viewGUI.resetMainMenu();
+    } else {
+
+    }
+  }
+
+  @Override
   public void performancePortfolioMainMenu(int pfIndex, int timestampType) {
     if (pfIndex == -1) {
       viewGUI.displayErrorMessage("Select a portfolio");
@@ -473,7 +531,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     if (timestampType == -1) {
       viewGUI.displayErrorMessage("Select proper timestamp type");
     }
-    ppd.pfIndex = String.valueOf((pfIndex + 1));
+    ppd.pfIndexStr = String.valueOf((pfIndex + 1));
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     super.currentPortfolioName = obj.getPortFolioNames("FLEXIBLE")[pfIndex];
     viewGUI.performanceDateEnter(timestampType);
@@ -591,7 +649,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
 
     dates[Integer.parseInt(ppd.number)] = super.currentPortfolioName;
-    dates[Integer.parseInt(ppd.number) + 1] = ppd.pfIndex;
+    dates[Integer.parseInt(ppd.number) + 1] = ppd.pfIndexStr;
     dates[Integer.parseInt(ppd.number) + 2] = ppd.timestampTypeStr;
     cmiObj.controllerModelInteract(TypeofAction.GET_PORTFOLIO_PERFORMANCE, dates, dates.length);
 
@@ -674,6 +732,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     viewGUI.resetFlexiblePortfolioScreen();
     viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
+    cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
   @Override
@@ -695,27 +754,28 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     String[] listOfPortfolioNames = getFlexiblePortfolioNames("FLEXIBLE");
     viewGUI.displayListOfPortfolioScreen(listOfPortfolioNames);
   }
+
   @Override
   public void sellStock() {
-     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
-     int numberOfPortFolio = obj.getNumberOfPortFolio();
-     if (numberOfPortFolio == 0) {
-       vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
-       return;
-     }
-     String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-     String[] arg = new String[portfolioNames.length + 1];
-     System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
-     arg[portfolioNames.length] = "FLEXIBLE";
+    StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+      return;
+    }
+    String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
+    String[] arg = new String[portfolioNames.length + 1];
+    System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
+    arg[portfolioNames.length] = "FLEXIBLE";
 
-     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
-             arg.length);
+    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
+            arg.length);
   }
 
   @Override
   public void selectStockSubmit(int portfolioNameIndex) {
     //viewGUI.displayAddScreen();
-    if(portfolioNameIndex == -1) {
+    if (portfolioNameIndex == -1) {
       viewGUI.displayErrorMessage("Select portfolio");
       return;
     }
@@ -734,6 +794,6 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "10. Walmart (WMT)"};
 
     viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
-   // buyAnotherStockButton(portfolioName);
+    // buyAnotherStockButton(portfolioName);
   }
 }
