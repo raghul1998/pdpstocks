@@ -11,6 +11,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.swing.*;
+
+import model.DollarValueData;
+import model.DollarValueDataImpl;
 import model.PortfolioPerformanceDataImpl;
 import model.StockCompositionData;
 import model.StockCompositionDataImpl;
@@ -23,6 +27,7 @@ import view.TypeofViews;
 public class GUIController extends ControllerViewInteractImpl implements Features {
   private GUIView viewGUI;
   private PortfolioPerformanceDataImpl ppd;
+  private DollarValueDataImpl dvd;
   //private ViewControllerInteract vciObj;
   boolean visited = false;
   //private ControllerModelInteract cmiObj;
@@ -38,6 +43,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   public GUIController(InputStream input, PrintStream output) {
     super(input, output);
     ppd = new PortfolioPerformanceDataImpl();
+    dvd = new DollarValueDataImpl();
   }
 
 
@@ -79,7 +85,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       int yesToOverride = viewGUI.jOptionPortfolioAlreadyExists();
       if (yesToOverride == 0) {
         // do nothing
-      } else if(yesToOverride == 1){
+      } else if (yesToOverride == 1) {
         viewGUI.resetCreatePortfolioScreen();
         return;
       }
@@ -91,27 +97,34 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     super.currentPortfolioName = name;
     super.cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
     //createPortfolioNameScreenAction(null, args);
-    if(type==0) {
-      viewGUI.flexiblePortfolioScreenWithDateInput(name);
-    }
-    else if(type==1) {
-      viewGUI.inflexiblePortfolioScreen();
+    String[] supportedStocks = {"1. Microsoft (MSFT)",
+            "2. Meta (META)",
+            "3. Google (GOOG)",
+            "4. Apple (AAPL)",
+            "5. Tesla (TSLA)",
+            "6. JPMorgan Chase (JPM)",
+            "7. Johnson (JNJ)",
+            "8. Amazon (AMZN)",
+            "9. UnitedHealth (UNH)",
+            "10. Walmart (WMT)"};
+    if (type == 0) {
+      viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, name);
+    } else if (type == 1) {
+      viewGUI.inflexiblePortfolioScreen(supportedStocks);
     }
   }
 
 
-
   @Override
   public void checkCurrentPrice(int type, String date, int stockSelected) {
-    if(type == 0) {
+    if (type == 0) {
       if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
         // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
         viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
         //viewGUI.resetDateInput();
         return;
       }
-    }
-    else if(type==1){
+    } else if (type == 1) {
       SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
       Date now = new Date();
       date = sdfDate.format(now);
@@ -167,7 +180,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
 
     String[] displayString = getFlexiblePortfolioNames("FLEXIBLE");
-    if(displayString != null) {
+    if (displayString != null) {
       viewGUI.displayPerformanceOfPortfolio(displayString);
     }
   }
@@ -206,9 +219,250 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void dollarValueScreenOne(int pfIndex, String date, int recurIndex) {
-    if(!super.validateDate(date, "yyyy-MM-dd", 0)) {
-
+    if (pfIndex == -1) {
+      viewGUI.displayErrorMessage("Select a portfolio");
+      viewGUI.resetDollarValueMainScreen();
+      return;
     }
+
+    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
+      viewGUI.displayErrorMessage("Invalid date. Reenter.");
+      viewGUI.resetDollarValueMainScreen();
+      return;
+    }
+
+    if (recurIndex == -1) {
+      viewGUI.displayErrorMessage("Notify recursion");
+      viewGUI.resetDollarValueMainScreen();
+      return;
+    }
+
+    dvd.startDate = date;
+    dvd.pfIndex = pfIndex;
+    dvd.recurIndex = recurIndex;
+
+    StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+    super.currentPortfolioName = obj.getPortFolioNames("FLEXIBLE")[pfIndex];
+
+    if (recurIndex == 0) {
+      // This means Recurring
+      viewGUI.dollarValueOnGoingScreen();
+    } else if (recurIndex == 1) {
+      StockNameMap snp = new StockNameMapImpl();
+      String buyStr = "How many stocks would you like to buy? (1 to " + snp.getMapSize() + ")";
+      viewGUI.dollarValueHowManyStocksScreen(buyStr);
+    }
+  }
+
+  @Override
+  public void dollarValueScreenTwo(int onGoingIndex) {
+    if (onGoingIndex == -1) {
+      viewGUI.displayErrorMessage("Select ongoing");
+      return;
+    }
+
+    dvd.onGoingIndex = onGoingIndex;
+    if (onGoingIndex == 0) {
+      // Yes
+      String str = "Enter the recurring frequency (1 to 30 days)";
+      viewGUI.dollarValueFrequencyEnterScreen(str);
+    } else if (onGoingIndex == 1) {
+      // No
+      if (Objects.equals(LocalDate.parse(dvd.startDate), LocalDate.now())) {
+        dvd.endDate = String.valueOf(LocalDate.now());
+      } else {
+        // Ask for end date
+        String str = "Enter the end date for the strategy (YYYY-MM-DD)"
+                + "(from " + dvd.startDate + " to current day)";
+        viewGUI.dollarValueEndDateScreen(str);
+      }
+    }
+  }
+
+  @Override
+  public void dollarValueScreenThreeEndDate(String endDate) {
+    if (!validateDate(endDate, "yyyy-MM-dd", 0)
+            || (LocalDate.parse(endDate).compareTo(LocalDate.parse(dvd.startDate)) < 0)) {
+      viewGUI.displayErrorMessage("Not a valid date. Reenter");
+      return;
+    }
+
+    dvd.endDate = endDate;
+    // Now calculate or ask for frequency
+    int remainder = (int) ChronoUnit.DAYS.between(LocalDate.parse(dvd.startDate),
+            LocalDate.parse(dvd.endDate));
+    if (remainder > 30) {
+      remainder = 30;
+    }
+
+    if (remainder == 0) {
+      dvd.frequencyStr = "0";
+    } else {
+      if (remainder == 1) {
+        dvd.frequencyStr = "1";
+      } else {
+        String str = "Enter the recurring frequency (1 to " + remainder + " days)";
+        viewGUI.dollarValueFrequencyEnterScreen(str);
+      }
+    }
+  }
+
+  @Override
+  public void dollarValueScreenFourFrequency(String frequencyStr) {
+    if (!validateStockSelectOption(frequencyStr, 1, 30)) {
+      viewGUI.displayErrorMessage("Not a valid Frequency. Reenter");
+      return;
+    }
+    dvd.frequencyStr = frequencyStr;
+    StockNameMap snp = new StockNameMapImpl();
+    String buyStr = "How many stocks would you like to buy? (1 to " + snp.getMapSize() + ")";
+    viewGUI.dollarValueHowManyStocksScreen(buyStr);
+  }
+
+  @Override
+  public void dollarValueScreenFiveHowManyShares(String numberOfStocks) {
+    StockNameMap snp = new StockNameMapImpl();
+    if (!validateStockSelectOption(numberOfStocks, 1, snp.getMapSize())) {
+      viewGUI.displayErrorMessage("Not a valid input. Reenter");
+      return;
+    }
+
+    dvd.numberOfStocks = Integer.parseInt(numberOfStocks);
+    String[] supportedStocks = {"1. Microsoft (MSFT)",
+            "2. Meta (META)",
+            "3. Google (GOOG)",
+            "4. Apple (AAPL)",
+            "5. Tesla (TSLA)",
+            "6. JPMorgan Chase (JPM)",
+            "7. Johnson (JNJ)",
+            "8. Amazon (AMZN)",
+            "9. UnitedHealth (UNH)",
+            "10. Walmart (WMT)"};
+    viewGUI.dollarValueStockProportionScreen(dvd.numberOfStocks, supportedStocks);
+  }
+
+  @Override
+  public void dollarValueScreenSixBuyStocks(String cost, JSpinner[] spinner,
+                                            JComboBox[] comboSupportStocksArray) {
+    int number = dvd.numberOfStocks;
+    int[] options = new int[number];
+    double[] proportion = new double[number];
+    String[] proportionStr = new String[number];
+
+    StockNameMap snp = new StockNameMapImpl();
+    Map<String, String> data = snp.getMap();
+    String[] stockNameIndexArray = new String[snp.getMapSize()];
+    String[] stockSymbolIndexArray = new String[snp.getMapSize()];
+    int index = 0;
+    for (Map.Entry<String, String> entry : data.entrySet()) {
+      stockSymbolIndexArray[index] = entry.getKey();
+      stockNameIndexArray[index++] = entry.getValue();
+    }
+
+    double totalProportion = 100;
+    for (int i = 0; i < number; i++) {
+      options[i] = comboSupportStocksArray[i].getSelectedIndex();
+      proportion[i] = (Double) spinner[i].getValue();
+      proportionStr[i] = String.valueOf(proportion[i]);
+      if (options[i] == -1) {
+        viewGUI.displayErrorMessage("Select all the stocks.");
+        return;
+      }
+      totalProportion -= proportion[i];
+    }
+
+    if (totalProportion != 0) {
+      viewGUI.displayErrorMessage("The total proportion should make up to 100% percent. Reenter");
+      return;
+    }
+
+    if (!super.validateCommissionCost(cost)) {
+      viewGUI.displayErrorMessage("Investment amount should be greater than 0. Reenter.");
+      return;
+    }
+
+    String[] dateArr;
+    int remainderDays = 0;
+    if (dvd.recurIndex == 0 && !Objects.equals(dvd.frequencyStr, "0")) {
+      assert dvd.endDate != null;
+
+      if (dvd.onGoingIndex == 1) {
+        remainderDays = (int) ChronoUnit.DAYS.between(LocalDate.parse(dvd.startDate)
+                , LocalDate.parse(dvd.endDate));
+      } else {
+        remainderDays = (int) ChronoUnit.DAYS.between(LocalDate.parse(dvd.startDate)
+                , LocalDate.now());
+      }
+      assert dvd.frequencyStr != null;
+      remainderDays = (remainderDays / Integer.parseInt(dvd.frequencyStr)) + 1;
+
+      dateArr = new String[remainderDays];
+      if (remainderDays == 0) {
+        dateArr = new String[1];
+        dateArr[0] = dvd.startDate;
+      } else {
+        LocalDate sDate = LocalDate.parse(dvd.startDate);
+        dateArr[0] = dvd.startDate;
+        for (int k = 1; k < remainderDays; k++) {
+          sDate = sDate.plusDays(Long.parseLong(dvd.frequencyStr));
+          dateArr[k] = sDate.toString();
+        }
+      }
+    } else {
+      dateArr = new String[1];
+      dateArr[0] = dvd.startDate;
+    }
+
+    String[] stockSymbolRequired = new String[options.length];
+    for (int j = 0; j < options.length; j++) {
+      stockSymbolRequired[j] = stockSymbolIndexArray[options[j]];
+    }
+
+    viewGUI.displayInformationalMessage("Buying Shares, please wait.");
+    // Calculate the number of shares to be bought for the
+    super.calculateAndBuySharesBasedOnStrategy(dateArr, cost, proportionStr,
+            stockSymbolRequired, number, super.currentPortfolioName);
+
+    // Save ongoing strategy data
+    // The final data will be like
+    // 2022-11-26, 2000, 3, MSFT, 20, GOOG, 60, WMT, 20)
+    if (dvd.recurIndex == 0 && dvd.onGoingIndex == 0) {
+      // Entry for ongoing strategy
+      StringBuilder strategyArgs = new StringBuilder();
+
+      // Type of Strategy
+      strategyArgs.append("DOLLAR-COST").append(",");
+
+      // Last known date on which the stocks were bought
+      strategyArgs.append(dateArr[remainderDays - 1]).append(",");
+
+      // Frequency to buy stocks
+      strategyArgs.append(dvd.frequencyStr).append(",");
+
+      // Cost invested
+      strategyArgs.append(cost).append(",");
+
+      // Number of stocks in the strategy
+      strategyArgs.append(stockSymbolRequired.length).append(",");
+
+      // Shares in the strategy
+      // Proportion for each shares
+      for (int j = 0; j < stockSymbolRequired.length; j++) {
+        strategyArgs.append(stockSymbolRequired[j]).append(",");
+        strategyArgs.append(proportion[j]).append(",");
+      }
+
+      // Persist the strategy
+      try {
+        super.persistStrategyToFile(String.valueOf(strategyArgs), super.currentPortfolioName);
+      } catch (Exception e) {
+        viewGUI.displayErrorMessage("Error in persisting the strategy. Try again");
+        viewGUI.resetMainMenu();
+      }
+    }
+
+    viewGUI.displayInformationalMessage("Stock successfully added to the portfolio.");
+    viewGUI.resetMainMenu();
   }
 
   @Override
@@ -367,6 +621,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     viewGUI.getGraph(pfPerformance, super.currentPortfolioName);
     //vciObj.portfolioPerformanceOverTime(dates, dates.length, pfPerformance, scale, getTitle);
   }
+
   public void buyStockSubmit(String date, int stockSelected, String noOfStocks,
                              String portfolioName) {
     // invalid date
@@ -378,7 +633,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
 
     // empty no of stocks
-    if(noOfStocks.equals("")){
+    if (noOfStocks.equals("")) {
       viewGUI.displayErrorMessage("Number of shares not entered. Please enter a valid natural number");
       return;
     }
@@ -406,12 +661,23 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void buyAnotherStockButton(String portfolioName) {
+    String[] supportedStocks = {"1. Microsoft (MSFT)",
+            "2. Meta (META)",
+            "3. Google (GOOG)",
+            "4. Apple (AAPL)",
+            "5. Tesla (TSLA)",
+            "6. JPMorgan Chase (JPM)",
+            "7. Johnson (JNJ)",
+            "8. Amazon (AMZN)",
+            "9. UnitedHealth (UNH)",
+            "10. Walmart (WMT)"};
+
     viewGUI.resetFlexiblePortfolioScreen();
-    viewGUI.flexiblePortfolioScreenWithDateInput(super.currentPortfolioName);
+    viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
   }
 
   @Override
-  public void checkHowManyShares(){
+  public void checkHowManyShares() {
     viewGUI.displayErrorMessage("Given input is not digit. Please enter a digit.");
     viewGUI.resetHowManyShares();
   }
@@ -429,51 +695,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     String[] listOfPortfolioNames = getFlexiblePortfolioNames("FLEXIBLE");
     viewGUI.displayListOfPortfolioScreen(listOfPortfolioNames);
   }
-//  @Override
-// public void addStockSubmit(String date, int stockSelected, String noOfStocks, String portfolioName) {
-//
-// // invalid date
-//    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
-//      // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-//      viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
-//      viewGUI.resetDateInput1();
-//      return;
-//    }
-//
-//    // empty no of stocks
-//    if(noOfStocks.equals("")){
-//      viewGUI.displayErrorMessage("Number of shares not entered. Please enter a valid natural number");
-//      return;
-//    }
-//
-//    StockNameMap snp = new StockNameMapImpl();
-//    Map<String, String> map = snp.getMap();
-//    String[] stockSymbolIndexArray = new String[snp.getMapSize()];
-//    String[] stock = new String[2];
-//    int index = 0;
-//    for (Map.Entry<String, String> entry : map.entrySet()) {
-//      stockSymbolIndexArray[index++] = entry.getKey();
-//    }
-//    stock[0] = stockSymbolIndexArray[stockSelected];
-//    stock[1] = date;
-//    super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
-//
-//    super.currentPortfolioName = portfolioName;
-//    //String[] stock = new String[2];
-//    stock[0] = noOfStocks;
-//    stock[1] = super.currentPortfolioName;
-//    super.cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
-//    if(!visited) {
-//      viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName);
-//    }
-//    else{
-//      visited = true;
-//      viewGUI.displayBoughtSuccessfulScreenForAnotherBoughtStock();
-//    }
-//    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
-// }
-
- @Override
+  @Override
   public void sellStock() {
      StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
      int numberOfPortFolio = obj.getNumberOfPortFolio();
@@ -488,44 +710,6 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
      vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
              arg.length);
-
-//     String[] args = new String[3];
-//     args[0] = date;
-//     args[1] = options;
-//     args[2] = "FLEXIBLE";
-//     vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS_ON_DATE, args, 3);
-//
-//     StockPortFolioDataImpl stkObj;
-//     try {
-//       stkObj = (StockPortFolioDataImpl)
-//               obj.getAllStockDataInPortFolio(Integer.parseInt(options) - 1,
-//                       true, date, true, true, "FLEXIBLE");
-//     } catch (Exception e) {
-//       output.println("Controller: Error in getting stock data " + e.getMessage());
-//       return;
-//     }
-//
-//     if (stkObj.numberOfUniqueStocks == 0) {
-//       return;
-//     }
-//
-//     String stockOptions = scan.nextLine();
-//
-//     while ((stockOptions == null || stockOptions.length() == 0)
-//             || (!validateStockSelectOption(stockOptions, 1, stkObj.numberOfUniqueStocks))) {
-//       vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
-//       stockOptions = scan.nextLine();
-//       if (Objects.equals(stockOptions, "m") || Objects.equals(stockOptions, "M")) {
-//         return;
-//       }
-//     }
-//
-//     if (sellSharesOnAStock(Integer.parseInt(options) - 1,
-//             stkObj.stockSymbol[Integer.parseInt(stockOptions) - 1], date)) {
-//       return;
-//     }
-//   }
-
   }
 
   @Override
@@ -538,7 +722,18 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     super.currentPortfolioName = obj.getPortFolioNames("FLEXIBLE")[portfolioNameIndex];
-    viewGUI.flexiblePortfolioScreenWithDateInput(super.currentPortfolioName);
+    String[] supportedStocks = {"1. Microsoft (MSFT)",
+            "2. Meta (META)",
+            "3. Google (GOOG)",
+            "4. Apple (AAPL)",
+            "5. Tesla (TSLA)",
+            "6. JPMorgan Chase (JPM)",
+            "7. Johnson (JNJ)",
+            "8. Amazon (AMZN)",
+            "9. UnitedHealth (UNH)",
+            "10. Walmart (WMT)"};
+
+    viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
    // buyAnotherStockButton(portfolioName);
   }
 }
