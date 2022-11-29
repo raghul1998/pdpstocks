@@ -50,7 +50,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   protected final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
   protected final ViewControllerInteract vciObj;
 
- // private GUIView viewGUI;
+  // private GUIView viewGUI;
   protected String currentPortfolioName;
   private final PrintStream output;
   private final Scanner scan;
@@ -563,7 +563,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param cost cost as string
    * @return true if cost is valid
    */
-  private boolean validateCommissionCost(String cost) {
+  protected boolean validateCommissionCost(String cost) {
     double commissionCost;
     if (cost == null || cost.length() == 0) {
       return false;
@@ -909,7 +909,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @throws ParseException if error while parsing the data
    */
   protected String[] getDatesFromUserInput(String choice, String date, String number,
-                                         String format) throws ParseException {
+                                           String format) throws ParseException {
     String[] dates = new String[Integer.parseInt(number) + 3];
     Date convertedDate;
 
@@ -1609,7 +1609,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
     for (i = 0; i < number - 1; i++) {
       output.println("Enter the proportion percent for "
-              + stockNameIndexArray[Integer.parseInt(options[i])]
+              + stockNameIndexArray[Integer.parseInt(options[i]) - 1]
               + " (out of " + totalProportion + "%)");
       proportion[i] = scan.nextLine();
 
@@ -1643,7 +1643,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
     if (i == number - 1) {
       output.println("The remaining " + totalProportion + " percentage will be automatically"
-              + " applied to " + stockNameIndexArray[Integer.parseInt(options[i])]
+              + " applied to " + stockNameIndexArray[Integer.parseInt(options[i]) - 1]
               + " stock.");
       proportion[i] = String.valueOf(totalProportion);
     } else {
@@ -1672,6 +1672,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
       dateArr = new String[remainderDays];
       if (remainderDays == 0) {
+        dateArr = new String[1];
         dateArr[0] = startDate;
       } else {
         LocalDate sDate = LocalDate.parse(startDate);
@@ -1687,8 +1688,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
 
     String[] stockSymbolRequired = new String[options.length];
-    for(int j = 0; j < options.length; j++) {
-      stockSymbolRequired[j] = stockSymbolIndexArray[Integer.parseInt(options[j])];
+    for (int j = 0; j < options.length; j++) {
+      stockSymbolRequired[j] = stockSymbolIndexArray[Integer.parseInt(options[j]) - 1];
     }
 
     output.println("Buying shares, please wait...");
@@ -1737,10 +1738,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     output.println("\nStock successfully added to the portfolio...!!!");
   }
 
-  private void calculateAndBuySharesBasedOnStrategy(String[] dateArr, String cost,
-                                                    String[] proportion,
-                                                    String[] stockSymbolIndexArray,
-                                                    int number, String pfName) {
+  protected void calculateAndBuySharesBasedOnStrategy(String[] dateArr, String cost,
+                                                      String[] proportion,
+                                                      String[] stockSymbolIndexArray,
+                                                      int number, String pfName) {
     double costInDouble = Double.parseDouble(cost);
     int index;
     for (int j = 0; j < dateArr.length; j++) {
@@ -1774,7 +1775,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param strategyArgs strategy data
    * @throws IOException if there is any issue in writing data
    */
-  private void persistStrategyToFile(String strategyArgs, String pfName) throws IOException {
+  protected void persistStrategyToFile(String strategyArgs, String pfName) throws IOException {
     String path = "userdata/user1/Strategy/";
     File directory = new File(path);
     if (!directory.exists()) {

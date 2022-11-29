@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.*;
+
 import view.GUIView;
 
 public interface Features {
@@ -22,4 +24,15 @@ public interface Features {
   void selectStockSubmit(String portfolioName);
   void addStocksUsingDollarMain();
   void dollarValueScreenOne(int pfIndex, String date, int recurIndex);
+
+  void dollarValueScreenTwo(int onGoingIndex);
+
+  void dollarValueScreenThreeEndDate(String endDate);
+
+  void dollarValueScreenFourFrequency(String frequency);
+
+  void dollarValueScreenFiveHowManyShares(String numberOfStocks);
+
+  void dollarValueScreenSixBuyStocks(String price, JSpinner[] spinner,
+                                     JComboBox[] comboSupportStocksArray);
 }

@@ -18,7 +18,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   private ViewControllerInteract vciObj;
   private JComboBox comboBoxMainMenu, comboBoxTypeOfPortfolio, comboBoxSupportedStocks,
           comboBoxBuyOrInvest, comboBoxListOfPortfolios, comboBoxSupportedStocks1;
-  private JComboBox comboCommon, combo2;
+  private JComboBox comboCommon, combo2, combo3, combo4, combo5;
   private JPanel cards;  // default screen
   private JPanel card1;  // main menu screen which is the default screen
   private JPanel card2;  // type of portfolio screen
@@ -43,7 +43,11 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   private JTextField inputRemainderNumberForPfPerformance;
   private JButton pfPerformanceButtonGetData;
 
-  private JButton dollarCostMainButton;
+  private JButton dollarCostMainButton, dollarCostOnGoingButton, dollarCostEndDateButton,
+          dollarCostFrequencyButton, dollarCostHowManySharesButton, getDollarFinalSubmit;
+  private JComboBox[] comboSupportStocksArray;
+
+  private JSpinner[] spinner;
 
   //  UtilDateModel model1 = new UtilDateModel();
   //  Properties p = new Properties();
@@ -60,7 +64,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   public JFrameViewImpl(String caption) {
     super(caption);
 
-    setSize(500, 300);
+    setSize(900, 500);
     setLocation(500, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -76,7 +80,12 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     pfPerformanceButton = new JButton("Next");
     dollarCostMainButton = new JButton("Next");
     mainMenuButton = new JButton("Main Menu");
+    dollarCostOnGoingButton = new JButton("Next");
     pfPerformanceButtonSubmit = new JButton("Next");
+    dollarCostEndDateButton = new JButton("Next");
+    dollarCostFrequencyButton = new JButton("Next");
+    dollarCostHowManySharesButton = new JButton("Next");
+    getDollarFinalSubmit = new JButton("Buy Shares");
     cards.setLayout(c1);
 
     // card1
@@ -123,7 +132,24 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void addFeatures(Features feature) {
-    dollarCostMainButton.addActionListener(e-> {
+    getDollarFinalSubmit.addActionListener(evt -> {
+      feature.dollarValueScreenSixBuyStocks(inputDate.getText(), spinner, comboSupportStocksArray);
+    });
+    dollarCostHowManySharesButton.addActionListener(evt ->
+            feature.dollarValueScreenFiveHowManyShares(inputDate.getText()));
+
+    dollarCostFrequencyButton.addActionListener(evt ->
+            feature.dollarValueScreenFourFrequency(inputDate.getText()));
+
+    dollarCostEndDateButton.addActionListener(evt -> {
+      feature.dollarValueScreenThreeEndDate(inputDate.getText());
+    });
+
+    dollarCostOnGoingButton.addActionListener(evt -> {
+      feature.dollarValueScreenTwo(combo3.getSelectedIndex());
+    });
+
+    dollarCostMainButton.addActionListener(e -> {
       feature.dollarValueScreenOne(comboCommon.getSelectedIndex(), inputDate.getText(),
               combo2.getSelectedIndex());
     });
@@ -142,7 +168,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 //        else if(comboBoxMainMenu.getSelectedIndex()==2){
 //          c1.show(cards,"listOfPortfolioScreen");
 //        }
-      else if(comboBoxMainMenu.getSelectedIndex()==3) {
+      else if (comboBoxMainMenu.getSelectedIndex() == 3) {
         feature.selectPortfolio();
       }
 //        }
@@ -152,7 +178,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       else if (comboBoxMainMenu.getSelectedIndex() == 5) {
         feature.performanceOfPortfolioMain();
       } else if (comboBoxMainMenu.getSelectedIndex() == 8) {
-        feature.performanceOfPortfolioMain();
+        feature.addStocksUsingDollarMain();
       }
 //        else if(comboBoxMainMenu.getSelectedIndex()==6){
 //          c1.show(cards,"listOfPortfolioScreenWithoutInflex");
@@ -170,9 +196,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     exitButton1.addActionListener(evt -> feature.exitProgram());
     exitButton2.addActionListener(evt -> feature.exitProgram());
-    selectButton.addActionListener(evt-> feature.selectStockSubmit(comboBoxListOfPortfolios.getName()));
-    addButton.addActionListener(evt-> feature.addStockSubmit(date.getText(),
-            comboBoxSupportedStocks1.getSelectedIndex(), howManyShares1.getText(),comboBoxListOfPortfolios.getName()));
+    selectButton.addActionListener(evt -> feature.selectStockSubmit(comboBoxListOfPortfolios.getName()));
+    addButton.addActionListener(evt -> feature.addStockSubmit(date.getText(),
+            comboBoxSupportedStocks1.getSelectedIndex(), howManyShares1.getText(), comboBoxListOfPortfolios.getName()));
 
 
     // selectButton.addActionListener(evt->feature.sellStock());
@@ -287,24 +313,13 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   // card 3
   @Override
-  public void flexiblePortfolioScreenWithDateInput() {
+  public void flexiblePortfolioScreenWithDateInput(String[] supportedStocks) {
     // Flexible Screen
     //displayEnterDate = new JLabel("Please Enter Date");
     display5 = new JLabel("Enter date");
     setPurchaseDate = new JTextField(10);
     display6 = new JLabel("Select stock from supported list of stocks");
     // review -  hardcoded
-    // todo - read it from csv and store in supportedStocks
-    String[] supportedStocks = {"1. Microsoft (MSFT)",
-            "2. Meta (META)",
-            "3. Google (GOOG)",
-            "4. Apple (AAPL)",
-            "5. Tesla (TSLA)",
-            "6. JPMorgan Chase (JPM)",
-            "7. Johnson (JNJ)",
-            "8. Amazon (AMZN)",
-            "9. UnitedHealth (UNH)",
-            "10. Walmart (WMT)"};
     comboBoxSupportedStocks = new JComboBox(supportedStocks);
     display7 = new JLabel("How many shares would you like to buy");
     //howManyShares = new JTextField(10);
@@ -469,6 +484,101 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     howManyShares.setText("");
   }
 
+  public void resetDollarValueMainScreen() {
+    comboCommon.setSelectedIndex(-1);
+    combo2.setSelectedIndex(-1);
+    inputDate.setText("");
+  }
+
+  @Override
+  public void dollarValueOnGoingScreen() {
+    display2 = new JLabel("Ongoing Strategy?");
+    String[] onGoing = {"Yes", "No"};
+    combo3 = new JComboBox(onGoing);
+    combo3.setSelectedIndex(-1);
+
+    JPanel cardCommon = new JPanel();
+
+    cardCommon.add(display2);
+    cardCommon.add(combo3);
+    cardCommon.add(dollarCostOnGoingButton);
+    cardCommon.add(mainMenuButton);
+    cards.add(cardCommon, "Dollar Cost Ongoing Screen");
+    c1.show(cards, "Dollar Cost Ongoing Screen");
+  }
+
+  @Override
+  public void dollarValueEndDateScreen(String str) {
+    display5 = new JLabel(str);
+    inputDate = new JTextField(10);
+
+    JPanel cardCommon = new JPanel();
+    cardCommon.add(display5);
+    cardCommon.add(inputDate);
+    cardCommon.add(dollarCostEndDateButton);
+    cardCommon.add(mainMenuButton);
+    cards.add(cardCommon, "Dollar Cost End Date Screen");
+    c1.show(cards, "Dollar Cost End Date Screen");
+  }
+
+  @Override
+  public void dollarValueFrequencyEnterScreen(String str) {
+    display6 = new JLabel(str);
+    inputDate = new JTextField(10);
+
+    JPanel cardCommon = new JPanel();
+    cardCommon.add(display6);
+    cardCommon.add(inputDate);
+    cardCommon.add(dollarCostFrequencyButton);
+    cardCommon.add(mainMenuButton);
+    cards.add(cardCommon, "Dollar Cost Frequency Input Screen");
+    c1.show(cards, "Dollar Cost Frequency Input Screen");
+  }
+
+  @Override
+  public void dollarValueHowManyStocksScreen(String buyStr) {
+    display7 = new JLabel(buyStr);
+    inputDate = new JTextField(10);
+
+    JPanel cardCommon = new JPanel();
+    cardCommon.add(display7);
+    cardCommon.add(inputDate);
+    cardCommon.add(dollarCostHowManySharesButton);
+    cardCommon.add(mainMenuButton);
+    cards.add(cardCommon, "Dollar Cost How Many Shares Screen");
+    c1.show(cards, "Dollar Cost How Many Shares Screen");
+  }
+
+  @Override
+  public void dollarValueStockProportionScreen(int numberOfStocks, String[] supportedStocks) {
+    display4 = new JLabel("Select the stocks and enter proportion");
+    JPanel cardCommon = new JPanel();
+    cardCommon.add(display4);
+
+    SpinnerModel[] model = new SpinnerModel[numberOfStocks];
+    spinner = new JSpinner[numberOfStocks];
+
+    comboSupportStocksArray = new JComboBox[10];
+    for(int i = 0; i < numberOfStocks; i++) {
+      model[i] = new SpinnerNumberModel(0, 0, 100, 0.1);
+      comboSupportStocksArray[i] = new JComboBox(supportedStocks);
+      comboSupportStocksArray[i].setSelectedIndex(-1);
+      cardCommon.add(comboSupportStocksArray[i]);
+      spinner[i] = new JSpinner(model[i]);
+      cardCommon.add(spinner[i]);
+    }
+
+    display7 = new JLabel("How much money you would like to invest?");
+    inputDate = new JTextField(10);
+    cardCommon.add(display7);
+    cardCommon.add(inputDate);
+
+    cardCommon.add(getDollarFinalSubmit);
+    cardCommon.add(mainMenuButton);
+    cards.add(cardCommon, "Dollar Cost Proportion Screen");
+    c1.show(cards, "Dollar Cost Proportion Screen");
+  }
+
   @Override
   public void displayBoughtSuccessfulScreenForAnotherBoughtStock() {
     //reset the fields.
@@ -548,12 +658,13 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     comboCommon.setSelectedIndex(-1);
 
     display3 = new JLabel("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
-                          + "(from year 2000 to current day)");
-    inputDate = new JTextField();
+            + "(from year 2000 to current day)");
+    inputDate = new JTextField(10);
 
     display8 = new JLabel("Recurring?");
     String[] recur = {"Yes", "No"};
     combo2 = new JComboBox(recur);
+    combo2.setSelectedIndex(-1);
 
     JPanel cardCommon = new JPanel();
     cardCommon.add(displayCommon);
