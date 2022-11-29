@@ -38,4 +38,5 @@ public interface Features {
   void valueAndCompositionScreenOne(int pfIndex);
 
   void resetMainMenu();
+  void valueAndCompositionFlexDateScreen(String date);
 }

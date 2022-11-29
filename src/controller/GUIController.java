@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
@@ -520,7 +521,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       viewGUI.valueAndCompScreenInflexibleResult(title, column, data, subText);
       viewGUI.resetMainMenu();
     } else {
-
+      ppd.getType = "TRUE";
+      ppd.pfType = "ALL";
+      viewGUI.valueAndCompFlexDateScreen();
     }
   }
 
@@ -528,6 +531,155 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   public void resetMainMenu() {
     super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
     viewGUI.resetMainMenu();
+  }
+
+  @Override
+  public void valueAndCompositionFlexDateScreen(String date) {
+    if (!validateDate(date, "yyyy-MM-dd", 0)) {
+      viewGUI.displayErrorMessage("Not a valid date. Reenter");
+      return;
+    }
+
+    showFlexPortfolioIndividualWithDate(ppd.pfIndex, date, ppd.getType, ppd.pfType);
+  }
+
+  private void showFlexPortfolioIndividualWithDate(int portfolioNumber, String date,
+                                                   String type, String portfolioType) {
+
+    StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
+    double commissionCost = obj.getCommissionCost();
+    StockPortFolioDataImpl stkObj = null;
+
+    if (Objects.equals(type, "FULL")) {
+      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
+              null, true, false, portfolioType);
+    } else if (Objects.equals(type, "TRUE")) {
+      try {
+        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber,
+                true, date, true, true, portfolioType);
+      } catch (Exception e) {
+        viewGUI.displayErrorMessage("Error in getting the data.");
+        return;
+      }
+    } else if (Objects.equals(type, "COST")) {
+      try {
+        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber,
+                false, date, false, false, portfolioType);
+      } catch (Exception e) {
+        viewGUI.displayErrorMessage("Error in getting the data.");
+        return;
+      }
+    }
+
+    if (stkObj == null) {
+      viewGUI.displayErrorMessage("Error in getting the data.");
+      return;
+    }
+
+    double totalPortFolioValue = 0;
+
+    if (stkObj.numberOfUniqueStocks == 0) {
+      if (type.equals("COST")) {
+        viewGUI.displayInformationalMessage("There are no investments until " + date);
+      } else {
+        viewGUI.displayInformationalMessage("The value of portfolio on " + date + " is $0.00");
+      }
+      return;
+    }
+
+    String title;
+
+    String[] portfolioNames = obj.getPortFolioNames(portfolioType);
+    if (type.equals("COST")) {
+      title = "COST BASIS OF " + portfolioNames[portfolioNumber].toUpperCase()
+              + " PORTFOLIO";
+    } else {
+      title = "Value of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO";
+    }
+
+    String[] column = new String[5];
+
+    if (!type.equals("COST")) {
+      column = new String[]{"Name", "Symbol", "Quantity", "Share Value", "Total Value"};
+    }
+
+    String[][] data = new String[stkObj.numberOfUniqueStocks][column.length];
+    String footer;
+    String[] costData = new String[5];
+
+    for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
+      if (stkObj.stockQuantity[i] == 0) {
+        continue;
+      }
+      if (!type.equals("COST")) {
+        data[i][0] = stkObj.stockName[i];
+        data[i][1] = stkObj.stockSymbol[i];
+        data[i][2] = String.valueOf(Math.floor(stkObj.stockQuantity[i] * 100) / 100);
+      }
+      // Display based on the date purchased on
+      double shareValue;
+      if (type.equals("COST")) {
+        shareValue = stkObj.valueOfSingleStock[i];
+      } else {
+        shareValue = getShareValueOnDate(stkObj.stockSymbol[i], date);
+      }
+      shareValue = Math.floor((shareValue) * 100) / 100;
+      if (!type.equals("COST")) {
+        data[i][3] = "$" + shareValue;
+        data[i][4] = "$" + Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100;
+      }
+      totalPortFolioValue += Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100;
+    }
+
+    totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
+    double totalMoneyInvested = Math.floor((totalPortFolioValue
+            + (stkObj.numberOfTransactions * commissionCost)) * 100) / 100;
+
+    if (type.equals("COST")) {
+      costData[0] = "Total Money invested in stocks: $" + totalPortFolioValue;
+      costData[1] = "Commission cost per transaction is: $" + commissionCost;
+      costData[2] = "Total number of transactions till date is: " + stkObj.numberOfTransactions;
+      costData[3] = "Total commission charges: $" + stkObj.numberOfTransactions * commissionCost;
+      costData[4] = "Total Money spent: $" + totalMoneyInvested + "\n";
+      viewGUI.displayValueCompForCost(title, costData);
+    } else {
+      footer = "\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue;
+      viewGUI.displayValueCompForOthers(title, column, data, footer);
+    }
+    viewGUI.resetMainMenu();
+  }
+
+  private double getShareValueOnDate(String stockSymbol, String date) {
+    GetStockData gsd = new GetStockDataImpl();
+    try {
+      String[] dateArr = new String[1];
+      dateArr[0] = date;
+      gsd.getValue(stockSymbol, dateArr);
+    } catch (Exception e) {
+      viewGUI.displayErrorMessage("Error in getting stock data on " + date);
+      return 0;
+    }
+
+    BufferedReader stockData;
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    String line;
+    String splitBy = ",";
+    String[] splitStockData;
+
+    try {
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+      stockData.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+    return Double.parseDouble(splitStockData[1]);
   }
 
   @Override
@@ -856,9 +1008,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "9. UnitedHealth (UNH)",
             "10. Walmart (WMT)"};
 
-    if(buyOrSell == 3) // buy
+    if (buyOrSell == 3) // buy
       viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
-    else if(buyOrSell == 4)  // sell
+    else if (buyOrSell == 4)  // sell
       viewGUI.displaySellScreen();
   }
 }

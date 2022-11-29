@@ -46,7 +46,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
           dollarCostFrequencyButton, dollarCostHowManySharesButton, getDollarFinalSubmit;
   private JComboBox[] comboSupportStocksArray;
   private JSpinner[] spinner;
-  private JButton compMainButton;
+  private JButton compMainButton, compFlexDateButton;
 
   public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
@@ -115,6 +115,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     dollarCostHowManySharesButton = new JButton("Next");
     getDollarFinalSubmit = new JButton("Buy Shares");
     compMainButton = new JButton("Next");
+    compFlexDateButton = new JButton("Next");
     cards.setLayout(c1);
 
     // card1
@@ -162,6 +163,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void addFeatures(Features feature) {
+    compFlexDateButton.addActionListener(evt ->
+            feature.valueAndCompositionFlexDateScreen(datePicker.getJFormattedTextField().getText()));
+
     compMainButton.addActionListener(evt -> {
       feature.valueAndCompositionScreenOne(comboCommon.getSelectedIndex());
     });
@@ -643,6 +647,71 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     panel.add(scrollPane);
     display4 = new JLabel(subText);
     panel.add(display4);
+
+    frame.add(panel);
+    frame.setSize(600, 550);
+    frame.setLocation(500, 200);
+    frame.setVisible(true);
+  }
+
+  @Override
+  public void valueAndCompFlexDateScreen() {
+    display4 = new JLabel("Select the date");
+    UtilDateModel model = new UtilDateModel();
+    Properties prop = new Properties();
+    prop.put("text.today", "Today");
+    prop.put("text.month", "Month");
+    prop.put("text.year", "Year");
+    JDatePanelImpl datePanel = new JDatePanelImpl(model, prop);
+    datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+    datePicker.setBounds(110, 100, 200, 25);
+    model.setSelected(true);
+    datePicker.setVisible(true);
+
+    JPanel cardCommon = new JPanel();
+    cardCommon.add(display4);
+    cardCommon.add(datePicker);
+    cardCommon.add(compFlexDateButton);
+    cardCommon.add(mainMenuButton);
+    cards.add(cardCommon, "Composition Flex Date Screen");
+    c1.show(cards, "Composition Flex Date Screen");
+  }
+
+  @Override
+  public void displayValueCompForCost(String title, String[] costData) {
+    display10 = new JLabel(title);
+    JLabel[] display = new JLabel[costData.length];
+    JFrame frame = new JFrame();
+    JPanel panel = new JPanel();
+    panel.add(display10);
+
+    for(int i = 0; i < costData.length; i++) {
+      display[i] = new JLabel(costData[i]);
+      panel.add(display[i]);
+    }
+
+    frame.add(panel);
+    frame.setSize(600, 550);
+    frame.setLocation(500, 200);
+    frame.setVisible(true);
+  }
+
+  @Override
+  public void displayValueCompForOthers(String title, String[] column,
+                                        String[][] data, String footer) {
+    display7 = new JLabel(title);
+    JTable table = new JTable(data, column);
+    table.setBounds(30, 40, 400, 300);
+    table.setEnabled(false);
+
+    JScrollPane scrollPane = new JScrollPane(table);
+    JFrame frame = new JFrame();
+    JPanel panel = new JPanel();
+    panel.add(display7);
+    panel.add(scrollPane);
+    display4 = new JLabel(footer);
+    panel.add(display4);
+    panel.setSize(400, 300);
 
     frame.add(panel);
     frame.setSize(600, 550);

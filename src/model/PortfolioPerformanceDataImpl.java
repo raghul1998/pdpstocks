@@ -9,4 +9,6 @@ public class PortfolioPerformanceDataImpl implements PortfolioPerformanceData {
   public String date;
   public String pfIndexStr;
   public int pfIndex;
+  public String getType;
+  public String pfType;
 }
