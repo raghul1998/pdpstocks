@@ -20,7 +20,6 @@ import model.StockCompositionData;
 import model.StockCompositionDataImpl;
 import model.StockNameMap;
 import model.StockNameMapImpl;
-import model.StockPortFolioDataImpl;
 import model.TypeofAction;
 import view.GUIView;
 import view.TypeofViews;
@@ -33,7 +32,6 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   boolean visited = false;
   //private ControllerModelInteract cmiObj;
 
-  // todo handle back and back to main menu
 
   /**
    * Constructor for the controller that interacts with the view that takes in two arguments and
@@ -110,9 +108,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "9. UnitedHealth (UNH)",
             "10. Walmart (WMT)"};
     if (type == 0) {
-      viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks);
+      viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, name);
     } else if (type == 1) {
-      viewGUI.inflexiblePortfolioScreen();
+      viewGUI.inflexiblePortfolioScreen(supportedStocks);
     }
   }
 
@@ -123,7 +121,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
         // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
         viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
-        viewGUI.resetDateInput();
+        //viewGUI.resetDateInput();
         return;
       }
     } else if (type == 1) {
@@ -630,7 +628,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
       // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
       viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
-      viewGUI.resetDateInput();
+      //viewGUI.resetDateInput();
       return;
     }
 
@@ -656,14 +654,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     //String[] stock = new String[2];
     stock[0] = noOfStocks;
     stock[1] = super.currentPortfolioName;
-    cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
-    if (!visited) {
-      viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName);
-    } else {
-      visited = true;
-      viewGUI.displayBoughtSuccessfulScreenForAnotherBoughtStock();
-    }
-    cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+    super.cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
+    viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName);
+    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
   @Override
@@ -678,8 +671,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "8. Amazon (AMZN)",
             "9. UnitedHealth (UNH)",
             "10. Walmart (WMT)"};
+
     viewGUI.resetFlexiblePortfolioScreen();
-    viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks);
+    viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
   }
 
   @Override
@@ -701,126 +695,45 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     String[] listOfPortfolioNames = getFlexiblePortfolioNames("FLEXIBLE");
     viewGUI.displayListOfPortfolioScreen(listOfPortfolioNames);
   }
-
-  @Override
-  public void addStockSubmit(String date, int stockSelected, String noOfStocks, String portfolioName) {
-
-// invalid date
-    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
-      // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-      viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
-      viewGUI.resetDateInput();
-      return;
-    }
-
-    // empty no of stocks
-    if (noOfStocks.equals("")) {
-      viewGUI.displayErrorMessage("Number of shares not entered. Please enter a valid natural number");
-      return;
-    }
-
-    StockNameMap snp = new StockNameMapImpl();
-    Map<String, String> map = snp.getMap();
-    String[] stockSymbolIndexArray = new String[snp.getMapSize()];
-    String[] stock = new String[2];
-    int index = 0;
-    for (Map.Entry<String, String> entry : map.entrySet()) {
-      stockSymbolIndexArray[index++] = entry.getKey();
-    }
-    stock[0] = stockSymbolIndexArray[stockSelected];
-    stock[1] = date;
-    super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
-
-    super.currentPortfolioName = portfolioName;
-    //String[] stock = new String[2];
-    stock[0] = noOfStocks;
-    stock[1] = super.currentPortfolioName;
-    cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
-    if (!visited) {
-      viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName);
-    } else {
-      visited = true;
-      viewGUI.displayBoughtSuccessfulScreenForAnotherBoughtStock();
-    }
-    cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
-  }
-
   @Override
   public void sellStock() {
-//   while (true) {
-//     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
-//     int numberOfPortFolio = obj.getNumberOfPortFolio();
-//     if (numberOfPortFolio == 0) {
-//       vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
-//       return;
-//     }
-//     String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-//     String[] arg = new String[portfolioNames.length + 1];
-//     System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
-//     arg[portfolioNames.length] = "FLEXIBLE";
-//
-//     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
-//             arg.length);
-//     output.println("\nSelect the portfolio to sell stocks from.");
-//     String options;
-//     options = scan.nextLine();
-//     while ((options == null || options.length() == 0)
-//             || (!validatePortfolioSelectOption(options, numberOfPortFolio))) {
-//       vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INVALID_ENTRY, null, 0);
-//       options = scan.nextLine();
-//       if (Objects.equals(options, "b") || Objects.equals(options, "B")) {
-//         return;
-//       }
-//     }
-//
-//     String date = sellStockDateEnter();
-//     if (date == null) {
-//       continue;
-//     }
-//
-//     String[] args = new String[3];
-//     args[0] = date;
-//     args[1] = options;
-//     args[2] = "FLEXIBLE";
-//     vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS_ON_DATE, args, 3);
-//
-//     StockPortFolioDataImpl stkObj;
-//     try {
-//       stkObj = (StockPortFolioDataImpl)
-//               obj.getAllStockDataInPortFolio(Integer.parseInt(options) - 1,
-//                       true, date, true, true, "FLEXIBLE");
-//     } catch (Exception e) {
-//       output.println("Controller: Error in getting stock data " + e.getMessage());
-//       return;
-//     }
-//
-//     if (stkObj.numberOfUniqueStocks == 0) {
-//       return;
-//     }
-//
-//     String stockOptions = scan.nextLine();
-//
-//     while ((stockOptions == null || stockOptions.length() == 0)
-//             || (!validateStockSelectOption(stockOptions, 1, stkObj.numberOfUniqueStocks))) {
-//       vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
-//       stockOptions = scan.nextLine();
-//       if (Objects.equals(stockOptions, "m") || Objects.equals(stockOptions, "M")) {
-//         return;
-//       }
-//     }
-//
-//     if (sellSharesOnAStock(Integer.parseInt(options) - 1,
-//             stkObj.stockSymbol[Integer.parseInt(stockOptions) - 1], date)) {
-//       return;
-//     }
-//   }
+     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+     int numberOfPortFolio = obj.getNumberOfPortFolio();
+     if (numberOfPortFolio == 0) {
+       vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+       return;
+     }
+     String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
+     String[] arg = new String[portfolioNames.length + 1];
+     System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
+     arg[portfolioNames.length] = "FLEXIBLE";
 
+     vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
+             arg.length);
   }
 
   @Override
-  public void selectStockSubmit(String portfolioName) {
-    viewGUI.displayAddScreen();
+  public void selectStockSubmit(int portfolioNameIndex) {
+    //viewGUI.displayAddScreen();
+    if(portfolioNameIndex == -1) {
+      viewGUI.displayErrorMessage("Select portfolio");
+      return;
+    }
+
+    StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+    super.currentPortfolioName = obj.getPortFolioNames("FLEXIBLE")[portfolioNameIndex];
+    String[] supportedStocks = {"1. Microsoft (MSFT)",
+            "2. Meta (META)",
+            "3. Google (GOOG)",
+            "4. Apple (AAPL)",
+            "5. Tesla (TSLA)",
+            "6. JPMorgan Chase (JPM)",
+            "7. Johnson (JNJ)",
+            "8. Amazon (AMZN)",
+            "9. UnitedHealth (UNH)",
+            "10. Walmart (WMT)"};
+
+    viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
+   // buyAnotherStockButton(portfolioName);
   }
-
-
 }
