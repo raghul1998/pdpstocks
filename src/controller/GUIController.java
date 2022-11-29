@@ -732,7 +732,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     viewGUI.resetFlexiblePortfolioScreen();
     viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
-    cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
   @Override
