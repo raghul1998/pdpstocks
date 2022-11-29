@@ -35,6 +35,7 @@ public interface Features {
 
   void dollarValueScreenSixBuyStocks(String price, JSpinner[] spinner,
                                      JComboBox[] comboSupportStocksArray);
-
   void valueAndCompositionScreenOne(int pfIndex);
+
+  void resetMainMenu();
 }
