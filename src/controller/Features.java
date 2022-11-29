@@ -7,7 +7,7 @@ import view.GUIView;
 public interface Features {
   void setView(GUIView guiView);
   void createAPortfolioGUI();
-  void valueAndCompositionGUI();
+  void valueAndCompositionGUIMainScreen();
   void createPortfolioScreenSubmit(int type, String name, int optionSelected);
   void performanceOfPortfolioMain();
   void performancePortfolioMainMenu(int pfIndex, int timestampType);
@@ -35,4 +35,6 @@ public interface Features {
 
   void dollarValueScreenSixBuyStocks(String price, JSpinner[] spinner,
                                      JComboBox[] comboSupportStocksArray);
+
+  void valueAndCompositionScreenOne(int pfIndex);
 }
