@@ -40,5 +40,6 @@ public interface GUIView {
 
   void valueAndCompScreenOne(String[] displayString);
 
-  void valueAndCompScreenInflexibleResult(String title, String[] column, String[][] data);
+  void valueAndCompScreenInflexibleResult(String title, String[] column,
+                                          String[][] data, String subText);
 }

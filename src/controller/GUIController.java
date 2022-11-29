@@ -500,12 +500,14 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       date = date.substring(0, 10);
 
       String[] column = {"Name", "Symbol", "Quantity",
-              "Date Of Purchase(DOP)", "Price of share on DOP"};
+              "DOP", "Price on DOP"};
 
       String title = pfName.toUpperCase() + " PORTFOLIO (inflexible)"
               + " COMPOSITION - Created on " + date;
 
       String[][] data = new String[stkObj.numberOfUniqueStocks][column.length];
+
+      String subText = "DOP - Date Of Purchase";
 
       for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
         data[i][0] = stkObj.stockName[i];
@@ -515,7 +517,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
         data[i][4] = String.valueOf(stkObj.valueOfSingleStock[i]);
       }
 
-      viewGUI.valueAndCompScreenInflexibleResult(title, column, data);
+      viewGUI.valueAndCompScreenInflexibleResult(title, column, data, subText);
       viewGUI.resetMainMenu();
     } else {
 
