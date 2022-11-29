@@ -178,10 +178,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       else if(comboBoxMainMenu.getSelectedIndex()==3) {
         feature.selectPortfolio();
       }
-//        }
-//        else if(comboBoxMainMenu.getSelectedIndex()==4){
-//          c1.show(cards,"listOfPortfolioScreenWithoutInflex");
-//        }
+        else if(comboBoxMainMenu.getSelectedIndex()==4){
+         feature.selectPortfolio();
+        }
       else if (comboBoxMainMenu.getSelectedIndex() == 5) {
         feature.performanceOfPortfolioMain();
       } else if (comboBoxMainMenu.getSelectedIndex() == 8) {
@@ -200,7 +199,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             inputName.getText(), comboBoxBuyOrInvest.getSelectedIndex()));
     submitButton2.addActionListener(evt -> feature.buyStockSubmit(datePicker.getJFormattedTextField().getText(),
             comboBoxSupportedStocks.getSelectedIndex(), howManyShares.getText(), inputName.getText()));
-
+    submitButton3.addActionListener(evt-> sellStock());
     // datePicker.getJFormattedTextField().getText()
 
 
