@@ -34,7 +34,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   private JTextField inputName, howManyShares;
   private JTextField inputDate, date;
-  private JButton exitButton, submitButton1, submitButton2, submitButton3,
+  private JButton exitButton, submitButton1, buyButton, submitButton3, submitButton4,
           backButton1, checkPrice, checkPrice1, buyAnotherButton, selectButton;
   private JButton mainMenuButton;
   private JButton pfPerformanceButton;
@@ -137,8 +137,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     checkPrice1 = new JButton("Check Price");
     exitButton = new JButton("Exit");
     submitButton1 = new JButton("Submit");
-    submitButton2 = new JButton("Submit");
+    buyButton = new JButton("Submit");
     submitButton3 = new JButton("Submit");
+    submitButton4 = new JButton("Submit");
     selectButton = new JButton("Select");
     backButton1 = new JButton("Back");
     // addButton = new JButton("Add");
@@ -222,9 +223,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     submitButton1.addActionListener(evt -> feature.createPortfolioScreenSubmit(
             comboBoxTypeOfPortfolio.getSelectedIndex(),
             inputName.getText(), comboBoxBuyOrInvest.getSelectedIndex()));
-    submitButton2.addActionListener(evt -> feature.buyStockSubmit(datePicker.getJFormattedTextField().getText(),
+    buyButton.addActionListener(evt -> feature.buyStockSubmit(datePicker.getJFormattedTextField().getText(),
             comboBoxSupportedStocks.getSelectedIndex(), howManyShares.getText(), inputName.getText()));
-    submitButton3.addActionListener(evt-> feature.sellStock(datePicker.getJFormattedTextField().getText(),
+    submitButton4.addActionListener(evt-> feature.sellStock(datePicker.getJFormattedTextField().getText(),
             comboBoxSupportedStocks.getSelectedIndex(),
             howManyShares.getText(),
             comboBoxListOfPortfolios.getSelectedIndex()));
@@ -245,9 +246,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
                     datePicker.getJFormattedTextField().getText(),
                     comboBoxSupportedStocks.getSelectedIndex() + 1));
 
-    checkPrice1.addActionListener(evt ->
-            feature.checkCurrentPrice(0,
-                    date.getText(), comboBoxSupportedStocks1.getSelectedIndex() + 1));
+//    checkPrice1.addActionListener(evt ->
+//            feature.checkCurrentPrice(0,
+//                    date.getText(), comboBoxSupportedStocks1.getSelectedIndex() + 1));
     howManyShares.addKeyListener(new KeyListener() {
       public void keyTyped(KeyEvent ke) {
         //String value = howManyShares.getText();
@@ -372,7 +373,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     card3.add(checkPrice);
     card3.add(display7);
     card3.add(howManyShares);
-    card3.add(submitButton2);
+    card3.add(buyButton);
     card3.add(mainMenuButton);
     cards.add(card3, "screen3");
     c1.show(cards, "screen3");
@@ -398,7 +399,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void inflexiblePortfolioScreen(String[] supportedStocks) {
-    // inflexible Screen
+    // inflexible Screen without date field
 
     display10 = new JLabel("Select stock from supported list of stocks");
     // review -  hardcoded
@@ -413,7 +414,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     card5.add(checkPrice);
     card5.add(display11);
     card5.add(howManyShares);
-    card5.add(submitButton3);
+    card5.add(buyButton);
     card5.add(mainMenuButton);
     cards.add(card5, "screen5");
     c1.show(cards, "screen5");
@@ -666,6 +667,30 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void displaySellScreen() {
+//    display5 = new JLabel("Enter date");
+//    //setPurchaseDate = new JTextField(10);
+//    display6 = new JLabel("Select stock from supported list of stocks");
+//    // review -  hardcoded
+//    comboBoxSupportedStocks = new JComboBox(supportedStocks);
+//    display7 = new JLabel("How many shares would you like to buy");
+//    //howManyShares = new JTextField(10);
+//    comboBoxSupportedStocks.setSelectedIndex(-1);
+//
+//    JPanel card3 = new JPanel();
+//    card3.add(display8);
+//    card3.add(display5);
+//    card3.add(datePicker);
+//    card3.add(display6);
+//    card3.add(comboBoxSupportedStocks);
+//    card3.add(checkPrice);
+//    card3.add(display7);
+//    card3.add(howManyShares);
+//    card3.add(submitButton2);
+//    card3.add(mainMenuButton);
+//    cards.add(card3, "screen3");
+//    c1.show(cards, "screen3");
+
+
 
   }
 
