@@ -238,6 +238,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       resetFlexiblePortfolioScreen();
       c1.previous(cards);
     });
+    // String date, int stockSelected, String noOfStocks, int pfNumber
+    sellButton.addActionListener(evt-> feature.sellStock(datePicker.getJFormattedTextField().getText(),
+            comboBoxStocksAvailableForSale.getSelectedIndex(),howManyShares.getText(),comboBoxListOfPortfolios.getSelectedIndex()));
 
     checkPrice.addActionListener(evt ->
             feature.checkCurrentPrice(comboBoxTypeOfPortfolio.getSelectedIndex(),
