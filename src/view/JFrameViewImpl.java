@@ -225,7 +225,10 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             inputName.getText(), comboBoxBuyOrInvest.getSelectedIndex()));
     submitButton2.addActionListener(evt -> feature.buyStockSubmit(datePicker.getJFormattedTextField().getText(),
             comboBoxSupportedStocks.getSelectedIndex(), howManyShares.getText(), inputName.getText()));
-    submitButton3.addActionListener(evt-> sellStock());
+    submitButton3.addActionListener(evt-> feature.sellStock(datePicker.getJFormattedTextField().getText(),
+            comboBoxSupportedStocks.getSelectedIndex(),
+            howManyShares.getText(),
+            comboBoxListOfPortfolios.getSelectedIndex()));
     // datePicker.getJFormattedTextField().getText()
 
 

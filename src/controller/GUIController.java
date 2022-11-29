@@ -756,20 +756,76 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   }
 
   @Override
-  public void sellStock() {
-    StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
-    int numberOfPortFolio = obj.getNumberOfPortFolio();
-    if (numberOfPortFolio == 0) {
-      vciObj.viewControllerInteract(TypeofViews.NO_PORTFOLIO, null, 0);
+  public void sellStock(String date, int stockSelected, String noOfStocks, int pfNumber) {
+     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+     int numberOfPortFolio = obj.getNumberOfPortFolio();
+     if (numberOfPortFolio == 0) {
+       viewGUI.displayInformationalMessage("You dont have any portfolio");
+       viewGUI.resetMainMenu();
+       return;
+     }
+     String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
+     String[] arg = new String[portfolioNames.length + 1];
+     System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
+     arg[portfolioNames.length] = "FLEXIBLE";
+
+     //vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
+    //         arg.length);
+    selectPortfolio();
+
+    StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
+    currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
+    int numberOfAvailableShares;
+    StockNameMap snp = new StockNameMapImpl();
+    Map<String, String> map = snp.getMap();
+    String[] stockSymbolIndexArray = new String[snp.getMapSize()];
+    String[] stockGetData = new String[2];
+    int index = 0;
+    for (Map.Entry<String, String> entry : map.entrySet()) {
+      stockSymbolIndexArray[index++] = entry.getKey();
+    }
+    stockGetData[0] = stockSymbolIndexArray[stockSelected];
+    stockGetData[1] = date;
+    try {
+      numberOfAvailableShares = stk.sharesAvailableOnTheDateForSale(pfNumber, stockGetData[0], date,
+              "FLEXIBLE");
+    } catch (Exception e) {
+      viewGUI.displayErrorMessage("Unable to get remaining share details on the stock for this date.");
       return;
     }
-    String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-    String[] arg = new String[portfolioNames.length + 1];
-    System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
-    arg[portfolioNames.length] = "FLEXIBLE";
 
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
-            arg.length);
+    if (numberOfAvailableShares == 0) {
+      viewGUI.displayErrorMessage("You cannot sell any shares of this stock on this date as they are already"
+              + " sold.");
+      return;
+    }
+
+    super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stockGetData, 2);
+    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+
+    //output.println("\nYou can sell only " + numberOfAvailableShares
+      //      + " shares of this stock on " + date);
+    viewGUI.displayInformationalMessage("\nYou can sell only " + numberOfAvailableShares
+            + " shares of this stock on " + date);
+    //output.println("How many share would you like to sell?\n");
+    viewGUI.resetHowManyShares();
+    String sellShares = noOfStocks;
+    if (sellShares == null || sellShares.length() == 0
+            || (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
+      String[] args = new String[1];
+      args[0] = String.valueOf(numberOfAvailableShares);
+      if (noOfStocks.equals("")) {
+        viewGUI.displayErrorMessage("Number of shares not entered. Please enter a valid natural number");
+        return;
+      }
+    }
+
+    String[] data = new String[3];
+    data[0] = sellShares;
+    data[1] = currentPortfolioName;
+    super.cmiObj.controllerModelInteract(TypeofAction.SELL_STOCKS, data, 3);
+    viewGUI.displayInformationalMessage("Shares successfully sold.");
+    viewGUI.resetMainMenu();
   }
 
   @Override
@@ -794,6 +850,5 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "10. Walmart (WMT)"};
 
     viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
-    // buyAnotherStockButton(portfolioName);
   }
 }
