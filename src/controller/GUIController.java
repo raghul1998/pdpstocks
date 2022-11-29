@@ -107,7 +107,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
         // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
         viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
-        viewGUI.resetDateInput();
+        //viewGUI.resetDateInput();
         return;
       }
     }
@@ -373,7 +373,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
       // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
       viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
-      viewGUI.resetDateInput();
+      //viewGUI.resetDateInput();
       return;
     }
 

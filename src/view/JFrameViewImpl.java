@@ -14,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Properties;
@@ -24,6 +25,8 @@ import controller.Features;
 
 public class JFrameViewImpl extends JFrame implements GUIView {
   private ViewControllerInteract vciObj;
+  JDatePickerImpl datePicker;
+
   private JComboBox comboBoxMainMenu, comboBoxTypeOfPortfolio, comboBoxSupportedStocks,
           comboBoxBuyOrInvest, comboBoxListOfPortfolios, comboBoxSupportedStocks1;
   private JComboBox comboCommon, combo2;
@@ -32,8 +35,10 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   private JLabel display1, display2, display3, display4,
           display5, display6, display7, display8, display9, display10,
           display11, display12, display13, display14, display15;
-  ;
-  private JTextField inputName, setPurchaseDate, howManyShares;
+
+
+
+  private JTextField inputName, howManyShares;
   private JTextField inputDate, date;
   private JButton exitButton, submitButton1, submitButton2, submitButton3,
           backButton1, checkPrice, checkPrice1, buyAnotherButton, selectButton;
@@ -44,6 +49,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   private JButton pfPerformanceButtonGetData;
 
   private JButton dollarCostMainButton;
+
   public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
     private String datePattern = "yyyy-MM-dd";
@@ -78,11 +84,25 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   // constructor
   public JFrameViewImpl(String caption) {
+
+
     super(caption);
 
     setSize(500, 300);
     setLocation(500, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    //cards.add(datePicker);
+    UtilDateModel model = new UtilDateModel();
+    Properties p = new Properties();
+    p.put("text.today", "Today");
+    p.put("text.month", "Month");
+    p.put("text.year", "Year");
+    JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+    datePicker.setBounds(110, 100, 200, 25);
+    model.setSelected(true);
+    datePicker.setVisible(true);
 
     cards = new JPanel();
     JPanel card1 = new JPanel();
@@ -178,8 +198,11 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     submitButton1.addActionListener(evt -> feature.createPortfolioScreenSubmit(
             comboBoxTypeOfPortfolio.getSelectedIndex(),
             inputName.getText(), comboBoxBuyOrInvest.getSelectedIndex()));
-    submitButton2.addActionListener(evt -> feature.buyStockSubmit(setPurchaseDate.getText(),
+    submitButton2.addActionListener(evt -> feature.buyStockSubmit(datePicker.getJFormattedTextField().getText(),
             comboBoxSupportedStocks.getSelectedIndex(), howManyShares.getText(), inputName.getText()));
+
+    // datePicker.getJFormattedTextField().getText()
+
 
     exitButton.addActionListener(evt -> feature.exitProgram());
     selectButton.addActionListener(evt-> feature.selectStockSubmit(comboBoxListOfPortfolios.getSelectedIndex()));
@@ -199,7 +222,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     checkPrice.addActionListener(evt ->
             feature.checkCurrentPrice(comboBoxTypeOfPortfolio.getSelectedIndex(),
-                    setPurchaseDate.getText(), comboBoxSupportedStocks.getSelectedIndex() + 1));
+                    datePicker.getJFormattedTextField().getText(), comboBoxSupportedStocks.getSelectedIndex() + 1));
 
     checkPrice1.addActionListener(evt ->
             feature.checkCurrentPrice(0,
@@ -306,6 +329,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     datePicker.setBounds(110, 100, 200, 25);
     model.setSelected(true);
     datePicker.setVisible(true);
+
+    display8 = new JLabel(datePicker.getJFormattedTextField().getText());
+    //String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     //cards.add(datePicker);
     display5 = new JLabel("Enter date");
     //setPurchaseDate = new JTextField(10);
@@ -328,6 +354,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     comboBoxSupportedStocks.setSelectedIndex(-1);
 
     JPanel card3 = new JPanel();
+    card3.add(display8);
     card3.add(display5);
     card3.add(datePicker);
     card3.add(display6);
@@ -339,6 +366,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     card3.add(mainMenuButton);
     cards.add(card3, "screen3");
     c1.show(cards, "screen3");
+
   }
 
   // card 4
@@ -394,10 +422,10 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   }
 
 
-  @Override
-  public void resetDateInput() {
-    setPurchaseDate.setText("");
-  }
+//  @Override
+//  public void resetDateInput() {
+//    datePicker.getJFormattedTextField().getText().setText("");
+//  }
 
   @Override
   public int jOptionPortfolioAlreadyExists() {
@@ -479,7 +507,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void resetFlexiblePortfolioScreen() {
-    setPurchaseDate.setText("");
+    //setPurchaseDate.setText("");
     comboBoxSupportedStocks.setSelectedIndex(-1);
     howManyShares.setText("");
   }

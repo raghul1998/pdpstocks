@@ -20,7 +20,7 @@ public interface GUIView {
   void resetCreatePortfolioScreen();
   void resetFlexiblePortfolioScreen();
   void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName);
-  void resetDateInput();
+  //void resetDateInput();
   void resetHowManyShares();
  //  void displayAddScreen();
   void displaySellScreen();
