@@ -123,7 +123,6 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     } else if (type == 1) {
       viewGUI.inflexiblePortfolioScreen(supportedStocks);
     }
-    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
 
@@ -504,7 +503,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
               "Date Of Purchase(DOP)", "Price of share on DOP"};
 
       String title = pfName.toUpperCase() + " PORTFOLIO (inflexible)"
-                      + " COMPOSITION - Created on " + date;
+              + " COMPOSITION - Created on " + date;
 
       String[][] data = new String[stkObj.numberOfUniqueStocks][column.length];
 
@@ -521,6 +520,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     } else {
 
     }
+  }
+
+  @Override
+  public void resetMainMenu() {
+    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+    viewGUI.resetMainMenu();
   }
 
   @Override
@@ -757,19 +762,19 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void sellStock(String date, int stockSelected, String noOfStocks, int pfNumber) {
-     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
-     int numberOfPortFolio = obj.getNumberOfPortFolio();
-     if (numberOfPortFolio == 0) {
-       viewGUI.displayInformationalMessage("You dont have any portfolio");
-       viewGUI.resetMainMenu();
-       return;
-     }
-     String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-     String[] arg = new String[portfolioNames.length + 1];
-     System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
-     arg[portfolioNames.length] = "FLEXIBLE";
+    StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      viewGUI.displayInformationalMessage("You dont have any portfolio");
+      viewGUI.resetMainMenu();
+      return;
+    }
+    String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
+    String[] arg = new String[portfolioNames.length + 1];
+    System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
+    arg[portfolioNames.length] = "FLEXIBLE";
 
-     //vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
+    //vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
     //         arg.length);
     selectPortfolio();
 
@@ -804,7 +809,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
 
     //output.println("\nYou can sell only " + numberOfAvailableShares
-      //      + " shares of this stock on " + date);
+    //      + " shares of this stock on " + date);
     viewGUI.displayInformationalMessage("\nYou can sell only " + numberOfAvailableShares
             + " shares of this stock on " + date);
     //output.println("How many share would you like to sell?\n");

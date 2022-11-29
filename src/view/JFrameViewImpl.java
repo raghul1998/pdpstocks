@@ -26,7 +26,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
           comboBoxBuyOrInvest, comboBoxListOfPortfolios, comboBoxSupportedStocks1;
   private JComboBox comboCommon, combo2, combo3, combo4, combo5;
   private JPanel cards;  // default screen
-  private CardLayout c1 = new CardLayout();
+  private CardLayout c1;
   private JLabel display1, display2, display3, display4,
           display5, display6, display7, display8, display9, display10,
           display11, display12, display13, display14, display15;
@@ -188,8 +188,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     });
 
     mainMenuButton.addActionListener(e -> {
-      resetMainMenu();
-      c1.first(cards);
+      feature.resetMainMenu();
     });
 
     comboBoxMainMenu.addActionListener(e -> {
@@ -315,7 +314,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     card2.add(display4);
     card2.add(comboBoxBuyOrInvest);
     card2.add(submitButton1);
-    card2.add(exitButton);
+    card2.add(mainMenuButton);
     cards.add(card2, "screen2");
     c1.show(cards, "screen2");
   }
@@ -632,15 +631,20 @@ public class JFrameViewImpl extends JFrame implements GUIView {
                                                  String[][] data) {
     display7 = new JLabel(title);
     JTable table = new JTable(data, column);
-    table.setBounds(30, 40, 200, 300);
+    table.setBounds(30, 40, 400, 300);
+    table.removeEditor();
     JScrollPane scrollPane = new JScrollPane(table);
 
-    JPanel cardCommon = new JPanel();
-    cardCommon.add(display7);
-    cardCommon.add(scrollPane);
-    cardCommon.add(table);
-    cards.add(cardCommon, "Composition Inflexible Value Screen");
-    c1.show(cards, "Composition Inflexible Value Screen");
+    JFrame frame = new JFrame();
+    JPanel panel = new JPanel();
+    panel.add(display7);
+    panel.add(scrollPane);
+    panel.setAutoscrolls(true);
+
+    frame.add(panel);
+    frame.setSize(600, 400);
+    frame.setLocation(500, 200);
+    frame.setVisible(true);
   }
 
   @Override
