@@ -628,21 +628,22 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void valueAndCompScreenInflexibleResult(String title, String[] column,
-                                                 String[][] data) {
+                                                 String[][] data, String subText) {
     display7 = new JLabel(title);
     JTable table = new JTable(data, column);
     table.setBounds(30, 40, 400, 300);
-    table.removeEditor();
-    JScrollPane scrollPane = new JScrollPane(table);
+    table.setEnabled(false);
 
+    JScrollPane scrollPane = new JScrollPane(table);
     JFrame frame = new JFrame();
     JPanel panel = new JPanel();
     panel.add(display7);
     panel.add(scrollPane);
-    panel.setAutoscrolls(true);
+    display4 = new JLabel(subText);
+    panel.add(display4);
 
     frame.add(panel);
-    frame.setSize(600, 400);
+    frame.setSize(600, 550);
     frame.setLocation(500, 200);
     frame.setVisible(true);
   }
