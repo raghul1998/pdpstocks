@@ -607,7 +607,6 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
                                                String type, String portfolioType) {
 
     StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
-    double commissionCost = obj.getCommissionCost();
     StockPortFolioDataImpl stkObj = null;
 
     if (Objects.equals(type, "FULL")) {
@@ -665,7 +664,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     String[][] data = new String[stkObj.numberOfUniqueStocks][column.length];
     String footer;
-    String[] costData = new String[5];
+    String[] costData = new String[2];
 
     for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
       if (stkObj.stockQuantity[i] == 0) {
@@ -692,18 +691,13 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
 
     totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
-    double totalMoneyInvested = Math.floor((totalPortFolioValue
-            + (stkObj.numberOfTransactions * commissionCost)) * 100) / 100;
 
     if (type.equals("COST")) {
-      costData[0] = "Total Money invested in stocks: $" + totalPortFolioValue;
-      costData[1] = "Commission cost per transaction is: $" + commissionCost;
-      costData[2] = "Total number of transactions till date is: " + stkObj.numberOfTransactions;
-      costData[3] = "Total commission charges: $" + stkObj.numberOfTransactions * commissionCost;
-      costData[4] = "Total Money spent: $" + totalMoneyInvested + "\n";
+      costData[0] = "Total Money invested: $" + totalPortFolioValue;
+      costData[1] = "Total number of transactions till date is: " + stkObj.numberOfTransactions;
       viewGUI.displayValueCompForCost(title, costData);
     } else {
-      footer = "\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue;
+      footer = "Total Portfolio Value is on " + date + ": $" + totalPortFolioValue;
       viewGUI.displayValueCompForOthers(title, column, data, footer);
     }
     viewGUI.resetMainMenu();

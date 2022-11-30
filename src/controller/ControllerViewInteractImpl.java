@@ -24,13 +24,11 @@ import model.StockNameMap;
 import model.StockNameMapImpl;
 import model.StockPortFolioDataImpl;
 import model.TypeofAction;
-import view.GUIView;
 import view.TypeofViews;
 import view.ViewControllerInteract;
 import view.ViewControllerInteractImpl;
 
 import static java.lang.System.exit;
-import static java.lang.System.out;
 import static java.lang.Thread.sleep;
 
 /**
@@ -214,8 +212,153 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     args[1] = date;
     args[2] = type;
     args[3] = portfolioType;
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args, 4);
+
+    showPortfolioIndividualWithDateScreenController(options, date, type, portfolioType);
+    //vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args, 4);
     return true;
+  }
+
+  private void showPortfolioIndividualWithDateScreenController(String option, String date, String type,
+                                                               String portfolioType) {
+    int portfolioNumber = Integer.parseInt(option) - 1;
+    StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
+    double commissionCost = obj.getCommissionCost();
+    StockPortFolioDataImpl stkObj = null;
+
+    if (Objects.equals(type, "FULL")) {
+      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
+              null, true, false, portfolioType);
+    } else if (Objects.equals(type, "TRUE")) {
+      try {
+        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber,
+                true, date, true, true, portfolioType);
+      } catch (Exception e) {
+        output.println("CONTROLLER: Error in getting the data.");
+        return;
+      }
+    } else if (Objects.equals(type, "COST")) {
+      try {
+        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber,
+                false, date, false, false, portfolioType);
+      } catch (Exception e) {
+        output.println("CONTROLLER: Error in getting the data.");
+        return;
+      }
+    }
+
+    if (stkObj == null) {
+      output.println("CONTROLLER: Error in getting the data.");
+      return;
+    }
+
+    double totalPortFolioValue = 0;
+
+    if (stkObj.numberOfUniqueStocks == 0) {
+      if (type.equals("COST")) {
+        output.println("There are no investments until " + date + "\n");
+      } else {
+        output.println("The value of portfolio on " + date + " is $0.00\n");
+      }
+      return;
+    }
+
+    String title;
+    String[] portfolioNames = obj.getPortFolioNames(portfolioType);
+    if (type.equals("COST")) {
+      title = "\nCOST BASIS OF " + portfolioNames[portfolioNumber].toUpperCase()
+              + " PORTFOLIO";
+    } else {
+      title = "\nValue of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO";
+    }
+
+    String[] column = new String[5];
+
+    if (!type.equals("COST")) {
+      column = new String[]
+              {
+                      "\nName",
+                      " (" + "Symbol" + ") ",
+                      "\t " + "Quantity",
+                      "\t " + "Share Value on " + date,
+                      "\t " + "Total Value\n"
+              };
+    }
+
+    String[][] data = new String[stkObj.numberOfUniqueStocks][column.length];
+    String footer;
+    String[] costData = new String[5];
+
+    for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
+      if (stkObj.stockQuantity[i] == 0) {
+        continue;
+      }
+      if (!type.equals("COST")) {
+        data[i][0] = stkObj.stockName[i];
+        data[i][1] = " (" + stkObj.stockSymbol[i] + ") ";
+        data[i][2] = "\t " + Math.floor(stkObj.stockQuantity[i] * 100) / 100;
+      }
+      // Display based on the date purchased on
+      double shareValue;
+      if (type.equals("COST")) {
+        shareValue = stkObj.valueOfSingleStock[i];
+      } else {
+        shareValue = getShareValueOnDate(stkObj.stockSymbol[i], date);
+      }
+      shareValue = Math.floor((shareValue) * 100) / 100;
+      if (!type.equals("COST")) {
+        data[i][3] = "\t $" + shareValue;
+        data[i][4] = "\t $" + Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100;
+      }
+      totalPortFolioValue += Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100;
+    }
+
+    totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
+    double totalMoneyInvested = Math.floor((totalPortFolioValue
+            + (stkObj.numberOfTransactions * commissionCost)) * 100) / 100;
+    if (type.equals("COST")) {
+      costData[0] = "\nTotal Money invested in stocks: $" + totalPortFolioValue;
+      costData[1] = "Commission cost per transaction is: $" + commissionCost;
+      costData[2] = "Total number of transactions till date is: " + stkObj.numberOfTransactions;
+      costData[3] = "Total commission charges: $" + stkObj.numberOfTransactions * commissionCost;
+      costData[4] = "Total Money spent: $" + totalMoneyInvested + "\n";
+      vciObj.displayValueCompForCost(title, costData);
+    } else {
+      footer = "\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n";
+      vciObj.displayValueCompForOthers(title, column, data, footer);
+    }
+  }
+
+  private double getShareValueOnDate(String stockSymbol, String date) {
+    GetStockData gsd = new GetStockDataImpl();
+    try {
+      String[] dateArr = new String[1];
+      dateArr[0] = date;
+      gsd.getValue(stockSymbol, dateArr);
+    } catch (Exception e) {
+      output.println("Error in getting stock data on " + date);
+      return 0;
+    }
+
+    BufferedReader stockData;
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    String line;
+    String splitBy = ",";
+    String[] splitStockData;
+
+    try {
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+      stockData.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+    return Double.parseDouble(splitStockData[1]);
   }
 
   /**
@@ -793,9 +936,79 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       output.println("Error in getting title");
     }
 
-    vciObj.portfolioPerformanceOverTime(dates, dates.length, pfPerformance, scale, getTitle);
+    portfolioPerformanceOverTimeController(dates, dates.length, pfPerformance, scale, getTitle);
+    //vciObj.portfolioPerformanceOverTime(dates, dates.length, pfPerformance, scale, getTitle);
 
     return endMenu();
+  }
+
+  private void portfolioPerformanceOverTimeController(String[] args, int length,
+                                                      Map<String, Double> pfPerformance,
+                                                      String[] scale, String getTitle) {
+    String title = "\nPerformance of portfolio " + args[length - 3].toUpperCase()
+            + " " + getTitle + "\n";
+
+    String[] data = new String[pfPerformance.size()];
+    int ind = 0;
+
+    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
+      data[ind] = printPerformance(set.getKey(), set.getValue(), scale, args[length - 1]);
+      ind++;
+    }
+
+    String[] scaleStr;
+    if (scale[1] == null) {
+      scaleStr = new String[1];
+      scaleStr[0] = "\nScale: * = $" + scale[0];
+    } else {
+      scaleStr = new String[3];
+      scaleStr[0] = "\nBase Amount: $" + scale[1];
+      scaleStr[1] = "One * is $" + scale[0] + " more than the base amount.";
+      scaleStr[2] = "~ is the base value.";
+    }
+
+    String footer = "# - either no stocks or 0 value in portfolio.\n";
+    vciObj.portfolioPerformanceOverTimeView(title, data, scaleStr,footer);
+  }
+
+  private String printPerformance(String dateStr, Double value, String[] scale, String choice) {
+    String result = null;
+    LocalDate date = LocalDate.parse(dateStr);
+    String year = String.valueOf(date.getYear());
+    String month = String.valueOf(date.getMonth());
+    month = month.substring(0, 3);
+    String dateIn = String.valueOf(date.getDayOfMonth());
+    if (dateIn.length() == 1) {
+      // Append 0 to dates with single digit
+      dateIn = "0" + dateIn;
+    }
+
+    if (Objects.equals(choice, "1")) {
+      result = year + ": " + getStars(value, scale);
+    } else if (Objects.equals(choice, "2")) {
+      result = month + " " + year + ": " + getStars(value, scale);
+    } else if (Objects.equals(choice, "3")) {
+      result = month + " " + dateIn + " " + year + ": " + getStars(value, scale);
+    }
+
+    return result;
+  }
+
+  private String getStars(Double value, String[] scale) {
+    if (value == null || value == 0) {
+      return "#";
+    }
+
+    int num;
+    if (scale[1] == null) {
+      num = (int) (value / Long.parseLong(scale[0]));
+    } else {
+      num = (int) ((value - Long.parseLong(scale[1])) / Long.parseLong(scale[0]));
+      if (num == 0) {
+        return "~";
+      }
+    }
+    return "*".repeat(Math.max(0, num));
   }
 
   /**

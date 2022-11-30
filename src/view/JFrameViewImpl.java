@@ -132,7 +132,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             "Sell a stock from portfolio",
             "Performance of portfolio",
             "Total amount invested on certain date",
-            "Configure the commission cost",
             "Add stocks to portfolio using Dollar-Cost strategy"};
 
     comboBoxMainMenu = new JComboBox(mainMenuOptions);
@@ -223,13 +222,14 @@ public class JFrameViewImpl extends JFrame implements GUIView {
         feature.valueAndCompositionGUIMainScreen();
       } else if (comboBoxMainMenu.getSelectedIndex() == 2) {
         feature.valueOnFullCompMainScreen();
-      } else if (comboBoxMainMenu.getSelectedIndex() == 3 || comboBoxMainMenu.getSelectedIndex() == 4) {
+      } else if (comboBoxMainMenu.getSelectedIndex() == 3 ||
+              comboBoxMainMenu.getSelectedIndex() == 4) {
         feature.selectPortfolio();
       } else if (comboBoxMainMenu.getSelectedIndex() == 5) {
         feature.performanceOfPortfolioMain();
       } else if (comboBoxMainMenu.getSelectedIndex() == 6) {
         feature.totalCostInvestedByDateMainMenu();
-      } else if (comboBoxMainMenu.getSelectedIndex() == 8) {
+      } else if (comboBoxMainMenu.getSelectedIndex() == 7) {
         feature.addStocksUsingDollarMain();
       }
 //        else if(comboBoxMainMenu.getSelectedIndex()==6){

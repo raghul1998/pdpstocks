@@ -86,10 +86,10 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showPortfolioIndividualScreen(opt, portfolioType);
         break;
       }
-      case PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE: {
+      /*case PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE: {
         showPortfolioIndividualWithDateScreen(args[0], args[1], args[2], args[3]);
         break;
-      }
+      }*/
       case PORTFOLIO_NAME_REENTER: {
         showPortfolioNameReenter();
         break;
@@ -210,6 +210,56 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       output.println("~ is the base value.");
     }
     output.println("# - either no stocks or 0 value in portfolio.\n");
+  }
+
+  @Override
+  public void displayValueCompForCost(String title, String[] costData) {
+    output.println(title);
+    for (String costDatum : costData) {
+      output.println(costDatum);
+    }
+  }
+
+  @Override
+  public void displayValueCompForOthers(String title, String[] column,
+                                        String[][] data, String footer) {
+    output.println(title);
+
+    for (int i = 0; i < column.length; i++) {
+      if (i == column.length - 1) {
+        output.println(column[i]);
+      } else {
+        output.print(column[i]);
+      }
+    }
+
+    for (int i = 0; i < data.length; i++) {
+      for (int j = 0; j < data[i].length; j++) {
+        if (j == data[i].length - 1) {
+          output.println(data[i][j]);
+        } else {
+          output.print(data[i][j]);
+        }
+      }
+    }
+
+    output.println(footer);
+  }
+
+  @Override
+  public void portfolioPerformanceOverTimeView(String title, String[] data,
+                                               String[] scaleStr, String footer) {
+    output.println(title);
+
+    for (String datum : data) {
+      output.println(datum);
+    }
+
+    for (String s : scaleStr) {
+      output.println(s);
+    }
+
+    output.println(footer);
   }
 
   /**
@@ -351,6 +401,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   }
 
   /**
+   * THIS METHOD IS NOT IN USE
    * This method helps in rendering the output when the user wants to view the value of the
    * portfolio on a certain date.
    *

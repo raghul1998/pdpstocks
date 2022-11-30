@@ -20,4 +20,11 @@ public interface ViewControllerInteract {
   void portfolioPerformanceOverTime(String[] args, int length,
                                     Map<String, Double> pfPerformance,
                                     String[] scale, String getTitle);
+
+  void displayValueCompForCost(String title, String[] costData);
+
+  void displayValueCompForOthers(String title, String[] column, String[][] data, String footer);
+
+  void portfolioPerformanceOverTimeView(String title, String[] data,
+                                        String[] scaleStr, String footer);
 }
