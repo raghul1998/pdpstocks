@@ -2068,7 +2068,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
    * @param option the number of shares that the user wants to buy
    * @return true if the input is valid, else false
    */
-  private boolean validateBuyStockOption(String option) {
+  protected boolean validateBuyStockOption(String option) {
     if (option == null || option.length() == 0) {
       return false;
     }

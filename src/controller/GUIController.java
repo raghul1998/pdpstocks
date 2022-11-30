@@ -21,7 +21,6 @@ import model.StockCompositionDataImpl;
 import model.StockNameMap;
 import model.StockNameMapImpl;
 import model.StockPortFolioDataImpl;
-import model.TransactValueData;
 import model.TransactValueDataImpl;
 import model.TypeofAction;
 import view.GUIView;
@@ -915,15 +914,14 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
                              String portfolioName) {
     // invalid date
     if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
-      // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-      viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
-      //viewGUI.resetDateInput();
+      viewGUI.displayErrorMessage("Invalid Date. Reenter");
       return;
     }
 
     // empty no of stocks
-    if (noOfStocks.equals("")) {
-      viewGUI.displayErrorMessage("Number of shares not entered. Please enter a valid natural number");
+    if (!validateBuyStockOption(noOfStocks)) {
+      viewGUI.displayErrorMessage("Number of shares invalid. "
+              + "Please enter a valid natural number");
       return;
     }
 
@@ -938,9 +936,8 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     stock[0] = stockSymbolIndexArray[stockSelected];
     stock[1] = date;
     super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
-
     super.currentPortfolioName = portfolioName;
-    //String[] stock = new String[2];
+
     stock[0] = noOfStocks;
     stock[1] = super.currentPortfolioName;
     super.cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
@@ -951,7 +948,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       showSuccessfulMsg = "";
     }
 
-    viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName, showSuccessfulMsg);
+    viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(showSuccessfulMsg);
     super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
@@ -983,31 +980,14 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void sellStock(String date, int stockSelected, String noOfStocks, int pfNumber) {
-    // sellStockFromPortfolio() - main method
-
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
-    int numberOfPortFolio = obj.getNumberOfPortFolio();
-    if (numberOfPortFolio == 0) {
-      viewGUI.displayInformationalMessage("You dont have any portfolio");
-      viewGUI.resetMainMenu();
-      return;
-    }
-    String[] portfolioNames = obj.getPortFolioNames("FLEXIBLE");
-    String[] arg = new String[portfolioNames.length + 1];
-    System.arraycopy(portfolioNames, 0, arg, 0, portfolioNames.length);
-    arg[portfolioNames.length] = "FLEXIBLE";
-
-    //vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
-    //         arg.length);
-    //selectPortfolio();
-
     StockPortFolioDataImpl stkObj;
     try {
       stkObj = (StockPortFolioDataImpl)
               obj.getAllStockDataInPortFolio(pfNumber,
                       true, date, true, true, "FLEXIBLE");
     } catch (Exception e) {
-      viewGUI.displayErrorMessage("Controller: Error in getting stock data " + e.getMessage());
+      viewGUI.displayErrorMessage("Error in getting stock data " + e.getMessage());
       return;
     }
 
@@ -1015,18 +995,16 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       return;
     }
 
-
-    if (sellSharesOnAStock(pfNumber,
-            stkObj.stockSymbol[stockSelected], date, noOfStocks)) {
-      return;
-    }
+    sellSharesOnAStock(pfNumber, stkObj.stockSymbol[stockSelected], date, noOfStocks);
   }
 
 
   // helper method
-  private boolean sellSharesOnAStock(int pfNumber, String stockSymbol, String date, String sellShares) {
+  private void sellSharesOnAStock(int pfNumber, String stockSymbol, String date,
+                                     String sellShares) {
+
     StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
-    currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
+    super.currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
     int numberOfAvailableShares;
 
     try {
@@ -1034,72 +1012,66 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
               "FLEXIBLE");
     } catch (Exception e) {
       viewGUI.displayErrorMessage("Unable to get remaining share details on the stock for this date.");
-      return true;
+      return;
     }
 
     if (numberOfAvailableShares == 0) {
       viewGUI.displayErrorMessage("You cannot sell any shares of this stock on this date as they are already"
               + " sold.");
-      return true;
+      return;
     }
 
     String[] stockGetData = new String[2];
     stockGetData[0] = stockSymbol;
     stockGetData[1] = date;
     super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stockGetData, 2);
-    //vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
-
-    // viewGUI.displayErrorMessage("\nYou can sell only " + numberOfAvailableShares
-    //       + " shares of this stock on " + date);
 
     if ((sellShares == null || sellShares.length() == 0)
             || (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
       String[] args = new String[1];
       args[0] = String.valueOf(numberOfAvailableShares);
-      // vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, args, 1);
 
-      if (args == null) {
-        viewGUI.displayErrorMessage("Not a valid input. Please enter number of shares as natural numbers.");
-        return false;
-      } else {
-        viewGUI.displayErrorMessage("Not a valid input. You can only sell until" + args[0] + " shares."
-                + " Also please enter number of shares as natural numbers.");
-        return false;
-      }
+      viewGUI.displayErrorMessage("Not a valid input. You can only sell until "
+              + args[0] + " shares."
+              + " Also please enter number of shares as natural numbers.");
+      return;
     }
 
     String[] data = new String[3];
     data[0] = sellShares;
-    data[1] = currentPortfolioName;
+    data[1] = super.currentPortfolioName;
     super.cmiObj.controllerModelInteract(TypeofAction.SELL_STOCKS, data, 3);
-    viewGUI.displayInformationalMessage("Shares successfully sold.");
-
-    return true;
+    viewGUI.displayInformationalMessage("Shares successfully sold");
+    viewGUI.resetStockSellScreenAfterSell();
   }
 
   // list of stocks as per date will be made available to user in a dropdown menu
   @Override
   public void getStocksAvailableForSaleAsPerDate(String date, int pfIndex) {
-    int portfolioNumber = pfIndex;
-    StockCompositionData obj = new StockCompositionDataImpl("Flexible");
+    if(!validateDate(date, "yyyy-MM-dd", 0)) {
+      viewGUI.displayErrorMessage("Not a valid date. Reenter");
+      return;
+    }
+
+    StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     StockPortFolioDataImpl stkObj;
 
     try {
-      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
-              date, true, true, "Flexible");
+      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(pfIndex, true,
+              date, true, true, "FLEXIBLE");
     } catch (Exception e) {
-      viewGUI.displayErrorMessage("View: Error in getting stock data " + e.getMessage());
+      viewGUI.displayErrorMessage("Error in getting stock data " + e.getMessage());
       return;
     }
 
     if (stkObj == null) {
-      viewGUI.displayErrorMessage("View: Error in getting stock data");
+      viewGUI.displayErrorMessage("Error in getting stock data");
       return;
     }
-    assert stkObj != null;
     String[] result = new String[stkObj.numberOfUniqueStocks];
     if (stkObj.numberOfUniqueStocks == 0) {
-      viewGUI.displayInformationalMessage("You don't own any stocks before this date");
+      viewGUI.displayInformationalMessage("You don't own any stocks before this date.");
+      return;
     } else {
       for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
         if (stkObj.stockQuantity[i] != 0) {
@@ -1113,7 +1085,6 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void selectStockSubmit(int buyOrSell, int portfolioNameIndex) {
-    //viewGUI.displayAddScreen();
     if (portfolioNameIndex == -1) {
       viewGUI.displayErrorMessage("Please select a portfolio");
       return;

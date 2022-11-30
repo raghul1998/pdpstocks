@@ -330,12 +330,12 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
       stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
               date, true, true, portfolioType);
     } catch (Exception e) {
-      output.println("View: Error in getting stock data " + e.getMessage());
+      output.println("Error in getting stock data " + e.getMessage());
       return;
     }
 
     if (stkObj == null) {
-      output.println("View: Error in getting stock data");
+      output.println("Error in getting stock data");
       return;
     }
 

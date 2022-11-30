@@ -243,7 +243,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     exitButton.addActionListener(evt -> feature.exitProgram());
     selectButton.addActionListener(evt ->
-            feature.selectStockSubmit(comboBoxMainMenu.getSelectedIndex(), comboBoxListOfPortfolios.getSelectedIndex()));
+            feature.selectStockSubmit(comboBoxMainMenu.getSelectedIndex(),
+                    comboBoxListOfPortfolios.getSelectedIndex()));
 
     // String date, int stockSelected, String noOfStocks, int pfNumber
 
@@ -264,7 +265,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 // String date, int stockSelected, String noOfStocks, int pfNumber
     sellButton.addActionListener(evt->
             feature.sellStock(datePicker.getJFormattedTextField().getText(),
-            comboBoxStocksAvailableForSale.getSelectedIndex(),howManyShares.getText(),
+            comboBoxStocksAvailableForSale.getSelectedIndex(), howManyShares.getText(),
             comboBoxListOfPortfolios.getSelectedIndex()));
 
 
@@ -277,7 +278,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
         if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
           howManyShares.setEditable(true);
         } else if (ke.getKeyChar() == '\b') {
-          feature.checkHowManyShares();
+          //feature.checkHowManyShares();
         } else {
           feature.checkHowManyShares();
         }
@@ -307,6 +308,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     resetFlexiblePortfolioScreen();
     c1.previous(cards);
   }
+
   // card2
   @Override
   public void displayTypeOfPortfolioFlexibleOrInFlexibleScreen() {
@@ -345,9 +347,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   // card 3
   @Override
   public void flexiblePortfolioScreenWithDateInput(String[] supportedStocks, String name) {
-    // Flexible Screen
-    //displayEnterDate = new JLabel("Please Enter Date");
-
     // For add stocks
     if (comboBoxTypeOfPortfolio == null) {
       String[] typeOfPortfolio = {"Flexible",
@@ -360,7 +359,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       inputName = new JTextField(10);
       inputName.setText(name);
     }
-
 
     //cards.add(datePicker);
     UtilDateModel model = new UtilDateModel();
@@ -405,7 +403,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   // card 4
 
   @Override
-  public void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName, String showSuccessMsg) {
+  public void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String showSuccessMsg) {
     display8 = new JLabel(showSuccessMsg);
     display9 = new JLabel("Stocks bought successfully.");
     JPanel card4 = new JPanel();
@@ -774,17 +772,16 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void displayListOfPortfolioScreen(String[] getListOfPortfolioNames) {
-    display12 = new JLabel("Select from below list of portfolios");
+    display12 = new JLabel("Select portfolio");
     // read from list of portfolios
-    String[] listOfPortfolios = getListOfPortfolioNames;
-    comboBoxListOfPortfolios = new JComboBox(listOfPortfolios);
-    JPanel card6_showListOfStocks = new JPanel();
-    //comboBoxTypeOfPortfolio.setSelectedIndex(-1);
-    card6_showListOfStocks.add(display12);
-    card6_showListOfStocks.add(comboBoxListOfPortfolios);
-    card6_showListOfStocks.add(selectButton);
-    card6_showListOfStocks.add(mainMenuButton);
-    cards.add(card6_showListOfStocks, "screen6");
+    comboBoxListOfPortfolios = new JComboBox(getListOfPortfolioNames);
+    comboBoxListOfPortfolios.setSelectedIndex(-1);
+    JPanel card6ShowListOfStocks = new JPanel();
+    card6ShowListOfStocks.add(display12);
+    card6ShowListOfStocks.add(comboBoxListOfPortfolios);
+    card6ShowListOfStocks.add(selectButton);
+    card6ShowListOfStocks.add(mainMenuButton);
+    cards.add(card6ShowListOfStocks, "screen6");
     c1.show(cards, "screen6");
   }
 
@@ -830,6 +827,11 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     cards.add(card8, "screen8");
     c1.show(cards, "screen8");
 
+  }
+
+  public void resetStockSellScreenAfterSell() {
+    comboBoxStocksAvailableForSale.setSelectedIndex(-1);
+    howManyShares.setText("");
   }
 
   @Override
