@@ -19,7 +19,7 @@ public interface GUIView {
   void getGraph(Map<String, Double> pfPerformance, String pfName);
   void resetCreatePortfolioScreen();
   void resetFlexiblePortfolioScreen();
-  void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName);
+  void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName, String showSuccessMsg);
   //void resetDateInput();
   void resetHowManyShares();
  //  void displayAddScreen();
@@ -54,4 +54,6 @@ public interface GUIView {
   void totalCostInvestedByDateScreenOne(String[] listOfPortfolioNames);
 
   //void soldSuccessfulScreen();
+  void displaySellScreen2(String[] listOfAvailableStocksForSale);
+  void buyAnotherReset();
 }

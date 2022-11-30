@@ -21,17 +21,16 @@ import model.StockCompositionDataImpl;
 import model.StockNameMap;
 import model.StockNameMapImpl;
 import model.StockPortFolioDataImpl;
+import model.TransactValueData;
+import model.TransactValueDataImpl;
 import model.TypeofAction;
 import view.GUIView;
-import view.TypeofViews;
 
 public class GUIController extends ControllerViewInteractImpl implements Features {
   private GUIView viewGUI;
   private PortfolioPerformanceDataImpl ppd;
   private DollarValueDataImpl dvd;
-  //private ViewControllerInteract vciObj;
-  boolean visited = false;
-  //private ControllerModelInteract cmiObj;
+  private TransactValueDataImpl tvd;
 
 
   /**
@@ -45,6 +44,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     super(input, output);
     ppd = new PortfolioPerformanceDataImpl();
     dvd = new DollarValueDataImpl();
+    tvd = new TransactValueDataImpl();
   }
 
 
@@ -119,6 +119,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "8. Amazon (AMZN)",
             "9. UnitedHealth (UNH)",
             "10. Walmart (WMT)"};
+    tvd.isFirstBuy = true;
     if (type == 0) {
       viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, name);
     } else if (type == 1) {
@@ -209,6 +210,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     return getPortfolioNames(args, args.length);
   }
+
 
   public void addStocksUsingDollarMain() {
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
@@ -926,26 +928,21 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     stock[0] = noOfStocks;
     stock[1] = super.currentPortfolioName;
     super.cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
-    viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName);
+    String showSuccessfulMsg;
+    if(tvd.isFirstBuy) {
+      showSuccessfulMsg = portfolioName.toUpperCase() + " portfolio created.";
+    } else {
+      showSuccessfulMsg = "";
+    }
+
+    viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName,showSuccessfulMsg);
     super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
   @Override
-  public void buyAnotherStockButton(String portfolioName) {
-    String[] supportedStocks = {"1. Microsoft (MSFT)",
-            "2. Meta (META)",
-            "3. Google (GOOG)",
-            "4. Apple (AAPL)",
-            "5. Tesla (TSLA)",
-            "6. JPMorgan Chase (JPM)",
-            "7. Johnson (JNJ)",
-            "8. Amazon (AMZN)",
-            "9. UnitedHealth (UNH)",
-            "10. Walmart (WMT)"};
-
-    viewGUI.resetFlexiblePortfolioScreen();
-    viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
-    super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+  public void buyAnotherSubmitButton(){
+    tvd.isFirstBuy = false;
+    viewGUI.buyAnotherReset();
   }
 
   @Override
@@ -970,6 +967,8 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void sellStock(String date, int stockSelected, String noOfStocks, int pfNumber) {
+     // sellStockFromPortfolio() - main method
+
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -984,52 +983,73 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     //vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_COMPOSITION, arg,
     //         arg.length);
-    selectPortfolio();
+    //selectPortfolio();
 
+    StockPortFolioDataImpl stkObj;
+    try {
+      stkObj = (StockPortFolioDataImpl)
+              obj.getAllStockDataInPortFolio(pfNumber,
+                      true, date, true, true, "FLEXIBLE");
+    } catch (Exception e) {
+      viewGUI.displayErrorMessage("Controller: Error in getting stock data " + e.getMessage());
+      return;
+    }
+
+    if (stkObj.numberOfUniqueStocks == 0) {
+      return;
+    }
+
+
+    if (sellSharesOnAStock(pfNumber,
+            stkObj.stockSymbol[stockSelected], date,noOfStocks)) {
+      return;
+    }
+  }
+
+
+  // helper method
+  private boolean sellSharesOnAStock(int pfNumber, String stockSymbol, String date, String sellShares) {
     StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
     currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
     int numberOfAvailableShares;
-    StockNameMap snp = new StockNameMapImpl();
-    Map<String, String> map = snp.getMap();
-    String[] stockSymbolIndexArray = new String[snp.getMapSize()];
-    String[] stockGetData = new String[2];
-    int index = 0;
-    for (Map.Entry<String, String> entry : map.entrySet()) {
-      stockSymbolIndexArray[index++] = entry.getKey();
-    }
-    stockGetData[0] = stockSymbolIndexArray[stockSelected];
-    stockGetData[1] = date;
+
     try {
-      numberOfAvailableShares = stk.sharesAvailableOnTheDateForSale(pfNumber, stockGetData[0], date,
+      numberOfAvailableShares = stk.sharesAvailableOnTheDateForSale(pfNumber, stockSymbol, date,
               "FLEXIBLE");
     } catch (Exception e) {
       viewGUI.displayErrorMessage("Unable to get remaining share details on the stock for this date.");
-      return;
+      return true;
     }
 
     if (numberOfAvailableShares == 0) {
       viewGUI.displayErrorMessage("You cannot sell any shares of this stock on this date as they are already"
               + " sold.");
-      return;
+      return true;
     }
 
+    String[] stockGetData = new String[2];
+    stockGetData[0] = stockSymbol;
+    stockGetData[1] = date;
     super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stockGetData, 2);
-    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+    //vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
 
-    //output.println("\nYou can sell only " + numberOfAvailableShares
-    //      + " shares of this stock on " + date);
-    viewGUI.displayInformationalMessage("\nYou can sell only " + numberOfAvailableShares
-            + " shares of this stock on " + date);
-    //output.println("How many share would you like to sell?\n");
-    viewGUI.resetHowManyShares();
-    String sellShares = noOfStocks;
-    if (sellShares == null || sellShares.length() == 0
+   // viewGUI.displayErrorMessage("\nYou can sell only " + numberOfAvailableShares
+     //       + " shares of this stock on " + date);
+
+    if ((sellShares == null || sellShares.length() == 0)
             || (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
       String[] args = new String[1];
       args[0] = String.valueOf(numberOfAvailableShares);
-      if (noOfStocks.equals("")) {
-        viewGUI.displayErrorMessage("Number of shares not entered. Please enter a valid natural number");
-        return;
+     // vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, args, 1);
+
+      if(args == null){
+        viewGUI.displayErrorMessage("Not a valid input. Please enter number of shares as natural numbers.");
+        return false;
+      }
+      else{
+        viewGUI.displayErrorMessage("Not a valid input. You can only sell until" + args[0] + " shares."
+                + " Also please enter number of shares as natural numbers.");
+        return false;
       }
     }
 
@@ -1038,14 +1058,47 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     data[1] = currentPortfolioName;
     super.cmiObj.controllerModelInteract(TypeofAction.SELL_STOCKS, data, 3);
     viewGUI.displayInformationalMessage("Shares successfully sold.");
-    viewGUI.resetMainMenu();
-  }
 
+  return true;
+  }
+  // list of stocks as per date will be made available to user in a dropdown menu
+  @Override
+  public void getStocksAvailableForSaleAsPerDate(String date, int pfIndex){
+    int portfolioNumber = pfIndex;
+    StockCompositionData obj = new StockCompositionDataImpl("Flexible");
+    StockPortFolioDataImpl stkObj;
+
+    try {
+      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
+              date, true, true, "Flexible");
+    } catch (Exception e) {
+      viewGUI.displayErrorMessage("View: Error in getting stock data " + e.getMessage());
+      return;
+    }
+
+    if (stkObj == null) {
+      viewGUI.displayErrorMessage("View: Error in getting stock data");
+      return;
+    }
+    assert stkObj != null;
+    String[] result= new String[stkObj.numberOfUniqueStocks];
+    if (stkObj.numberOfUniqueStocks == 0) {
+      viewGUI.displayInformationalMessage("You don't own any stocks before this date");
+    } else {
+      for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
+        if (stkObj.stockQuantity[i] != 0) {
+          result[i] = stkObj.stockName[i];
+        }
+      }
+    }
+    tvd.listOfAvailableStocksForSale = result;
+    viewGUI.displaySellScreen2(tvd.listOfAvailableStocksForSale);
+  }
   @Override
   public void selectStockSubmit(int buyOrSell, int portfolioNameIndex) {
     //viewGUI.displayAddScreen();
     if (portfolioNameIndex == -1) {
-      viewGUI.displayErrorMessage("Select portfolio");
+      viewGUI.displayErrorMessage("Please select a portfolio");
       return;
     }
 
