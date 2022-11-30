@@ -49,6 +49,7 @@ public class ViewTest extends TestParentClass {
             + "6. Performance of portfolio\n"
             + "7. Total amount invested on certain date\n"
             + "8. Configure the commission cost\n"
+            + "9. Add stocks to portfolio using Dollar-Cost strategy\n"
             + "e. Exit\n"
             + "\n"
             + "ENTER YOUR CHOICE: \n";
@@ -208,7 +209,7 @@ public class ViewTest extends TestParentClass {
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
 
-    String expected = "Not a valid input. Please enter the correct stock.\n"
+    String expected = "Not a valid input. Please enter the correct number.\n"
             + "If you want to go back to main menu, press 'm'.\n" + "\n";
 
     String result = bytes.toString();
@@ -336,7 +337,8 @@ public class ViewTest extends TestParentClass {
     String expected = "\nCREATE PORTFOLIO MENU\n" + "\n"
             + s.toUpperCase() + " Portfolio\n" + "\n"
             + "1. Buy a stock\n"
-            + "2. Main Menu\n"
+            + "2. Invest by dollar-cost averaging\n"
+            + "3. Main Menu\n"
             + "e. Exit\n" + "\n"
             + "ENTER YOUR CHOICE: \n";
 
@@ -380,9 +382,7 @@ public class ViewTest extends TestParentClass {
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS, null, 0);
 
-    String expected = "\n" + "\n" + getSupportedStocks()
-            + "\n"
-            + "Which stock would you like to buy?\n";
+    String expected = "\n" + "\n" + getSupportedStocks();
 
 
     String result = bytes.toString();
@@ -484,125 +484,12 @@ public class ViewTest extends TestParentClass {
     result = result.replace("\r\n", "\n");
 
     assertEquals(expected, result);
-  }
-
-
-  /**
-   * This test displays details of a particular portfolio - FULL.
-   */
-  @Test
-  public void testUShowParticularPortfolioFullComposition() {
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-    String[] args3 = {"1", "2022-11-11", "FULL", "ALL"};
+    deleteFileInDirectory("pf_view1.csv");
     deleteDirectory();
-    String[] name = {"view2","1"};
-    String[] args = {"GOOG", "2022-11-11"};
-    String[] args1 = {"1", "view2"};
-
-    ModelControllerInteract obj = new ModelControllerInteractImpl();
-    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
-    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
-    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
-
-
-    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args3, 0);
-
-    String expected = "\nValue of VIEW2 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
-            + "\nGoogle (GOOG) \t 1\t $"
-            + Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100
-            + "\t $"
-            + (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
-            + "\n\nTotal Portfolio Value is on 2022-11-11: $"
-            + (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
-            + "\n\n";
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expected, result);
   }
+
 
   /**
    * This test displays the list of stocks available for the user to be sold.
    */
-  @Test
-  public void testVListOfStocksOnDate() {
-
-    deleteFileInDirectory("pf_view3.csv");
-    String[] name = {"view3","Flexible"};
-    String[] args = {"MSFT", "2022-11-11"};
-    String[] args1 = {"3", "view3"};
-    String[] args2 = {"2", "view3"};
-
-    ModelControllerInteract obj = new ModelControllerInteractImpl();
-    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
-    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
-    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
-    obj.modelControllerInteract(TypeofAction.SELL_STOCKS, args2, 0);
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-    String[] args3 = {"2022-11-11", "1","ALL"};
-
-    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.LIST_OF_STOCKS_ON_DATE, args3, 0);
-    String expected = "\nList of stocks available on date: 2022-11-11\n"
-            + "\n"
-            + "S.No\tName (Symbol) \n"
-            + "\n"
-            + "1.\tGoogle (GOOG) \n"
-            + "\n"
-            + "Which stock would you like to sell?\n";
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expected, result);
-  }
-
-
-  /**
-   * This test displays details of a particular portfolio - COST.
-   */
-  @Test
-  public void testWShowParticularPortfolioCostAnalysis() {
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream output = new PrintStream(bytes);
-    String[] args3 = {"1", "2022-11-11", "COST","ALL"};
-    deleteDirectory();
-    deleteFileInDirectory("pf_view4.csv");
-    String[] name = {"view4","Flexible"};
-    String[] args = {"MSFT", "2022-11-11"};
-    String[] args1 = {"3", "view4"};
-    String[] args2 = {"2", "view4"};
-
-    ModelControllerInteract obj = new ModelControllerInteractImpl();
-    obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, name, 0);
-    obj.modelControllerInteract(TypeofAction.GET_STOCK_DATA, args, 0);
-    obj.modelControllerInteract(TypeofAction.BUY_STOCKS, args1, 0);
-    obj.modelControllerInteract(TypeofAction.SELL_STOCKS, args2, 0);
-
-
-    ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE, args3, 0);
-
-    String expected = "\nCOST BASIS OF VIEW4 PORTFOLIO\n"
-            + "\n"
-            + "Total Money invested in stocks: $728.97\n"
-            + "Commission cost per transaction is: $4.5\n"
-            + "Total number of transactions till date is: 2\n"
-            + "Total commission charges: $9.0\n"
-            + "Total Money spent: $737.97\n\n";
-
-    String result = bytes.toString();
-    result = result.replace("\r\n", "\n");
-
-    assertEquals(expected, result);
-    deleteFileInDirectory("pf_view4.csv");
-    deleteDirectory();
-  }
-
 }
