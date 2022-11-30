@@ -39,4 +39,12 @@ public interface Features {
 
   void resetMainMenu();
   void valueAndCompositionFlexDateScreen(String date);
+
+  void valueOnFullCompMainScreen();
+
+  void valueOnFullScreenOne(int pfIndex, String date);
+
+  void totalCostInvestedByDateMainMenu();
+
+  void totalCostInvestedScreenOne(int pfIndex, String date);
 }

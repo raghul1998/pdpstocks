@@ -535,16 +535,76 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void valueAndCompositionFlexDateScreen(String date) {
-    if (!validateDate(date, "yyyy-MM-dd", 0)) {
+    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
       viewGUI.displayErrorMessage("Not a valid date. Reenter");
       return;
     }
 
-    showFlexPortfolioIndividualWithDate(ppd.pfIndex, date, ppd.getType, ppd.pfType);
+    showPortfolioIndividualWithDate(ppd.pfIndex, date, ppd.getType, ppd.pfType);
   }
 
-  private void showFlexPortfolioIndividualWithDate(int portfolioNumber, String date,
-                                                   String type, String portfolioType) {
+  @Override
+  public void valueOnFullCompMainScreen() {
+    StockCompositionData obj = new StockCompositionDataImpl("ALL");
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      viewGUI.displayInformationalMessage("You dont have any portfolio");
+      viewGUI.resetMainMenu();
+      return;
+    }
+
+    String[] displayString = getFlexiblePortfolioNames("ALL");
+    if (displayString != null) {
+      viewGUI.valueOnFullCompScreenOne(displayString);
+    }
+  }
+
+  @Override
+  public void valueOnFullScreenOne(int pfIndex, String date) {
+    if (pfIndex == -1) {
+      viewGUI.displayErrorMessage("Select a portfolio");
+      return;
+    }
+
+    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
+      viewGUI.displayErrorMessage("Not a valid date. Reenter");
+      return;
+    }
+
+    showPortfolioIndividualWithDate(pfIndex, date, "FULL", "ALL");
+  }
+
+  @Override
+  public void totalCostInvestedByDateMainMenu() {
+    StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
+    int numberOfPortFolio = obj.getNumberOfPortFolio();
+    if (numberOfPortFolio == 0) {
+      viewGUI.displayInformationalMessage("You dont have any portfolio");
+      viewGUI.resetMainMenu();
+      return;
+    }
+
+    String[] listOfPortfolioNames = getFlexiblePortfolioNames("FLEXIBLE");
+    viewGUI.totalCostInvestedByDateScreenOne(listOfPortfolioNames);
+  }
+
+  @Override
+  public void totalCostInvestedScreenOne(int pfIndex, String date) {
+    if (pfIndex == -1) {
+      viewGUI.displayErrorMessage("Select a portfolio");
+      return;
+    }
+
+    if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
+      viewGUI.displayErrorMessage("Not a valid date. Reenter");
+      return;
+    }
+
+    showPortfolioIndividualWithDate(pfIndex, date, "COST", "FLEXIBLE");
+  }
+
+  private void showPortfolioIndividualWithDate(int portfolioNumber, String date,
+                                               String type, String portfolioType) {
 
     StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
     double commissionCost = obj.getCommissionCost();

@@ -49,5 +49,9 @@ public interface GUIView {
 
   void displayValueCompForOthers(String title, String[] column, String[][] data, String footer);
 
+  void valueOnFullCompScreenOne(String[] displayString);
+
+  void totalCostInvestedByDateScreenOne(String[] listOfPortfolioNames);
+
   //void soldSuccessfulScreen();
 }
