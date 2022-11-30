@@ -898,6 +898,20 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       return;
     }
 
+    boolean isAllNull = true;
+    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
+      if(set.getValue() != null) {
+        isAllNull = false;
+        break;
+      }
+    }
+
+    if(isAllNull) {
+      viewGUI.displayInformationalMessage("You dont have any stocks on these dates");
+      resetMainMenu();
+      return;
+    }
+
     String[] scale = super.getScale(pfPerformance);
     String getTitle = "";
     try {
@@ -1005,7 +1019,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
     super.currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
-    int numberOfAvailableShares;
+    double numberOfAvailableShares;
 
     try {
       numberOfAvailableShares = stk.sharesAvailableOnTheDateForSale(pfNumber, stockSymbol, date,
@@ -1027,13 +1041,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stockGetData, 2);
 
     if ((sellShares == null || sellShares.length() == 0)
-            || (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
+            || (!validateSellStockInput(sellShares, numberOfAvailableShares))) {
       String[] args = new String[1];
       args[0] = String.valueOf(numberOfAvailableShares);
 
       viewGUI.displayErrorMessage("Not a valid input. You can only sell until "
-              + args[0] + " shares."
-              + " Also please enter number of shares as natural numbers.");
+              + args[0] + " shares.");
       return;
     }
 
@@ -1070,7 +1083,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
     String[] result = new String[stkObj.numberOfUniqueStocks];
     if (stkObj.numberOfUniqueStocks == 0) {
-      viewGUI.displayInformationalMessage("You don't own any stocks before this date.");
+      viewGUI.displayInformationalMessage("You don't own any stocks before on or before date.");
       return;
     } else {
       for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {

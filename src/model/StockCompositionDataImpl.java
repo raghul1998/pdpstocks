@@ -322,13 +322,13 @@ public class StockCompositionDataImpl implements StockCompositionData {
   }
 
   @Override
-  public int sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol, String dateStr,
+  public double sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol, String dateStr,
                                              String portfolioType) throws ParseException {
     String filename = getPortFolioFileNameByIndex(pfIndex, portfolioType);
-    Map<Date, Integer> map = new TreeMap<>();
+    Map<Date, Double> map = new TreeMap<>();
     BufferedReader stockData;
-    int result = 0;
-    int futureResult = 0;
+    double result = 0;
+    double futureResult = 0;
 
     try {
       stockData = new BufferedReader(new FileReader(filename));
@@ -353,18 +353,18 @@ public class StockCompositionDataImpl implements StockCompositionData {
           if (Objects.equals(splitStockData[3], stockSymbol)
                   && date2.compareTo(date1) <= 0) {
             if (Objects.equals(splitStockData[0], "BUY")) {
-              result += Integer.parseInt(splitStockData[5]);
+              result += Double.parseDouble(splitStockData[5]);
             } else if (Objects.equals(splitStockData[0], "SALE")) {
-              result -= Integer.parseInt(splitStockData[5]);
+              result -= Double.parseDouble(splitStockData[5]);
             }
           }
 
           if (Objects.equals(splitStockData[3], stockSymbol)
                   && date2.compareTo(date1) > 0) {
             if (Objects.equals(splitStockData[0], "BUY")) {
-              map.put(date2, Integer.parseInt(splitStockData[5]));
+              map.put(date2, Double.parseDouble(splitStockData[5]));
             } else if (Objects.equals(splitStockData[0], "SALE")) {
-              map.put(date2, Integer.parseInt(splitStockData[5]) * -1);
+              map.put(date2, Double.parseDouble(splitStockData[5]) * -1);
             }
           }
 
@@ -378,14 +378,14 @@ public class StockCompositionDataImpl implements StockCompositionData {
     }
 
     for (Map.Entry element : map.entrySet()) {
-      if ((int) element.getValue() > 0) {
+      if ((double) element.getValue() > 0) {
         isBuyFoundAfterSale = true;
-        futureResult += (int) element.getValue();
+        futureResult += (double) element.getValue();
       } else {
         if (!isBuyFoundAfterSale) {
-          result += (int) element.getValue();
+          result += (double) element.getValue();
         } else {
-          futureResult += (int) element.getValue();
+          futureResult += (double) element.getValue();
         }
       }
 

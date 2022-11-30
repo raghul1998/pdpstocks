@@ -809,6 +809,26 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
   }
 
+  protected boolean validateSellStockInput(String option, double maxSize) {
+    if (option == null || option.length() == 0) {
+      return false;
+    }
+
+    if (option.equals("m") || option.equals("M")) {
+      return true;
+    }
+    // The selected option should be a number, and it should be a valid digit.
+    double val;
+    try {
+      val = Double.parseDouble(option);
+    } catch (Exception e) {
+      return false;
+    }
+
+    return val > (double) 0 && val <= maxSize;
+  }
+
+
   /**
    * This is a helper method for calculating the performance of a portfolio.
    *
@@ -1268,7 +1288,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   private boolean sellSharesOnAStock(int pfNumber, String stockSymbol, String date) {
     StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
     currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
-    int numberOfAvailableShares;
+    double numberOfAvailableShares;
 
     try {
       numberOfAvailableShares = stk.sharesAvailableOnTheDateForSale(pfNumber, stockSymbol, date,
@@ -1296,7 +1316,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
     String sellShares = scan.nextLine();
     while ((sellShares == null || sellShares.length() == 0)
-            || (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
+            || (!validateSellStockInput(sellShares, numberOfAvailableShares))) {
       String[] args = new String[1];
       args[0] = String.valueOf(numberOfAvailableShares);
       vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, args, 1);

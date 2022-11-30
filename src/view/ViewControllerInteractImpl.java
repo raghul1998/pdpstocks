@@ -599,7 +599,7 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    */
   private void showStockBuyInvalidRetryScreen(String[] args) {
     if (args == null) {
-      output.println("Not a valid input. Please enter number of shares as natural numbers.");
+      output.println("Not a valid input. Reenter.");
     } else {
       output.println("Not a valid input. You can only sell until" + args[0] + " shares."
               + " Also please enter number of shares as natural numbers.");

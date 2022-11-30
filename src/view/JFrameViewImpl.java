@@ -51,10 +51,19 @@ public class JFrameViewImpl extends JFrame implements GUIView {
           totalValueInvestedMainButton;
 
   private String[] stocksAvailableForSale;
-  public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
+  static class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
+    private final String datePattern;
+    private final SimpleDateFormat dateFormatter;
 
-    private String datePattern = "yyyy-MM-dd";
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+    public DateLabelFormatter(String format) {
+      this.datePattern = format;
+      this.dateFormatter = new SimpleDateFormat(format);
+    }
+
+    public DateLabelFormatter() {
+      this.datePattern = "yyyy-MM-dd";
+      this.dateFormatter = new SimpleDateFormat(this.datePattern);
+    }
 
     @Override
     public Object stringToValue(String text) throws ParseException {
@@ -67,7 +76,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
         Calendar cal = (Calendar) value;
         return dateFormatter.format(cal.getTime());
       }
-
       return "";
     }
 
@@ -187,7 +195,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             feature.dollarValueScreenFourFrequency(inputDate.getText()));
 
     dollarCostEndDateButton.addActionListener(evt -> {
-      feature.dollarValueScreenThreeEndDate(inputDate.getText());
+      feature.dollarValueScreenThreeEndDate(datePicker.getJFormattedTextField().getText());
     });
 
     dollarCostOnGoingButton.addActionListener(evt -> {
@@ -195,7 +203,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     });
 
     dollarCostMainButton.addActionListener(e -> {
-      feature.dollarValueScreenOne(comboCommon.getSelectedIndex(), inputDate.getText(),
+      feature.dollarValueScreenOne(comboCommon.getSelectedIndex(),
+              datePicker.getJFormattedTextField().getText(),
               combo2.getSelectedIndex());
     });
 
@@ -295,7 +304,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
                     combo2.getSelectedIndex()));
 
     pfPerformanceButtonSubmit.addActionListener(evt ->
-            feature.performancePortfolioSubmit(inputDate.getText(), combo2.getSelectedIndex()));
+            feature.performancePortfolioSubmit(datePicker.getJFormattedTextField().getText(),
+                    combo2.getSelectedIndex()));
 
     pfPerformanceButtonGetData.addActionListener(evt ->
             feature.performanceOfPortfolioGetData(inputRemainderNumberForPfPerformance.getText()));
@@ -513,7 +523,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     BarChart chart = new BarChartImpl("Portfolio Performance", "Date", "Price");
     for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
       if (set.getValue() != null) {
-        chart.createDataset(set.getKey(), set.getValue(), pfName + "Portfolio");
+        chart.createDataset(set.getKey(), set.getValue(), pfName + " Portfolio");
       }
     }
     chart.drawGraph();
@@ -563,11 +573,21 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   @Override
   public void dollarValueEndDateScreen(String str) {
     display5 = new JLabel(str);
-    inputDate = new JTextField(10);
+    UtilDateModel model = new UtilDateModel();
+    Properties p = new Properties();
+    p.put("text.today", "Today");
+    p.put("text.month", "Month");
+    p.put("text.year", "Year");
+    datePanel = new JDatePanelImpl(model, p);
+    datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+    datePicker.setBounds(110, 100, 200, 25);
+    model.setSelected(true);
+    datePicker.setVisible(true);
+
 
     JPanel cardCommon = new JPanel();
     cardCommon.add(display5);
-    cardCommon.add(inputDate);
+    cardCommon.add(datePicker);
     cardCommon.add(dollarCostEndDateButton);
     cardCommon.add(mainMenuButton);
     cards.add(cardCommon, "Dollar Cost End Date Screen");
@@ -851,8 +871,18 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     }
 
     display3 = new JLabel("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
-            + "(from year 2000 to current day)");
-    inputDate = new JTextField(10);
+            + " (from year 2000 to current day)");
+
+    UtilDateModel model = new UtilDateModel();
+    Properties p = new Properties();
+    p.put("text.today", "Today");
+    p.put("text.month", "Month");
+    p.put("text.year", "Year");
+    datePanel = new JDatePanelImpl(model, p);
+    datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+    datePicker.setBounds(110, 100, 200, 25);
+    model.setSelected(true);
+    datePicker.setVisible(true);
 
 
     display8 = new JLabel("Recurring?");
@@ -861,7 +891,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     combo2.setSelectedIndex(-1);
 
     cardCommon.add(display3);
-    cardCommon.add(inputDate);
+    cardCommon.add(datePicker);
     cardCommon.add(display8);
     cardCommon.add(combo2);
     cardCommon.add(dollarCostMainButton);
@@ -879,26 +909,47 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   public void performanceDateEnter(int timestampType) {
     LocalDate today = LocalDate.now();
     String dis = "";
+
+    UtilDateModel model = new UtilDateModel();
+    Properties prop = new Properties();
+    String format = "yyyy-MM-dd";
+
     if (timestampType == 0) {
       dis = "Enter the start year in format (YYYY) from year 2000 to "
               + today.minusYears(4).getYear();
+      prop.put("text.year", "Year");
+      format = "yyyy";
     } else if (timestampType == 1) {
       dis = "Enter the start month in format (YYYY-MM) from year 2000 to "
               + today.minusMonths(4).getMonth() + " "
               + today.minusMonths(4).getYear();
+
+      prop.put("text.month", "Month");
+      prop.put("text.year", "Year");
+      format = "yyyy-MM";
+
     } else if (timestampType == 2) {
       dis = "Enter the start date in format (YYYY-MM-DD) from year 2000 to "
               + today.minusDays(4).getYear() + "-"
               + today.minusDays(4).getMonth() + "-"
               + today.minusDays(4).getDayOfMonth();
+
+      prop.put("text.today", "Today");
+      prop.put("text.month", "Month");
+      prop.put("text.year", "Year");
+      format = "yyyy-MM-dd";
     }
 
     display3 = new JLabel(dis);
-    inputDate = new JTextField(10);
+    datePanel = new JDatePanelImpl(model, prop);
+    datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter(format));
+    datePicker.setBounds(110, 100, 200, 25);
+    model.setSelected(true);
+    datePicker.setVisible(true);
 
     JPanel cardCommon = new JPanel();
     cardCommon.add(display3);
-    cardCommon.add(inputDate);
+    cardCommon.add(datePicker);
     cardCommon.add(pfPerformanceButtonSubmit);
     cardCommon.add(mainMenuButton);
     cards.add(cardCommon, "Performance Screen");

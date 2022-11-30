@@ -54,7 +54,7 @@ public interface StockCompositionData extends StockPortFolioData {
    * @return the number of shares available as an integer
    * @throws ParseException if error while parsing the csv data
    */
-  int sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol,
+  double sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol,
                                       String dateStr, String portfolioType) throws ParseException;
 
   /**
