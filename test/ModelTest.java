@@ -32,7 +32,7 @@ public class ModelTest extends TestParentClass {
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, args, 0);
 
-    File dir = new File("userdata/user1/");
+    File dir = new File("userdata/user1/Portfolio");
     File[] directoryListing = dir.listFiles();
     String expectedName = "pf_" + args[0] + ".csv";
     String pfName = null;
@@ -57,7 +57,7 @@ public class ModelTest extends TestParentClass {
     ModelControllerInteract obj = new ModelControllerInteractImpl();
     obj.modelControllerInteract(TypeofAction.CREATE_PORTFOLIO, args, 0);
 
-    File dir = new File("userdata/user1/");
+    File dir = new File("userdata/user1/Portfolio");
     File[] directoryListing = dir.listFiles();
     String expectedName = "pf_" + args[0] + ".csv";
     String pfName = null;

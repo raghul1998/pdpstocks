@@ -125,7 +125,7 @@ public class ControllerTest extends TestParentClass {
             + "Value of CONTROLLERTEST1 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on " + "2022-11-11" + "\t Total Value\n"
             + "\n"
-            + "Microsoft (MSFT) \t 2\t $"
+            + "Microsoft (MSFT) \t 2.0\t $"
             + Math.floor(Double.parseDouble(readStockDataFromPortfolioCsv(
             "controllerTest1",
             1, 6, false)) * 100) / 100
@@ -325,7 +325,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
             + "\n"
-            + "Microsoft (MSFT) \t 5\t $"
+            + "Microsoft (MSFT) \t 5.0\t $"
             + Math.floor(Double.parseDouble(readStockDataFromPortfolioCsv(
             "controllerTest2",
             1, 6, false)) * 100) / 100
@@ -452,7 +452,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-12\t Total Value\n"
             + "\n"
-            + "Microsoft (MSFT) \t 5\t $"
+            + "Microsoft (MSFT) \t 5.0\t $"
 
             + Math.floor(Double.parseDouble(readStockDataFromPortfolioCsv(
             "controllerTest3",
@@ -560,7 +560,7 @@ public class ControllerTest extends TestParentClass {
             + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
             + "\n"
-            + "Microsoft (MSFT) \t 5\t $"
+            + "Microsoft (MSFT) \t 5.0\t $"
             + Math.floor(Double.parseDouble(readStockDataFromPortfolioCsv(
             "controllerTest3",
             1, 6, false)) * 100) / 100
@@ -619,7 +619,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-11-12\t Total Value\n"
-            + "\nMicrosoft (MSFT) \t 5\t $"
+            + "\nMicrosoft (MSFT) \t 5.0\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100
             + "\t $"
             + 5 * (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100)
@@ -670,7 +670,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2019-12-12\t Total Value\n"
-            + "\nMicrosoft (MSFT) \t 5\t $"
+            + "\nMicrosoft (MSFT) \t 5.0\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100
             + "\t $"
             + (5 * (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100)) / 100)
@@ -726,7 +726,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Value of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\nMicrosoft (MSFT) \t 5\t $"
+            + "\nMicrosoft (MSFT) \t 5.0\t $"
             + Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100) / 100
             + "\t $"
             + (5 * (Math.floor(Double.parseDouble(readStockPriceFromStockDataCsv()) * 100)) / 100)
@@ -782,7 +782,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "\nValue of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\nMicrosoft (MSFT) \t 5\t $" + Math.floor(Double.parseDouble(
+            + "\nMicrosoft (MSFT) \t 5.0\t $" + Math.floor(Double.parseDouble(
             readStockPriceFromStockDataCsv()) * 100) / 100 + "\t $"
             + 5 * Math.floor(Double.parseDouble(
             readStockPriceFromStockDataCsv()) * 100) / 100 + "\n"
@@ -838,7 +838,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "\nValue of CONTROLLERTEST3 PORTFOLIO\n"
             + "\nName (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
-            + "\nMicrosoft (MSFT) \t 5\t $" + Math.floor(Double.parseDouble(
+            + "\nMicrosoft (MSFT) \t 5.0\t $" + Math.floor(Double.parseDouble(
             readStockPriceFromStockDataCsv()) * 100) / 100
             + "\t $" + 5 * Math.floor(Double.parseDouble(
             readStockPriceFromStockDataCsv()) * 100) / 100 + "\n"
@@ -1203,7 +1203,7 @@ public class ControllerTest extends TestParentClass {
    */
   @Test
   public void testRController_InvalidInitialChoice() {
-    String userInput = "9" + "\n" + "e";
+    String userInput = "10" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
 
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -1235,7 +1235,7 @@ public class ControllerTest extends TestParentClass {
    */
   @Test
   public void testSController_InvalidInputs() {
-    String userInput = "9" + "\n" + "1" + "\n" + "1" + "\n" + "" + "\n" + "controllerTest4"
+    String userInput = "11" + "\n" + "1" + "\n" + "1" + "\n" + "" + "\n" + "controllerTest4"
             + "\n" + "6" + "\n" + "1" + "\n" + "11" + "\n" + "10" + "\n" + "9900-72-00" + "\n"
             + "2022-01-01" + "\n" + "-4" + "\n" + "4.3" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -1283,7 +1283,7 @@ public class ControllerTest extends TestParentClass {
             + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
-            + "Not a valid input. Please enter the correct stock.\n"
+            + "Not a valid input. Please enter the correct number.\n"
             + "If you want to go back to main menu, press 'm'.\n"
             + "\nEnter the date on which you would like to purchase the stock (YYYY-MM-DD)\n"
             + "Not a valid input. Please enter the correct date.\n"
@@ -2297,10 +2297,10 @@ public class ControllerTest extends TestParentClass {
             + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
-            + "Not a valid input. Please enter the correct stock.\n"
+            + "Not a valid input. Please enter the correct number.\n"
             + "If you want to go back to main menu, press 'm'.\n"
             + "\n"
-            + "Not a valid input. Please enter the correct stock.\n"
+            + "Not a valid input. Please enter the correct number.\n"
             + "If you want to go back to main menu, press 'm'.\n"
             + "\n"
             + getMainScreen()
@@ -2391,7 +2391,7 @@ public class ControllerTest extends TestParentClass {
    */
   @Test
   public void testZEController_ToggleBetweenMainMenuAndBack() {
-    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + " 2" + "\n" + "2" + "\n"
+    String userInput = "1" + "\n" + "1" + "\n" + "test" + "\n" + " 6" + "\n" + "3" + "\n"
             + "-1" + "\n" + "b" + "\n" + "3" + "\n" + "1" + "\n" + "-1" + "\n" + "b"
             + "\n" + "-1" + "\n" + "b" + "\n" + "1" + "\n" + "1" + "\n"
             + "test" + "\n" + "1" + "\n" + "-1" + "\n" + "m" + "\n" + "e";
@@ -2490,7 +2490,7 @@ public class ControllerTest extends TestParentClass {
             + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
-            + "Not a valid input. Please enter the correct stock.\n"
+            + "Not a valid input. Please enter the correct number.\n"
             + "If you want to go back to main menu, press 'm'.\n"
             + "\n"
             + getMainScreen()
@@ -3004,7 +3004,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-01-01\t Total Value\n"
             + "\n"
-            + "JPMorgan Chase (JPM) \t 30\t $158.44\t $4753.2\n"
+            + "JPMorgan Chase (JPM) \t 30.0\t $158.44\t $4753.2\n"
             + "\n"
             + "Total Portfolio Value is on 2022-01-01: $4753.2\n"
             + "\n"
@@ -3034,8 +3034,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
             + "\n"
-            + "JPMorgan Chase (JPM) \t 30\t $150.5\t $4515.0\n"
-            + "Walmart (WMT) \t 150\t $141.0\t $21150.0\n"
+            + "JPMorgan Chase (JPM) \t 30.0\t $150.5\t $4515.0\n"
+            + "Walmart (WMT) \t 150.0\t $141.0\t $21150.0\n"
             + "\n"
             + "Total Portfolio Value is on 2022-02-02: $25665.0\n"
             + "\n"
@@ -3065,9 +3065,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-03-03\t Total Value\n"
             + "\n"
-            + "Tesla (TSLA) \t 100\t $878.77\t $87877.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $139.84\t $4195.2\n"
-            + "Walmart (WMT) \t 121\t $137.29\t $16612.09\n"
+            + "Tesla (TSLA) \t 100.0\t $878.77\t $87877.0\n"
+            + "JPMorgan Chase (JPM) \t 30.0\t $139.84\t $4195.2\n"
+            + "Walmart (WMT) \t 121.0\t $137.29\t $16612.09\n"
             + "\n"
             + "Total Portfolio Value is on 2022-03-03: $108684.29\n"
             + "\n"
@@ -3127,9 +3127,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-01-01\t Total Value\n"
             + "\n"
-            + "Tesla (TSLA) \t 100\t $1073.44\t $107344.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $158.44\t $4753.2\n"
-            + "Walmart (WMT) \t 121\t $143.19\t $17325.98\n"
+            + "Tesla (TSLA) \t 100.0\t $1073.44\t $107344.0\n"
+            + "JPMorgan Chase (JPM) \t 30.0\t $158.44\t $4753.2\n"
+            + "Walmart (WMT) \t 121.0\t $143.19\t $17325.98\n"
             + "\n"
             + "Total Portfolio Value is on 2022-01-01: $129423.18\n"
             + "\n"
@@ -3159,9 +3159,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-02-02\t Total Value\n"
             + "\n"
-            + "Tesla (TSLA) \t 100\t $928.18\t $92818.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $150.5\t $4515.0\n"
-            + "Walmart (WMT) \t 121\t $141.0\t $17061.0\n"
+            + "Tesla (TSLA) \t 100.0\t $928.18\t $92818.0\n"
+            + "JPMorgan Chase (JPM) \t 30.0\t $150.5\t $4515.0\n"
+            + "Walmart (WMT) \t 121.0\t $141.0\t $17061.0\n"
             + "\n"
             + "Total Portfolio Value is on 2022-02-02: $114394.0\n"
             + "\n"
@@ -3191,9 +3191,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-03-03\t Total Value\n"
             + "\n"
-            + "Tesla (TSLA) \t 100\t $878.77\t $87877.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $139.84\t $4195.2\n"
-            + "Walmart (WMT) \t 121\t $137.29\t $16612.09\n"
+            + "Tesla (TSLA) \t 100.0\t $878.77\t $87877.0\n"
+            + "JPMorgan Chase (JPM) \t 30.0\t $139.84\t $4195.2\n"
+            + "Walmart (WMT) \t 121.0\t $137.29\t $16612.09\n"
             + "\n"
             + "Total Portfolio Value is on 2022-03-03: $108684.29\n"
             + "\n"
@@ -3312,9 +3312,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-11\t Total Value\n"
             + "\n"
-            + "Tesla (TSLA) \t 100\t $186.0\t $18600.0\n"
-            + "JPMorgan Chase (JPM) \t 530\t $135.19\t $71650.7\n"
-            + "Walmart (WMT) \t 121\t $142.66\t $17261.86\n"
+            + "Tesla (TSLA) \t 100.0\t $186.0\t $18600.0\n"
+            + "JPMorgan Chase (JPM) \t 530.0\t $135.19\t $71650.7\n"
+            + "Walmart (WMT) \t 121.0\t $142.66\t $17261.86\n"
             + "\n"
             + "Total Portfolio Value is on 2022-11-11: $107512.56\n"
             + "\n"
@@ -3655,8 +3655,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-09-09\t Total Value\n"
             + "\n"
-            + "JPMorgan Chase (JPM) \t 30\t $119.14\t $3574.2\n"
-            + "Walmart (WMT) \t 121\t $136.3\t $16492.3\n"
+            + "JPMorgan Chase (JPM) \t 30.0\t $119.14\t $3574.2\n"
+            + "Walmart (WMT) \t 121.0\t $136.3\t $16492.3\n"
             + "\n"
             + "Total Portfolio Value is on 2022-09-09: $20066.5\n"
             + "\n"
@@ -3686,9 +3686,9 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-09-08\t Total Value\n"
             + "\n"
-            + "Tesla (TSLA) \t 100\t $281.3\t $28130.0\n"
-            + "JPMorgan Chase (JPM) \t 30\t $115.28\t $3458.4\n"
-            + "Walmart (WMT) \t 121\t $135.4\t $16383.4\n"
+            + "Tesla (TSLA) \t 100.0\t $281.3\t $28130.0\n"
+            + "JPMorgan Chase (JPM) \t 30.0\t $115.28\t $3458.4\n"
+            + "Walmart (WMT) \t 121.0\t $135.4\t $16383.4\n"
             + "\n"
             + "Total Portfolio Value is on 2022-09-08: $47971.8\n"
             + "\n"
@@ -5563,10 +5563,10 @@ public class ControllerTest extends TestParentClass {
             + getSupportedStocks()
             + "\n"
             + "Which stock would you like to buy?\n"
-            + "Not a valid input. Please enter the correct stock.\n"
+            + "Not a valid input. Please enter the correct number.\n"
             + "If you want to go back to main menu, press 'm'.\n"
             + "\n"
-            + "Not a valid input. Please enter the correct stock.\n"
+            + "Not a valid input. Please enter the correct number.\n"
             + "If you want to go back to main menu, press 'm'.\n"
             + "\n"
             + getMainScreen()
@@ -5819,8 +5819,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-13\t Total Value\n"
             + "\n"
-            + "Microsoft (MSFT) \t 35\t $242.99\t $8504.65\n"
-            + "Meta (META) \t 100\t $109.23\t $10923.0\n"
+            + "Microsoft (MSFT) \t 35.0\t $242.99\t $8504.65\n"
+            + "Meta (META) \t 100.0\t $109.23\t $10923.0\n"
             + "\n"
             + "Total Portfolio Value is on 2022-11-13: $19427.65\n"
             + "\n"
@@ -5851,8 +5851,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-14\t Total Value\n"
             + "\n"
-            + "Microsoft (MSFT) \t 35\t $241.98\t $8469.29\n"
-            + "Meta (META) \t 100\t $110.99\t $11099.0\n"
+            + "Microsoft (MSFT) \t 35.0\t $241.98\t $8469.29\n"
+            + "Meta (META) \t 100.0\t $110.99\t $11099.0\n"
             + "\n"
             + "Total Portfolio Value is on 2022-11-14: $19568.29\n"
             + "\n"
@@ -6230,8 +6230,8 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2010-01-31\t Total Value\n"
             + "\n"
-            + "Microsoft (MSFT) \t 34\t $29.9\t $1016.59\n"
-            + "Meta (META) \t 100\t $42.05\t $4205.0\n"
+            + "Microsoft (MSFT) \t 34.0\t $29.9\t $1016.59\n"
+            + "Meta (META) \t 100.0\t $42.05\t $4205.0\n"
             + "\n"
             + "Total Portfolio Value is on 2010-01-31: $5221.59\n"
             + "\n"
@@ -7089,7 +7089,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Name (Symbol) \t Quantity\t Share Value on 2022-11-15\t Total Value\n"
             + "\n"
-            + "Amazon (AMZN) \t 2\t $103.21\t $206.42\n"
+            + "Amazon (AMZN) \t 2.0\t $103.21\t $206.42\n"
             + "\n"
             + "Total Portfolio Value is on 2022-11-15: $206.42\n"
             + "\n"
@@ -7332,7 +7332,7 @@ public class ControllerTest extends TestParentClass {
    */
   @Test
   public void testZZOController_InflexiblePortfolio2() {
-    String userInput = "1" + "\n" + "2" + "\n" + "controllerTest9900" + "\n" + "1" + "\n"
+    String userInput = "1" + "\n" + "2" + "\n" + "controllerTest992" + "\n" + "1" + "\n"
             + "10" + "\n" + "80" + "\n" + "n" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -7352,7 +7352,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "CREATE PORTFOLIO MENU\n"
             + "\n"
-            + "CONTROLLERTEST9900 Portfolio\n"
+            + "CONTROLLERTEST992 Portfolio\n"
             + "\n"
             + getBuyStockScreen()
             + "\n"
@@ -7374,7 +7374,7 @@ public class ControllerTest extends TestParentClass {
             + "\n"
             + "Would you like to buy another stock? (Y|N)\n"
             + "\n"
-            + "CONTROLLERTEST9900 PORTFOLIO CREATED...!!!\n"
+            + "CONTROLLERTEST992 PORTFOLIO CREATED...!!!\n"
             + getMainScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
@@ -7385,8 +7385,144 @@ public class ControllerTest extends TestParentClass {
     result = result.replace("\r\n", "\n");
 
     assertEquals(expectedOutput, result);
-    deleteDirectory();
   }
 
+  @Test
+  public void testZZPInvestByDollarCostAveraging() {
+    String userInput = "1" + "\n" + "1" + "\n" + "controllerTest993" + "\n" + "2" + "\n"
+            + "2022-11-01" + "\n" + "y" + "\n" + "n" + "\n" + "2022-11-29" + "\n"
+            + "2" + "\n" + "2" + "\n" + "2" + "\n" + "4" + "\n" + "50" + "\n" + "50" + "\n" + "e";
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            +"\n"+ "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + getFlexibleInflexibleScreen()
+            + "\n"
+            + "Enter your choice:\n"
+            + "Enter the name for this portfolio.\n"
+            + "\n"
+            + "CREATE PORTFOLIO MENU\n"
+            + "\n"
+            + "CONTROLLERTEST993 Portfolio\n"
+            + "\n"
+            + getBuyStockScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) (from year 2000 to current day)\n"
+            + "Do you want to investment to be recurring? (Y|N)\n"
+            + "Is this an ongoing strategy? (Y|N)\n"
+            + "Enter the end date for the strategy (YYYY-MM-DD)(from 2022-11-01 to current day)\n"
+            + "Enter the recurring frequency (1 to 28 days)\n"
+            + "How many stocks would you like to buy? (1 to 10)\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Enter the stock option (1 out of 2)\n"
+            + "\n"
+            + "Enter the stock option (2 out of 2)\n"
+            + "How much money you would like to invest?\n"
+            + "Enter the proportion percent for Meta (out of 100.0%)\n"
+            + "The remaining 50.0 percentage will be automatically applied to Apple stock.\n"
+            + "Buying shares, please wait...\n"
+            + "\n"
+            + "Stock successfully added to the portfolio...!!!\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  @Test
+  public void testZZQAddStockstoPortfolioUsingDollarStrategy() {
+    String userInput = "9" + "\n" + "22" + "\n" + "2022-01-01" + "\n" + "y" + "\n" + "n" + "\n"
+            + "2022-11-30" + "\n" + "15" + "\n" + "3" + "\n" + "1" + "\n" + "9" + "\n" + "10"
+            + "\n" +"100" + "\n" + "33" + "\n" + "34"+ "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "14. CONTROLLERTEST94\n"
+            + "15. CONTROLLERTEST95\n"
+            + "16. CONTROLLERTEST96\n"
+            + "17. CONTROLLERTEST97\n"
+            + "18. CONTROLLERTEST98\n"
+            + "19. CONTROLLERTEST99\n"
+            + "20. CONTROLLERTEST990\n"
+            + "21. CONTROLLERTEST991\n"
+            + "22. CONTROLLERTEST993\n"
+            + "\n"
+            + "Select the portfolio to which you would like to add the stock.\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) (from year 2000 to current day)\n"
+            + "Do you want to investment to be recurring? (Y|N)\n"
+            + "Is this an ongoing strategy? (Y|N)\n"
+            + "Enter the end date for the strategy (YYYY-MM-DD)(from 2022-01-01 to current day)\n"
+            + "Enter the recurring frequency (1 to 30 days)\n"
+            + "How many stocks would you like to buy? (1 to 10)\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Enter the stock option (1 out of 3)\n"
+            + "\n"
+            + "Enter the stock option (2 out of 3)\n"
+            + "\n"
+            + "Enter the stock option (3 out of 3)\n"
+            + "How much money you would like to invest?\n"
+            + "Enter the proportion percent for Microsoft (out of 100.0%)\n"
+            + "Enter the proportion percent for UnitedHealth (out of 67.0%)\n"
+            + "The remaining 33.0 percentage will be automatically applied to Walmart stock.\n"
+            + "Buying shares, please wait...\n"
+            + "\n"
+            + "Stock successfully added to the portfolio...!!!\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+    deleteDirectory();
+  }
 
 }

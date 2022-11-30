@@ -65,7 +65,7 @@ public class TestParentClass {
   // A helper function to delete a file
 
   protected void deleteDirectory() {
-    File directory = new File("userdata/user1");
+    File directory = new File("userdata/user1/Portfolio");
     if (directory.exists()) {
       File[] filename = directory.listFiles();
       assert filename != null;
@@ -85,7 +85,7 @@ public class TestParentClass {
   protected String readStockDataFromPortfolioCsv(String portfolioName, int lineNumber,
                                                  int colNumber, boolean needSplit)
           throws IOException {
-    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String filename = "userdata/user1/Portfolio/" + "pf_" + portfolioName + ".csv";
     String[] cols;
     FileReader fr = new FileReader(filename);
     BufferedReader br = new BufferedReader(fr);
@@ -116,7 +116,7 @@ public class TestParentClass {
   }
 
   protected int readPortfolioCsvIndex(String portfolioName) throws IOException {
-    String filename = "userdata/user1/" + "pf_" + portfolioName + ".csv";
+    String filename = "userdata/user1/Portfolio/" + "pf_" + portfolioName + ".csv";
     String[] cols;
     FileReader fr = new FileReader(filename);
     BufferedReader br = new BufferedReader(fr);
@@ -140,7 +140,7 @@ public class TestParentClass {
   }
 
   protected void deleteFileInDirectory(String fileName) {
-    File directory = new File("userdata/user1");
+    File directory = new File("userdata/user1/Portfolio/");
     if (directory.exists()) {
       File[] filename = directory.listFiles();
       assert filename != null;
@@ -187,13 +187,15 @@ public class TestParentClass {
             + "6. Performance of portfolio\n"
             + "7. Total amount invested on certain date\n"
             + "8. Configure the commission cost\n"
+            + "9. Add stocks to portfolio using Dollar-Cost strategy\n"
             + "e. Exit\n";
   }
 
 
   protected String getBuyStockScreen() {
     return "1. Buy a stock\n"
-            + "2. Main Menu\n"
+            + "2. Invest by dollar-cost averaging\n"
+            + "3. Main Menu\n"
             + "e. Exit\n";
   }
 
