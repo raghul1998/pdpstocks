@@ -80,7 +80,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     super(caption);
 
-    setSize(900, 500);
+    setSize(700, 350);
     setLocation(500, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -97,7 +97,13 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     datePicker.setVisible(true);
 
     cards = new JPanel();
-    JPanel card1 = new JPanel();
+   // JPanel card1 = new JPanel();
+    JPanel card1 = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10,10,10,10);
+
+
+
     c1 = new CardLayout();
     pfPerformanceButton = new JButton("Next");
     dollarCostMainButton = new JButton("Next");
@@ -141,11 +147,17 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     buyAnotherButton = new JButton("Buy Another");
     mainMenuButton = new JButton("Main Menu");
     howManyShares = new JTextField(10);
-    card1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
+   // card1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
 
-    card1.add(display1);
-    card1.add(comboBoxMainMenu);
-    card1.add(exitButton);
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    card1.add(display1, constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    card1.add(comboBoxMainMenu, constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    card1.add(exitButton, constraints);
     cards.add(card1, "mainMenu");
     c1.show(cards, "mainMenu");
     this.add(cards);
