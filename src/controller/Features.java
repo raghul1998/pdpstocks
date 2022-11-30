@@ -16,10 +16,8 @@ public interface Features {
   void performancePortfolioSubmit(String date, int timestampType);
   void performanceOfPortfolioGetData(String text);
   void buyStockSubmit(String date, int stockSelected, String noOfStocks, String portfolioName);
-  void buyAnotherStockButton(String portfolioName);
   void checkHowManyShares();
   void selectPortfolio();
-  //void addStockSubmit(String date, int stockSelected, String noOfStocks, String portfolioName);
   void sellStock(String date, int stockSelected, String noOfStocks, int pfNumber);
   void selectStockSubmit(int buyOrSell, int portfolioName);
   void addStocksUsingDollarMain();
@@ -38,4 +36,6 @@ public interface Features {
   void valueAndCompositionScreenOne(int pfIndex);
 
   void resetMainMenu();
+  void getStocksAvailableForSaleAsPerDate(String date, int pfIndex);
+  void buyAnotherSubmitButton();
 }

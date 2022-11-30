@@ -35,7 +35,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   private JTextField inputName, howManyShares;
   private JTextField inputDate;
   private JButton exitButton, submitButton1, buyButton,  sellButton, submitButton4,
-           checkPrice, buyAnotherButton, selectButton;
+           checkPrice, buyAnotherButton, selectButton, goWithThisDateButton;
   private JButton mainMenuButton;
   private JButton pfPerformanceButton;
   private JButton pfPerformanceButtonSubmit;
@@ -48,6 +48,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   private JSpinner[] spinner;
   private JButton compMainButton;
 
+  private String[] stocksAvailableForSale;
   public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
     private String datePattern = "yyyy-MM-dd";
@@ -69,15 +70,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     }
 
   }
-  //  UtilDateModel model1 = new UtilDateModel();
-  //  Properties p = new Properties();
-  //  p.put("text.today", "Today");
-  //  p.put("text.month", "Month");
-  //  p.put("text.year", "Year");
-  //  JDatePanelImpl datePanel = new JDatePanelImpl(model1, p);
-  //  // Don't know about the formatter, but there it is...
-  //  JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-  // cards.add(datePicker);
 
 
   // constructor
@@ -134,22 +126,19 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     comboBoxMainMenu.setSelectedIndex(-1);
 
     checkPrice = new JButton("Check Price");
-    //checkPrice1 = new JButton("Check Price");
     exitButton = new JButton("Exit");
     submitButton1 = new JButton("Submit");
     buyButton = new JButton("Buy");
     sellButton = new JButton("Sell");
-    //submitButton3 = new JButton("Submit");
     submitButton4 = new JButton("Submit");
     selectButton = new JButton("Select");
-   // backButton1 = new JButton("Back");
-    // addButton = new JButton("Add");
+    goWithThisDateButton = new JButton("Go");
     pfPerformanceButtonGetData = new JButton("Submit");
     buyAnotherButton = new JButton("Buy Another");
     mainMenuButton = new JButton("Main Menu");
     howManyShares = new JTextField(10);
-    // howManyShares1 = new JTextField(10);
     card1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
+
     card1.add(display1);
     card1.add(comboBoxMainMenu);
     card1.add(exitButton);
@@ -234,26 +223,26 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     selectButton.addActionListener(evt ->
             feature.selectStockSubmit(comboBoxMainMenu.getSelectedIndex(),comboBoxListOfPortfolios.getSelectedIndex()));
 
-    buyAnotherButton.addActionListener(evt -> {
-      resetFlexiblePortfolioScreen();
-      c1.previous(cards);
-    });
-    // String date, int stockSelected, String noOfStocks, int pfNumber
-    sellButton.addActionListener(evt-> feature.sellStock(datePicker.getJFormattedTextField().getText(),
-            comboBoxStocksAvailableForSale.getSelectedIndex(),howManyShares.getText(),comboBoxListOfPortfolios.getSelectedIndex()));
+    buyAnotherButton.addActionListener(evt -> feature.buyAnotherSubmitButton());
 
     checkPrice.addActionListener(evt ->
             feature.checkCurrentPrice(comboBoxTypeOfPortfolio.getSelectedIndex(),
                     datePicker.getJFormattedTextField().getText(),
                     comboBoxSupportedStocks.getSelectedIndex() + 1));
 
-//    checkPrice1.addActionListener(evt ->
-//            feature.checkCurrentPrice(0,
-//                    date.getText(), comboBoxSupportedStocks1.getSelectedIndex() + 1));
+//    datePicker.addActionListener(
+//            evt -> {stocksAvailableForSale = feature.getStocksAvailableForSaleAsPerDate(datePicker.getJFormattedTextField().getText(),
+//                    comboBoxListOfPortfolios.getSelectedIndex());
+
+    goWithThisDateButton.addActionListener(evt-> feature.getStocksAvailableForSaleAsPerDate(datePicker.getJFormattedTextField().getText(),
+            comboBoxListOfPortfolios.getSelectedIndex()));
+// String date, int stockSelected, String noOfStocks, int pfNumber
+    sellButton.addActionListener(evt-> feature.sellStock(datePicker.getJFormattedTextField().getText(),
+            comboBoxStocksAvailableForSale.getSelectedIndex(),howManyShares.getText(),comboBoxListOfPortfolios.getSelectedIndex()));
+
+
     howManyShares.addKeyListener(new KeyListener() {
       public void keyTyped(KeyEvent ke) {
-        //String value = howManyShares.getText();
-        //int l = value.length();
       }
 
       @Override
@@ -286,6 +275,11 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     //backButton1.addActionListener(evt -> c1.show(cards,"screen2"));
   }
 
+  @Override
+  public void buyAnotherReset(){
+    resetFlexiblePortfolioScreen();
+    c1.previous(cards);
+  }
   // card2
   @Override
   public void displayTypeOfPortfolioFlexibleOrInFlexibleScreen() {
@@ -348,7 +342,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     p.put("text.month", "Month");
     p.put("text.year", "Year");
     JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+    datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
     datePicker.setBounds(110, 100, 200, 25);
     model.setSelected(true);
     datePicker.setVisible(true);
@@ -384,9 +378,9 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   // card 4
 
   @Override
-  public void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName) {
-    display8 = new JLabel(portfolioName + " Portfolio Created");
-    display9 = new JLabel("Bought Successful");
+  public void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName, String showSuccessMsg) {
+    display8 = new JLabel(showSuccessMsg);
+    display9 = new JLabel("Stocks bought successfully.");
     JPanel card4 = new JPanel();
     card4.add(display8);
     card4.add(display9);
@@ -675,44 +669,41 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     p.put("text.month", "Month");
     p.put("text.year", "Year");
     JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-    JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+    datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
     datePicker.setBounds(110, 100, 200, 25);
     model.setSelected(true);
     datePicker.setVisible(true);
 
-    display6 = new JLabel("Select stock you want to sell");
-
-//    String[] stocksAvailableForSale = getStocksAvailableForSaleAsPerDate();
-//    comboBoxStocksAvailableForSale = new JComboBox(stocksAvailableForSale);
-//    comboBoxStocksAvailableForSale.setSelectedIndex(-1);
-
-    display7 = new JLabel("How many shares would you like to buy");
-    howManyShares = new JTextField(10);
-
     JPanel card7 = new JPanel();
     card7.add(display5);
     card7.add(datePicker);
-    card7.add(display6);
-   // card7_soldSuccessful.add(comboStocksAvailableForSale);
-    card7.add(display7);
-    card7.add(howManyShares);
 
-    card7.add(sellButton);
-    card7.add(mainMenuButton);
+
+    card7.add(goWithThisDateButton);
     cards.add(card7, "screen7");
     c1.show(cards, "screen7");
   }
 
-//  @Override
-//  public void soldSuccessfulScreen(){
-//    display9 = new JLabel("Stocks sold sucessfully");
-//
-//    JPanel card7_soldSuccessful = new JPanel();
-//    card7_soldSuccessful.add(display9);
-//    card7_soldSuccessful.add(mainMenuButton);
-//    card7_soldSuccessful.add(exitButton);
-//
-//  }
+  @Override
+  public void displaySellScreen2(String[] stocksAvailableForSale){
+    display6 = new JLabel("Select stock you want to sell");
+    comboBoxStocksAvailableForSale = new JComboBox(stocksAvailableForSale);
+    comboBoxStocksAvailableForSale.setSelectedIndex(-1);
+    display7 = new JLabel("How many shares would you like to sell");
+    howManyShares = new JTextField(10);
+
+    JPanel card8 = new JPanel();
+    card8.add(display6);
+    card8.add(comboBoxStocksAvailableForSale);
+    card8.add(display7);
+    card8.add(howManyShares);
+
+    card8.add(sellButton);
+    card8.add(mainMenuButton);
+    cards.add(card8, "screen8");
+    c1.show(cards, "screen8");
+
+  }
 
   @Override
   public void displayAddStocksUsingDollarStrategyMain(String[] displayString) {
@@ -785,4 +776,5 @@ public class JFrameViewImpl extends JFrame implements GUIView {
             "Error",
             JOptionPane.ERROR_MESSAGE);
   }
+
 }
