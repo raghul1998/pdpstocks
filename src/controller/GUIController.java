@@ -269,7 +269,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     dvd.recurIndex = recurIndex;
 
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
-    if (dvd.isCreateDollarValue == false) {
+    if (!dvd.isCreateDollarValue) {
       super.currentPortfolioName = obj.getPortFolioNames("FLEXIBLE")[pfIndex];
     }
 

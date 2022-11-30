@@ -842,6 +842,10 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       comboCommon.setSelectedIndex(-1);
       cardCommon.add(displayCommon);
       cardCommon.add(comboCommon);
+    } else {
+      String[] temp = {"temp"};
+      comboCommon = new JComboBox(temp);
+      comboCommon.setSelectedIndex(0);
     }
 
     display3 = new JLabel("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
