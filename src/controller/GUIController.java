@@ -1100,6 +1100,8 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     String[] result = new String[stkObj.numberOfUniqueStocks];
     if (stkObj.numberOfUniqueStocks == 0) {
       viewGUI.displayInformationalMessage("You don't own any stocks before this date");
+      viewGUI.resetMainMenu();
+      return;
     } else {
       for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
         if (stkObj.stockQuantity[i] != 0) {
