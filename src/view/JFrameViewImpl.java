@@ -834,9 +834,15 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void displayAddStocksUsingDollarStrategyMain(String[] displayString) {
-    JLabel displayCommon = new JLabel("Select the portfolio");
-    comboCommon = new JComboBox(displayString);
-    comboCommon.setSelectedIndex(-1);
+    JPanel cardCommon = new JPanel();
+
+    if(displayString != null) {
+      JLabel displayCommon = new JLabel("Select the portfolio");
+      comboCommon = new JComboBox(displayString);
+      comboCommon.setSelectedIndex(-1);
+      cardCommon.add(displayCommon);
+      cardCommon.add(comboCommon);
+    }
 
     display3 = new JLabel("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
             + "(from year 2000 to current day)");
@@ -848,9 +854,6 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     combo2 = new JComboBox(recur);
     combo2.setSelectedIndex(-1);
 
-    JPanel cardCommon = new JPanel();
-    cardCommon.add(displayCommon);
-    cardCommon.add(comboCommon);
     cardCommon.add(display3);
     cardCommon.add(inputDate);
     cardCommon.add(display8);

@@ -8,4 +8,5 @@ public class DollarValueDataImpl implements DollarValueData {
   public String endDate;
   public String frequencyStr;
   public int numberOfStocks;
+  public boolean isCreateDollarValue;
 }

@@ -93,6 +93,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       typeStr = "2";
     }
 
+    if (type == 1 && optionSelected == 1) {
+      viewGUI.displayInformationalMessage("This option is not available for Inflexible Portfolio");
+      viewGUI.resetMainMenu();
+      return;
+    }
+
     if (checkIfPortfolioExists(name)) {
       int yesToOverride = viewGUI.jOptionPortfolioAlreadyExists();
       if (yesToOverride == 0) {
@@ -108,6 +114,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     args[1] = typeStr;
     super.currentPortfolioName = name;
     super.cmiObj.controllerModelInteract(TypeofAction.CREATE_PORTFOLIO, args, 1);
+    dvd.isCreateDollarValue = false;
     //createPortfolioNameScreenAction(null, args);
     String[] supportedStocks = {"1. Microsoft (MSFT)",
             "2. Meta (META)",
@@ -121,7 +128,14 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "10. Walmart (WMT)"};
     tvd.isFirstBuy = true;
     if (type == 0) {
-      viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, name);
+      if (optionSelected == 0) {
+        // Normal Buy Stocks
+        viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, name);
+      } else if (optionSelected == 1) {
+        // Dollar Value Investment
+        dvd.isCreateDollarValue = true;
+        viewGUI.displayAddStocksUsingDollarStrategyMain(null);
+      }
     } else if (type == 1) {
       viewGUI.inflexiblePortfolioScreen(supportedStocks);
     }
@@ -255,7 +269,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     dvd.recurIndex = recurIndex;
 
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
-    super.currentPortfolioName = obj.getPortFolioNames("FLEXIBLE")[pfIndex];
+    if (dvd.isCreateDollarValue == false) {
+      super.currentPortfolioName = obj.getPortFolioNames("FLEXIBLE")[pfIndex];
+    }
 
     if (recurIndex == 0) {
       // This means Recurring
@@ -929,18 +945,18 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     stock[1] = super.currentPortfolioName;
     super.cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
     String showSuccessfulMsg;
-    if(tvd.isFirstBuy) {
+    if (tvd.isFirstBuy) {
       showSuccessfulMsg = portfolioName.toUpperCase() + " portfolio created.";
     } else {
       showSuccessfulMsg = "";
     }
 
-    viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName,showSuccessfulMsg);
+    viewGUI.displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(portfolioName, showSuccessfulMsg);
     super.cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
   }
 
   @Override
-  public void buyAnotherSubmitButton(){
+  public void buyAnotherSubmitButton() {
     tvd.isFirstBuy = false;
     viewGUI.buyAnotherReset();
   }
@@ -967,7 +983,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void sellStock(String date, int stockSelected, String noOfStocks, int pfNumber) {
-     // sellStockFromPortfolio() - main method
+    // sellStockFromPortfolio() - main method
 
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
@@ -1001,7 +1017,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
 
     if (sellSharesOnAStock(pfNumber,
-            stkObj.stockSymbol[stockSelected], date,noOfStocks)) {
+            stkObj.stockSymbol[stockSelected], date, noOfStocks)) {
       return;
     }
   }
@@ -1033,20 +1049,19 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stockGetData, 2);
     //vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
 
-   // viewGUI.displayErrorMessage("\nYou can sell only " + numberOfAvailableShares
-     //       + " shares of this stock on " + date);
+    // viewGUI.displayErrorMessage("\nYou can sell only " + numberOfAvailableShares
+    //       + " shares of this stock on " + date);
 
     if ((sellShares == null || sellShares.length() == 0)
             || (!validateStockSelectOption(sellShares, 1, numberOfAvailableShares))) {
       String[] args = new String[1];
       args[0] = String.valueOf(numberOfAvailableShares);
-     // vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, args, 1);
+      // vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, args, 1);
 
-      if(args == null){
+      if (args == null) {
         viewGUI.displayErrorMessage("Not a valid input. Please enter number of shares as natural numbers.");
         return false;
-      }
-      else{
+      } else {
         viewGUI.displayErrorMessage("Not a valid input. You can only sell until" + args[0] + " shares."
                 + " Also please enter number of shares as natural numbers.");
         return false;
@@ -1059,11 +1074,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     super.cmiObj.controllerModelInteract(TypeofAction.SELL_STOCKS, data, 3);
     viewGUI.displayInformationalMessage("Shares successfully sold.");
 
-  return true;
+    return true;
   }
+
   // list of stocks as per date will be made available to user in a dropdown menu
   @Override
-  public void getStocksAvailableForSaleAsPerDate(String date, int pfIndex){
+  public void getStocksAvailableForSaleAsPerDate(String date, int pfIndex) {
     int portfolioNumber = pfIndex;
     StockCompositionData obj = new StockCompositionDataImpl("Flexible");
     StockPortFolioDataImpl stkObj;
@@ -1081,7 +1097,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       return;
     }
     assert stkObj != null;
-    String[] result= new String[stkObj.numberOfUniqueStocks];
+    String[] result = new String[stkObj.numberOfUniqueStocks];
     if (stkObj.numberOfUniqueStocks == 0) {
       viewGUI.displayInformationalMessage("You don't own any stocks before this date");
     } else {
@@ -1094,6 +1110,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     tvd.listOfAvailableStocksForSale = result;
     viewGUI.displaySellScreen2(tvd.listOfAvailableStocksForSale);
   }
+
   @Override
   public void selectStockSubmit(int buyOrSell, int portfolioNameIndex) {
     //viewGUI.displayAddScreen();
