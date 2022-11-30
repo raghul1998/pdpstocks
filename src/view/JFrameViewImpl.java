@@ -80,7 +80,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     super(caption);
 
-    setSize(700, 350);
+    setSize(900, 600);
     setLocation(500, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -340,16 +340,35 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     comboBoxBuyOrInvest = new JComboBox(options);
     comboBoxBuyOrInvest.setSelectedIndex(-1);
-    JPanel card2 = new JPanel();
-    card2.setLayout(new FlowLayout());
-    card2.add(display2);
-    card2.add(comboBoxTypeOfPortfolio);
-    card2.add(display3);
-    card2.add(inputName);
-    card2.add(display4);
-    card2.add(comboBoxBuyOrInvest);
-    card2.add(submitButton1);
-    card2.add(mainMenuButton);
+    //JPanel card2 = new JPanel();
+    JPanel card2 = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10,10,10,10);
+  //  card2.setLayout(new FlowLayout());
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    card2.add(display2, constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    card2.add(comboBoxTypeOfPortfolio,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    card2.add(display3, constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 4;
+    card2.add(inputName,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 5;
+    card2.add(display4,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 6;
+    card2.add(comboBoxBuyOrInvest,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 7;
+    card2.add(submitButton1,constraints);
+    constraints.gridx = 5;
+    constraints.gridy = 7;
+    card2.add(mainMenuButton,constraints);
     cards.add(card2, "screen2");
     c1.show(cards, "screen2");
   }
@@ -398,17 +417,40 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     //howManyShares = new JTextField(10);
     comboBoxSupportedStocks.setSelectedIndex(-1);
 
-    JPanel card3 = new JPanel();
+   // JPanel card3 = new JPanel();
+
+    JPanel card3 = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10,10,10,10);
+
     //card3.add(display8);
-    card3.add(display5);
-    card3.add(datePicker);
-    card3.add(display6);
-    card3.add(comboBoxSupportedStocks);
-    card3.add(checkPrice);
-    card3.add(display7);
-    card3.add(howManyShares);
-    card3.add(buyButton);
-    card3.add(mainMenuButton);
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    card3.add(display5,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    card3.add(datePicker,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    card3.add(display6,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 4;
+    card3.add(comboBoxSupportedStocks,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 5;
+    card3.add(checkPrice,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 6;
+    card3.add(display7,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 7;
+    card3.add(howManyShares,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 8;
+    card3.add(buyButton,constraints);
+    constraints.gridx = 6;
+    constraints.gridy = 8;
+    card3.add(mainMenuButton,constraints);
     cards.add(card3, "screen3");
     c1.show(cards, "screen3");
 
@@ -420,11 +462,22 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   public void displayBoughtSuccessfulAndWouldLikeToBuyAgainButtonWindow(String portfolioName, String showSuccessMsg) {
     display8 = new JLabel(showSuccessMsg);
     display9 = new JLabel("Stocks bought successfully.");
-    JPanel card4 = new JPanel();
-    card4.add(display8);
-    card4.add(display9);
-    card4.add(buyAnotherButton);
-    card4.add(mainMenuButton);
+   // JPanel card4 = new JPanel();
+    JPanel card4 = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10,10,10,10);
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    card4.add(display8,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    card4.add(display9,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    card4.add(buyAnotherButton,constraints);
+    constraints.gridx = 4;
+    constraints.gridy = 3;
+    card4.add(mainMenuButton,constraints);
     cards.add(card4, "screen4");
     c1.show(cards, "screen4");
   }
@@ -442,24 +495,37 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     howManyShares = new JTextField(10);
     comboBoxSupportedStocks.setSelectedIndex(-1);
 
-    JPanel card5 = new JPanel();
-    card5.add(display10);
-    card5.add(comboBoxSupportedStocks);
-    card5.add(checkPrice);
-    card5.add(display11);
-    card5.add(howManyShares);
-    card5.add(buyButton);
-    card5.add(mainMenuButton);
+   // JPanel card5 = new JPanel();
+    JPanel card5 = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10,10,10,10);
+
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    card5.add(display10,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    card5.add(comboBoxSupportedStocks,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    card5.add(checkPrice,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 4;
+    card5.add(display11,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 5;
+    card5.add(howManyShares,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 6;
+    card5.add(buyButton,constraints);
+    constraints.gridx = 4;
+    constraints.gridy = 6;
+    card5.add(mainMenuButton,constraints);
     cards.add(card5, "screen5");
     c1.show(cards, "screen5");
 
   }
 
-
-//  @Override
-//  public void resetDateInput() {
-//    datePicker.getJFormattedTextField().getText().setText("");
-//  }
 
   @Override
   public int jOptionPortfolioAlreadyExists() {
@@ -790,12 +856,26 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     // read from list of portfolios
     String[] listOfPortfolios = getListOfPortfolioNames;
     comboBoxListOfPortfolios = new JComboBox(listOfPortfolios);
-    JPanel card6_showListOfStocks = new JPanel();
+   // JPanel card6_showListOfStocks = new JPanel();
     //comboBoxTypeOfPortfolio.setSelectedIndex(-1);
-    card6_showListOfStocks.add(display12);
-    card6_showListOfStocks.add(comboBoxListOfPortfolios);
-    card6_showListOfStocks.add(selectButton);
-    card6_showListOfStocks.add(mainMenuButton);
+
+    JPanel card6_showListOfStocks = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10,10,10,10);
+
+
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    card6_showListOfStocks.add(display12,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    card6_showListOfStocks.add(comboBoxListOfPortfolios,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    card6_showListOfStocks.add(selectButton,constraints);
+    constraints.gridx = 4;
+    constraints.gridy = 3;
+    card6_showListOfStocks.add(mainMenuButton,constraints);
     cards.add(card6_showListOfStocks, "screen6");
     c1.show(cards, "screen6");
   }
@@ -814,11 +894,23 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     model.setSelected(true);
     datePicker.setVisible(true);
 
-    JPanel card7 = new JPanel();
-    card7.add(display5);
-    card7.add(datePicker);
+   // JPanel card7 = new JPanel();
+    JPanel card7 = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10,10,10,10);
 
-    card7.add(goWithThisDateButton);
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    card7.add(display5,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    card7.add(datePicker,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    card7.add(goWithThisDateButton,constraints);
+    constraints.gridx = 4;
+    constraints.gridy = 3;
+    card7.add(mainMenuButton,constraints);
     cards.add(card7, "screen7");
     c1.show(cards, "screen7");
   }
@@ -831,14 +923,29 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     display7 = new JLabel("How many shares would you like to sell");
     howManyShares = new JTextField(10);
 
-    JPanel card8 = new JPanel();
-    card8.add(display6);
-    card8.add(comboBoxStocksAvailableForSale);
-    card8.add(display7);
-    card8.add(howManyShares);
+    //JPanel card8 = new JPanel();
+    JPanel card8 = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10,10,10,10);
 
-    card8.add(sellButton);
-    card8.add(mainMenuButton);
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    card8.add(display6,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    card8.add(comboBoxStocksAvailableForSale,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    card8.add(display7,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 4;
+    card8.add(howManyShares,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 5;
+    card8.add(sellButton,constraints);
+    constraints.gridx = 4;
+    constraints.gridy = 5;
+    card8.add(mainMenuButton,constraints);
     cards.add(card8, "screen8");
     c1.show(cards, "screen8");
 
