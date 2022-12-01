@@ -912,14 +912,6 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       return;
     }
 
-    String[] scale = super.getScale(pfPerformance);
-    String getTitle = "";
-    try {
-      getTitle = super.getTitle(pfPerformance, dates[dates.length - 1]);
-    } catch (Exception e) {
-      // Do nothing
-    }
-
     viewGUI.getGraph(pfPerformance, super.currentPortfolioName);
     //vciObj.portfolioPerformanceOverTime(dates, dates.length, pfPerformance, scale, getTitle);
   }
