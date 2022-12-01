@@ -779,6 +779,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       constraints.gridy = y++;
       cardCommon.add(comboSupportStocksArray[i],constraints);
       spinner[i] = new JSpinner(model[i]);
+      constraints.gridx = 0;
+      constraints.gridy = 1;
       cardCommon.add(spinner[i],constraints);
     }
 
