@@ -20,9 +20,15 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import controller.Features;
 
+/**
+ * This class represents the Jframe View that provides implementation
+ * of GUI based view for Stock Application.
+ *
+ */
 public class JFrameViewImpl extends JFrame implements GUIView {
   private ViewControllerInteract vciObj;
   JDatePickerImpl datePicker;
@@ -57,6 +63,11 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   private String[] stocksAvailableForSale;
 
+  /**
+   * This class represents Date which formats the date in yyyy-MM-dd pattern.
+   * It includes conversion methods from dateValue to string and vice versa.
+   *
+   */
   static class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
     private final String datePattern;
     private final SimpleDateFormat dateFormatter;
@@ -87,15 +98,21 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   }
 
-
+  /**
+   * Constructor for the JFrameViewImpl that takes in one argument and sets it as the
+   * title of the window frame and initializes all necessary variables
+   * required for the view to global variables.
+   *
+   * @param caption  the name of the application which gets displayed in the Title bar.
+   */
   // constructor
   public JFrameViewImpl(String caption) {
 
 
     super(caption);
 
-    setSize(900, 600);
-    setLocation(500, 200);
+    setSize(800, 450);
+    setLocation(400, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     //cards.add(datePicker);
@@ -114,7 +131,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     // JPanel card1 = new JPanel();
     JPanel card1 = new JPanel(new GridBagLayout());
     GridBagConstraints constraints = new GridBagConstraints();
-    constraints.insets = new Insets(10, 10, 10, 10);
+    constraints.insets = new Insets(60, 10, 10, 10);
 
 
     c1 = new CardLayout();
@@ -133,9 +150,14 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     totalValueInvestedMainButton = new JButton("Next");
     cards.setLayout(c1);
 
+    Border EtchedBorder = BorderFactory.createEtchedBorder();
     // card1
     // main menu dropdown box
     display1 = new JLabel("Main Menu");
+    display1.setBorder(EtchedBorder);
+
+
+
     String[] mainMenuOptions = {"Create Portfolio",
             "Value and Composition of Portfolio",
             "Value of portfolio on full composition",
@@ -399,7 +421,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     constraints.gridx = 0;
     constraints.gridy = 7;
     card2.add(submitButton1, constraints);
-    constraints.gridx = 5;
+    constraints.gridx = 1;
     constraints.gridy = 7;
     card2.add(mainMenuButton, constraints);
     cards.add(card2, "screen2");
@@ -477,7 +499,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     constraints.gridx = 0;
     constraints.gridy = 8;
     card3.add(buyButton, constraints);
-    constraints.gridx = 6;
+    constraints.gridx = 1;
     constraints.gridy = 8;
     card3.add(mainMenuButton, constraints);
     cards.add(card3, "screen3");
@@ -504,7 +526,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     constraints.gridx = 0;
     constraints.gridy = 3;
     card4.add(buyAnotherButton, constraints);
-    constraints.gridx = 4;
+    constraints.gridx = 1;
     constraints.gridy = 3;
     card4.add(mainMenuButton, constraints);
     cards.add(card4, "screen4");
@@ -547,7 +569,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     constraints.gridx = 0;
     constraints.gridy = 6;
     card5.add(buyButton, constraints);
-    constraints.gridx = 4;
+    constraints.gridx = 1;
     constraints.gridy = 6;
     card5.add(mainMenuButton, constraints);
     cards.add(card5, "screen5");
@@ -628,6 +650,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     chart.drawGraph();
   }
 
+  @Override
   public void resetCreatePortfolioScreen() {
     comboBoxTypeOfPortfolio.setSelectedIndex(-1);
     inputName.setText("");
@@ -659,12 +682,23 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     combo3 = new JComboBox(onGoing);
     combo3.setSelectedIndex(-1);
 
-    JPanel cardCommon = new JPanel();
+    //JPanel cardCommon = new JPanel();
+    JPanel cardCommon = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10, 10, 10, 10);
 
-    cardCommon.add(display2);
-    cardCommon.add(combo3);
-    cardCommon.add(dollarCostOnGoingButton);
-    cardCommon.add(mainMenuButton);
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    cardCommon.add(display2,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    cardCommon.add(combo3,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    cardCommon.add(dollarCostOnGoingButton,constraints);
+    constraints.gridx = 1;
+    constraints.gridy = 3;
+    cardCommon.add(mainMenuButton,constraints);
     cards.add(cardCommon, "Dollar Cost Ongoing Screen");
     c1.show(cards, "Dollar Cost Ongoing Screen");
   }
@@ -724,30 +758,53 @@ public class JFrameViewImpl extends JFrame implements GUIView {
   @Override
   public void dollarValueStockProportionScreen(int numberOfStocks, String[] supportedStocks) {
     display4 = new JLabel("Select the stocks and enter proportion");
-    JPanel cardCommon = new JPanel();
-    cardCommon.add(display4);
+
+    JPanel cardCommon = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10, 10, 10, 10);
+
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    cardCommon.add(display4,constraints);
 
     SpinnerModel[] model = new SpinnerModel[numberOfStocks];
     spinner = new JSpinner[numberOfStocks];
-
+    int y = 2;
     comboSupportStocksArray = new JComboBox[10];
     for (int i = 0; i < numberOfStocks; i++) {
       model[i] = new SpinnerNumberModel(0, 0, 100, 0.1);
       comboSupportStocksArray[i] = new JComboBox(supportedStocks);
       comboSupportStocksArray[i].setSelectedIndex(-1);
-      cardCommon.add(comboSupportStocksArray[i]);
+      constraints.gridx = 0;
+      constraints.gridy = y++;
+      cardCommon.add(comboSupportStocksArray[i],constraints);
       spinner[i] = new JSpinner(model[i]);
-      cardCommon.add(spinner[i]);
+      cardCommon.add(spinner[i],constraints);
     }
 
     display7 = new JLabel("How much money you would like to invest?");
     inputDate = new JTextField(10);
-    cardCommon.add(display7);
-    cardCommon.add(inputDate);
+    constraints.gridx = 0;
+    constraints.gridy = y++;
+    cardCommon.add(display7,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = y++;
+    cardCommon.add(inputDate,constraints);
 
-    cardCommon.add(getDollarFinalSubmit);
-    cardCommon.add(mainMenuButton);
-    cards.add(cardCommon, "Dollar Cost Proportion Screen");
+    constraints.gridx = 0;
+    constraints.gridy = y;
+    cardCommon.add(getDollarFinalSubmit,constraints);
+    constraints.gridx = 4;
+    constraints.gridy = y;
+    cardCommon.add(mainMenuButton,constraints);
+    JScrollPane scrollPane = new JScrollPane(cardCommon);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setBounds(10, 10, 765, 400);
+    JPanel contentPane = new JPanel(null);
+    contentPane.setPreferredSize(new Dimension(500, 400));
+    contentPane.add(scrollPane);
+    cards.add(contentPane, "Dollar Cost Proportion Screen");
     c1.show(cards, "Dollar Cost Proportion Screen");
   }
 
@@ -910,7 +967,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     constraints.gridx = 0;
     constraints.gridy = 3;
     card6ShowListOfStocks.add(selectButton, constraints);
-    constraints.gridx = 4;
+    constraints.gridx = 1;
     constraints.gridy = 3;
     card6ShowListOfStocks.add(mainMenuButton, constraints);
     cards.add(card6ShowListOfStocks, "screen6");
@@ -945,7 +1002,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     constraints.gridx = 0;
     constraints.gridy = 3;
     card7.add(goWithThisDateButton, constraints);
-    constraints.gridx = 4;
+    constraints.gridx = 1;
     constraints.gridy = 3;
     card7.add(mainMenuButton, constraints);
     cards.add(card7, "screen7");
@@ -980,7 +1037,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     constraints.gridx = 0;
     constraints.gridy = 5;
     card8.add(sellButton, constraints);
-    constraints.gridx = 4;
+    constraints.gridx = 1;
     constraints.gridy = 5;
     card8.add(mainMenuButton, constraints);
     cards.add(card8, "screen8");
@@ -988,6 +1045,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   }
 
+  @Override
   public void resetStockSellScreenAfterSell() {
     comboBoxStocksAvailableForSale.setSelectedIndex(-1);
     howManyShares.setText("");
@@ -995,22 +1053,28 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
   @Override
   public void displayAddStocksUsingDollarStrategyMain(String[] displayString) {
-    JPanel cardCommon = new JPanel();
+    JPanel cardCommon = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(10, 10, 10, 10);
 
     if (displayString != null) {
       JLabel displayCommon = new JLabel("Select the portfolio");
       comboCommon = new JComboBox(displayString);
       comboCommon.setSelectedIndex(-1);
-      cardCommon.add(displayCommon);
-      cardCommon.add(comboCommon);
+      constraints.gridx = 0;
+      constraints.gridy = 1;
+      cardCommon.add(displayCommon,constraints);
+      constraints.gridx = 0;
+      constraints.gridy = 2;
+      cardCommon.add(comboCommon,constraints);
     } else {
       String[] temp = {"temp"};
       comboCommon = new JComboBox(temp);
       comboCommon.setSelectedIndex(0);
     }
 
-    display3 = new JLabel("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
-            + " (from year 2000 to current day)");
+    display3 = new JLabel("Enter the date on which you would like to purchase the "
+            + "stock (YYYY-MM-DD) (from year 2000 to current day)");
 
     UtilDateModel model = new UtilDateModel();
     Properties p = new Properties();
@@ -1023,18 +1087,29 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     model.setSelected(true);
     datePicker.setVisible(true);
 
-
     display8 = new JLabel("Recurring?");
     String[] recur = {"Yes", "No"};
     combo2 = new JComboBox(recur);
     combo2.setSelectedIndex(-1);
 
-    cardCommon.add(display3);
-    cardCommon.add(datePicker);
-    cardCommon.add(display8);
-    cardCommon.add(combo2);
-    cardCommon.add(dollarCostMainButton);
-    cardCommon.add(mainMenuButton);
+    constraints.gridx = 0;
+    constraints.gridy = 3;
+    cardCommon.add(display3,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 4;
+    cardCommon.add(datePicker,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 5;
+    cardCommon.add(display8,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 6;
+    cardCommon.add(combo2,constraints);
+    constraints.gridx = 0;
+    constraints.gridy = 7;
+    cardCommon.add(dollarCostMainButton,constraints);
+    constraints.gridx = 1;
+    constraints.gridy = 7;
+    cardCommon.add(mainMenuButton,constraints);
     cards.add(cardCommon, "Dollar Cost Main Screen");
     c1.show(cards, "Dollar Cost Main Screen");
   }

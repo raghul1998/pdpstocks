@@ -230,7 +230,7 @@ public class ViewTest extends TestParentClass {
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_INVALID_RETRY, null, 0);
 
-    String expected = "Not a valid input. Please enter number of shares as natural numbers.\n"
+    String expected = "Not a valid input. Reenter.\n"
             + "Press 'b' to go back to the previous menu, 'm' to main menu.\n\n";
 
     String result = bytes.toString();
