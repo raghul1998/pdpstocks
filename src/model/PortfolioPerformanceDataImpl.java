@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * This class represents the data that are required while calculating performance of the
+ * portfolio.
+ */
 public class PortfolioPerformanceDataImpl implements PortfolioPerformanceData {
   public int timestampType;
   public String timestampTypeStr;

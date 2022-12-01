@@ -1,17 +1,19 @@
 package view;
 
-import org.jfree.ui.ApplicationFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.*;
 
+/**
+ * This class represents the graph chart and it's dependencies.
+ */
 public class BarChartImpl extends JFrame implements BarChart {
   private final String xLabel;
   private final String yLabel;
@@ -39,6 +41,11 @@ public class BarChartImpl extends JFrame implements BarChart {
     );
 
     ChartPanel chartPanel = new ChartPanel(chart);
+    CategoryPlot plot = (CategoryPlot) chart.getPlot();
+    CategoryAxis domainAxis = plot.getDomainAxis();
+    domainAxis.setCategoryLabelPositions(
+            CategoryLabelPositions.createUpRotationLabelPositions(
+                    Math.PI / 2.0));
     chartPanel.setPreferredSize(new java.awt.Dimension(1000, 500));
     this.setContentPane(chartPanel);
     this.pack();

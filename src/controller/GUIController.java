@@ -25,6 +25,10 @@ import model.TransactValueDataImpl;
 import model.TypeofAction;
 import view.GUIView;
 
+/**
+ * This class represents the controller that controls the GUI and also extents the feature
+ * interface.
+ */
 public class GUIController extends ControllerViewInteractImpl implements Features {
   private GUIView viewGUI;
   private PortfolioPerformanceDataImpl ppd;
@@ -59,6 +63,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void valueAndCompositionGUIMainScreen() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("ALL");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -196,6 +205,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void performanceOfPortfolioMain() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -210,6 +224,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
   }
 
+  /**
+   * This helper method helps in retriving the name of the portfolios.
+   *
+   * @param type type of portfolio
+   * @return the names of portfolio
+   */
   private String[] getFlexiblePortfolioNames(String type) {
     StockCompositionData obj = new StockCompositionDataImpl(type);
     int numberOfPortFolio = obj.getNumberOfPortFolio();
@@ -226,6 +246,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
 
   public void addStocksUsingDollarMain() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -296,20 +321,16 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       viewGUI.dollarValueFrequencyEnterScreen(str);
     } else if (onGoingIndex == 1) {
       // No
-      if (Objects.equals(LocalDate.parse(dvd.startDate), LocalDate.now())) {
-        dvd.endDate = String.valueOf(LocalDate.now());
-      } else {
-        // Ask for end date
-        String str = "Enter the end date for the strategy (YYYY-MM-DD)"
-                + "(from " + dvd.startDate + " to current day)";
-        viewGUI.dollarValueEndDateScreen(str);
-      }
+      // Ask for end date
+      String str = "Enter the end date for the strategy (YYYY-MM-DD)"
+              + "(from " + dvd.startDate + " to current day)";
+      viewGUI.dollarValueEndDateScreen(str);
     }
   }
 
   @Override
   public void dollarValueScreenThreeEndDate(String endDate) {
-    if (!validateDate(endDate, "yyyy-MM-dd", 0)
+    if (!super.validateDateEndDate(endDate, "yyyy-MM-dd")
             || (LocalDate.parse(endDate).compareTo(LocalDate.parse(dvd.startDate)) < 0)) {
       viewGUI.displayErrorMessage("Not a valid date. Reenter");
       return;
@@ -319,9 +340,8 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     // Now calculate or ask for frequency
     int remainder = (int) ChronoUnit.DAYS.between(LocalDate.parse(dvd.startDate),
             LocalDate.parse(dvd.endDate));
-    if (remainder > 30) {
-      remainder = 30;
-    }
+
+    dvd.remainder = remainder;
 
     if (remainder == 0) {
       dvd.frequencyStr = "0";
@@ -337,7 +357,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void dollarValueScreenFourFrequency(String frequencyStr) {
-    if (!validateStockSelectOption(frequencyStr, 1, 30)) {
+    if (!validateStockSelectOption(frequencyStr, 1, dvd.remainder)) {
       viewGUI.displayErrorMessage("Not a valid Frequency. Reenter");
       return;
     }
@@ -411,6 +431,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     String[] dateArr;
     int remainderDays = 0;
+    String lastKnownStockDate = dvd.startDate;
+    boolean isDatesInFuture = false;
+
     if (dvd.recurIndex == 0 && !Objects.equals(dvd.frequencyStr, "0")) {
       assert dvd.endDate != null;
 
@@ -434,6 +457,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
         for (int k = 1; k < remainderDays; k++) {
           sDate = sDate.plusDays(Long.parseLong(dvd.frequencyStr));
           dateArr[k] = sDate.toString();
+          if (sDate.compareTo(LocalDate.now()) <= 0) {
+            lastKnownStockDate = sDate.toString();
+          }
+          if ((sDate.compareTo(LocalDate.now()) > 0) && !isDatesInFuture) {
+            isDatesInFuture = true;
+          }
         }
       }
     } else {
@@ -446,7 +475,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       stockSymbolRequired[j] = stockSymbolIndexArray[options[j]];
     }
 
-    viewGUI.displayInformationalMessage("Buying Shares, please wait.");
+    viewGUI.displayInformationalMessage("Buying Shares, please wait until success message.");
     // Calculate the number of shares to be bought for the
     super.calculateAndBuySharesBasedOnStrategy(dateArr, cost, proportionStr,
             stockSymbolRequired, number, super.currentPortfolioName);
@@ -454,15 +483,28 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     // Save ongoing strategy data
     // The final data will be like
     // 2022-11-26, 2000, 3, MSFT, 20, GOOG, 60, WMT, 20)
-    if (dvd.recurIndex == 0 && dvd.onGoingIndex == 0) {
+    if ((dvd.recurIndex == 0 && dvd.onGoingIndex == 0) || isDatesInFuture) {
       // Entry for ongoing strategy
       StringBuilder strategyArgs = new StringBuilder();
 
       // Type of Strategy
-      strategyArgs.append("DOLLAR-COST").append(",");
+      if (isDatesInFuture) {
+        strategyArgs.append("DOLLAR-COST-END").append(",");
+      } else {
+        strategyArgs.append("DOLLAR-COST").append(",");
+      }
 
       // Last known date on which the stocks were bought
-      strategyArgs.append(dateArr[remainderDays - 1]).append(",");
+      if (isDatesInFuture) {
+        strategyArgs.append(lastKnownStockDate).append(",");
+      } else {
+        strategyArgs.append(dateArr[remainderDays - 1]).append(",");
+      }
+
+      // Add end date as well
+      if (isDatesInFuture) {
+        strategyArgs.append(dvd.endDate).append(",");
+      }
 
       // Frequency to buy stocks
       strategyArgs.append(dvd.frequencyStr).append(",");
@@ -477,7 +519,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       // Proportion for each shares
       for (int j = 0; j < stockSymbolRequired.length; j++) {
         strategyArgs.append(stockSymbolRequired[j]).append(",");
-        strategyArgs.append(proportion[j]).append(",");
+        if (j < stockSymbolRequired.length - 1) {
+          strategyArgs.append(proportion[j]).append(",");
+        }
+        if (j == stockSymbolRequired.length - 1) {
+          strategyArgs.append(proportion[j]).append("\n");
+        }
       }
 
       // Persist the strategy
@@ -562,6 +609,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void valueOnFullCompMainScreen() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("ALL");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -593,6 +645,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void totalCostInvestedByDateMainMenu() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -620,6 +677,14 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     showPortfolioIndividualWithDate(pfIndex, date, "COST", "FLEXIBLE");
   }
 
+  /**
+   * This method helps in displaying the value of portfolio on certain date.
+   *
+   * @param portfolioNumber index of portfolio
+   * @param date            date chosen by user
+   * @param type            type of value
+   * @param portfolioType   type of portfolio
+   */
   private void showPortfolioIndividualWithDate(int portfolioNumber, String date,
                                                String type, String portfolioType) {
 
@@ -720,6 +785,13 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     viewGUI.resetMainMenu();
   }
 
+  /**
+   * This method helps in getting the value of a share on a certain date.
+   *
+   * @param stockSymbol symbol of the stock
+   * @param date        date selected by user
+   * @return the value of stock
+   */
   private double getShareValueOnDate(String stockSymbol, String date) {
     GetStockData gsd = new GetStockDataImpl();
     try {
@@ -767,6 +839,13 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     viewGUI.performanceDateEnter(timestampType);
   }
 
+  /**
+   * This method helps in form the display string for GUI for the names of portfolio
+   *
+   * @param portfolioNames    name of portfolio
+   * @param numberOfPortFolio number of portfolio
+   * @return the formated name
+   */
   private String[] getPortfolioNames(String[] portfolioNames, int numberOfPortFolio) {
     String[] result = new String[numberOfPortFolio - 1];
     StockCompositionData obj = new StockCompositionDataImpl("ALL");
@@ -868,6 +947,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     viewGUI.resetMainMenu();
   }
 
+  /**
+   * This method helps in drawing the graph for the performance of the portfolio.
+   */
   private void drawGraph() {
     String[] dates;
 
@@ -900,19 +982,19 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     boolean isAllNull = true;
     for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
-      if(set.getValue() != null) {
+      if (set.getValue() != null) {
         isAllNull = false;
         break;
       }
     }
 
-    if(isAllNull) {
+    if (isAllNull) {
       viewGUI.displayInformationalMessage("You dont have any stocks on these dates");
       resetMainMenu();
       return;
     }
 
-    viewGUI.getGraph(pfPerformance, super.currentPortfolioName);
+    viewGUI.getGraph(pfPerformance, super.currentPortfolioName.toUpperCase());
     //vciObj.portfolioPerformanceOverTime(dates, dates.length, pfPerformance, scale, getTitle);
   }
 
@@ -972,6 +1054,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void selectPortfolio() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -1005,9 +1092,15 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   }
 
 
-  // helper method
+  /**
+   * This method helps in selling the stocks on certain date selected by the portfolio.
+   * @param pfNumber portfolio selected by the user
+   * @param stockSymbol stock symbol selected by the user
+   * @param date date selected by the user
+   * @param sellShares shares to be sold selected by the user
+   */
   private void sellSharesOnAStock(int pfNumber, String stockSymbol, String date,
-                                     String sellShares) {
+                                  String sellShares) {
 
     StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
     super.currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
@@ -1053,7 +1146,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   // list of stocks as per date will be made available to user in a dropdown menu
   @Override
   public void getStocksAvailableForSaleAsPerDate(String date, int pfIndex) {
-    if(!validateDate(date, "yyyy-MM-dd", 0)) {
+    if (!validateDate(date, "yyyy-MM-dd", 0)) {
       viewGUI.displayErrorMessage("Not a valid date. Reenter");
       return;
     }

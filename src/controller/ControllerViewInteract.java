@@ -1,7 +1,5 @@
 package controller;
 
-import view.GUIView;
-
 /**
  * This interface represents the controller that interacts with the view and the set of methods
  * that can be called upon to interact with the model.

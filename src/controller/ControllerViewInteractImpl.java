@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,8 +48,6 @@ import static java.lang.Thread.sleep;
 public class ControllerViewInteractImpl implements ControllerViewInteract {
   protected final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
   protected final ViewControllerInteract vciObj;
-
-  // private GUIView viewGUI;
   protected String currentPortfolioName;
   private final PrintStream output;
   private final Scanner scan;
@@ -118,9 +117,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         if (pfFile.exists()) {
           BufferedReader strategyData;
           try {
-            strategyData = new BufferedReader(new FileReader(pfFile));
+            strategyData = new BufferedReader(new FileReader(file));
           } catch (IOException e) {
-            System.out.println("CONTROLLER: Unable to get strategy data\n");
+            System.out.println("CONTROLLER: Portfolio does not exists\n");
             return;
           }
 
@@ -169,6 +168,46 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
               }
             }
 
+            if (Objects.equals(splitData[0], "DOLLAR-COST-END")) {
+              // Check if the last purchase date has exceeded the recurring date
+              String lastPurchaseDate = splitData[1];
+              String endDateStr = splitData[2];
+              String frequency = splitData[3];
+              LocalDate dateToBePurchasedNext = LocalDate.parse(lastPurchaseDate)
+                      .plusDays(Long.parseLong(frequency));
+              LocalDate today = LocalDate.now();
+              LocalDate endDate = LocalDate.parse(endDateStr);
+
+              if (endDate.compareTo(today) < 0) {
+                // This means, the strategy time period is over,
+                // don't add them to the strategy as well
+                continue;
+              }
+
+              if (dateToBePurchasedNext.compareTo(today) <= 0) {
+                isSharesBought = true;
+                // if stocks are bought, store the new date in the strategy file
+                newData.replace(0, 10, dateToBePurchasedNext.toString());
+
+                // Buy stocks on this date
+                String[] dateArg = new String[1];
+                dateArg[0] = dateToBePurchasedNext.toString();
+                String cost = splitData[4];
+                int number = Integer.parseInt(splitData[5]);
+                String[] stockSymbol = new String[number];
+                String[] proportion = new String[number];
+
+                for (int i = 0; i < number; i++) {
+                  stockSymbol[i] = splitData[6 + i];
+                  proportion[i] = splitData[6 + i];
+                }
+
+                // Buy shares
+                calculateAndBuySharesBasedOnStrategy(dateArg, cost,
+                        proportion, stockSymbol, number, arrOfStr[0]);
+              }
+            }
+
             tempData.append('\n');
             newData.append(tempData);
           }
@@ -182,6 +221,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
               output.println("CONTROLLER: Error in persisting the strategy. " + e.getMessage());
             }
           }
+        } else {
+          // Portfolio does not exist, delete the strategy as well
+          file.delete();
         }
       }
     }
@@ -557,7 +599,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     stock[0] = stockSymbolIndexArray[Integer.parseInt(options) - 1];
     stock[1] = date;
     cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
-    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+    String[] stockData = readStockDataToShow();
+    if (stockData == null) {
+      output.println("CONTROLLER: Error in getting data. Retry.");
+      return true;
+    }
+    vciObj.showStockDataScreen(stockData);
     vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_VALUE, null, 0);
 
     String option;
@@ -674,6 +721,44 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       }
     }
   }
+
+  protected boolean validateDateEndDate(String dateStr, String format) {
+    if (dateStr == null || dateStr.length() == 0) {
+      return false;
+    }
+
+    Date date;
+    try {
+      DateFormat sdf = new SimpleDateFormat(format);
+      date = sdf.parse(dateStr);
+      if (!dateStr.equals(sdf.format(date))) {
+        return false;
+      }
+
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTime(date);
+      if (calendar.get(Calendar.YEAR) > 2050
+              || calendar.get(Calendar.YEAR) < 2000) {
+        return false;
+      }
+
+      if (calendar.get(Calendar.YEAR) == LocalDate.now().getYear()) {
+        if (calendar.get(Calendar.MONTH) + 1 > LocalDate.now().getMonthValue()) {
+          return false;
+        }
+        if (calendar.get(Calendar.MONTH) + 1 == LocalDate.now().getMonthValue()) {
+          if (calendar.get(Calendar.DATE) > LocalDate.now().getDayOfMonth()) {
+            return false;
+          }
+        }
+      }
+    } catch (Exception e) {
+      return false;
+    }
+
+    return true;
+  }
+
 
   private void commissionCostMainMenu() {
     StockCompositionData stk = new StockCompositionDataImpl("ALL");
@@ -988,7 +1073,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     }
 
     String footer = "# - either no stocks or 0 value in portfolio.\n";
-    vciObj.portfolioPerformanceOverTimeView(title, data, scaleStr,footer);
+    vciObj.portfolioPerformanceOverTimeView(title, data, scaleStr, footer);
   }
 
   private String printPerformance(String dateStr, Double value, String[] scale, String choice) {
@@ -1308,7 +1393,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     stockGetData[0] = stockSymbol;
     stockGetData[1] = date;
     cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stockGetData, 2);
-    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+    String[] stockData = readStockDataToShow();
+    if (stockData == null) {
+      output.println("CONTROLLER: Error in getting data. Retry.");
+      return true;
+    }
+    vciObj.showStockDataScreen(stockData);
 
     output.println("\nYou can sell only " + numberOfAvailableShares
             + " shares of this stock on " + date);
@@ -1338,6 +1428,44 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return endMenu();
   }
 
+  /**
+   * This method helps to read the current stock data.
+   *
+   * @return the stock data
+   */
+  private String[] readStockDataToShow() {
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData;
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      output.println("Supported stocks file not found " + e.getMessage());
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+      stockData.close();
+    } catch (Exception e) {
+      try {
+        stockData.close();
+      } catch (Exception ex) {
+        // Nothing
+      }
+      output.println("Controller: Error in reading Supported stocks csv file.");
+      return null;
+    }
+    return splitStockData;
+  }
+
+  /**
+   * This method acts as an abstract method that holds common code.
+   *
+   * @return true if successful in reading
+   */
   private boolean abstractAddStockScreen() {
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
@@ -1383,6 +1511,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     performCreatePortfolioMenuAction("1", "1", args, 1);
   }
 
+  /**
+   * This method helps in adding stocks using dollar-cost strategy
+   */
   private void addStockUsingDollarCostMainMenu() {
     if (!abstractAddStockScreen()) {
       return;
@@ -1660,6 +1791,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return true;
   }
 
+  /**
+   * This method helps in getting inputs and calculating data for buying stocks using dollar-cost
+   * strategy.
+   */
   private void dollarCostAverage() {
     // Dollar-Cost Averaging investing
     // Ask for the date of investment
@@ -1709,22 +1844,16 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       if (onGoingStr.equalsIgnoreCase("n")) {
         // If the strategy is not going, then ask for the end date
         // The end date can be in future as well
-
-        if (Objects.equals(LocalDate.parse(startDate), LocalDate.now())) {
-          output.println("Since start date is today, the end date will be today as well.");
-          endDate = String.valueOf(LocalDate.now());
-        } else {
-          output.println("Enter the end date for the strategy (YYYY-MM-DD)"
-                  + "(from " + startDate + " to current day)");
+        output.println("Enter the end date for the strategy"
+                + " from " + startDate + " (YYYY-MM-DD)");
+        endDate = scan.nextLine();
+        while (!validateDateEndDate(endDate, "yyyy-MM-dd")
+                || (LocalDate.parse(endDate).compareTo(LocalDate.parse(startDate)) < 0)) {
+          vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
           endDate = scan.nextLine();
-          while (!validateDate(endDate, "yyyy-MM-dd", 0)
-                  || (LocalDate.parse(endDate).compareTo(LocalDate.parse(startDate)) < 0)) {
-            vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
-            endDate = scan.nextLine();
-            if (Objects.equals(endDate, "b") || Objects.equals(endDate, "B")) {
-              cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
-              return;
-            }
+          if (Objects.equals(endDate, "b") || Objects.equals(endDate, "B")) {
+            cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO, null, 0);
+            return;
           }
         }
       }
@@ -1737,10 +1866,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         int remainder = (int) ChronoUnit.DAYS.between(LocalDate.parse(startDate),
                 LocalDate.parse(endDate));
 
-        if (remainder > 30) {
-          remainder = 30;
-        }
-
         if (remainder == 0) {
           output.println("Since the start date is today, there is no recurring investment applied.");
           frequencyStr = "0";
@@ -1751,7 +1876,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
           } else {
             output.println("Enter the recurring frequency (1 to " + remainder + " days)");
             frequencyStr = scan.nextLine();
-            while (!validateStockSelectOption(frequencyStr, 1, 30)) {
+            while (!validateStockSelectOption(frequencyStr, 1, remainder)) {
               vciObj.viewControllerInteract(TypeofViews.NOT_VALID_MAIN_MENU, null, 0);
               frequencyStr = scan.nextLine();
               if (frequencyStr.equalsIgnoreCase("m")) {
@@ -1803,7 +1928,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       while (!validateStockSelectOption(options[i], 1, snp.getMapSize())) {
         vciObj.viewControllerInteract(TypeofViews.STOCK_BUY_REENTER, null, 0);
         options[i] = scan.nextLine();
-        i--;
       }
       if (Objects.equals(options[i], "m") || Objects.equals(options[i], "M")) {
         cmiObj.controllerModelInteract(TypeofAction.DELETE_EMPTY_PORTFOLIO,
@@ -1889,6 +2013,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
 
     String[] dateArr;
     int remainderDays = 0;
+    String lastKnownStockDate = startDate;
+    boolean isDatesInFuture = false;
+
     if (recurringStr.equalsIgnoreCase("y")
             && !Objects.equals(frequencyStr, "0")) {
       assert endDate != null;
@@ -1913,6 +2040,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
         for (int k = 1; k < remainderDays; k++) {
           sDate = sDate.plusDays(Long.parseLong(frequencyStr));
           dateArr[k] = sDate.toString();
+          if (sDate.compareTo(LocalDate.now()) <= 0) {
+            lastKnownStockDate = sDate.toString();
+          }
+          if ((sDate.compareTo(LocalDate.now()) > 0) && !isDatesInFuture) {
+            isDatesInFuture = true;
+          }
         }
       }
     } else {
@@ -1933,16 +2066,29 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     // Save ongoing strategy data
     // The final data will be like
     // 2022-11-26, 2000, 3, MSFT, 20, GOOG, 60, WMT, 20)
-    if (recurringStr.equalsIgnoreCase("y")
-            && onGoingStr.equalsIgnoreCase("y")) {
+    if ((recurringStr.equalsIgnoreCase("y")
+            && onGoingStr.equalsIgnoreCase("y")) || isDatesInFuture) {
       // Entry for ongoing strategy
       StringBuilder strategyArgs = new StringBuilder();
 
       // Type of Strategy
-      strategyArgs.append("DOLLAR-COST").append(",");
+      if (isDatesInFuture) {
+        strategyArgs.append("DOLLAR-COST-END").append(",");
+      } else {
+        strategyArgs.append("DOLLAR-COST").append(",");
+      }
 
       // Last known date on which the stocks were bought
-      strategyArgs.append(dateArr[remainderDays - 1]).append(",");
+      if (isDatesInFuture) {
+        strategyArgs.append(lastKnownStockDate).append(",");
+      } else {
+        strategyArgs.append(dateArr[remainderDays - 1]).append(",");
+      }
+
+      // Add end date as well
+      if (isDatesInFuture) {
+        strategyArgs.append(endDate).append(",");
+      }
 
       // Frequency to buy stocks
       strategyArgs.append(frequencyStr).append(",");
@@ -1957,7 +2103,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       // Proportion for each shares
       for (int j = 0; j < stockSymbolRequired.length; j++) {
         strategyArgs.append(stockSymbolRequired[j]).append(",");
-        strategyArgs.append(proportion[j]).append(",");
+        if (j < stockSymbolRequired.length - 1) {
+          strategyArgs.append(proportion[j]).append(",");
+        }
+        if (j == stockSymbolRequired.length - 1) {
+          strategyArgs.append(proportion[j]).append("\n");
+        }
       }
 
       // Persist the strategy
@@ -1977,10 +2128,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
                                                       int number, String pfName) {
     double costInDouble = Double.parseDouble(cost);
     int index;
+    LocalDate today = LocalDate.now();
     for (int j = 0; j < dateArr.length; j++) {
+      LocalDate dateToBePurchased = LocalDate.parse(dateArr[j]);
       for (index = 0; index < number; index++) {
         double prop = Double.parseDouble(proportion[index]);
-        if (prop != 0) {
+        if (prop != 0 && (dateToBePurchased.compareTo(today) <= 0)) {
           // Get the stock price on that date
           String[] args = new String[2];
           args[0] = stockSymbolIndexArray[index]; // Stock Symbol
@@ -2021,7 +2174,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       file.createNewFile();
     }
 
-    PrintWriter write = new PrintWriter(fileName);
+    PrintWriter write = new PrintWriter(new FileOutputStream(fileName, true));
     write.write(strategyArgs);
     write.flush();
     write.close();
