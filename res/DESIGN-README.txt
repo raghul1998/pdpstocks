@@ -32,6 +32,13 @@ Since the dollar value stragety indirectly allows users to buy shares as fractio
 sell stocks using fractional values. The detailed description is given below.
 Also, since commission cost is optional in this assignment, the GUI does not have commission cost.
 
+GUI supportablity is added in this assignment. To support the GUI, a new controller has been added without editing
+the old controller. The Model interface has not been modified as the model is capable enough to accomodate the new interface.
+
+Based on the feedback from the previous assignment, we moved the IO operations to the controller. 
+Also, declaration of unnecessary variable for the class has been avoided and removed. The feedback for selecting date
+has been integrated in the GUI.
+
 DETAILED FEATURE DESCRIPTION
 
 1. CREATE A PORTFOLIO
