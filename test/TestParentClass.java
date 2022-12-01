@@ -215,6 +215,7 @@ public class TestParentClass {
     try {
       stockData = new BufferedReader(new FileReader("data/StockData.csv"));
     } catch (Exception e) {
+      // Do nothing
     }
 
     try {

@@ -402,7 +402,7 @@ public class ViewTest extends TestParentClass {
 
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
     String[] stockDataView = super.readStockDataToShow();
-    if(stockDataView == null) {
+    if (stockDataView == null) {
       return;
     }
     vciObj.showStockDataScreen(stockDataView);
@@ -467,7 +467,7 @@ public class ViewTest extends TestParentClass {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
 
-    String[] name = {"view1","1"};
+    String[] name = {"view1", "1"};
     String[] stocks = {"MSFT", "2022-11-11"};
 
     String[] portfolioNames = {"view1", "ALL"};
@@ -492,8 +492,4 @@ public class ViewTest extends TestParentClass {
     deleteDirectory();
   }
 
-
-  /**
-   * This test displays the list of stocks available for the user to be sold.
-   */
 }

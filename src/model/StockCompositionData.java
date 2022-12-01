@@ -26,6 +26,7 @@ public interface StockCompositionData extends StockPortFolioData {
   /**
    * This method finds out the names of all the portfolio that a user has in the system.
    *
+   * @param portfolioType type of portfolio
    * @return the names of the portfolio as a string array
    */
   String[] getPortFolioNames(String portfolioType);
@@ -34,11 +35,12 @@ public interface StockCompositionData extends StockPortFolioData {
    * This method gets all the stock related data that is in a portfolio and some data relevant to
    * the portfolio.
    *
-   * @param index       the index of the portfolio
-   * @param unique      true if the stocks bought of different dates should be obtained uniquely
-   * @param dateStr     date until which the stock data is required
-   * @param includeSale true if the data needs to have the stocks that are sold as well
-   * @param realValue   true to ignore the data of those stocks with zero shares
+   * @param index         the index of the portfolio
+   * @param unique        true if the stocks bought of different dates should be obtained uniquely
+   * @param dateStr       date until which the stock data is required
+   * @param includeSale   true if the data needs to have the stocks that are sold as well
+   * @param realValue     true to ignore the data of those stocks with zero shares
+   * @param portfolioType type of portfolio
    * @return the object of stock portfolio data class
    */
   StockPortFolioData getAllStockDataInPortFolio(int index, boolean unique, String dateStr,
@@ -48,20 +50,24 @@ public interface StockCompositionData extends StockPortFolioData {
   /**
    * This method gets all the stocks on a particular date that are available for sale.
    *
-   * @param pfIndex     the index of the portfolio
-   * @param stockSymbol symbol of the stock
-   * @param dateStr     data on which the stock data needs to be obtained
+   * @param pfIndex       the index of the portfolio
+   * @param stockSymbol   symbol of the stock
+   * @param dateStr       data on which the stock data needs to be obtained
+   * @param portfolioType type of portfolio
    * @return the number of shares available as an integer
    * @throws ParseException if error while parsing the csv data
    */
-  double sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol,
-                                      String dateStr, String portfolioType) throws ParseException;
+  double sharesAvailableOnTheDateForSale(int pfIndex,
+                                         String stockSymbol,
+                                         String dateStr,
+                                         String portfolioType) throws ParseException;
 
   /**
    * This method obtains the complete performance data of the portfolio on the given date.
    *
-   * @param args   the arguments required for computing the portfolio performance
-   * @param length the length of the arguments
+   * @param args          the arguments required for computing the portfolio performance
+   * @param length        the length of the arguments
+   * @param portfolioType type of portfolio
    * @return the map of the date and value of the portfolio on that date
    * @throws IOException if there is an error in IO operation
    */
@@ -71,7 +77,8 @@ public interface StockCompositionData extends StockPortFolioData {
   /**
    * This method that returns the name of the portfolio by the index that is provided.
    *
-   * @param index the index of the portfolio
+   * @param index         the index of the portfolio
+   * @param portfolioType type of portfolio
    * @return the name of the portfolio as a string
    */
   String getPortFolioFileNameByIndex(int index, String portfolioType);

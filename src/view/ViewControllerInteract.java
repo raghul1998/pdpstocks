@@ -34,7 +34,7 @@ public interface ViewControllerInteract {
   void displayValueCompForOthers(String title, String[] column, String[][] data, String footer);
 
   /**
-   * This method displays the performance of portfolio over time
+   * This method displays the performance of portfolio over time.
    *
    * @param title    title to be displayed
    * @param data     data to be displayed
@@ -45,7 +45,7 @@ public interface ViewControllerInteract {
                                         String[] scaleStr, String footer);
 
   /**
-   * This method helps to display the current stock data on the screen
+   * This method helps to display the current stock data on the screen.
    *
    * @param stockData stock data to be displayed
    */

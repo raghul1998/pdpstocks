@@ -10,7 +10,7 @@ The application will not create an empty portfolio.
 
 EXTERNAL DEPENDENCY
 1. An open source library, free to use if we mention author name, called JDatePicker to pick dates.
-   The author credit is mentioned in the file called LICENSE under 'res/dependencies/JDatePicker/LICENSE.txt'
+   The author credit is mentioned in the file called LICENSE under 'dependencies/JDatePicker/LICENSE.txt'
    https://github.com/JDatePicker/JDatePicker
    https://github.com/JDatePicker/JDatePicker/blob/master/LICENSE.md
    https://jdatepicker.org/
@@ -21,7 +21,7 @@ EXTERNAL DEPENDENCY
    
    
 HOW TO INCLUDE DEPENDENCY IN IntelliJ
-1. Unzip the dependencies zip file present under the 'res' folder and copy paste (in some desirable location) the JAR files 
+1. Unzip the dependencies zip file and copy paste (in some desirable location) the JAR files 
    present (three in total) under JDatePicker folder and JFreeChart folder present under that dependencies zip file.
 2. Open the project in IntelliJ
 3. Select File->Project Structure->Modules

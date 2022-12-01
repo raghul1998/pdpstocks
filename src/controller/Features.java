@@ -1,6 +1,9 @@
 package controller;
 
-import javax.swing.*;
+
+
+import javax.swing.JSpinner;
+import javax.swing.JComboBox;
 
 import view.GUIView;
 
@@ -48,7 +51,7 @@ public interface Features {
   void performancePortfolioMainMenu(int pfIndex, int timestampType);
 
   /**
-   * A method to check the current stock price and display
+   * A method to check the current stock price and display.
    *
    * @param type          type of portfolio
    * @param name          name of stock
@@ -77,7 +80,7 @@ public interface Features {
   void performanceOfPortfolioGetData(String num);
 
   /**
-   * This method buys the stocks selected by user
+   * This method buys the stocks selected by user.
    *
    * @param date          date selected by user
    * @param stockSelected stock selected by user
@@ -179,7 +182,7 @@ public interface Features {
   void resetMainMenu();
 
   /**
-   * This method gets date for viewing value and composition
+   * This method gets date for viewing value and composition.
    *
    * @param date date selected by user
    */
@@ -212,7 +215,7 @@ public interface Features {
   void totalCostInvestedScreenOne(int pfIndex, String date);
 
   /**
-   * This method helps in getting stock data available for sale
+   * This method helps in getting stock data available for sale.
    *
    * @param date    date selected by user
    * @param pfIndex portfolio selected by user

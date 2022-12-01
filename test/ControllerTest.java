@@ -7401,7 +7401,7 @@ public class ControllerTest extends TestParentClass {
     obj.start();
 
     String expectedOutput = getMainScreen()
-            +"\n"+ "ENTER YOUR CHOICE: \n"
+            + "\n" + "ENTER YOUR CHOICE: \n"
             + "\n"
             + getFlexibleInflexibleScreen()
             + "\n"
@@ -7415,7 +7415,8 @@ public class ControllerTest extends TestParentClass {
             + getBuyStockScreen()
             + "\n"
             + "ENTER YOUR CHOICE: \n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) (from year 2000 to current day)\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) "
+            + "(from year 2000 to current day)\n"
             + "Do you want to investment to be recurring? (Y|N)\n"
             + "Is this an ongoing strategy? (Y|N)\n"
             + "Enter the end date for the strategy from 2022-11-01 (YYYY-MM-DD)\n"
@@ -7451,7 +7452,7 @@ public class ControllerTest extends TestParentClass {
   public void testZZQAddStockstoPortfolioUsingDollarStrategy() {
     String userInput = "9" + "\n" + "22" + "\n" + "2022-01-01" + "\n" + "y" + "\n" + "n" + "\n"
             + "2022-11-30" + "\n" + "15" + "\n" + "3" + "\n" + "1" + "\n" + "9" + "\n" + "10"
-            + "\n" +"100" + "\n" + "33" + "\n" + "34"+ "\n" + "e";
+            + "\n" + "100" + "\n" + "33" + "\n" + "34" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -7489,7 +7490,8 @@ public class ControllerTest extends TestParentClass {
             + "22. CONTROLLERTEST993\n"
             + "\n"
             + "Select the portfolio to which you would like to add the stock.\n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) (from year 2000 to current day)\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) "
+            + "(from year 2000 to current day)\n"
             + "Do you want to investment to be recurring? (Y|N)\n"
             + "Is this an ongoing strategy? (Y|N)\n"
             + "Enter the end date for the strategy from 2022-01-01 (YYYY-MM-DD)\n"
@@ -7525,7 +7527,7 @@ public class ControllerTest extends TestParentClass {
   }
 
   @Test
-  public void testZZRValueOfPortfolioAfterExecutingStrategy(){
+  public void testZZRValueOfPortfolioAfterExecutingStrategy() {
     String userInput = "3" + "\n" + "23" + "\n" + "2022-11-01" + "\n" + "m" + "\n" + "e";
 
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -7582,7 +7584,7 @@ public class ControllerTest extends TestParentClass {
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"
             + getMainScreen()
-            +"\n"
+            + "\n"
             + "ENTER YOUR CHOICE: \n"
             + "\n"
             + "Exiting...\n";

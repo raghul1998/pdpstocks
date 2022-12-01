@@ -15,6 +15,7 @@ public interface GetStockData {
    * @param stock   the ticker symbol of the stock that the data is required for
    * @param dateStr data on which the stock is required for
    * @throws ParseException if there is an error in parsing the data
+   * @throws IOException    if there is an error in reading the file
    */
   void getValue(String stock, String[] dateStr) throws ParseException, IOException;
 

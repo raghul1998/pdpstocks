@@ -32,6 +32,8 @@ public class StockCompositionDataImpl implements StockCompositionData {
   /**
    * A constructor that reads the user directory to find the number of portfolios that the user
    * has or created and assigns the number to the global variable.
+   *
+   * @param portfolioType type of portfolio
    */
   public StockCompositionDataImpl(String portfolioType) {
     int count = 0;
@@ -323,7 +325,7 @@ public class StockCompositionDataImpl implements StockCompositionData {
 
   @Override
   public double sharesAvailableOnTheDateForSale(int pfIndex, String stockSymbol, String dateStr,
-                                             String portfolioType) throws ParseException {
+                                                String portfolioType) throws ParseException {
     String filename = getPortFolioFileNameByIndex(pfIndex, portfolioType);
     Map<Date, Double> map = new TreeMap<>();
     BufferedReader stockData;

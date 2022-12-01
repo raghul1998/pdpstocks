@@ -9,7 +9,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.RefineryUtilities;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
  * This class represents the graph chart and it's dependencies.
@@ -20,6 +20,13 @@ public class BarChartImpl extends JFrame implements BarChart {
   private final DefaultCategoryDataset dataset;
   private final String title;
 
+  /**
+   * Constructor that allocates title, x-axis and y-axis label for the graph.
+   *
+   * @param title  title of the graph
+   * @param xLabel x-axis label of the graph
+   * @param yLabel y-axis label of the graph
+   */
   public BarChartImpl(String title, String xLabel, String yLabel) {
     super(title);
     this.title = title;
@@ -28,10 +35,12 @@ public class BarChartImpl extends JFrame implements BarChart {
     dataset = new DefaultCategoryDataset();
   }
 
+  @Override
   public void createDataset(String xAxisValue, double yAxisValue, String pfName) {
     this.dataset.addValue(yAxisValue, pfName, xAxisValue);
   }
 
+  @Override
   public void drawGraph() {
     JFreeChart chart = ChartFactory.createBarChart(
             this.title, // Chart title

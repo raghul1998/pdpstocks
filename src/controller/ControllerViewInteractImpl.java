@@ -260,7 +260,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return true;
   }
 
-  private void showPortfolioIndividualWithDateScreenController(String option, String date, String type,
+  private void showPortfolioIndividualWithDateScreenController(String option, String date,
+                                                               String type,
                                                                String portfolioType) {
     int portfolioNumber = Integer.parseInt(option) - 1;
     StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
@@ -316,14 +317,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     String[] column = new String[5];
 
     if (!type.equals("COST")) {
-      column = new String[]
-              {
-                      "\nName",
-                      " (" + "Symbol" + ") ",
-                      "\t " + "Quantity",
-                      "\t " + "Share Value on " + date,
-                      "\t " + "Total Value\n"
-              };
+      column = new String[]{
+        "\nName",
+        " (" + "Symbol" + ") ",
+        "\t " + "Quantity",
+        "\t " + "Share Value on " + date,
+        "\t " + "Total Value\n"};
     }
 
     String[][] data = new String[stkObj.numberOfUniqueStocks][column.length];
@@ -740,17 +739,6 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       if (calendar.get(Calendar.YEAR) > 2050
               || calendar.get(Calendar.YEAR) < 2000) {
         return false;
-      }
-
-      if (calendar.get(Calendar.YEAR) == LocalDate.now().getYear()) {
-        if (calendar.get(Calendar.MONTH) + 1 > LocalDate.now().getMonthValue()) {
-          return false;
-        }
-        if (calendar.get(Calendar.MONTH) + 1 == LocalDate.now().getMonthValue()) {
-          if (calendar.get(Calendar.DATE) > LocalDate.now().getDayOfMonth()) {
-            return false;
-          }
-        }
       }
     } catch (Exception e) {
       return false;
@@ -1512,7 +1500,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   /**
-   * This method helps in adding stocks using dollar-cost strategy
+   * This method helps in adding stocks using dollar-cost strategy.
    */
   private void addStockUsingDollarCostMainMenu() {
     if (!abstractAddStockScreen()) {
@@ -1867,7 +1855,8 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
                 LocalDate.parse(endDate));
 
         if (remainder == 0) {
-          output.println("Since the start date is today, there is no recurring investment applied.");
+          output.println("Since the start date is today, there is no recurring "
+                  + "investment applied.");
           frequencyStr = "0";
         } else {
           if (remainder == 1) {
@@ -2021,11 +2010,11 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
       assert endDate != null;
 
       if (onGoingStr.equalsIgnoreCase("n")) {
-        remainderDays = (int) ChronoUnit.DAYS.between(LocalDate.parse(startDate)
-                , LocalDate.parse(endDate));
+        remainderDays = (int) ChronoUnit.DAYS.between(LocalDate.parse(startDate),
+                LocalDate.parse(endDate));
       } else {
-        remainderDays = (int) ChronoUnit.DAYS.between(LocalDate.parse(startDate)
-                , LocalDate.now());
+        remainderDays = (int) ChronoUnit.DAYS.between(LocalDate.parse(startDate),
+                LocalDate.now());
       }
       assert frequencyStr != null;
       remainderDays = (remainderDays / Integer.parseInt(frequencyStr)) + 1;
@@ -2156,7 +2145,7 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
   }
 
   /**
-   * A private helper method that writes the strategy data to the file
+   * A private helper method that writes the strategy data to the file.
    *
    * @param strategyArgs strategy data
    * @throws IOException if there is any issue in writing data

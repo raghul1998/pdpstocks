@@ -15,6 +15,5 @@ public interface ControllerViewInteract {
    * This method setups the basic data for the application to run. This is an initial process.
    */
   void setup();
-
- // void setView(GUIView guiView);
+  
 }
