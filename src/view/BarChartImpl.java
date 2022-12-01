@@ -1,5 +1,8 @@
 package view;
 
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -39,6 +42,11 @@ public class BarChartImpl extends JFrame implements BarChart {
     );
 
     ChartPanel chartPanel = new ChartPanel(chart);
+    CategoryPlot plot = (CategoryPlot) chart.getPlot();
+    CategoryAxis domainAxis = plot.getDomainAxis();
+    domainAxis.setCategoryLabelPositions(
+            CategoryLabelPositions.createUpRotationLabelPositions(
+                    Math.PI / 6.0));
     chartPanel.setPreferredSize(new java.awt.Dimension(1000, 500));
     this.setContentPane(chartPanel);
     this.pack();

@@ -18,11 +18,11 @@ public class Main {
    * @param args arguments for the main method if any
    */
   public static void main(String[] args) {
-    GUIView guiView = new JFrameViewImpl("STOCKS GUI APPLICATION");
     ControllerViewInteract obj = new ControllerViewInteractImpl(System.in, System.out);
+    //obj.setup();
+    GUIView guiView = new JFrameViewImpl("STOCKS GUI APPLICATION");
     GUIController guiController = new GUIController(System.in, System.out);
     guiController.setView(guiView);
-    //obj.setup();
     obj.start();
   }
 }

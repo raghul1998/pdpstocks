@@ -59,6 +59,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void valueAndCompositionGUIMainScreen() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("ALL");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -196,6 +201,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void performanceOfPortfolioMain() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -226,6 +236,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
 
   public void addStocksUsingDollarMain() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -296,20 +311,16 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       viewGUI.dollarValueFrequencyEnterScreen(str);
     } else if (onGoingIndex == 1) {
       // No
-      if (Objects.equals(LocalDate.parse(dvd.startDate), LocalDate.now())) {
-        dvd.endDate = String.valueOf(LocalDate.now());
-      } else {
-        // Ask for end date
-        String str = "Enter the end date for the strategy (YYYY-MM-DD)"
-                + "(from " + dvd.startDate + " to current day)";
-        viewGUI.dollarValueEndDateScreen(str);
-      }
+      // Ask for end date
+      String str = "Enter the end date for the strategy (YYYY-MM-DD)"
+              + "(from " + dvd.startDate + " to current day)";
+      viewGUI.dollarValueEndDateScreen(str);
     }
   }
 
   @Override
   public void dollarValueScreenThreeEndDate(String endDate) {
-    if (!validateDate(endDate, "yyyy-MM-dd", 0)
+    if (!super.validateDateEndDate(endDate, "yyyy-MM-dd")
             || (LocalDate.parse(endDate).compareTo(LocalDate.parse(dvd.startDate)) < 0)) {
       viewGUI.displayErrorMessage("Not a valid date. Reenter");
       return;
@@ -319,9 +330,8 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     // Now calculate or ask for frequency
     int remainder = (int) ChronoUnit.DAYS.between(LocalDate.parse(dvd.startDate),
             LocalDate.parse(dvd.endDate));
-    if (remainder > 30) {
-      remainder = 30;
-    }
+
+    dvd.remainder = remainder;
 
     if (remainder == 0) {
       dvd.frequencyStr = "0";
@@ -337,7 +347,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void dollarValueScreenFourFrequency(String frequencyStr) {
-    if (!validateStockSelectOption(frequencyStr, 1, 30)) {
+    if (!validateStockSelectOption(frequencyStr, 1, dvd.remainder)) {
       viewGUI.displayErrorMessage("Not a valid Frequency. Reenter");
       return;
     }
@@ -411,6 +421,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     String[] dateArr;
     int remainderDays = 0;
+    String lastKnownStockDate = dvd.startDate;
+    boolean isDatesInFuture = false;
+
     if (dvd.recurIndex == 0 && !Objects.equals(dvd.frequencyStr, "0")) {
       assert dvd.endDate != null;
 
@@ -434,6 +447,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
         for (int k = 1; k < remainderDays; k++) {
           sDate = sDate.plusDays(Long.parseLong(dvd.frequencyStr));
           dateArr[k] = sDate.toString();
+          if (sDate.compareTo(LocalDate.now()) <= 0) {
+            lastKnownStockDate = sDate.toString();
+          }
+          if ((sDate.compareTo(LocalDate.now()) > 0) && !isDatesInFuture) {
+            isDatesInFuture = true;
+          }
         }
       }
     } else {
@@ -446,7 +465,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       stockSymbolRequired[j] = stockSymbolIndexArray[options[j]];
     }
 
-    viewGUI.displayInformationalMessage("Buying Shares, please wait.");
+    viewGUI.displayInformationalMessage("Buying Shares, please wait until success message.");
     // Calculate the number of shares to be bought for the
     super.calculateAndBuySharesBasedOnStrategy(dateArr, cost, proportionStr,
             stockSymbolRequired, number, super.currentPortfolioName);
@@ -454,15 +473,28 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     // Save ongoing strategy data
     // The final data will be like
     // 2022-11-26, 2000, 3, MSFT, 20, GOOG, 60, WMT, 20)
-    if (dvd.recurIndex == 0 && dvd.onGoingIndex == 0) {
+    if ((dvd.recurIndex == 0 && dvd.onGoingIndex == 0) || isDatesInFuture) {
       // Entry for ongoing strategy
       StringBuilder strategyArgs = new StringBuilder();
 
       // Type of Strategy
-      strategyArgs.append("DOLLAR-COST").append(",");
+      if (isDatesInFuture) {
+        strategyArgs.append("DOLLAR-COST-END").append(",");
+      } else {
+        strategyArgs.append("DOLLAR-COST").append(",");
+      }
 
       // Last known date on which the stocks were bought
-      strategyArgs.append(dateArr[remainderDays - 1]).append(",");
+      if (isDatesInFuture) {
+        strategyArgs.append(lastKnownStockDate).append(",");
+      } else {
+        strategyArgs.append(dateArr[remainderDays - 1]).append(",");
+      }
+
+      // Add end date as well
+      if (isDatesInFuture) {
+        strategyArgs.append(dvd.endDate).append(",");
+      }
 
       // Frequency to buy stocks
       strategyArgs.append(dvd.frequencyStr).append(",");
@@ -477,7 +509,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       // Proportion for each shares
       for (int j = 0; j < stockSymbolRequired.length; j++) {
         strategyArgs.append(stockSymbolRequired[j]).append(",");
-        strategyArgs.append(proportion[j]).append(",");
+        if (j < stockSymbolRequired.length - 1) {
+          strategyArgs.append(proportion[j]).append(",");
+        }
+        if (j == stockSymbolRequired.length - 1) {
+          strategyArgs.append(proportion[j]).append("\n");
+        }
       }
 
       // Persist the strategy
@@ -562,6 +599,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void valueOnFullCompMainScreen() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("ALL");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -593,6 +635,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void totalCostInvestedByDateMainMenu() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -900,19 +947,19 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
     boolean isAllNull = true;
     for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
-      if(set.getValue() != null) {
+      if (set.getValue() != null) {
         isAllNull = false;
         break;
       }
     }
 
-    if(isAllNull) {
+    if (isAllNull) {
       viewGUI.displayInformationalMessage("You dont have any stocks on these dates");
       resetMainMenu();
       return;
     }
 
-    viewGUI.getGraph(pfPerformance, super.currentPortfolioName);
+    viewGUI.getGraph(pfPerformance, super.currentPortfolioName.toUpperCase());
     //vciObj.portfolioPerformanceOverTime(dates, dates.length, pfPerformance, scale, getTitle);
   }
 
@@ -972,6 +1019,11 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   @Override
   public void selectPortfolio() {
+    try {
+      super.readStrategyAndImplement();
+    } catch (Exception e) {
+      // Do nothing
+    }
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
     if (numberOfPortFolio == 0) {
@@ -1007,7 +1059,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
 
   // helper method
   private void sellSharesOnAStock(int pfNumber, String stockSymbol, String date,
-                                     String sellShares) {
+                                  String sellShares) {
 
     StockCompositionData stk = new StockCompositionDataImpl("FLEXIBLE");
     super.currentPortfolioName = stk.getPortFolioNames("FLEXIBLE")[pfNumber];
@@ -1053,7 +1105,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   // list of stocks as per date will be made available to user in a dropdown menu
   @Override
   public void getStocksAvailableForSaleAsPerDate(String date, int pfIndex) {
-    if(!validateDate(date, "yyyy-MM-dd", 0)) {
+    if (!validateDate(date, "yyyy-MM-dd", 0)) {
       viewGUI.displayErrorMessage("Not a valid date. Reenter");
       return;
     }
