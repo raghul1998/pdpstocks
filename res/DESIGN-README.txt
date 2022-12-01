@@ -16,12 +16,6 @@ Any input to the application will go to the CV, the CV will determine what to ba
 If the input only needs to render some data to the user, it will tell the view to display such view.
 If the input needs to perform some operations, then CV will inform the model via CM which in-turn will go to the model.
 
-The Model only exposes one interface with one method and an enum that tells the types of actions the model can perform.
-The CM will send commands to the model by calling this one method and passing the type of actions as an argument.
-The CM will receive the command from the CV based on the user inputs.
-Similarly, the view exposes only one interface with one methond and an enum that tells the types of views that it has.
-The CV will send commands to the view by calling this method and passing the type of view as an argument.
-
 The application makes use of APIs to fetch the real time data of the stock when the user tries to buy the stocks.
 The application also uses real-time data to get the value of the stocks/shares when the user wants to view the 
 value of the portfolio on a certain date.
