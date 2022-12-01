@@ -111,8 +111,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
 
     super(caption);
 
-    setSize(1000, 1000);
-    setLocation(500, 200);
+    setSize(700, 450);
+    setLocation(400, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     //cards.add(datePicker);
@@ -131,7 +131,7 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     // JPanel card1 = new JPanel();
     JPanel card1 = new JPanel(new GridBagLayout());
     GridBagConstraints constraints = new GridBagConstraints();
-    constraints.insets = new Insets(10, 10, 10, 10);
+    constraints.insets = new Insets(60, 10, 10, 10);
 
 
     c1 = new CardLayout();
@@ -752,20 +752,41 @@ public class JFrameViewImpl extends JFrame implements GUIView {
     JPanel cardCommon = new JPanel(new GridBagLayout());
     GridBagConstraints constraints = new GridBagConstraints();
     constraints.insets = new Insets(10, 10, 10, 10);
-
-//    cardCommon.setPreferredSize(new Dimension( 2000,2000));
-//    JScrollPane scrollFrame = new JScrollPane(cardCommon);
-//    cardCommon.setAutoscrolls(true);
-//    scrollFrame.setPreferredSize(new Dimension( 800,300));
-//    this.add(scrollFrame);
-
-//    JScrollPane scrollPane = new JScrollPane(cards);
-//   // scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//
+////    cardCommon.setPreferredSize(new Dimension( 2000,2000));
+////    JScrollPane scrollFrame = new JScrollPane(cardCommon);
+////    cardCommon.setAutoscrolls(true);
+////    scrollFrame.setPreferredSize(new Dimension( 800,300));
+////    this.add(scrollFrame);
+//
+//    JScrollPane scrollPane = new JScrollPane(cardCommon);
+////   // scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 //    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 //    scrollPane.setBounds(50, 30, 300, 50);
+//    JPanel contentPane = new JPanel(null);
+//    contentPane.setPreferredSize(new Dimension(500, 400));
+//    contentPane.add(scrollPane);
 //
-//    cardCommon.setPreferredSize(new Dimension(500, 400));
-//    cardCommon.add(scrollPane);
+////
+////    cardCommon.setPreferredSize(new Dimension(500, 400));
+////    cardCommon.add(scrollPane);
+
+    JFrame frame = new JFrame();
+    //JPanel panel = new JPanel();
+//    for (int i = 0; i < 10; i++) {
+//      panel.add(new JButton("Hello-" + i));
+//    }
+    JScrollPane scrollPane = new JScrollPane(cardCommon);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    scrollPane.setBounds(50, 30, 300, 50);
+    JPanel contentPane = new JPanel(null);
+    contentPane.setPreferredSize(new Dimension(500, 400));
+    contentPane.add(scrollPane);
+    frame.setContentPane(contentPane);
+    frame.pack();
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    frame.setVisible(true);
 
     constraints.gridx = 0;
     constraints.gridy = 1;
