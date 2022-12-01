@@ -1065,8 +1065,8 @@ public class JFrameViewImpl extends JFrame implements GUIView {
       comboCommon.setSelectedIndex(0);
     }
 
-    display3 = new JLabel("Enter the date on which you would like to purchase the stock (YYYY-MM-DD)"
-            + " (from year 2000 to current day)");
+    display3 = new JLabel("Enter the date on which you would like to purchase the "
+            + "stock (YYYY-MM-DD) (from year 2000 to current day)");
 
     UtilDateModel model = new UtilDateModel();
     Properties p = new Properties();
