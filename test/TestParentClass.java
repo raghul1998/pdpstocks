@@ -207,4 +207,29 @@ public class TestParentClass {
   }
 
 
+  protected String[] readStockDataToShow() {
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData = new String[4];
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+      stockData.close();
+    } catch (Exception e) {
+      try {
+        stockData.close();
+      } catch (Exception ex) {
+        // Nothing
+      }
+      return null;
+    }
+    return splitStockData;
+  }
 }

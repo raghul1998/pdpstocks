@@ -25,6 +25,10 @@ import model.TransactValueDataImpl;
 import model.TypeofAction;
 import view.GUIView;
 
+/**
+ * This class represents the controller that controls the GUI and also extents the feature
+ * interface.
+ */
 public class GUIController extends ControllerViewInteractImpl implements Features {
   private GUIView viewGUI;
   private PortfolioPerformanceDataImpl ppd;
@@ -220,6 +224,12 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     }
   }
 
+  /**
+   * This helper method helps in retriving the name of the portfolios.
+   *
+   * @param type type of portfolio
+   * @return the names of portfolio
+   */
   private String[] getFlexiblePortfolioNames(String type) {
     StockCompositionData obj = new StockCompositionDataImpl(type);
     int numberOfPortFolio = obj.getNumberOfPortFolio();
@@ -667,6 +677,14 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     showPortfolioIndividualWithDate(pfIndex, date, "COST", "FLEXIBLE");
   }
 
+  /**
+   * This method helps in displaying the value of portfolio on certain date.
+   *
+   * @param portfolioNumber index of portfolio
+   * @param date            date chosen by user
+   * @param type            type of value
+   * @param portfolioType   type of portfolio
+   */
   private void showPortfolioIndividualWithDate(int portfolioNumber, String date,
                                                String type, String portfolioType) {
 
@@ -767,6 +785,13 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     viewGUI.resetMainMenu();
   }
 
+  /**
+   * This method helps in getting the value of a share on a certain date.
+   *
+   * @param stockSymbol symbol of the stock
+   * @param date        date selected by user
+   * @return the value of stock
+   */
   private double getShareValueOnDate(String stockSymbol, String date) {
     GetStockData gsd = new GetStockDataImpl();
     try {
@@ -814,6 +839,13 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     viewGUI.performanceDateEnter(timestampType);
   }
 
+  /**
+   * This method helps in form the display string for GUI for the names of portfolio
+   *
+   * @param portfolioNames    name of portfolio
+   * @param numberOfPortFolio number of portfolio
+   * @return the formated name
+   */
   private String[] getPortfolioNames(String[] portfolioNames, int numberOfPortFolio) {
     String[] result = new String[numberOfPortFolio - 1];
     StockCompositionData obj = new StockCompositionDataImpl("ALL");
@@ -915,6 +947,9 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     viewGUI.resetMainMenu();
   }
 
+  /**
+   * This method helps in drawing the graph for the performance of the portfolio.
+   */
   private void drawGraph() {
     String[] dates;
 
@@ -1057,7 +1092,13 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   }
 
 
-  // helper method
+  /**
+   * This method helps in selling the stocks on certain date selected by the portfolio.
+   * @param pfNumber portfolio selected by the user
+   * @param stockSymbol stock symbol selected by the user
+   * @param date date selected by the user
+   * @param sellShares shares to be sold selected by the user
+   */
   private void sellSharesOnAStock(int pfNumber, String stockSymbol, String date,
                                   String sellShares) {
 

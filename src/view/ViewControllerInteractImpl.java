@@ -1,16 +1,9 @@
 package view;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
-import controller.GetStockData;
-import controller.GetStockDataImpl;
 import model.StockCompositionData;
 import model.StockCompositionDataImpl;
 import model.StockNameMap;
@@ -56,10 +49,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         listOfSupportedStocksScreen();
         break;
       }
-      case SHOW_STOCK_DATA: {
-        showStockDataScreen();
-        break;
-      }
       case BUY_STOCKS_VALUE: {
         showBuyStockValueScreen();
         break;
@@ -86,10 +75,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showPortfolioIndividualScreen(opt, portfolioType);
         break;
       }
-      /*case PORTFOLIO_INDIVIDUAL_LIST_WITH_DATE: {
-        showPortfolioIndividualWithDateScreen(args[0], args[1], args[2], args[3]);
-        break;
-      }*/
       case PORTFOLIO_NAME_REENTER: {
         showPortfolioNameReenter();
         break;
@@ -134,10 +119,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
         showListOfStocksAvailableOnADate(args[0], args[1], args[2]);
         break;
       }
-      /*case PORTFOLIO_PERFORMANCE: {
-        portfolioPerformanceOverTime(args, length);
-        break;
-      }*/
       case NOT_VALID_MAIN_MENU: {
         notAValidMainMenu();
         break;
@@ -185,33 +166,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
     output.println("Press 'm' to go back to main menu.\n");
   }
 
-  /**
-   * This method displays the performance of the portfolio over time.
-   *
-   * @param args   the helper arguments to display
-   * @param length length of the arguments
-   */
-  public void portfolioPerformanceOverTime(String[] args, int length,
-                                           Map<String, Double> pfPerformance,
-                                           String[] scale, String getTitle) {
-
-    output.println("\nPerformance of portfolio " + args[length - 3].toUpperCase()
-            + " " + getTitle + "\n");
-
-    for (Map.Entry<String, Double> set : pfPerformance.entrySet()) {
-      printPerformance(set.getKey(), set.getValue(), scale, args[length - 1]);
-    }
-
-    if (scale[1] == null) {
-      output.println("\nScale: * = $" + scale[0]);
-    } else {
-      output.println("\nBase Amount: $" + scale[1]);
-      output.println("One * is $" + scale[0] + " more than the base amount.");
-      output.println("~ is the base value.");
-    }
-    output.println("# - either no stocks or 0 value in portfolio.\n");
-  }
-
   @Override
   public void displayValueCompForCost(String title, String[] costData) {
     output.println(title);
@@ -250,68 +204,13 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   public void portfolioPerformanceOverTimeView(String title, String[] data,
                                                String[] scaleStr, String footer) {
     output.println(title);
-
     for (String datum : data) {
       output.println(datum);
     }
-
     for (String s : scaleStr) {
       output.println(s);
     }
-
     output.println(footer);
-  }
-
-  /**
-   * This method prints the performance of the portfolio.
-   *
-   * @param dateStr the date of the stock
-   * @param value   value on that date
-   * @param scale   scale for display
-   * @param choice  choice of the user
-   */
-  private void printPerformance(String dateStr, Double value, String[] scale, String choice) {
-    LocalDate date = LocalDate.parse(dateStr);
-    String year = String.valueOf(date.getYear());
-    String month = String.valueOf(date.getMonth());
-    month = month.substring(0, 3);
-    String dateIn = String.valueOf(date.getDayOfMonth());
-    if (dateIn.length() == 1) {
-      // Append 0 to dates with single digit
-      dateIn = "0" + dateIn;
-    }
-
-    if (Objects.equals(choice, "1")) {
-      output.println(year + ": " + getStars(value, scale));
-    } else if (Objects.equals(choice, "2")) {
-      output.println(month + " " + year + ": " + getStars(value, scale));
-    } else if (Objects.equals(choice, "3")) {
-      output.println(month + " " + dateIn + " " + year + ": " + getStars(value, scale));
-    }
-  }
-
-  /**
-   * This helper method gets the number of stars to be displayed.
-   *
-   * @param value value of the stock
-   * @param scale scale to display
-   * @return the stars in strings
-   */
-  private String getStars(Double value, String[] scale) {
-    if (value == null || value == 0) {
-      return "#";
-    }
-
-    int num;
-    if (scale[1] == null) {
-      num = (int) (value / Long.parseLong(scale[0]));
-    } else {
-      num = (int) ((value - Long.parseLong(scale[1])) / Long.parseLong(scale[0]));
-      if (num == 0) {
-        return "~";
-      }
-    }
-    return "*".repeat(Math.max(0, num));
   }
 
   /**
@@ -398,112 +297,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
    */
   private void showPortfolioReviewScreen() {
     output.println("Press 'b' to go back and 'm' for main menu.\n");
-  }
-
-  /**
-   * THIS METHOD IS NOT IN USE
-   * This method helps in rendering the output when the user wants to view the value of the
-   * portfolio on a certain date.
-   *
-   * @param option the index of the portfolio
-   * @param date   the date entered by the user
-   */
-  private void showPortfolioIndividualWithDateScreen(String option, String date, String type,
-                                                     String portfolioType) {
-    int portfolioNumber = Integer.parseInt(option) - 1;
-    StockCompositionData obj = new StockCompositionDataImpl(portfolioType);
-    double commissionCost = obj.getCommissionCost();
-    StockPortFolioDataImpl stkObj = null;
-
-    if (Objects.equals(type, "FULL")) {
-      stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber, true,
-              null, true, false, portfolioType);
-    } else if (Objects.equals(type, "TRUE")) {
-      try {
-        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber,
-                true, date, true, true, portfolioType);
-      } catch (Exception e) {
-        output.println("Error in getting the data.");
-        return;
-      }
-    } else if (Objects.equals(type, "COST")) {
-      try {
-        stkObj = (StockPortFolioDataImpl) obj.getAllStockDataInPortFolio(portfolioNumber,
-                false, date, false, false, portfolioType);
-      } catch (Exception e) {
-        output.println("Error in getting the data.");
-        return;
-      }
-    }
-
-    if (stkObj == null) {
-      output.println("Error in getting the data.");
-      return;
-    }
-
-    double totalPortFolioValue = 0;
-
-    if (stkObj.numberOfUniqueStocks == 0) {
-      if (type.equals("COST")) {
-        output.println("There are no investments until " + date + "\n");
-      } else {
-        output.println("The value of portfolio on " + date + " is $0.00\n");
-      }
-      return;
-    }
-
-    String[] portfolioNames = obj.getPortFolioNames(portfolioType);
-    if (type.equals("COST")) {
-      output.println("\nCOST BASIS OF " + portfolioNames[portfolioNumber].toUpperCase()
-              + " PORTFOLIO");
-    } else {
-      output.println("\nValue of " + portfolioNames[portfolioNumber].toUpperCase() + " PORTFOLIO");
-    }
-
-    if (!type.equals("COST")) {
-      output.print("\nName");
-      output.print(" (" + "Symbol" + ") ");
-      output.print("\t " + "Quantity");
-      output.print("\t " + "Share Value on " + date);
-      output.println("\t " + "Total Value\n");
-    }
-
-    for (int i = 0; i < stkObj.numberOfUniqueStocks; i++) {
-      if (stkObj.stockQuantity[i] == 0) {
-        continue;
-      }
-      if (!type.equals("COST")) {
-        output.print(stkObj.stockName[i]);
-        output.print(" (" + stkObj.stockSymbol[i] + ") ");
-        output.print("\t " + Math.floor(stkObj.stockQuantity[i] * 100) / 100);
-      }
-      // Display based on the date purchased on
-      double shareValue;
-      if (type.equals("COST")) {
-        shareValue = stkObj.valueOfSingleStock[i];
-      } else {
-        shareValue = getShareValueOnDate(stkObj.stockSymbol[i], date);
-      }
-      shareValue = Math.floor((shareValue) * 100) / 100;
-      if (!type.equals("COST")) {
-        output.print("\t $" + shareValue);
-        output.println("\t $" + Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100);
-      }
-      totalPortFolioValue += Math.floor((shareValue * stkObj.stockQuantity[i]) * 100) / 100;
-    }
-
-    totalPortFolioValue = Math.floor(totalPortFolioValue * 100) / 100;
-    double totalMoneyInvested = Math.floor((totalPortFolioValue
-            + (stkObj.numberOfTransactions * commissionCost)) * 100) / 100;
-    if (type.equals("COST")) {
-      output.println("\nTotal Money invested in stocks: $" + totalPortFolioValue);
-      output.println("Commission cost per transaction is: $" + commissionCost);
-      output.println("Total number of transactions till date is: " + stkObj.numberOfTransactions);
-      output.println("Total commission charges: $" + stkObj.numberOfTransactions * commissionCost);
-      output.println("Total Money spent: $" + totalMoneyInvested + "\n");
-    } else {
-      output.println("\nTotal Portfolio Value is on " + date + ": $" + totalPortFolioValue + "\n");
-    }
   }
 
   /**
@@ -618,32 +411,14 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   /**
    * This method helps in showing the current stock data, and it's share price that the user wants
    * to purchase.
+   * @param stockData the stock data
    */
-  private void showStockDataScreen() {
-    String line;
-    String splitBy = ",";
-    BufferedReader stockData = null;
-    String[] splitStockData = new String[4];
-    try {
-      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
-    } catch (Exception e) {
-      output.println("Supported stocks file not found " + e.getMessage());
-    }
-
-    try {
-      assert stockData != null;
-      line = stockData.readLine();
-      splitStockData = line.split(splitBy);
-      stockData.close();
-    } catch (Exception e) {
-      output.println("Error in reading Supported stocks csv file.");
-    }
-
+  public void showStockDataScreen(String[] stockData) {
     output.println("\nSTOCK DETAILS");
-    output.println("StockName: " + splitStockData[0]);
-    output.println("Symbol: " + splitStockData[2]);
-    output.println("Time: " + splitStockData[3]);
-    output.println("Price: $" + splitStockData[1]);
+    output.println("StockName: " + stockData[0]);
+    output.println("Symbol: " + stockData[2]);
+    output.println("Time: " + stockData[3]);
+    output.println("Price: $" + stockData[1]);
   }
 
   /**
@@ -720,79 +495,6 @@ public class ViewControllerInteractImpl implements ViewControllerInteract {
   private void showPortfolioNameReenter() {
     output.println("Cannot create a portfolio with empty name. Enter a valid name.");
     output.println("If you want to go back to main menu, press '0'.\n");
-  }
-
-  /**
-   * THIS METHOD IS NOT IN USE.
-   * A helper method that calculates the pseudo-random share values based on the stock value during
-   * purchase and the date provided.
-   *
-   * @param stockValue the value of the share at the time of purchase
-   * @param date       the date inputted by the user
-   * @return the pseudo-random value of the stock as a double
-   */
-  private double getRandomShareValue(double stockValue, String date) {
-    String[] dateSplit = date.split("-");
-    StringBuilder dateSplitIndividual = new StringBuilder();
-    for (String s : dateSplit) {
-      dateSplitIndividual.append(s);
-    }
-    int dateLong = Integer.parseInt(dateSplitIndividual.toString());
-    int decimalValue = sumOfNumber(dateLong);
-    Random rand = new Random(dateLong);
-    int randomShareValueInteger = (int) (rand.nextInt((int) ((stockValue + 30)
-            - (stockValue - 10))) + stockValue - 10);
-    String randomShareValueString = "" + randomShareValueInteger + "." + decimalValue;
-    double value = Double.parseDouble(randomShareValueString);
-    return Math.floor(value * 100) / 100;
-  }
-
-  /**
-   * THIS METHOD IS NOT IN USE.
-   * This helper method helps in calculating the sum of all the integers with a given integer.
-   *
-   * @param number the number for which the sum needs to be calculated
-   * @return the sum as an integer
-   */
-  private int sumOfNumber(int number) {
-    int sum;
-    for (sum = 0; number != 0; number = number / 10) {
-      sum = sum + number % 10;
-    }
-    return sum;
-  }
-
-  private double getShareValueOnDate(String stockSymbol, String date) {
-    GetStockData gsd = new GetStockDataImpl();
-    try {
-      String[] dateArr = new String[1];
-      dateArr[0] = date;
-      gsd.getValue(stockSymbol, dateArr);
-    } catch (Exception e) {
-      output.println("Error in getting stock data on " + date);
-      return 0;
-    }
-
-    BufferedReader stockData;
-    try {
-      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    String line;
-    String splitBy = ",";
-    String[] splitStockData;
-
-    try {
-      line = stockData.readLine();
-      splitStockData = line.split(splitBy);
-      stockData.close();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-
-    return Double.parseDouble(splitStockData[1]);
   }
 
 }

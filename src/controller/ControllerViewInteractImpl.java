@@ -48,8 +48,6 @@ import static java.lang.Thread.sleep;
 public class ControllerViewInteractImpl implements ControllerViewInteract {
   protected final ControllerModelInteract cmiObj = new ControllerModelInteractImpl();
   protected final ViewControllerInteract vciObj;
-
-  // private GUIView viewGUI;
   protected String currentPortfolioName;
   private final PrintStream output;
   private final Scanner scan;
@@ -601,7 +599,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     stock[0] = stockSymbolIndexArray[Integer.parseInt(options) - 1];
     stock[1] = date;
     cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
-    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+    String[] stockData = readStockDataToShow();
+    if (stockData == null) {
+      output.println("CONTROLLER: Error in getting data. Retry.");
+      return true;
+    }
+    vciObj.showStockDataScreen(stockData);
     vciObj.viewControllerInteract(TypeofViews.BUY_STOCKS_VALUE, null, 0);
 
     String option;
@@ -1390,7 +1393,12 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     stockGetData[0] = stockSymbol;
     stockGetData[1] = date;
     cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stockGetData, 2);
-    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+    String[] stockData = readStockDataToShow();
+    if (stockData == null) {
+      output.println("CONTROLLER: Error in getting data. Retry.");
+      return true;
+    }
+    vciObj.showStockDataScreen(stockData);
 
     output.println("\nYou can sell only " + numberOfAvailableShares
             + " shares of this stock on " + date);
@@ -1420,6 +1428,44 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return endMenu();
   }
 
+  /**
+   * This method helps to read the current stock data.
+   *
+   * @return the stock data
+   */
+  private String[] readStockDataToShow() {
+    String line;
+    String splitBy = ",";
+    BufferedReader stockData = null;
+    String[] splitStockData;
+    try {
+      stockData = new BufferedReader(new FileReader("data/StockData.csv"));
+    } catch (Exception e) {
+      output.println("Supported stocks file not found " + e.getMessage());
+    }
+
+    try {
+      assert stockData != null;
+      line = stockData.readLine();
+      splitStockData = line.split(splitBy);
+      stockData.close();
+    } catch (Exception e) {
+      try {
+        stockData.close();
+      } catch (Exception ex) {
+        // Nothing
+      }
+      output.println("Controller: Error in reading Supported stocks csv file.");
+      return null;
+    }
+    return splitStockData;
+  }
+
+  /**
+   * This method acts as an abstract method that holds common code.
+   *
+   * @return true if successful in reading
+   */
   private boolean abstractAddStockScreen() {
     StockCompositionData obj = new StockCompositionDataImpl("FLEXIBLE");
     int numberOfPortFolio = obj.getNumberOfPortFolio();
@@ -1465,6 +1511,9 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     performCreatePortfolioMenuAction("1", "1", args, 1);
   }
 
+  /**
+   * This method helps in adding stocks using dollar-cost strategy
+   */
   private void addStockUsingDollarCostMainMenu() {
     if (!abstractAddStockScreen()) {
       return;
@@ -1742,6 +1791,10 @@ public class ControllerViewInteractImpl implements ControllerViewInteract {
     return true;
   }
 
+  /**
+   * This method helps in getting inputs and calculating data for buying stocks using dollar-cost
+   * strategy.
+   */
   private void dollarCostAverage() {
     // Dollar-Cost Averaging investing
     // Ask for the date of investment

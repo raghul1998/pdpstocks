@@ -401,7 +401,11 @@ public class ViewTest extends TestParentClass {
     PrintStream output = new PrintStream(bytes);
 
     ViewControllerInteract vciObj = new ViewControllerInteractImpl(output);
-    vciObj.viewControllerInteract(TypeofViews.SHOW_STOCK_DATA, null, 0);
+    String[] stockDataView = super.readStockDataToShow();
+    if(stockDataView == null) {
+      return;
+    }
+    vciObj.showStockDataScreen(stockDataView);
 
     String line;
     String splitBy = ",";
