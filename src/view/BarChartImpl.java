@@ -46,7 +46,7 @@ public class BarChartImpl extends JFrame implements BarChart {
     CategoryAxis domainAxis = plot.getDomainAxis();
     domainAxis.setCategoryLabelPositions(
             CategoryLabelPositions.createUpRotationLabelPositions(
-                    Math.PI / 6.0));
+                    Math.PI / 2.0));
     chartPanel.setPreferredSize(new java.awt.Dimension(1000, 500));
     this.setContentPane(chartPanel);
     this.pack();
