@@ -138,7 +138,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     if (type == 0) {
       if (optionSelected == 0) {
         // Normal Buy Stocks
-        viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, name);
+        viewGUI.flexiblePortfolioScreenWithDateInput(type, supportedStocks, name);
       } else if (optionSelected == 1) {
         // Dollar Value Investment
         dvd.isCreateDollarValue = true;
@@ -154,15 +154,18 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
   public void checkCurrentPrice(int type, String date, int stockSelected) {
     if (type == 0) {
       if (!super.validateDate(date, "yyyy-MM-dd", 0)) {
-        // vciObj.viewControllerInteract(TypeofViews.DATE_RENTER, null, 0);
         viewGUI.displayErrorMessage("Invalid Date. Please reenter valid date");
-        //viewGUI.resetDateInput();
         return;
       }
     } else if (type == 1) {
       SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
       Date now = new Date();
       date = sdfDate.format(now);
+    }
+
+    if(stockSelected == -1) {
+      viewGUI.displayErrorMessage("Select a stock");
+      return;
     }
 
     String[] stock = new String[2];
@@ -175,7 +178,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     for (Map.Entry<String, String> entry : map.entrySet()) {
       stockSymbolIndexArray[index++] = entry.getKey();
     }
-    stock[0] = stockSymbolIndexArray[stockSelected - 1];
+    stock[0] = stockSymbolIndexArray[stockSelected];
     stock[1] = date;
     super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
 
@@ -1024,14 +1027,13 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
     stock[0] = stockSymbolIndexArray[stockSelected];
     stock[1] = date;
     super.cmiObj.controllerModelInteract(TypeofAction.GET_STOCK_DATA, stock, 2);
-    super.currentPortfolioName = portfolioName;
 
     stock[0] = noOfStocks;
     stock[1] = super.currentPortfolioName;
     super.cmiObj.controllerModelInteract(TypeofAction.BUY_STOCKS, stock, 2);
     String showSuccessfulMsg;
     if (tvd.isFirstBuy) {
-      showSuccessfulMsg = portfolioName.toUpperCase() + " portfolio created.";
+      showSuccessfulMsg = super.currentPortfolioName.toUpperCase() + " portfolio created.";
     } else {
       showSuccessfulMsg = "";
     }
@@ -1202,7 +1204,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
             "10. Walmart (WMT)"};
 
     if (buyOrSell == 3) // buy
-      viewGUI.flexiblePortfolioScreenWithDateInput(supportedStocks, super.currentPortfolioName);
+      viewGUI.flexiblePortfolioScreenWithDateInput(0, supportedStocks, super.currentPortfolioName);
     else if (buyOrSell == 4)  // sell
       viewGUI.displaySellScreen();
   }

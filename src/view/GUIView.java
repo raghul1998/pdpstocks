@@ -39,10 +39,11 @@ public interface GUIView {
    * This method views the user to select stocks from the supported list of stocks and date
    * of purchase.
    *
-   * @param supportedStocks   list of available stocks supported by the application
-   * @param name   name of the portfolio
+   * @param type type of portfolio
+   * @param supportedStocks list of available stocks supported by the application
+   * @param name            name of the portfolio
    */
-  void flexiblePortfolioScreenWithDateInput(String[] supportedStocks, String name);
+  void flexiblePortfolioScreenWithDateInput(int type, String[] supportedStocks, String name);
 
   /**
    * This method prompts the user to select stocks from the supported list of stocks.
