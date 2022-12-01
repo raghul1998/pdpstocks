@@ -7593,7 +7593,132 @@ public class ControllerTest extends TestParentClass {
     result = result.replace("\r\n", "\n");
 
     assertEquals(expectedOutput, result);
-    deleteDirectory();
   }
 
+  @Test
+  public void testZZSValueOfPortfolioAfterExecutingStrategy2() {
+    String userInput = "9" + "\n" + "22" + "\n" + "2022-01-01" + "\n" + "y" + "\n" + "n" + "\n"
+            + "2022-10-30" + "\n" + "15" + "\n" + "3" + "\n" + "2" + "\n" + "5" + "\n" + "6"
+            + "\n" +"1000" + "\n" + "6" + "\n" + "50"+ "\n"+ "3" + "\n" + "23" + "\n"
+            + "2022-11-01" + "\n" + "m" + "\n" + "e";
+
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "14. CONTROLLERTEST94\n"
+            + "15. CONTROLLERTEST95\n"
+            + "16. CONTROLLERTEST96\n"
+            + "17. CONTROLLERTEST97\n"
+            + "18. CONTROLLERTEST98\n"
+            + "19. CONTROLLERTEST99\n"
+            + "20. CONTROLLERTEST990\n"
+            + "21. CONTROLLERTEST991\n"
+            + "22. CONTROLLERTEST993\n"
+            + "\n"
+            + "Select the portfolio to which you would like to add the stock.\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) (from year 2000 to current day)\n"
+            + "Do you want to investment to be recurring? (Y|N)\n"
+            + "Is this an ongoing strategy? (Y|N)\n"
+            + "Enter the end date for the strategy from 2022-01-01 (YYYY-MM-DD)\n"
+            + "Enter the recurring frequency (1 to 302 days)\n"
+            + "How many stocks would you like to buy? (1 to 10)\n"
+            + "\n"
+            + "\n"
+            + getSupportedStocks()
+            + "\n"
+            + "Enter the stock option (1 out of 3)\n"
+            + "\n"
+            + "Enter the stock option (2 out of 3)\n"
+            + "\n"
+            + "Enter the stock option (3 out of 3)\n"
+            + "How much money you would like to invest?\n"
+            + "Enter the proportion percent for Meta (out of 100.0%)\n"
+            + "Enter the proportion percent for Tesla (out of 94.0%)\n"
+            + "The remaining 44.0 percentage will be automatically applied to JPMorgan Chase stock.\n"
+            + "Buying shares, please wait...\n"
+            + "\n"
+            + "Stock successfully added to the portfolio...!!!\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
+            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
+            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
+            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
+            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
+            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
+            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
+            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
+            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
+            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
+            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
+            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
+            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
+            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
+            + "15. CONTROLLERTEST95 (FLEXIBLE)\n"
+            + "16. CONTROLLERTEST96 (FLEXIBLE)\n"
+            + "17. CONTROLLERTEST97 (FLEXIBLE)\n"
+            + "18. CONTROLLERTEST98 (FLEXIBLE)\n"
+            + "19. CONTROLLERTEST99 (FLEXIBLE)\n"
+            + "20. CONTROLLERTEST990 (FLEXIBLE)\n"
+            + "21. CONTROLLERTEST991 (FLEXIBLE)\n"
+            + "22. CONTROLLERTEST992 (INFLEXIBLE)\n"
+            + "23. CONTROLLERTEST993 (FLEXIBLE)\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "Value of CONTROLLERTEST993 PORTFOLIO\n"
+            + "\n"
+            + "Name (Symbol) \t Quantity\t Share Value on 2022-11-01\t Total Value\n"
+            + "\n"
+            + "Meta (META) \t 10.34\t $94.33\t $976.31\n"
+            + "Apple (AAPL) \t 2.49\t $155.08\t $387.7\n"
+            + "Microsoft (MSFT) \t 2.68\t $234.6\t $628.72\n"
+            + "UnitedHealth (UNH) \t 1.44\t $555.0\t $799.2\n"
+            + "Walmart (WMT) \t 5.45\t $142.97\t $779.18\n"
+            + "Tesla (TSLA) \t 19.21\t $234.05\t $4496.1\n"
+            + "JPMorgan Chase (JPM) \t 73.78\t $126.87\t $9360.46\n"
+            + "\n"
+            + "Total Portfolio Value is on 2022-11-01: $17427.66\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+    deleteDirectory();
+  }
 }
