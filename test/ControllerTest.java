@@ -7644,7 +7644,6 @@ public class ControllerTest extends TestParentClass {
   }
 
 
-
   /**
    * This test checks the total investment on specific dates for dollar value.
    */
@@ -7719,7 +7718,7 @@ public class ControllerTest extends TestParentClass {
   @Test
   public void testZZZBController_TotalInvestmentMoreThanOneDateDateDollarValue() {
     String userInput = "7" + "\n" + "22" + "\n" + "2022-01-01" + "\n" + "b" + "\n"
-            +"22" + "\n" + "2022-11-11" + "\n" + "m" + "\n" + "e";
+            + "22" + "\n" + "2022-11-11" + "\n" + "m" + "\n" + "e";
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes);
@@ -7817,5 +7816,6 @@ public class ControllerTest extends TestParentClass {
     result = result.replace("\r\n", "\n");
 
     assertEquals(expectedOutput, result);
+    deleteDirectory();
   }
 }
