@@ -7599,7 +7599,7 @@ public class ControllerTest extends TestParentClass {
   public void testZZSValueOfPortfolioAfterExecutingStrategy2() {
     String userInput = "9" + "\n" + "22" + "\n" + "2022-01-01" + "\n" + "y" + "\n" + "n" + "\n"
             + "2022-10-30" + "\n" + "15" + "\n" + "3" + "\n" + "2" + "\n" + "5" + "\n" + "6"
-            + "\n" +"1000" + "\n" + "6" + "\n" + "50"+ "\n"+ "3" + "\n" + "23" + "\n"
+            + "\n" + "1000" + "\n" + "6" + "\n" + "50" + "\n" + "3" + "\n" + "23" + "\n"
             + "2022-11-01" + "\n" + "m" + "\n" + "e";
 
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
@@ -7638,7 +7638,8 @@ public class ControllerTest extends TestParentClass {
             + "22. CONTROLLERTEST993\n"
             + "\n"
             + "Select the portfolio to which you would like to add the stock.\n"
-            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) (from year 2000 to current day)\n"
+            + "Enter the date on which you would like to purchase the stock (YYYY-MM-DD) "
+            + "(from year 2000 to current day)\n"
             + "Do you want to investment to be recurring? (Y|N)\n"
             + "Is this an ongoing strategy? (Y|N)\n"
             + "Enter the end date for the strategy from 2022-01-01 (YYYY-MM-DD)\n"
@@ -7656,7 +7657,8 @@ public class ControllerTest extends TestParentClass {
             + "How much money you would like to invest?\n"
             + "Enter the proportion percent for Meta (out of 100.0%)\n"
             + "Enter the proportion percent for Tesla (out of 94.0%)\n"
-            + "The remaining 44.0 percentage will be automatically applied to JPMorgan Chase stock.\n"
+            + "The remaining 44.0 percentage will be automatically "
+            + "applied to JPMorgan Chase stock.\n"
             + "Buying shares, please wait...\n"
             + "\n"
             + "Stock successfully added to the portfolio...!!!\n"

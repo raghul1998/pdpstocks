@@ -19,7 +19,7 @@ public class Main {
    */
   public static void main(String[] args) {
     ControllerViewInteract obj = new ControllerViewInteractImpl(System.in, System.out);
-    //obj.setup();
+    obj.setup();
     GUIView guiView = new JFrameViewImpl("STOCKS GUI APPLICATION");
     GUIController guiController = new GUIController(System.in, System.out);
     guiController.setView(guiView);
