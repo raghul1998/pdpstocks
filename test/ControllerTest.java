@@ -7526,9 +7526,13 @@ public class ControllerTest extends TestParentClass {
     assertEquals(expectedOutput, result);
   }
 
+  /**
+   * This test checks value of dollar value portfolio on multiple dates.
+   */
   @Test
   public void testZZRValueOfPortfolioAfterExecutingStrategy() {
-    String userInput = "3" + "\n" + "23" + "\n" + "2022-11-01" + "\n" + "m" + "\n" + "e";
+    String userInput = "3" + "\n" + "23" + "\n" + "2022-11-01" + "\n" + "m"
+            + "\n" +  "3" + "\n" + "23" + "\n" + "2022-12-01" + "\n" + "m" + "\n" + "e";
 
     InputStream input = new ByteArrayInputStream(userInput.getBytes());
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -7536,58 +7540,134 @@ public class ControllerTest extends TestParentClass {
 
     ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
     obj.start();
-    String expectedOutput = getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "LIST OF PORTFOLIO\n"
-            + "\n"
-            + "1. CONTROLLERTEST1 (FLEXIBLE)\n"
-            + "2. CONTROLLERTEST2 (FLEXIBLE)\n"
-            + "3. CONTROLLERTEST3 (FLEXIBLE)\n"
-            + "4. CONTROLLERTEST4 (FLEXIBLE)\n"
-            + "5. CONTROLLERTEST5 (FLEXIBLE)\n"
-            + "6. CONTROLLERTEST6 (FLEXIBLE)\n"
-            + "7. CONTROLLERTEST7 (FLEXIBLE)\n"
-            + "8. CONTROLLERTEST8 (FLEXIBLE)\n"
-            + "9. CONTROLLERTEST9 (FLEXIBLE)\n"
-            + "10. CONTROLLERTEST90 (FLEXIBLE)\n"
-            + "11. CONTROLLERTEST91 (FLEXIBLE)\n"
-            + "12. CONTROLLERTEST92 (FLEXIBLE)\n"
-            + "13. CONTROLLERTEST93 (FLEXIBLE)\n"
-            + "14. CONTROLLERTEST94 (FLEXIBLE)\n"
-            + "15. CONTROLLERTEST95 (FLEXIBLE)\n"
-            + "16. CONTROLLERTEST96 (FLEXIBLE)\n"
-            + "17. CONTROLLERTEST97 (FLEXIBLE)\n"
-            + "18. CONTROLLERTEST98 (FLEXIBLE)\n"
-            + "19. CONTROLLERTEST99 (FLEXIBLE)\n"
-            + "20. CONTROLLERTEST990 (FLEXIBLE)\n"
-            + "21. CONTROLLERTEST991 (FLEXIBLE)\n"
-            + "22. CONTROLLERTEST992 (INFLEXIBLE)\n"
-            + "23. CONTROLLERTEST993 (FLEXIBLE)\n"
-            + "\n"
-            + "Which portfolio would you like to check?\n"
-            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
-            + "\n"
-            + "Value of CONTROLLERTEST993 PORTFOLIO\n"
-            + "\n"
-            + "Name (Symbol) \t Quantity\t Share Value on 2022-11-01\t Total Value\n"
-            + "\n"
-            + "Meta (META) \t 3.48\t $94.33\t $328.26\n"
-            + "Apple (AAPL) \t 2.49\t $155.08\t $387.7\n"
-            + "Microsoft (MSFT) \t 2.68\t $234.6\t $628.72\n"
-            + "UnitedHealth (UNH) \t 1.44\t $555.0\t $799.2\n"
-            + "Walmart (WMT) \t 5.45\t $142.97\t $779.18\n"
-            + "\n"
-            + "Total Portfolio Value is on 2022-11-01: $2923.06\n"
-            + "\n"
-            + "Press 'b' to go back and 'm' for main menu.\n"
-            + "\n"
-            + getMainScreen()
-            + "\n"
-            + "ENTER YOUR CHOICE: \n"
-            + "\n"
-            + "Exiting...\n";
+
+    String expectedOutput = getMainScreen() +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "LIST OF PORTFOLIO\n" +
+            "\n" +
+            "1. CONTROLLERTEST1 (FLEXIBLE)\n" +
+            "2. CONTROLLERTEST2 (FLEXIBLE)\n" +
+            "3. CONTROLLERTEST3 (FLEXIBLE)\n" +
+            "4. CONTROLLERTEST4 (FLEXIBLE)\n" +
+            "5. CONTROLLERTEST5 (FLEXIBLE)\n" +
+            "6. CONTROLLERTEST6 (FLEXIBLE)\n" +
+            "7. CONTROLLERTEST7 (FLEXIBLE)\n" +
+            "8. CONTROLLERTEST8 (FLEXIBLE)\n" +
+            "9. CONTROLLERTEST9 (FLEXIBLE)\n" +
+            "10. CONTROLLERTEST90 (FLEXIBLE)\n" +
+            "11. CONTROLLERTEST91 (FLEXIBLE)\n" +
+            "12. CONTROLLERTEST92 (FLEXIBLE)\n" +
+            "13. CONTROLLERTEST93 (FLEXIBLE)\n" +
+            "14. CONTROLLERTEST94 (FLEXIBLE)\n" +
+            "15. CONTROLLERTEST95 (FLEXIBLE)\n" +
+            "16. CONTROLLERTEST96 (FLEXIBLE)\n" +
+            "17. CONTROLLERTEST97 (FLEXIBLE)\n" +
+            "18. CONTROLLERTEST98 (FLEXIBLE)\n" +
+            "19. CONTROLLERTEST99 (FLEXIBLE)\n" +
+            "20. CONTROLLERTEST990 (FLEXIBLE)\n" +
+            "21. CONTROLLERTEST991 (FLEXIBLE)\n" +
+            "22. CONTROLLERTEST992 (INFLEXIBLE)\n" +
+            "23. CONTROLLERTEST993 (FLEXIBLE)\n" +
+            "\n" +
+            "Which portfolio would you like to check?\n" +
+            "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n" +
+            "\n" +
+            "Value of CONTROLLERTEST993 PORTFOLIO\n" +
+            "\n" +
+            "Name (Symbol) \t Quantity\t Share Value on 2022-11-01\t Total Value\n" +
+            "\n" +
+            "Meta (META) \t 10.34\t $94.33\t $976.31\n" +
+            "Apple (AAPL) \t 2.49\t $155.08\t $387.7\n" +
+            "Microsoft (MSFT) \t 2.68\t $234.6\t $628.72\n" +
+            "UnitedHealth (UNH) \t 1.44\t $555.0\t $799.2\n" +
+            "Walmart (WMT) \t 5.45\t $142.97\t $779.18\n" +
+            "Tesla (TSLA) \t 19.21\t $234.05\t $4496.1\n" +
+            "JPMorgan Chase (JPM) \t 73.78\t $126.87\t $9360.46\n" +
+            "\n" +
+            "Total Portfolio Value is on 2022-11-01: $17427.66\n" +
+            "\n" +
+            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\n" +
+            "\n" +
+            "MENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. Value and Composition of portfolio\n" +
+            "3. Value of portfolio on full composition\n" +
+            "4. Add a stock to portfolio\n" +
+            "5. Sell a stock from portfolio\n" +
+            "6. Performance of portfolio\n" +
+            "7. Total amount invested on certain date\n" +
+            "8. Configure the commission cost\n" +
+            "9. Add stocks to portfolio using Dollar-Cost strategy\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "LIST OF PORTFOLIO\n" +
+            "\n" +
+            "1. CONTROLLERTEST1 (FLEXIBLE)\n" +
+            "2. CONTROLLERTEST2 (FLEXIBLE)\n" +
+            "3. CONTROLLERTEST3 (FLEXIBLE)\n" +
+            "4. CONTROLLERTEST4 (FLEXIBLE)\n" +
+            "5. CONTROLLERTEST5 (FLEXIBLE)\n" +
+            "6. CONTROLLERTEST6 (FLEXIBLE)\n" +
+            "7. CONTROLLERTEST7 (FLEXIBLE)\n" +
+            "8. CONTROLLERTEST8 (FLEXIBLE)\n" +
+            "9. CONTROLLERTEST9 (FLEXIBLE)\n" +
+            "10. CONTROLLERTEST90 (FLEXIBLE)\n" +
+            "11. CONTROLLERTEST91 (FLEXIBLE)\n" +
+            "12. CONTROLLERTEST92 (FLEXIBLE)\n" +
+            "13. CONTROLLERTEST93 (FLEXIBLE)\n" +
+            "14. CONTROLLERTEST94 (FLEXIBLE)\n" +
+            "15. CONTROLLERTEST95 (FLEXIBLE)\n" +
+            "16. CONTROLLERTEST96 (FLEXIBLE)\n" +
+            "17. CONTROLLERTEST97 (FLEXIBLE)\n" +
+            "18. CONTROLLERTEST98 (FLEXIBLE)\n" +
+            "19. CONTROLLERTEST99 (FLEXIBLE)\n" +
+            "20. CONTROLLERTEST990 (FLEXIBLE)\n" +
+            "21. CONTROLLERTEST991 (FLEXIBLE)\n" +
+            "22. CONTROLLERTEST992 (INFLEXIBLE)\n" +
+            "23. CONTROLLERTEST993 (FLEXIBLE)\n" +
+            "\n" +
+            "Which portfolio would you like to check?\n" +
+            "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n" +
+            "\n" +
+            "Value of CONTROLLERTEST993 PORTFOLIO\n" +
+            "\n" +
+            "Name (Symbol) \t Quantity\t Share Value on 2022-12-01\t Total Value\n" +
+            "\n" +
+            "Meta (META) \t 10.34\t $119.19\t $1233.61\n" +
+            "Apple (AAPL) \t 2.49\t $148.21\t $370.52\n" +
+            "Microsoft (MSFT) \t 2.68\t $253.87\t $680.37\n" +
+            "UnitedHealth (UNH) \t 1.44\t $552.36\t $795.39\n" +
+            "Walmart (WMT) \t 5.45\t $152.05\t $828.67\n" +
+            "Tesla (TSLA) \t 19.21\t $197.08\t $3785.9\n" +
+            "JPMorgan Chase (JPM) \t 73.78\t $138.18\t $10194.92\n" +
+            "\n" +
+            "Total Portfolio Value is on 2022-12-01: $17889.38\n" +
+            "\n" +
+            "Press 'b' to go back and 'm' for main menu.\n" +
+            "\n" +
+            "\n" +
+            "MENU\n" +
+            "\n" +
+            "1. Create a portfolio\n" +
+            "2. Value and Composition of portfolio\n" +
+            "3. Value of portfolio on full composition\n" +
+            "4. Add a stock to portfolio\n" +
+            "5. Sell a stock from portfolio\n" +
+            "6. Performance of portfolio\n" +
+            "7. Total amount invested on certain date\n" +
+            "8. Configure the commission cost\n" +
+            "9. Add stocks to portfolio using Dollar-Cost strategy\n" +
+            "e. Exit\n" +
+            "\n" +
+            "ENTER YOUR CHOICE: \n" +
+            "\n" +
+            "Exiting...\n";
 
     String result = bytes.toString();
     result = result.replace("\r\n", "\n");
@@ -7708,6 +7788,185 @@ public class ControllerTest extends TestParentClass {
             + "JPMorgan Chase (JPM) \t 73.78\t $126.87\t $9360.46\n"
             + "\n"
             + "Total Portfolio Value is on 2022-11-01: $17427.66\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+  /**
+   * This test checks the total investment on specific dates for dollar value.
+   */
+  @Test
+  public void testZZZAController_TotalInvestmentOnSpecificDateDollarValue() {
+    String userInput = "7" + "\n" + "23" + "\n" + "2022-01-01" + "\n" + "b" + "\n"
+            + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "COST BASIS OF CONTROLLERTEST91 PORTFOLIO\n"
+            + "\n"
+            + "Total Money invested in stocks: $56209.0\n"
+            + "Commission cost per transaction is: $4.5\n"
+            + "Total number of transactions till date is: 4\n"
+            + "Total commission charges: $18.0\n"
+            + "Total Money spent: $56227.0\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "COST BASIS OF CONTROLLERTEST91 PORTFOLIO\n"
+            + "\n"
+            + "Total Money invested in stocks: $51239.0\n"
+            + "Commission cost per transaction is: $4.5\n"
+            + "Total number of transactions till date is: 2\n"
+            + "Total commission charges: $9.0\n"
+            + "Total Money spent: $51248.0\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "Exiting...\n";
+
+    String result = bytes.toString();
+    result = result.replace("\r\n", "\n");
+
+    assertEquals(expectedOutput, result);
+  }
+
+
+  /**
+   * This test checks the total investment on more than one date for dollar value.
+   */
+  @Test
+  public void testZZZBController_TotalInvestmentMoreThanOneDateDateDollarValue() {
+    String userInput = "7" + "\n" + "23" + "\n" + "2022-01-01" + "\n" + "b" + "\n"
+            + "23" + "\n" + "2014-03-03" + "\n" + "m" + "\n" + "e";
+    InputStream input = new ByteArrayInputStream(userInput.getBytes());
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    PrintStream output = new PrintStream(bytes);
+
+    ControllerViewInteract obj = new ControllerViewInteractImpl(input, output);
+    obj.start();
+
+    String expectedOutput = getMainScreen()
+            + "\n"
+            + "ENTER YOUR CHOICE: \n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "COST BASIS OF CONTROLLERTEST91 PORTFOLIO\n"
+            + "\n"
+            + "Total Money invested in stocks: $56209.0\n"
+            + "Commission cost per transaction is: $4.5\n"
+            + "Total number of transactions till date is: 4\n"
+            + "Total commission charges: $18.0\n"
+            + "Total Money spent: $56227.0\n"
+            + "\n"
+            + "Press 'b' to go back and 'm' for main menu.\n"
+            + "\n"
+            + "\n"
+            + "LIST OF PORTFOLIO\n"
+            + "\n"
+            + "1. CONTROLLERTEST1\n"
+            + "2. CONTROLLERTEST2\n"
+            + "3. CONTROLLERTEST3\n"
+            + "4. CONTROLLERTEST4\n"
+            + "5. CONTROLLERTEST5\n"
+            + "6. CONTROLLERTEST6\n"
+            + "7. CONTROLLERTEST7\n"
+            + "8. CONTROLLERTEST8\n"
+            + "9. CONTROLLERTEST9\n"
+            + "10. CONTROLLERTEST90\n"
+            + "11. CONTROLLERTEST91\n"
+            + "12. CONTROLLERTEST92\n"
+            + "13. CONTROLLERTEST93\n"
+            + "\n"
+            + "Which portfolio would you like to check?\n"
+            + "Enter the year in format (YYYY-MM-DD) (2000 to 2022): \n"
+            + "\n"
+            + "COST BASIS OF CONTROLLERTEST91 PORTFOLIO\n"
+            + "\n"
+            + "Total Money invested in stocks: $51239.0\n"
+            + "Commission cost per transaction is: $4.5\n"
+            + "Total number of transactions till date is: 2\n"
+            + "Total commission charges: $9.0\n"
+            + "Total Money spent: $51248.0\n"
             + "\n"
             + "Press 'b' to go back and 'm' for main menu.\n"
             + "\n"

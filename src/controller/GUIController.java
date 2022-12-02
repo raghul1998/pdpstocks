@@ -330,7 +330,7 @@ public class GUIController extends ControllerViewInteractImpl implements Feature
       // No
       // Ask for end date
       String str = "Enter the end date for the strategy (YYYY-MM-DD)"
-              + "(from " + dvd.startDate + " to current day)";
+              + " (from " + dvd.startDate + ")";
       viewGUI.dollarValueEndDateScreen(str);
     }
   }
