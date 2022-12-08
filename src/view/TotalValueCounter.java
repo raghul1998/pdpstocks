@@ -35,7 +35,7 @@ public class TotalValueCounter {
       try {
         Date inputDate = dateFormat.parse(date);
         for (int i = 0; i < portfolio.getDateNumsList().size(); i++) {
-          if (date.compareTo(portfolio.getDateNumsList().get(i).getDate()) > 0) {
+          if (date.compareTo(portfolio.getDateNumsList().get(i).getDate()) >= 0) {
             num += Double.parseDouble(portfolio.getDateNumsList().get(i).getNum());
           }
         }
