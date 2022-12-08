@@ -2,7 +2,12 @@ package controller;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -17,6 +22,7 @@ import model.Portfolio;
 import model.PortfolioImpl;
 import view.MVCView;
 import view.MainMenu;
+import view.TotalValueCounter;
 
 /**
  * This class represents controller and this interacts with model
@@ -210,6 +216,12 @@ public class MVCCommandController {
   private boolean userInputForSell(String path) {
     Portfolio portfolio;
 
+    if(portfolios.getSize() == 0) {
+      System.out.println("There are no stocks to sell in this portfolio.\n");
+      goToMenuOrCompo(portfolios.getPortfolios());
+      return false;
+    }
+
     this.output.println("Enter the symbol of the Company to sell");
     String symbol = sc.next();
     portfolio = new Validation().validateSymbolForSell(portfolios, symbol);
@@ -221,7 +233,11 @@ public class MVCCommandController {
 
     this.output.println("Enter the date[in YYYY-MM-DD format]");
     String date = sc.next();
-    while (!new Validation().validateDateForSell(portfolios, symbol, date)) {
+    /*while (!new Validation().validateDateForSell(portfolios, symbol, date)) {
+      date = sc.next();
+    }*/
+
+    while (!new Validation().validateDate(symbol, date)) {
       date = sc.next();
     }
 
@@ -236,6 +252,15 @@ public class MVCCommandController {
     str = portfolios.sellPortfolio(symbol, num, date);
 
     boolean count = true; // duplicated codes
+
+    if(portfolios.getSize() == 0) {
+      System.out.println("All the stocks in the portfolio are sold.\n");
+      int type = new Validation().typePortfolioFile(path);
+      model.saveFile(portfolios, type);
+      goToMenuOrCompo(portfolios.getPortfolios());
+      return false;
+    }
+
     this.output.println("Sell another stock? Y or N");
     String choice = sc.next();
     while (!choice.equals("Y") && !choice.equals("N")) {
@@ -261,12 +286,13 @@ public class MVCCommandController {
     this.output.println("4. View the total value of a portfolio on a certain date");
     this.output.println("5. View portfolio performance");
     this.output.println("6. Invest dollar-cost averaging");
-    this.output.println("7. Go back to main menu");
+    this.output.println("7. Re-balance portfolio");
+    this.output.println("8. Go back to main menu");
     this.output.print(": ");
 
     int input = inputInteger(null);
 
-    if (input == 7) {
+    if (input == 8) {
       stock = new ArrayList<>();
       menu();
       return;
@@ -317,10 +343,136 @@ public class MVCCommandController {
         commandView.viewPerformance(path, date);
         goToMenuOrCompo(stockData);
         break;
+      case 7:
+        commandView.examinePortfolioComposition(path, date);
+        reBalancePortfolio(path, date);
+        goToMenuOrCompo(stockData);
+        break;
       default:
         this.output.println("Invalid Input");
         goToMenuOrCompo(stockData);
     }
+  }
+
+  private void reBalancePortfolio(String path, String date) {
+    double totalPortfolioValue = Double.parseDouble(
+            new TotalValueCounter().determineTotalValueOfPortfolio(path, date));
+
+    if(totalPortfolioValue == 0) {
+      return;
+    }
+
+    double portion;
+    ImportXML imXml = new ImportXML();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    PortfolioImpl pfImpl = imXml.buildDocument(path);
+    ArrayList<Portfolio> pfList = pfImpl.getPortfolios();
+    AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
+
+    int k = 0;
+    ArrayList<Double> sharesList = numList(pfList, date);
+    String[] proportionRequired = new String[pfList.size()];
+
+    if(pfList.size() == 1 || isThereOnlyOneStockOnThisDate(sharesList)) {
+      System.out.println("You have only one stock on " + date + ". Hence already balanced.\n");
+      return;
+    }
+
+    double totalProportion = 100;
+    System.out.println("Enter the proportion for each stock out of total value"
+            + " of portfolio (in %)");
+    for (int i = 0; i < pfList.size(); i++) {
+      if(sharesList.get(i) == 0) {
+        // This means there are no shares on this date, so skip
+        continue;
+      }
+      Portfolio portfolio = pfList.get(i);
+      System.out.print(portfolio.getSymbol() + " : ");
+      proportionRequired[i] = sc.next();
+      try {
+        double val = Double.parseDouble(proportionRequired[i]);
+        totalProportion -= val;
+      } catch (Exception e) {
+        System.out.println("Enter a valid number");
+        i--;
+      }
+
+      // In the final iteration, check if the proportion makes up to 100, else ask from beginning
+      if ((i == pfList.size() - 1) && (totalProportion != 0)) {
+        System.out.println("The proportions should make up to 100 percent. "
+                + "Enter again from beginning.");
+        totalProportion = 100;
+        i = -1;
+      }
+    }
+
+    // Boolean: 1 - buy, 0 - sell
+    // Double: amount to be bought or sold
+    Map<Boolean, Double> finalData = new HashMap<>();
+
+    for (int i = 0; i < pfList.size(); i++) {
+      if(sharesList.get(i) == 0) {
+        // No shares on this date, so skip
+        continue;
+      }
+      Portfolio portfolio = pfList.get(i);
+      double numberOfShares = sharesList.get(i);
+      double singleShareValueOnGivenDate =
+              Double.parseDouble(avtsd.getValue(portfolio.getSymbol(), date));
+      double totalValueOfThisStockOnGivenDate = singleShareValueOnGivenDate * numberOfShares;
+      double requiredValue = totalPortfolioValue
+              * (Double.parseDouble(proportionRequired[i]) / 100);
+
+      if(requiredValue > totalValueOfThisStockOnGivenDate) {
+        // Shares to be bought
+        double difference = requiredValue - totalValueOfThisStockOnGivenDate;
+        double numberOfSharesToBeBought = difference / singleShareValueOnGivenDate;
+        finalData.put(true, numberOfSharesToBeBought);
+        portfolios.insertPortfolioWithDate(portfolio.getCompany(), portfolio.getSymbol(),
+                String.valueOf(numberOfSharesToBeBought), date);
+      } else {
+        // Shares to be sold
+        double difference = totalValueOfThisStockOnGivenDate - requiredValue;
+        double numberOfSharesToBeSold = difference / singleShareValueOnGivenDate;
+        finalData.put(true, numberOfSharesToBeSold);
+        portfolios.sellPortfolio(portfolio.getSymbol(), numberOfSharesToBeSold, date);
+      }
+    }
+
+    model.saveFile(portfolios, 2);
+    System.out.println("Portfolio has been balanced for " + date + "\n");
+    goToMenuOrCompo(portfolios.getPortfolios());
+  }
+
+  private boolean isThereOnlyOneStockOnThisDate(ArrayList<Double> sharesList) {
+    int numberOfStocksWithNonZeroShares = 0;
+    for(int i = 0; i < sharesList.size(); i++) {
+      if(sharesList.get(i) != 0) {
+        numberOfStocksWithNonZeroShares++;
+      }
+    }
+
+    if(numberOfStocksWithNonZeroShares == 1) {
+      return true;
+    }
+    return false;
+  }
+
+  private ArrayList<Double> numList(ArrayList<Portfolio> portfolios, String date) {
+    ArrayList<Double> ret = new ArrayList<>();
+    double num;
+
+    for (int i = 0; i < portfolios.size(); i++) {
+      num = 0;
+      for (int j = 0; j < portfolios.get(i).getDateNumsList().size(); j++) {
+        if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) > 0) {
+          num += Double.parseDouble(portfolios.get(i).getDateNumsList().get(j).getNum());
+        }
+      }
+      ret.add(num);
+    }
+
+    return ret;
   }
 
   private void goToMenuOrCompoInflexible(ArrayList<Portfolio> stockData) {

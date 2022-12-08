@@ -31,6 +31,7 @@ public class TotalValueCounter {
     ArrayList<Portfolio> pfList = pfImpl.getPortfolios();
 
     for (Portfolio portfolio : pfList) {
+      num = 0;
       try {
         Date inputDate = dateFormat.parse(date);
         for (int i = 0; i < portfolio.getDateNumsList().size(); i++) {

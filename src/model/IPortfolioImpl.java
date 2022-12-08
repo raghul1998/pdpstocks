@@ -22,7 +22,7 @@ public interface IPortfolioImpl {
   /**
    * Method to sell stocks in a portfolio.
    */
-  String sellPortfolio(String symbol, int num, String date);
+  String sellPortfolio(String symbol, double num, String date);
 
   /**
    * Method to get instance of a portfolio.

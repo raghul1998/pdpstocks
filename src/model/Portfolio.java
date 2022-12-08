@@ -135,7 +135,7 @@ public class Portfolio {
    * @param sell the number of shares that user is holding
    * @return true: if user sells all shares of this company, false: otherwise
    */
-  public boolean removeDateNum(int sell) {
+  public boolean removeDateNum(double sell) {
     ArrayList<Integer> del = new ArrayList<Integer>();
 
     if (sell == Double.parseDouble(num)) {

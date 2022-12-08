@@ -88,7 +88,7 @@ public class PortfolioImpl implements IPortfolioImpl {
   }
 
   @Override
-  public String sellPortfolio(String symbol, int num, String date) {
+  public String sellPortfolio(String symbol, double num, String date) {
     Portfolio portfolio = getPortfolio(symbol);
     double money;
 
