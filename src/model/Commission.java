@@ -10,7 +10,7 @@ public class Commission {
    * A constructor for Commission class and 1 is default value.
    */
   public Commission() {
-    this.fee = 1;
+    this.fee = 0;
   }
 
   /**

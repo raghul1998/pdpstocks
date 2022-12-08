@@ -138,7 +138,7 @@ public class Portfolio {
   public boolean removeDateNum(int sell) {
     ArrayList<Integer> del = new ArrayList<Integer>();
 
-    if (sell == Integer.parseInt(num)) {
+    if (sell == Double.parseDouble(num)) {
       dateNumsList.clear();
       return true;
     }

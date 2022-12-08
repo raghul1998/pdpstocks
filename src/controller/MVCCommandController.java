@@ -173,7 +173,7 @@ public class MVCCommandController {
 
     this.output.println("Enter the value of stock. Buy at today's price, enter 'N'");
     String value = sc.next();
-    if (value.equals("N")) {
+    if (value.equalsIgnoreCase("N")) {
       portfolios.insertPortfolioWithDate(company, symbol, String.valueOf(num), date);
     } else {
       while (Objects.equals(portfolios.checkValue(symbol, value, date), "-1")) {

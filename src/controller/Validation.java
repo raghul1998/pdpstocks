@@ -130,10 +130,10 @@ public class Validation {
    * @return true: possible to sell, false: otherwise
    */
   public boolean validateNumForSell(Portfolio portfolio, String date, String num) {
-    int hold = 0;
-    boolean ret = validateNum(num);
+    double hold = 0;
+    boolean ret = validateNumDouble(num);
 
-    if (ret) {
+    if (!ret) {
       return false;
     }
 
@@ -143,7 +143,22 @@ public class Validation {
       }
       hold += Double.parseDouble(portfolio.getDateNumsList().get(i).getNum());
     }
-    return hold >= Integer.parseInt(num);
+    return hold >= Double.parseDouble(num);
+  }
+
+  /**
+   * This method checks the validation of input number.
+   *
+   * @param num number input from the user
+   * @return true: if corrects input, false: otherwise
+   */
+  public boolean validateNumDouble(String num) {
+    try {
+      Double.parseDouble(num);
+    } catch (NumberFormatException e) {
+      return false;
+    }
+    return true;
   }
 
   /**
