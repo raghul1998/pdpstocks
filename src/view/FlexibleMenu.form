@@ -25,6 +25,15 @@
           <text value="View Portfolio Performance"/>
         </properties>
       </component>
+      <component id="890d2" class="javax.swing.JButton" binding="reBalancePortfolioButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <text value="ReBalanace Portfolio"/>
+        </properties>
+      </component>
       <component id="198bc" class="javax.swing.JLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
@@ -46,7 +55,7 @@
       </component>
       <component id="b82fa" class="javax.swing.JButton" binding="goBackToTheButton" default-binding="true">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>

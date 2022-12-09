@@ -19,6 +19,7 @@ public class FlexibleMenu extends JFrame {
   private JPanel flexibleMenu;
   private JButton investDollarCostAveragingButton;
   private JButton goBackToTheButton;
+  private JButton reBalancePortfolioButton;
 
   FlexibleMenu() {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,6 +116,19 @@ public class FlexibleMenu extends JFrame {
       public void actionPerformed(ActionEvent e) {
         JFrame menu = new MainMenu();
         menu.setVisible(true);
+        FlexibleMenu.this.dispose();
+      }
+    });
+    reBalancePortfolioButton.addActionListener(new ActionListener() {
+      /**
+       * Invoked when an action occurs.
+       *
+       * @param e the event to be processed
+       */
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        DisplayResult displayResult = new DisplayResult(6);
+        displayResult.setVisible(true);
         FlexibleMenu.this.dispose();
       }
     });

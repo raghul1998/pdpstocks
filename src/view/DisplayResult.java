@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.Validation;
+import model.AlphaVantageTimeSeriesDaily;
 import model.ImportXML;
 import model.MVCModel;
 import model.Portfolio;
@@ -98,6 +99,17 @@ public class DisplayResult extends JFrame {
             JFrame passive = new PassiveInvestment(path);
             passive.setVisible(true);
             DisplayResult.this.dispose();
+          } else if (type == 6) {
+            // Re-balance portfolio
+            double total = Double.parseDouble(
+                    new TotalValueCounter().determineTotalValueOfPortfolio(path, date));
+            if (total == 0) {
+              displayMessage("You don't have any shares on " + date);
+            } else {
+              viewCompo(path, date, total);
+              Rebalance rb = new Rebalance(path, date, total);
+              rb.setBalance();
+            }
           }
         }
       }
@@ -173,6 +185,7 @@ public class DisplayResult extends JFrame {
     double portion;
     StringBuilder result = new StringBuilder();
     String totalInvestment = String.valueOf(pfImpl.getInvested());
+    AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
 
     result.append("Total value of a portfolio: ").append(total);
     result.append("\n" + "Total money invested: ").append(totalInvestment).append("\n");
@@ -193,7 +206,14 @@ public class DisplayResult extends JFrame {
     }
     result.append("\n");
 
+    ArrayList<Double> sharesList = numList(pfList, date);
+    int k = 0;
+
     for (Portfolio portfolio : pfList) {
+      if(sharesList.get(k) == 0) {
+        k++;
+        continue;
+      }
       try {
         Date inputDate = dateFormat.parse(date);
         Date pfDate = dateFormat.parse(portfolio.getDateOfPurchase());
@@ -204,9 +224,10 @@ public class DisplayResult extends JFrame {
         output[0] = portfolio.getCompany();
         output[1] = portfolio.getSymbol();
         output[2] = String.format("%.2f", portion);
-        output[3] = String.valueOf(portfolio.getNum());
+        output[3] = String.format("%.2f", sharesList.get(k));
         output[4] = portfolio.getValueOfPurchase();
-        output[5] = portfolio.getTotalValueOfPurchase();
+        output[5] = String.format("%.2f", sharesList.get(k)
+                * Double.parseDouble(avtsd.getValue(portfolio.getSymbol(), date)));
         output[6] = portfolio.getDateOfPurchase();
 
         if (pfDate.after(inputDate)) {
@@ -216,6 +237,7 @@ public class DisplayResult extends JFrame {
           result.append(String.format("%-19s", output[i]));
         }
         result.append("\n");
+        k++;
       } catch (ParseException el) {
         throw new RuntimeException(el);
       }
@@ -224,6 +246,23 @@ public class DisplayResult extends JFrame {
     System.out.println(result.toString());
     textFieldData.setText(result.toString());
     textFieldData.setVisible(true);
+  }
+
+  private ArrayList<Double> numList(ArrayList<Portfolio> portfolios, String date) {
+    ArrayList<Double> ret = new ArrayList<>();
+    double num;
+
+    for (int i=0; i<portfolios.size(); i++) {
+      num = 0;
+      for (int j=0; j<portfolios.get(i).getDateNumsList().size(); j++) {
+        if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) >= 0) {
+          num += Double.parseDouble(portfolios.get(i).getDateNumsList().get(j).getNum());
+        }
+      }
+      ret.add(num);
+    }
+
+    return ret;
   }
 
 
