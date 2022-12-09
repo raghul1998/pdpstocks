@@ -156,9 +156,13 @@ public class Portfolio {
       }
     }
 
+    int count = 0;
+
     for (int i = 0; i < del.size(); i++) {
       int idx = del.get(i);
+      idx = idx - count;
       dateNumsList.remove(idx);
+      count++;
     }
     toDateNumsStr();
 
