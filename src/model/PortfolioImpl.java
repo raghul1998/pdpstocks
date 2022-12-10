@@ -95,7 +95,7 @@ public class PortfolioImpl implements IPortfolioImpl {
     money = Double.parseDouble(getValue(symbol, date)) * num;
     profit = money;
 
-    boolean count = portfolio.removeDateNum(num);
+    boolean count = portfolio.removeDateNum(num, date);
     if (count) {
       System.out.println("You sold all shares of " + symbol);
     }

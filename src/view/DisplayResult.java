@@ -230,9 +230,6 @@ public class DisplayResult extends JFrame {
                 * Double.parseDouble(avtsd.getValue(portfolio.getSymbol(), date)));
         output[6] = portfolio.getDateOfPurchase();
 
-        if (pfDate.after(inputDate)) {
-          continue;
-        }
         for (int i = 0; i < 7; i++) {
           result.append(String.format("%-19s", output[i]));
         }

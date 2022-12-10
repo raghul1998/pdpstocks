@@ -1,6 +1,8 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * This class represents a single portfolio.
@@ -135,7 +137,7 @@ public class Portfolio {
    * @param sell the number of shares that user is holding
    * @return true: if user sells all shares of this company, false: otherwise
    */
-  public boolean removeDateNum(double sell) {
+  public boolean removeDateNum(double sell, String date) {
     ArrayList<Integer> del = new ArrayList<Integer>();
 
     if (sell == Double.parseDouble(num)) {
@@ -143,10 +145,29 @@ public class Portfolio {
       return true;
     }
 
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     for (int i = 0; i < dateNumsList.size(); i++) {
+      Date inputDate = null;
+      Date pfDate = null;
+
+      try {
+        inputDate = dateFormat.parse(date);
+        pfDate = dateFormat.parse(dateNumsList.get(i).getDate());
+      } catch (Exception e) {
+        // Do nothing
+      }
+
+      assert pfDate != null;
+      if(pfDate.after(inputDate)) {
+        // If the buy was done in the future, don't include that
+        continue;
+      }
+
       if (sell < Double.parseDouble(dateNumsList.get(i).getNum())) {
         dateNumsList.get(i).setNum(
                 String.valueOf(Double.parseDouble(dateNumsList.get(i).getNum()) - sell));
+        sell = 0;
       } else {
         sell -= Double.parseDouble(dateNumsList.get(i).getNum());
         del.add(i);
