@@ -1,14 +1,18 @@
 package controller;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import model.AlphaVantageTimeSeriesDaily;
 import model.ImportXML;
@@ -25,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test class for the Main class in controller.
  */
+
 public class MVCCommandControllerTest {
 
   public static boolean compareString(String one, String two) {
@@ -1630,6 +1635,106 @@ public void testRebalancingPortfolioAtStart(){
 
 }
 
+//  add stocks on 2015-05-05
+  // add stocks on 2016-06-06
+  // add stocks on 2017-07-07
+  // add stocks on 2018-08-08
+  //  rebalance at the end - 2017-07-08
+  // examine on 2015-05-05
+
+
+  @Test
+  public void testRebalancingPortfolioinBetweenSameProportion2(){
+    String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
+            + " Y Meta META 20 2017-07-06 N Y Amazon AMZN 23 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_10.xml "
+            + "2018-08-08 7 flexible_10.xml 2017-07-11 25 25 25 25 3 flexible_11.xml 2017-07-11 8 4 8 4";
+    InputStream input = new ByteArrayInputStream(inputString.getBytes());
+    OutputStream outputStream = new ByteArrayOutputStream();
+    MVCView view = new MVCCommandView();
+    MVCModel model = new MVCModel();
+    MVCCommandController controller = new MVCCommandController(model, view, input,
+            new PrintStream(outputStream));
+
+    controller.menu();
+
+    ImportXML imXml = new ImportXML();
+    PortfolioImpl pfImpl = imXml.buildDocument("flexible_11.xml");
+    ArrayList<Portfolio> pfList = pfImpl.getPortfolios();
+
+    AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
+    ArrayList<Double> sharesList = numList(pfList, "2017-07-11");
+
+    String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
+            avtsd.getValue("JNJ", "2017-07-11")));
+    String totalValue2 = String.format("%.2f",sharesList.get(1) * Double.parseDouble(
+            avtsd.getValue("UNH", "2017-07-11")));
+    String totalValue3 = String.format("%.2f", sharesList.get(2) * Double.parseDouble(
+            avtsd.getValue("META", "2017-07-11")));
+    String totalValue4 = String.format("%.2f",sharesList.get(3) * Double.parseDouble(
+            avtsd.getValue("AMZN", "2017-07-11")));
+
+    assertEquals(totalValue1, "8217.96");
+    assertEquals(totalValue2, "8217.96");
+    assertEquals(totalValue3, "8217.96");
+    assertEquals(totalValue4, "8217.96");
+
+    double total1 = Double.parseDouble(
+            new TotalValueCounter().determineTotalValueOfPortfolio("flexible_10.xml",
+                    "2017-07-11"));
+    double total2 = Double.parseDouble(
+            new TotalValueCounter().determineTotalValueOfPortfolio("flexible_11.xml",
+                    "2017-07-11"));
+
+    assertEquals(String.valueOf(total1),String.valueOf(total2));
+
+  }
+
+  @Test
+  public void testRebalancingPortfolioinBetweenDiffProportion2(){
+    String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
+            + " Y Meta META 20 2017-07-06 N Y Amazon AMZN 23 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_12.xml "
+            + "2018-08-08 7 flexible_12.xml 2017-07-11 60 40 5 5 flexible_13.xml 2017-07-11 8 4 8 4";
+    InputStream input = new ByteArrayInputStream(inputString.getBytes());
+    OutputStream outputStream = new ByteArrayOutputStream();
+    MVCView view = new MVCCommandView();
+    MVCModel model = new MVCModel();
+    MVCCommandController controller = new MVCCommandController(model, view, input,
+            new PrintStream(outputStream));
+
+    controller.menu();
+
+    ImportXML imXml = new ImportXML();
+    PortfolioImpl pfImpl = imXml.buildDocument("flexible_13.xml");
+    ArrayList<Portfolio> pfList = pfImpl.getPortfolios();
+
+    AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
+    ArrayList<Double> sharesList = numList(pfList, "2017-07-11");
+
+    String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
+            avtsd.getValue("JNJ", "2017-07-11")));
+    String totalValue2 = String.format("%.2f",sharesList.get(1) * Double.parseDouble(
+            avtsd.getValue("UNH", "2017-07-11")));
+    String totalValue3 = String.format("%.2f", sharesList.get(2) * Double.parseDouble(
+            avtsd.getValue("META", "2017-07-11")));
+    String totalValue4 = String.format("%.2f",sharesList.get(3) * Double.parseDouble(
+            avtsd.getValue("AMZN", "2017-07-11")));
+
+    assertEquals(totalValue1, "19723.10");
+    assertEquals(totalValue2, "13148.74");
+    assertEquals(totalValue3, "1643.59");
+    assertEquals(totalValue4, "1643.59");
+
+    double total1 = Double.parseDouble(
+            new TotalValueCounter().determineTotalValueOfPortfolio("flexible_13.xml",
+                    "2017-07-11"));
+    double total2 = Double.parseDouble(
+            new TotalValueCounter().determineTotalValueOfPortfolio("flexible_12.xml",
+                    "2017-07-11"));
+
+   // assertEquals(String.valueOf(total1),String.valueOf(total2));
+
+  }
+
   private ArrayList<Double> numList(ArrayList<Portfolio> portfolios, String date) {
     ArrayList<Double> ret = new ArrayList<>();
     double num;
@@ -1645,4 +1750,22 @@ public void testRebalancingPortfolioAtStart(){
     }
     return ret;
   }
+
+//  protected void deleteFileInDirectory(String fileName) {
+//    File directory = new File("/pdpstocks/");
+//    if (directory.exists()) {
+//      File[] filename = directory.listFiles();
+//      assert filename != null;
+//      for (File fName : filename) {
+//        if (Objects.equals(fileName, fName.getName())) {
+//          if (fName.delete()) {
+//            // Do nothing
+//          } else {
+//            System.out.println("Unable to delete");
+//          }
+//          break;
+//        }
+//      }
+//    }
+//  }
 }
