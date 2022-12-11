@@ -10,5 +10,5 @@ public interface CreatePortfolio {
    *
    * @param pfImpl portfolio to save
    */
-  void saveFile(PortfolioImpl pfImpl, int type);
+  String saveFile(PortfolioImpl pfImpl, int type);
 }

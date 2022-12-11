@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,13 +30,15 @@ public class Rebalance extends JFrame {
   private double totalPortfolioValue;
   private String[] proportionRequired;
   private JTextField[] input;
+  private DisplayResult obj;
 
-  public Rebalance(String path, String date, double total) {
+  public Rebalance(String path, String date, double total, DisplayResult obj) {
     super();
 
     this.path = path;
     this.date = date;
     this.total = total;
+    this.obj = obj;
 
     setSize(800, 450);
     setLocation(400, 200);
@@ -85,6 +88,9 @@ public class Rebalance extends JFrame {
     JLabel[] stockName = new JLabel[numberOfStocksWithNonZeroShares];
 
     JPanel panel = new JPanel();
+
+    JLabel label = new JLabel("Enter the proportion in % for all these stocks\n");
+    panel.add(label);
 
     for(int i = 0; i < numberOfStocksWithNonZeroShares; i++) {
       Portfolio portfolio = pfList.get(i);
@@ -163,11 +169,16 @@ public class Rebalance extends JFrame {
       }
     }
 
-    new MVCModel().saveFile(portfolios, 2);
-    String message = "A new balanced portfolio has been created.";
+    MVCModel model = new MVCModel();
+    String newPfName = model.saveFile(portfolios, 2);
+    String message = "A new balanced portfolio has been created."
+            + "The new portfolio name is " + newPfName;
     JOptionPane.showMessageDialog(this, message,
             "INFORMATIONAL", JOptionPane.INFORMATION_MESSAGE);
     this.dispose();
+    JFrame menu = new MainMenu();
+    menu.setVisible(true);
+    obj.dispose();
   }
 
   private boolean isThereOnlyOneStockOnThisDate(ArrayList<Double> sharesList) {

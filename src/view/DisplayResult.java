@@ -107,7 +107,7 @@ public class DisplayResult extends JFrame {
               displayMessage("You don't have any shares on " + date);
             } else {
               viewCompo(path, date, total);
-              Rebalance rb = new Rebalance(path, date, total);
+              Rebalance rb = new Rebalance(path, date, total, DisplayResult.this);
               rb.setBalance();
             }
           }

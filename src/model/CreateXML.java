@@ -27,7 +27,7 @@ public class CreateXML implements CreatePortfolio {
    * @param pfImpl portfolio to save
    */
   @Override
-  public void saveFile(PortfolioImpl pfImpl, int type) {
+  public String saveFile(PortfolioImpl pfImpl, int type) {
     ArrayList<Portfolio> userData = pfImpl.getPortfolios();
 
     try {
@@ -103,8 +103,10 @@ public class CreateXML implements CreatePortfolio {
       System.out.println("Portfolio created successfully with XML file!");
       System.out.println("The name of XML file: " + pf);
       System.out.println();
+      return pf;
     } catch (Exception e) {
       System.out.println(e);
     }
+    return null;
   }
 }

@@ -18,8 +18,8 @@ public class MVCModel implements CreatePortfolio, ImportPortfolio {
     importXML = new ImportXML();
   }
 
-  public void saveFile(PortfolioImpl pfImpl, int type) {
-    createXML.saveFile(pfImpl, type);
+  public String saveFile(PortfolioImpl pfImpl, int type) {
+    return createXML.saveFile(pfImpl, type);
   }
 
   public PortfolioImpl buildDocument(String path) {
