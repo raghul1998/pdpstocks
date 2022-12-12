@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test class for the Main class in controller.
  */
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MVCCommandControllerTest {
 
   public static boolean compareString(String one, String two) {
@@ -1404,7 +1404,7 @@ public class MVCCommandControllerTest {
   // creates flexible_1 portfolio on 2022-11-11, rebalances on 2022-11-15, all stocks
   // with equal proportion
   @Test
-  public void testRebalancingPortfolioSameProportion(){
+  public void testZARebalancingPortfolioSameProportion(){
     String inputString = "1 Walmart WMT 10 2022-11-11 200 Y Amazon AMZN 10 2022-11-11 "
             + "200 Y Google GOOG 10 2022-11-11 200 Y Apple AAPL 10 2022-11-11 200 N 2 3 "
             + "flexible_1.xml 2022-11-11 7 flexible_1.xml 2022-11-15 25 25 25 25 3 "
@@ -1453,7 +1453,7 @@ public class MVCCommandControllerTest {
   // with different proportion
 
   @Test
-  public void testRebalancingPortfolioUnequalProportion(){
+  public void testZBRebalancingPortfolioUnequalProportion(){
     String inputString = "1 Walmart WMT 10 2022-11-11 200 Y Amazon AMZN 10 2022-11-11 200 "
             + "Y Google GOOG 10 2022-11-11 200 Y Apple AAPL 10 2022-11-11 200 N 2 3 flexible_3.xml"
             + " 2022-11-11 7 flexible_3.xml 2022-11-15 50 40 5 5 3 flexible_4.xml 2022-11-15 8 4 "
@@ -1507,7 +1507,7 @@ public class MVCCommandControllerTest {
 //  rebalance at the end - 2018-08-09
   // examine on 2018-08-09
   @Test
-  public void testRebalancingPortfolioAtEnd(){
+  public void testZCRebalancingPortfolioAtEnd(){
     String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N Y "
             + "Meta META 20 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_5.xml "
             + "2018-08-08 7 flexible_5.xml 2018-08-09 25 25 25 25 3 flexible_6.xml 2018-08-09 "
@@ -1561,7 +1561,7 @@ public class MVCCommandControllerTest {
 
 
 @Test
-public void testRebalancingPortfolioinBetween(){
+public void testZDRebalancingPortfolioinBetween(){
   String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
           + " Y Meta META 20 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_7.xml "
           + "2018-08-08 7 flexible_7.xml 2016-06-07 50 50 3 flexible_8.xml 2016-06-07 8 4 8 4";
@@ -1608,7 +1608,7 @@ public void testRebalancingPortfolioinBetween(){
 //  rebalance at the end - 2015-05-05
 // examine on 2016-09-09
 @Test
-public void testRebalancingPortfolioAtStart(){
+public void testZERebalancingPortfolioAtStart(){
   String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06"
           + " N Y Meta META 20 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_9.xml "
           + "2018-08-08 7 flexible_9.xml 2015-05-06 8 4 8 4";
@@ -1644,7 +1644,7 @@ public void testRebalancingPortfolioAtStart(){
 
 
   @Test
-  public void testRebalancingPortfolioinBetweenSameProportion2(){
+  public void testZFRebalancingPortfolioinBetweenSameProportion2(){
     String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
             + " Y Meta META 20 2017-07-06 N Y Amazon AMZN 23 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_10.xml "
             + "2018-08-08 7 flexible_10.xml 2017-07-11 25 25 25 25 3 flexible_11.xml 2017-07-11 8 4 8 4";
@@ -1690,7 +1690,7 @@ public void testRebalancingPortfolioAtStart(){
   }
 
   @Test
-  public void testRebalancingPortfolioinBetweenDiffProportion2(){
+  public void testZGRebalancingPortfolioinBetweenDiffProportion2(){
     String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
             + " Y Meta META 20 2017-07-06 N Y Amazon AMZN 23 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_12.xml "
             + "2018-08-08 7 flexible_12.xml 2017-07-11 60 40 5 5 flexible_13.xml 2017-07-11 8 4 8 4";
@@ -1724,15 +1724,6 @@ public void testRebalancingPortfolioAtStart(){
     assertEquals(totalValue3, "1643.59");
     assertEquals(totalValue4, "1643.59");
 
-    double total1 = Double.parseDouble(
-            new TotalValueCounter().determineTotalValueOfPortfolio("flexible_13.xml",
-                    "2017-07-11"));
-    double total2 = Double.parseDouble(
-            new TotalValueCounter().determineTotalValueOfPortfolio("flexible_12.xml",
-                    "2017-07-11"));
-
-   // assertEquals(String.valueOf(total1),String.valueOf(total2));
-
   }
 
   private ArrayList<Double> numList(ArrayList<Portfolio> portfolios, String date) {
@@ -1750,22 +1741,4 @@ public void testRebalancingPortfolioAtStart(){
     }
     return ret;
   }
-
-//  protected void deleteFileInDirectory(String fileName) {
-//    File directory = new File("/pdpstocks/");
-//    if (directory.exists()) {
-//      File[] filename = directory.listFiles();
-//      assert filename != null;
-//      for (File fName : filename) {
-//        if (Objects.equals(fileName, fName.getName())) {
-//          if (fName.delete()) {
-//            // Do nothing
-//          } else {
-//            System.out.println("Unable to delete");
-//          }
-//          break;
-//        }
-//      }
-//    }
-//  }
 }
