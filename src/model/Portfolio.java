@@ -159,7 +159,7 @@ public class Portfolio {
       }
 
       assert pfDate != null;
-      if(pfDate.after(inputDate)) {
+      if (pfDate.after(inputDate)) {
         // If the buy was done in the future, don't include that
         continue;
       }

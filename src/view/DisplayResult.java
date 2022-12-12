@@ -210,7 +210,7 @@ public class DisplayResult extends JFrame {
     int k = 0;
 
     for (Portfolio portfolio : pfList) {
-      if(sharesList.get(k) == 0) {
+      if (sharesList.get(k) == 0) {
         k++;
         continue;
       }
@@ -249,9 +249,9 @@ public class DisplayResult extends JFrame {
     ArrayList<Double> ret = new ArrayList<>();
     double num;
 
-    for (int i=0; i<portfolios.size(); i++) {
+    for (int i = 0; i < portfolios.size(); i++) {
       num = 0;
-      for (int j=0; j<portfolios.get(i).getDateNumsList().size(); j++) {
+      for (int j = 0; j < portfolios.get(i).getDateNumsList().size(); j++) {
         if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) >= 0) {
           num += Double.parseDouble(portfolios.get(i).getDateNumsList().get(j).getNum());
         }

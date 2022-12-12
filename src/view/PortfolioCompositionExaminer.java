@@ -57,7 +57,7 @@ public class PortfolioCompositionExaminer {
     int k = 0;
     ArrayList<Double> sharesList = numList(pfList, date);
     for (Portfolio portfolio : pfList) {
-      if(sharesList.get(k) == 0) {
+      if (sharesList.get(k) == 0) {
         k++;
         continue;
       }
@@ -73,7 +73,8 @@ public class PortfolioCompositionExaminer {
         output[2] = String.format("%.2f", portion);
         output[3] = String.format("%.2f", sharesList.get(k));
         output[4] = portfolio.getValueOfPurchase();
-        output[5] = String.format("%.2f", sharesList.get(k) * Double.parseDouble(avtsd.getValue(portfolio.getSymbol(), date)));
+        output[5] = String.format("%.2f", sharesList.get(k)
+                * Double.parseDouble(avtsd.getValue(portfolio.getSymbol(), date)));
         output[6] = portfolio.getDateOfPurchase();
 
         for (int i = 0; i < 7; i++) {
@@ -92,9 +93,9 @@ public class PortfolioCompositionExaminer {
     ArrayList<Double> ret = new ArrayList<>();
     double num;
 
-    for (int i=0; i<portfolios.size(); i++) {
+    for (int i = 0; i < portfolios.size(); i++) {
       num = 0;
-      for (int j=0; j<portfolios.get(i).getDateNumsList().size(); j++) {
+      for (int j = 0; j < portfolios.get(i).getDateNumsList().size(); j++) {
         if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) >= 0) {
           num += Double.parseDouble(portfolios.get(i).getDateNumsList().get(j).getNum());
         }

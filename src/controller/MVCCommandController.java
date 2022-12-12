@@ -2,10 +2,8 @@ package controller;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -216,7 +214,7 @@ public class MVCCommandController {
   private boolean userInputForSell(String path) {
     Portfolio portfolio;
 
-    if(portfolios.getSize() == 0) {
+    if (portfolios.getSize() == 0) {
       System.out.println("There are no stocks to sell in this portfolio.\n");
       goToMenuOrCompo(portfolios.getPortfolios());
       return false;
@@ -253,7 +251,7 @@ public class MVCCommandController {
 
     boolean count = true; // duplicated codes
 
-    if(portfolios.getSize() == 0) {
+    if (portfolios.getSize() == 0) {
       System.out.println("All the stocks in the portfolio are sold.\n");
       int type = new Validation().typePortfolioFile(path);
       model.saveFile(portfolios, type);
@@ -354,11 +352,17 @@ public class MVCCommandController {
     }
   }
 
+  /**
+   * This method helps in balancing the portfolio on the given data.
+   *
+   * @param path path of the portfolio
+   * @param date date provided by the user
+   */
   private void reBalancePortfolio(String path, String date) {
     double totalPortfolioValue = Double.parseDouble(
             new TotalValueCounter().determineTotalValueOfPortfolio(path, date));
 
-    if(totalPortfolioValue == 0) {
+    if (totalPortfolioValue == 0) {
       return;
     }
 
@@ -373,7 +377,7 @@ public class MVCCommandController {
     ArrayList<Double> sharesList = numList(pfList, date);
     String[] proportionRequired = new String[pfList.size()];
 
-    if(pfList.size() == 1 || isThereOnlyOneStockOnThisDate(sharesList)) {
+    if (pfList.size() == 1 || isThereOnlyOneStockOnThisDate(sharesList)) {
       System.out.println("You have only one stock on " + date + ". Hence already balanced.\n");
       return;
     }
@@ -382,7 +386,7 @@ public class MVCCommandController {
     System.out.println("Enter the proportion for each stock out of total value"
             + " of portfolio (in %)");
     for (int i = 0; i < pfList.size(); i++) {
-      if(sharesList.get(i) == 0) {
+      if (sharesList.get(i) == 0) {
         // This means there are no shares on this date, so skip
         continue;
       }
@@ -411,7 +415,7 @@ public class MVCCommandController {
     Map<Boolean, Double> finalData = new HashMap<>();
 
     for (int i = 0; i < pfList.size(); i++) {
-      if(sharesList.get(i) == 0) {
+      if (sharesList.get(i) == 0) {
         // No shares on this date, so skip
         continue;
       }
@@ -423,7 +427,7 @@ public class MVCCommandController {
       double requiredValue = totalPortfolioValue
               * (Double.parseDouble(proportionRequired[i]) / 100);
 
-      if(requiredValue > totalValueOfThisStockOnGivenDate) {
+      if (requiredValue > totalValueOfThisStockOnGivenDate) {
         // Shares to be bought
         double difference = requiredValue - totalValueOfThisStockOnGivenDate;
         double numberOfSharesToBeBought = difference / singleShareValueOnGivenDate;
@@ -444,18 +448,21 @@ public class MVCCommandController {
     goToMenuOrCompo(portfolios.getPortfolios());
   }
 
+  /**
+   * This method helps in determining if there is only one stock on a given date.
+   *
+   * @param sharesList list of shares on the date
+   * @return true if it has only one stock else false
+   */
   private boolean isThereOnlyOneStockOnThisDate(ArrayList<Double> sharesList) {
     int numberOfStocksWithNonZeroShares = 0;
-    for(int i = 0; i < sharesList.size(); i++) {
-      if(sharesList.get(i) != 0) {
+    for (int i = 0; i < sharesList.size(); i++) {
+      if (sharesList.get(i) != 0) {
         numberOfStocksWithNonZeroShares++;
       }
     }
 
-    if(numberOfStocksWithNonZeroShares == 1) {
-      return true;
-    }
-    return false;
+    return numberOfStocksWithNonZeroShares == 1;
   }
 
   private ArrayList<Double> numList(ArrayList<Portfolio> portfolios, String date) {
@@ -609,8 +616,8 @@ public class MVCCommandController {
 
     this.output.println("Enter finish date. Enter 'N' to not designate.");
     date = sc.next();
-    while (!new Validation().validateDate("GOOG", date) ||
-            date.compareTo(range.get(0)) < 0) {
+    while (!new Validation().validateDate("GOOG", date)
+            || date.compareTo(range.get(0)) < 0) {
       if (date.equals("N")) {
         break;
       }

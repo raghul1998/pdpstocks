@@ -1,13 +1,17 @@
 package view;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 import model.AlphaVantageTimeSeriesDaily;
 import model.ImportXML;
@@ -15,13 +19,15 @@ import model.MVCModel;
 import model.Portfolio;
 import model.PortfolioImpl;
 
+/**
+ * This class represents and responsible for implementing the re-balancing portfolio feature.
+ */
 public class Rebalance extends JFrame {
-  PortfolioImpl portfolios = new PortfolioImpl();
+  PortfolioImpl portfolios;
   private final JPanel cards;
   private final CardLayout card1;
   private final String path;
   private final String date;
-  private final double total;
   private int numberOfStocksWithNonZeroShares = 0;
   private final JButton reBalanceButton;
   private ArrayList<Portfolio> pfList;
@@ -32,12 +38,20 @@ public class Rebalance extends JFrame {
   private JTextField[] input;
   private DisplayResult obj;
 
+  /**
+   * This method is the constructor for this class that initializes certain values and
+   * creates the JPanel to display.
+   *
+   * @param path  path of the portfolio
+   * @param date  date which user entered
+   * @param total total value of the portfolio
+   * @param obj   object of the previous screen
+   */
   public Rebalance(String path, String date, double total, DisplayResult obj) {
     super();
 
     this.path = path;
     this.date = date;
-    this.total = total;
     this.obj = obj;
 
     setSize(800, 450);
@@ -59,11 +73,14 @@ public class Rebalance extends JFrame {
     setVisible(true);
   }
 
+  /**
+   * This method is responsible for getting the user data to re-balance the portfolio.
+   */
   public void setBalance() {
     totalPortfolioValue = Double.parseDouble(
             new TotalValueCounter().determineTotalValueOfPortfolio(path, date));
 
-    if(totalPortfolioValue == 0) {
+    if (totalPortfolioValue == 0) {
       return;
     }
 
@@ -78,7 +95,7 @@ public class Rebalance extends JFrame {
     sharesList = numList(pfList, date);
     proportionRequired = new String[pfList.size()];
 
-    if(pfList.size() == 1 || isThereOnlyOneStockOnThisDate(sharesList)) {
+    if (pfList.size() == 1 || isThereOnlyOneStockOnThisDate(sharesList)) {
       String message = "You have only one stock on " + date + ". Hence already balanced.";
       JOptionPane.showMessageDialog(this, message);
       return;
@@ -92,7 +109,7 @@ public class Rebalance extends JFrame {
     JLabel label = new JLabel("Enter the proportion in % for all these stocks\n");
     panel.add(label);
 
-    for(int i = 0; i < numberOfStocksWithNonZeroShares; i++) {
+    for (int i = 0; i < numberOfStocksWithNonZeroShares; i++) {
       Portfolio portfolio = pfList.get(i);
       stockName[i] = new JLabel(portfolio.getSymbol() + " : ");
       input[i] = new JTextField(10);
@@ -105,11 +122,14 @@ public class Rebalance extends JFrame {
     card1.show(cards, "Rebalance Main Screen");
   }
 
+  /**
+   * This private helper method takes care of re-balancing the portfolio.
+   */
   private void rebalanceFinal() {
     double totalProportion = 100;
 
     for (int i = 0; i < pfList.size(); i++) {
-      if(sharesList.get(i) == 0) {
+      if (sharesList.get(i) == 0) {
         // This means there are no shares on this date, so skip
         continue;
       }
@@ -141,7 +161,7 @@ public class Rebalance extends JFrame {
     Map<Boolean, Double> finalData = new HashMap<>();
 
     for (int i = 0; i < pfList.size(); i++) {
-      if(sharesList.get(i) == 0) {
+      if (sharesList.get(i) == 0) {
         // No shares on this date, so skip
         continue;
       }
@@ -153,7 +173,7 @@ public class Rebalance extends JFrame {
       double requiredValue = totalPortfolioValue
               * (Double.parseDouble(proportionRequired[i]) / 100);
 
-      if(requiredValue > totalValueOfThisStockOnGivenDate) {
+      if (requiredValue > totalValueOfThisStockOnGivenDate) {
         // Shares to be bought
         double difference = requiredValue - totalValueOfThisStockOnGivenDate;
         double numberOfSharesToBeBought = difference / singleShareValueOnGivenDate;
@@ -181,19 +201,30 @@ public class Rebalance extends JFrame {
     obj.dispose();
   }
 
+  /**
+   * This method tells whether there is one stock on a given date in a portfolio.
+   *
+   * @param sharesList share list of the portfolio
+   * @return true if there is only one stock else false
+   */
   private boolean isThereOnlyOneStockOnThisDate(ArrayList<Double> sharesList) {
-    for(int i = 0; i < sharesList.size(); i++) {
-      if(sharesList.get(i) != 0) {
+    for (int i = 0; i < sharesList.size(); i++) {
+      if (sharesList.get(i) != 0) {
         numberOfStocksWithNonZeroShares++;
       }
     }
 
-    if(numberOfStocksWithNonZeroShares == 1) {
-      return true;
-    }
-    return false;
+    return numberOfStocksWithNonZeroShares == 1;
   }
 
+  /**
+   * This method helps in calculating the stock and its share details of a portfolio on a certain
+   * date.
+   *
+   * @param portfolios the portfolio data
+   * @param date       date which user entered
+   * @return the array list of stocks on that date
+   */
   private ArrayList<Double> numList(ArrayList<Portfolio> portfolios, String date) {
     ArrayList<Double> ret = new ArrayList<>();
     double num;

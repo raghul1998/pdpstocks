@@ -7,12 +7,10 @@ import org.junit.runners.MethodSorters;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import model.AlphaVantageTimeSeriesDaily;
 import model.ImportXML;
@@ -1404,7 +1402,7 @@ public class MVCCommandControllerTest {
   // creates flexible_1 portfolio on 2022-11-11, rebalances on 2022-11-15, all stocks
   // with equal proportion
   @Test
-  public void testZARebalancingPortfolioSameProportion(){
+  public void testZARebalancingPortfolioSameProportion() {
     String inputString = "1 Walmart WMT 10 2022-11-11 200 Y Amazon AMZN 10 2022-11-11 "
             + "200 Y Google GOOG 10 2022-11-11 200 Y Apple AAPL 10 2022-11-11 200 N 2 3 "
             + "flexible_1.xml 2022-11-11 7 flexible_1.xml 2022-11-15 25 25 25 25 3 "
@@ -1427,11 +1425,11 @@ public class MVCCommandControllerTest {
 
     String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
             avtsd.getValue("WMT", "2022-11-15")));
-    String totalValue2 = String.format("%.2f",sharesList.get(1) * Double.parseDouble(
+    String totalValue2 = String.format("%.2f", sharesList.get(1) * Double.parseDouble(
             avtsd.getValue("AMZN", "2022-11-15")));
-    String totalValue3 = String.format("%.2f",sharesList.get(2) * Double.parseDouble(
+    String totalValue3 = String.format("%.2f", sharesList.get(2) * Double.parseDouble(
             avtsd.getValue("GOOG", "2022-11-15")));
-    String totalValue4 = String.format("%.2f",sharesList.get(3) * Double.parseDouble(
+    String totalValue4 = String.format("%.2f", sharesList.get(3) * Double.parseDouble(
             avtsd.getValue("AAPL", "2022-11-15")));
 
     assertEquals(totalValue1, "1237.85");
@@ -1446,14 +1444,14 @@ public class MVCCommandControllerTest {
             new TotalValueCounter().determineTotalValueOfPortfolio("flexible_1.xml",
                     "2022-11-15"));
 
-    assertEquals(String.valueOf(total1),String.valueOf(total2));
+    assertEquals(String.valueOf(total1), String.valueOf(total2));
   }
 
   // creates flexible_1 portfolio on 2022-11-11, rebalances on 2022-11-15, all stocks
   // with different proportion
 
   @Test
-  public void testZBRebalancingPortfolioUnequalProportion(){
+  public void testZBRebalancingPortfolioUnequalProportion() {
     String inputString = "1 Walmart WMT 10 2022-11-11 200 Y Amazon AMZN 10 2022-11-11 200 "
             + "Y Google GOOG 10 2022-11-11 200 Y Apple AAPL 10 2022-11-11 200 N 2 3 flexible_3.xml"
             + " 2022-11-11 7 flexible_3.xml 2022-11-15 50 40 5 5 3 flexible_4.xml 2022-11-15 8 4 "
@@ -1476,11 +1474,11 @@ public class MVCCommandControllerTest {
 
     String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
             avtsd.getValue("WMT", "2022-11-15")));
-    String totalValue2 = String.format("%.2f",sharesList.get(1) * Double.parseDouble(
+    String totalValue2 = String.format("%.2f", sharesList.get(1) * Double.parseDouble(
             avtsd.getValue("AMZN", "2022-11-15")));
-    String totalValue3 = String.format("%.2f",sharesList.get(2) * Double.parseDouble(
+    String totalValue3 = String.format("%.2f", sharesList.get(2) * Double.parseDouble(
             avtsd.getValue("GOOG", "2022-11-15")));
-    String totalValue4 = String.format("%.2f",sharesList.get(3) * Double.parseDouble(
+    String totalValue4 = String.format("%.2f", sharesList.get(3) * Double.parseDouble(
             avtsd.getValue("AAPL", "2022-11-15")));
 
     assertEquals(totalValue1, "2475.70");
@@ -1495,19 +1493,19 @@ public class MVCCommandControllerTest {
             new TotalValueCounter().determineTotalValueOfPortfolio("flexible_3.xml",
                     "2022-11-15"));
 
-    assertEquals(String.valueOf(total1),String.valueOf(total2));
+    assertEquals(String.valueOf(total1), String.valueOf(total2));
     //assertTrue(compareString(expected, "1237.85"));
   }
 
 
-//  add stocks on 2015-05-05
+  //  add stocks on 2015-05-05
   // add stocks on 2016-06-06
   // add stocks on 2017-07-07
   // add stocks on 2018-08-08
-//  rebalance at the end - 2018-08-09
+  //  rebalance at the end - 2018-08-09
   // examine on 2018-08-09
   @Test
-  public void testZCRebalancingPortfolioAtEnd(){
+  public void testZCRebalancingPortfolioAtEnd() {
     String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N Y "
             + "Meta META 20 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_5.xml "
             + "2018-08-08 7 flexible_5.xml 2018-08-09 25 25 25 25 3 flexible_6.xml 2018-08-09 "
@@ -1530,11 +1528,11 @@ public class MVCCommandControllerTest {
 
     String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
             avtsd.getValue("JNJ", "2018-08-09")));
-    String totalValue2 = String.format("%.2f",sharesList.get(1) * Double.parseDouble(
+    String totalValue2 = String.format("%.2f", sharesList.get(1) * Double.parseDouble(
             avtsd.getValue("UNH", "2018-08-09")));
-    String totalValue3 = String.format("%.2f",sharesList.get(2) * Double.parseDouble(
+    String totalValue3 = String.format("%.2f", sharesList.get(2) * Double.parseDouble(
             avtsd.getValue("META", "2018-08-09")));
-    String totalValue4 = String.format("%.2f",sharesList.get(3) * Double.parseDouble(
+    String totalValue4 = String.format("%.2f", sharesList.get(3) * Double.parseDouble(
             avtsd.getValue("MSFT", "2018-08-09")));
 
     assertEquals(totalValue1, "3185.26");
@@ -1549,10 +1547,10 @@ public class MVCCommandControllerTest {
             new TotalValueCounter().determineTotalValueOfPortfolio("flexible_6.xml",
                     "2018-08-09"));
 
-    assertEquals(String.valueOf(total1),String.valueOf(total2));
+    assertEquals(String.valueOf(total1), String.valueOf(total2));
   }
 
-//  add stocks on 2015-05-05
+  //  add stocks on 2015-05-05
   // add stocks on 2016-06-06
   // add stocks on 2017-07-07
   // add stocks on 2018-08-08
@@ -1560,94 +1558,94 @@ public class MVCCommandControllerTest {
   // examine on 2015-05-05
 
 
-@Test
-public void testZDRebalancingPortfolioinBetween(){
-  String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
-          + " Y Meta META 20 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_7.xml "
-          + "2018-08-08 7 flexible_7.xml 2016-06-07 50 50 3 flexible_8.xml 2016-06-07 8 4 8 4";
-  InputStream input = new ByteArrayInputStream(inputString.getBytes());
-  OutputStream outputStream = new ByteArrayOutputStream();
-  MVCView view = new MVCCommandView();
-  MVCModel model = new MVCModel();
-  MVCCommandController controller = new MVCCommandController(model, view, input,
-          new PrintStream(outputStream));
+  @Test
+  public void testZDRebalancingPortfolioinBetween() {
+    String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
+            + " Y Meta META 20 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_7.xml "
+            + "2018-08-08 7 flexible_7.xml 2016-06-07 50 50 3 flexible_8.xml 2016-06-07 8 4 8 4";
+    InputStream input = new ByteArrayInputStream(inputString.getBytes());
+    OutputStream outputStream = new ByteArrayOutputStream();
+    MVCView view = new MVCCommandView();
+    MVCModel model = new MVCModel();
+    MVCCommandController controller = new MVCCommandController(model, view, input,
+            new PrintStream(outputStream));
 
-  controller.menu();
+    controller.menu();
 
-  ImportXML imXml = new ImportXML();
-  PortfolioImpl pfImpl = imXml.buildDocument("flexible_8.xml");
-  ArrayList<Portfolio> pfList = pfImpl.getPortfolios();
+    ImportXML imXml = new ImportXML();
+    PortfolioImpl pfImpl = imXml.buildDocument("flexible_8.xml");
+    ArrayList<Portfolio> pfList = pfImpl.getPortfolios();
 
-  AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
-  ArrayList<Double> sharesList = numList(pfList, "2016-06-07");
+    AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
+    ArrayList<Double> sharesList = numList(pfList, "2016-06-07");
 
-  String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
-          avtsd.getValue("JNJ", "2016-06-07")));
-  String totalValue2 = String.format("%.2f",sharesList.get(1) * Double.parseDouble(
-          avtsd.getValue("UNH", "2016-06-07")));
+    String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
+            avtsd.getValue("JNJ", "2016-06-07")));
+    String totalValue2 = String.format("%.2f", sharesList.get(1) * Double.parseDouble(
+            avtsd.getValue("UNH", "2016-06-07")));
 
-  assertEquals(totalValue1, "2732.11");
-  assertEquals(totalValue2, "2732.11");
+    assertEquals(totalValue1, "2732.11");
+    assertEquals(totalValue2, "2732.11");
 
-  double total1 = Double.parseDouble(
-          new TotalValueCounter().determineTotalValueOfPortfolio("flexible_7.xml",
-                  "2016-06-07"));
-  double total2 = Double.parseDouble(
-          new TotalValueCounter().determineTotalValueOfPortfolio("flexible_8.xml",
-                  "2016-06-07"));
+    double total1 = Double.parseDouble(
+            new TotalValueCounter().determineTotalValueOfPortfolio("flexible_7.xml",
+                    "2016-06-07"));
+    double total2 = Double.parseDouble(
+            new TotalValueCounter().determineTotalValueOfPortfolio("flexible_8.xml",
+                    "2016-06-07"));
 
-  assertEquals(String.valueOf(total1),String.valueOf(total2));
+    assertEquals(String.valueOf(total1), String.valueOf(total2));
 
-}
+  }
 
-//
-//  add stocks on 2015-05-05
-// add stocks on 2016-06-06
-// add stocks on 2017-07-07
-// add stocks on 2018-08-08
-//  rebalance at the end - 2015-05-05
-// examine on 2016-09-09
-@Test
-public void testZERebalancingPortfolioAtStart(){
-  String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06"
-          + " N Y Meta META 20 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_9.xml "
-          + "2018-08-08 7 flexible_9.xml 2015-05-06 8 4 8 4";
-  InputStream input = new ByteArrayInputStream(inputString.getBytes());
-  OutputStream outputStream = new ByteArrayOutputStream();
-  MVCView view = new MVCCommandView();
-  MVCModel model = new MVCModel();
-  MVCCommandController controller = new MVCCommandController(model, view, input,
-          new PrintStream(outputStream));
+  //  add stocks on 2015-05-05
+  // add stocks on 2016-06-06
+  // add stocks on 2017-07-07
+  // add stocks on 2018-08-08
+  //  rebalance at the end - 2015-05-05
+  // examine on 2016-09-09
+  @Test
+  public void testZERebalancingPortfolioAtStart() {
+    String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06"
+            + " N Y Meta META 20 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_9.xml "
+            + "2018-08-08 7 flexible_9.xml 2015-05-06 8 4 8 4";
+    InputStream input = new ByteArrayInputStream(inputString.getBytes());
+    OutputStream outputStream = new ByteArrayOutputStream();
+    MVCView view = new MVCCommandView();
+    MVCModel model = new MVCModel();
+    MVCCommandController controller = new MVCCommandController(model, view, input,
+            new PrintStream(outputStream));
 
-  controller.menu();
+    controller.menu();
 
-  ImportXML imXml = new ImportXML();
-  PortfolioImpl pfImpl = imXml.buildDocument("flexible_9.xml");
-  ArrayList<Portfolio> pfList = pfImpl.getPortfolios();
+    ImportXML imXml = new ImportXML();
+    PortfolioImpl pfImpl = imXml.buildDocument("flexible_9.xml");
+    ArrayList<Portfolio> pfList = pfImpl.getPortfolios();
 
-  AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
-  ArrayList<Double> sharesList = numList(pfList, "2015-05-06");
+    AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
+    ArrayList<Double> sharesList = numList(pfList, "2015-05-06");
 
-  String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
-          avtsd.getValue("JNJ", "2015-05-06")));
+    String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
+            avtsd.getValue("JNJ", "2015-05-06")));
 
-  assertEquals(totalValue1, "1983.40");
+    assertEquals(totalValue1, "1983.40");
 
-}
+  }
 
-//  add stocks on 2015-05-05
+  //  add stocks on 2015-05-05
   // add stocks on 2016-06-06
   // add stocks on 2017-07-07
   // add stocks on 2018-08-08
   //  rebalance at the end - 2017-07-08
   // examine on 2015-05-05
 
-
   @Test
-  public void testZFRebalancingPortfolioinBetweenSameProportion2(){
+  public void testZFRebalancingPortfolioinBetweenSameProportion2() {
     String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
-            + " Y Meta META 20 2017-07-06 N Y Amazon AMZN 23 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_10.xml "
-            + "2018-08-08 7 flexible_10.xml 2017-07-11 25 25 25 25 3 flexible_11.xml 2017-07-11 8 4 8 4";
+            + " Y Meta META 20 2017-07-06 N Y Amazon AMZN 23 2017-07-07 N "
+            + "Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_10.xml "
+            + "2018-08-08 7 flexible_10.xml 2017-07-11 25 25 25 25 3 "
+            + "flexible_11.xml 2017-07-11 8 4 8 4";
     InputStream input = new ByteArrayInputStream(inputString.getBytes());
     OutputStream outputStream = new ByteArrayOutputStream();
     MVCView view = new MVCCommandView();
@@ -1666,11 +1664,11 @@ public void testZERebalancingPortfolioAtStart(){
 
     String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
             avtsd.getValue("JNJ", "2017-07-11")));
-    String totalValue2 = String.format("%.2f",sharesList.get(1) * Double.parseDouble(
+    String totalValue2 = String.format("%.2f", sharesList.get(1) * Double.parseDouble(
             avtsd.getValue("UNH", "2017-07-11")));
     String totalValue3 = String.format("%.2f", sharesList.get(2) * Double.parseDouble(
             avtsd.getValue("META", "2017-07-11")));
-    String totalValue4 = String.format("%.2f",sharesList.get(3) * Double.parseDouble(
+    String totalValue4 = String.format("%.2f", sharesList.get(3) * Double.parseDouble(
             avtsd.getValue("AMZN", "2017-07-11")));
 
     assertEquals(totalValue1, "8217.96");
@@ -1685,15 +1683,17 @@ public void testZERebalancingPortfolioAtStart(){
             new TotalValueCounter().determineTotalValueOfPortfolio("flexible_11.xml",
                     "2017-07-11"));
 
-    assertEquals(String.valueOf(total1),String.valueOf(total2));
+    assertEquals(String.valueOf(total1), String.valueOf(total2));
 
   }
 
   @Test
-  public void testZGRebalancingPortfolioinBetweenDiffProportion2(){
+  public void testZGRebalancingPortfolioinBetweenDiffProportion2() {
     String inputString = "1 Johnson JNJ 20 2015-05-05 N Y UnitedHealth UNH 23 2016-06-06 N"
-            + " Y Meta META 20 2017-07-06 N Y Amazon AMZN 23 2017-07-07 N Y Microsoft MSFT 4 2018-08-08 N N 2 3 flexible_12.xml "
-            + "2018-08-08 7 flexible_12.xml 2017-07-11 60 40 5 5 flexible_13.xml 2017-07-11 8 4 8 4";
+            + " Y Meta META 20 2017-07-06 N Y Amazon AMZN 23 2017-07-07 N Y Microsoft MSFT 4 "
+            + "2018-08-08 N N 2 3 flexible_12.xml "
+            + "2018-08-08 7 flexible_12.xml 2017-07-11 60 40 5 5 "
+            + "flexible_13.xml 2017-07-11 8 4 8 4";
     InputStream input = new ByteArrayInputStream(inputString.getBytes());
     OutputStream outputStream = new ByteArrayOutputStream();
     MVCView view = new MVCCommandView();
@@ -1712,11 +1712,11 @@ public void testZERebalancingPortfolioAtStart(){
 
     String totalValue1 = String.format("%.2f", sharesList.get(0) * Double.parseDouble(
             avtsd.getValue("JNJ", "2017-07-11")));
-    String totalValue2 = String.format("%.2f",sharesList.get(1) * Double.parseDouble(
+    String totalValue2 = String.format("%.2f", sharesList.get(1) * Double.parseDouble(
             avtsd.getValue("UNH", "2017-07-11")));
     String totalValue3 = String.format("%.2f", sharesList.get(2) * Double.parseDouble(
             avtsd.getValue("META", "2017-07-11")));
-    String totalValue4 = String.format("%.2f",sharesList.get(3) * Double.parseDouble(
+    String totalValue4 = String.format("%.2f", sharesList.get(3) * Double.parseDouble(
             avtsd.getValue("AMZN", "2017-07-11")));
 
     assertEquals(totalValue1, "19723.10");
@@ -1730,9 +1730,9 @@ public void testZERebalancingPortfolioAtStart(){
     ArrayList<Double> ret = new ArrayList<>();
     double num;
 
-    for (int i=0; i<portfolios.size(); i++) {
+    for (int i = 0; i < portfolios.size(); i++) {
       num = 0;
-      for (int j=0; j<portfolios.get(i).getDateNumsList().size(); j++) {
+      for (int j = 0; j < portfolios.get(i).getDateNumsList().size(); j++) {
         if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) >= 0) {
           num += Double.parseDouble(portfolios.get(i).getDateNumsList().get(j).getNum());
         }
