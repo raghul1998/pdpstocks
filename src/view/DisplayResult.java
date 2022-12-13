@@ -105,6 +105,9 @@ public class DisplayResult extends JFrame {
                     new TotalValueCounter().determineTotalValueOfPortfolio(path, date));
             if (total == 0) {
               displayMessage("You don't have any shares on " + date);
+              JFrame menu = new MainMenu();
+              menu.setVisible(true);
+              DisplayResult.this.dispose();
             } else {
               viewCompo(path, date, total);
               Rebalance rb = new Rebalance(path, date, total, DisplayResult.this);
@@ -218,7 +221,7 @@ public class DisplayResult extends JFrame {
         Date inputDate = dateFormat.parse(date);
         Date pfDate = dateFormat.parse(portfolio.getDateOfPurchase());
         portion =
-                Double.parseDouble(portfolio.getNum()) * Double.parseDouble(
+                Double.parseDouble(String.valueOf(sharesList.get(k))) * Double.parseDouble(
                         pfImpl.getValue(portfolio.getSymbol(), date))
                         / total * 100;
         output[0] = portfolio.getCompany();

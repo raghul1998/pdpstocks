@@ -65,8 +65,8 @@ public class PortfolioCompositionExaminer {
         Date inputDate = dateFormat.parse(date);
         Date pfDate = dateFormat.parse(portfolio.getDateOfPurchase());
         portion =
-                Double.parseDouble(portfolio.getNum()) * Double.parseDouble(
-                        pfImpl.getValue(portfolio.getSymbol(), date))
+                Double.parseDouble(String.valueOf(sharesList.get(k)))
+                        * Double.parseDouble(pfImpl.getValue(portfolio.getSymbol(), date))
                         / total * 100;
         output[0] = portfolio.getCompany();
         output[1] = portfolio.getSymbol();

@@ -384,10 +384,17 @@ public class MVCCommandController {
 
     double totalProportion = 100;
     System.out.println("Enter the proportion for each stock out of total value"
-            + " of portfolio (in %)");
+            + " of portfolio (in % upto two decimals)");
     for (int i = 0; i < pfList.size(); i++) {
       if (sharesList.get(i) == 0) {
         // This means there are no shares on this date, so skip
+        // In the final iteration, check if the proportion makes up to 100, else ask from beginning
+        if ((i == pfList.size() - 1) && (totalProportion != 0)) {
+          System.out.println("The proportions should make up to 100 percent. "
+                  + "Enter again from beginning.");
+          totalProportion = 100;
+          i = -1;
+        }
         continue;
       }
       Portfolio portfolio = pfList.get(i);
@@ -396,6 +403,7 @@ public class MVCCommandController {
       try {
         double val = Double.parseDouble(proportionRequired[i]);
         totalProportion -= val;
+        totalProportion = Math.floor(totalProportion * 100) / 100;
       } catch (Exception e) {
         System.out.println("Enter a valid number");
         i--;
@@ -472,7 +480,7 @@ public class MVCCommandController {
     for (int i = 0; i < portfolios.size(); i++) {
       num = 0;
       for (int j = 0; j < portfolios.get(i).getDateNumsList().size(); j++) {
-        if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) > 0) {
+        if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) >= 0) {
           num += Double.parseDouble(portfolios.get(i).getDateNumsList().get(j).getNum());
         }
       }

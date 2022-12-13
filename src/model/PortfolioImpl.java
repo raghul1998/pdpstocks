@@ -137,10 +137,23 @@ public class PortfolioImpl implements IPortfolioImpl {
    */
   @Override
   public String getValue(String symbol, String date) {
-    String value;
+    String value = null;
 
     AlphaVantageTimeSeriesDaily avtsd = new AlphaVantageTimeSeriesDaily();
-    value = avtsd.getValue(symbol, date);
+
+    try {
+      value = avtsd.getValue(symbol, date);
+    } catch (Exception e) {
+      try {
+        value = avtsd.getValue(symbol, date);
+      } catch (Exception ex) {
+        try {
+          value = avtsd.getValue(symbol, date);
+        } catch (Exception exp) {
+          // Do nothing
+        }
+      }
+    }
 
     return value;
   }

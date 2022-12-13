@@ -98,6 +98,10 @@ public class Rebalance extends JFrame {
     if (pfList.size() == 1 || isThereOnlyOneStockOnThisDate(sharesList)) {
       String message = "You have only one stock on " + date + ". Hence already balanced.";
       JOptionPane.showMessageDialog(this, message);
+      this.dispose();
+      JFrame menu = new MainMenu();
+      menu.setVisible(true);
+      obj.dispose();
       return;
     }
 
@@ -106,7 +110,7 @@ public class Rebalance extends JFrame {
 
     JPanel panel = new JPanel();
 
-    JLabel label = new JLabel("Enter the proportion in % for all these stocks\n");
+    JLabel label = new JLabel("Enter the proportion in % (upto 2 decimals) for all these stocks\n");
     panel.add(label);
 
     for (int i = 0; i < numberOfStocksWithNonZeroShares; i++) {
@@ -131,6 +135,14 @@ public class Rebalance extends JFrame {
     for (int i = 0; i < pfList.size(); i++) {
       if (sharesList.get(i) == 0) {
         // This means there are no shares on this date, so skip
+        // In the final iteration, check if the proportion makes up to 100, else ask from beginning
+        if ((i == pfList.size() - 1) && (totalProportion != 0)) {
+          String message = "The proportions should make up to 100 percent. "
+                  + "Enter again from beginning.";
+          JOptionPane.showMessageDialog(this, message,
+                  "ERROR", JOptionPane.ERROR_MESSAGE);
+          return;
+        }
         continue;
       }
 
@@ -139,6 +151,7 @@ public class Rebalance extends JFrame {
       try {
         double val = Double.parseDouble(proportionRequired[i]);
         totalProportion -= val;
+        totalProportion = Math.floor(totalProportion * 100) / 100;
       } catch (Exception e) {
         String message = "Enter a valid number";
         JOptionPane.showMessageDialog(this, message,
@@ -232,7 +245,7 @@ public class Rebalance extends JFrame {
     for (int i = 0; i < portfolios.size(); i++) {
       num = 0;
       for (int j = 0; j < portfolios.get(i).getDateNumsList().size(); j++) {
-        if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) > 0) {
+        if (date.compareTo(portfolios.get(i).getDateNumsList().get(j).getDate()) >= 0) {
           num += Double.parseDouble(portfolios.get(i).getDateNumsList().get(j).getNum());
         }
       }
