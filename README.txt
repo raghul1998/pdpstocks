@@ -2,7 +2,8 @@ README
 
 Please run the jar file (java -jar 'filename') as an administrator (possibly in a windows machine).
 The system on which the application is running should have internet connection.
-If you want to run the program using the submitted code, please load the project using IntelliJ and
+If you want to run the program using the submitted code, please go to the folder 
+'Code written by us for this assignment' load the project using IntelliJ and
 run the main function.
 
 Rebalancing the portfolio feature has been implemented completely. The rebalance feature can be accessed

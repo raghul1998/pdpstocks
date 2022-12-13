@@ -1,0 +1,58 @@
+Code Critique
+
+DESIGN CRITIQUE
+1.  To start with, as per the requirements of the project, the design follows MVC architecture. 
+2.  The program starts with main () calling the controller. The controller takes in put at all the times. 
+3.  The validations to the input are performed in the controller which better. 
+4.  The controller also takes care of dispatching the operations to either the view or the model based on the user input. 
+5.  Even though this is as per standards, the controller does not pass much information to the model or the view for it to independently perform the operations. 
+6.  For example, to know the value and composition of the portfolio, the controller only validates certain inputs and passes the control to the view.
+7.  Even though it is very difficult to completely eliminate the coupling between modules, efforts could have been made to reduce the coupling between some of the modules. 
+8.  For example, the buy or sell is completely dependent on the cached portfolio model and the API call to the Alpha Vantage site. 
+9.  The operation fails with run time stack errors, and this is not a good approach. 
+10. This could have been made better by removing the dependency and making a fail-safe approach if the portfolio fetch or the API calls fail.
+11. The GUI view on the other hand acts as a controller itself. 
+12. The GUI view decides what input to get from the user and decides what operations to perform. 
+13. This design is not optimal as the view has access to the model object which can be easily manipulated. 
+14. This can be rectified by following the Command Callback design flow.
+
+IMPLEMENTATION CRITIQUE
+1.  One of the major uses of interfaces is to hide the data from the client code. 
+2.  Here, most of the classes do not use interface and the clients directly access the class using its implementation object. 
+3.  This defies one of the SOLID principles and does not hide the information. 
+4.  For example, the portfolio class itself doesn’t have an interface and hence the client accessing the data using its implementation object has access to its data. 
+5.  This could have been made better by creating interfaces and making those classes implement the interfaces. 
+6.  Another flaw that I noticed is, the recursive calls are made to the previous functions if the back option is called rather than returning to the previous function. 
+7.  This will result in stack overflow at some point in time. 
+8.  I also noticed that the model performs a lot more than holding the data like performing IO operations, etc. 
+9.  This could have been easily moved to the controller which could have been served as a better design. 
+10. While perusing the code, I noticed that the code uses GOOGLE share as a base check and determines if the market is closed or not. 
+11. Even though this serves the purpose in most of the cases, if I try to buy a share that exists before GOOGLE, I will still be notified that market was closed on that date which is not right. 
+12. This could have been corrected by using the stock name that user enters rather than relying on a default stock.
+
+DOCUMENTATION CRITIQUE
+1. Almost all the interface, class and method are well documented and furnished with details. 
+2. The single line comments provided over the methods are well enough to understand what the function does overall. 
+3. But that could have been made better by providing some more details with an additional one or two lines. 
+4. Also, I found some of the public methods under Portfolio class are undocumented which could have been avoided by provided some comments.
+
+DESIGN/CODE STRENGTH
+1. Cohesion of a method or module is highly maintained and appreciable. 
+2. For example, the create portfolio model only takes care of creating the portfolios. 
+3. The buy and sell stocks method takes care only of those defined purposes. 
+4. This serves the first principle called Single Responsibility of the SOLID principles. 
+5. Because of this, I was able to easily re-use methods for implementing the re-balance feature which I see as a strength of this design and implementation.
+
+DESIGN/CODE LIMITATION
+1. When a user tries to create a portfolio, the user is not able to name their portfolio. 
+2. I see this as a limitation to the design because of two reasons. 
+3. One is, as a user, I should be able name by own portfolio. 
+4. The second point is, as I mentioned earlier, a new portfolio is created for every buy and/or sell transaction. 
+5. Because of this, as a user, I will not be able to differentiate between which portfolio belongs to which timeline unless I open and read the compositions.
+
+
+CHANGE THAT I WANT TO REQUEST
+1. For every buy and/or sell transaction, a new portfolio is created. 
+2. Even though this design is useful in successfully maintaining the history of purchases independently, this defeats the meaning of a portfolio. 
+3. Every transaction in a portfolio should be contained within the portfolio itself. 
+4. This is one change I would ask my clients to make.
