@@ -95,7 +95,7 @@ public class Rebalance extends JFrame {
     sharesList = numList(pfList, date);
     proportionRequired = new String[pfList.size()];
 
-    if (pfList.size() == 1 || isThereOnlyOneStockOnThisDate(sharesList)) {
+    if (isThereOnlyOneStockOnThisDate(sharesList) || pfList.size() == 1) {
       String message = "You have only one stock on " + date + ". Hence already balanced.";
       JOptionPane.showMessageDialog(this, message);
       this.dispose();
@@ -105,15 +105,28 @@ public class Rebalance extends JFrame {
       return;
     }
 
-    input = new JTextField[numberOfStocksWithNonZeroShares];
-    JLabel[] stockName = new JLabel[numberOfStocksWithNonZeroShares];
+    input = new JTextField[pfList.size()];
+    JLabel[] stockName = new JLabel[pfList.size()];
 
     JPanel panel = new JPanel();
 
     JLabel label = new JLabel("Enter the proportion in % (upto 2 decimals) for all these stocks\n");
     panel.add(label);
 
-    for (int i = 0; i < numberOfStocksWithNonZeroShares; i++) {
+    /*for (int i = 0; i < numberOfStocksWithNonZeroShares; i++) {
+      Portfolio portfolio = pfList.get(i);
+      stockName[i] = new JLabel(portfolio.getSymbol() + " : ");
+      input[i] = new JTextField(10);
+      panel.add(stockName[i]);
+      panel.add(input[i]);
+    }*/
+
+    int kv = 0;
+    for (int i = 0; i < pfList.size(); i++) {
+      if (sharesList.get(i) == 0) {
+        // This means there are no shares on this date, so skip
+        continue;
+      }
       Portfolio portfolio = pfList.get(i);
       stockName[i] = new JLabel(portfolio.getSymbol() + " : ");
       input[i] = new JTextField(10);

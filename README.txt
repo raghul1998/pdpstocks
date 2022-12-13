@@ -46,7 +46,7 @@ GUI CHANGES
 7. Once the user enters the stock proportios, the input is validated and a private method rebalanceFinal is called to complete
    the balancing process.
    
-OTHER CHANGES AND BUG FIXES
+OTHER CHANGES AND BUG FIXES RELATED TO THIS FEATURE
 1. In the DisplayResults.java, in the existing the view composition function, there was a bug where the number of shares 
    and the total value displayed was not giving right values all the time.
 2. The sellPortfolio() method in PortfolioImpl.java file has been modified to take in number of stocks to be sold as double
@@ -58,3 +58,5 @@ OTHER CHANGES AND BUG FIXES
    removeDateNum() in Portfolio.java file. This has been fixed.
 5. The saveFile() method is CreateXML.java file is modified to return a string value (name of the new portfolio). Earlier it was returing
    void. This is useful for GUI to display the new portfolio name.
+6. While displaying the value and composition, the proportion column was displaying wrong values. Fixed them in examinePortfolioComposition()
+   method and viewCompo() method in PortfolioCompositionExaminer.java and DisplayResult.java files respectively.
